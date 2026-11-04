@@ -1,0 +1,19 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: sodium
+      # Every file, on the oldest PHP the plugin header claims to support as well as the newest:
+      # a syntax that parses on 8.3 and not on 8.0 would break exactly the hosts least able to
+      # debug it.
+      - name: Lint
+        run: find . -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Signature round-trip
+        run: php tests/signature-test.php

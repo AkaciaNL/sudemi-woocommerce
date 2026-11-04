@@ -1,0 +1,49 @@
+=== sudemi Connector ===
+Contributors: akacia
+Tags: woocommerce, marketplace, ai, product feed
+Requires at least: 6.2
+Tested up to: 6.7
+Requires PHP: 8.0
+Stable tag: 1.0.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+List your WooCommerce catalogue on sudemi, so an AI assistant can find your products and send buyers to you.
+
+== Description ==
+
+sudemi is a marketplace that an AI assistant can search on a shopper's behalf. This plugin keeps
+your catalogue in step with it: categories, products, specifications, images, prices and stock.
+
+You remain the merchant of record. sudemi does not take the payment and does not ship anything;
+a buyer who finds your product is sent to you.
+
+**What the plugin cannot change.** Your shop address, legal name, country, trader status and VAT
+number are confirmed once on sudemi and locked afterwards, because a buyer's rights depend on
+them being true.
+
+**Your signing key never leaves your server.** The plugin generates an Ed25519 keypair on your
+host and sends sudemi only the public half.
+
+== Installation ==
+
+1. Install and activate the plugin.
+2. Go to WooCommerce → sudemi and press Connect this shop.
+3. Open the link shown, sign in to your sudemi account, and confirm the shop is yours.
+
+== Frequently Asked Questions ==
+
+= Does this send my customers' data anywhere? =
+
+No. It sends your catalogue — products, prices, stock, images — and nothing about your orders or
+your customers.
+
+= What if my host does not have the sodium extension? =
+
+The plugin tells you on its settings screen and refuses to connect, rather than failing later.
+Ask your host to enable it; it ships with PHP 7.2 and later.
+
+== Changelog ==
+
+= 1.0.0 =
+* First release.
