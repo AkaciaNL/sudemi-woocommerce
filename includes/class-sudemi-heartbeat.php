@@ -153,6 +153,13 @@ final class Sudemi_Heartbeat {
 			Sudemi_Orders::handle_pending( $body['pending_orders'] );
 		}
 
+		// Orders this shop accepted while the buyer's payment still covered other shops: now
+		// paid (ship them) or released after all (cancel them). Not gated on automatic
+		// confirmation — these are outcomes to record, not questions to answer.
+		if ( ! empty( $body['settled_orders'] ) ) {
+			Sudemi_Orders::handle_settled( $body['settled_orders'] );
+		}
+
 		// sudemi and this shop disagree about what the catalogue is, so something did not arrive.
 		// A full sync is the only answer that does not involve guessing which product it was.
 		if ( ! empty( $body['full_sync_requested'] ) ) {

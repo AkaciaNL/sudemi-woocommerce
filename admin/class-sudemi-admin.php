@@ -285,6 +285,8 @@ final class Sudemi_Admin {
 		switch ( $status ) {
 			case 'AWAITING_SELLER':
 				return __( 'Waiting for you — buyer not charged', 'sudemi' );
+			case 'ACCEPTED':
+				return __( 'Accepted — waiting for the other shops in the buyer\'s payment; buyer not charged yet, do not ship', 'sudemi' );
 			case 'PAID':
 				return __( 'Confirmed and charged', 'sudemi' );
 			case 'DECLINED':

@@ -150,6 +150,17 @@ class Sudemi_Orders {
 		$status = isset( $response['status'] ) ? (int) $response['status'] : 0;
 		$body   = isset( $response['body'] ) ? $response['body'] : array();
 
+		if ( 200 === $status && isset( $body['status'] ) && 'ok' === $body['status']
+			&& isset( $body['payment'] ) && 'waiting_for_other_shops' === $body['payment'] ) {
+			// Accepted, but not paid. The buyer paid several shops in one payment, and a card
+			// authorisation can be captured only once — so sudemi takes the money when the last
+			// of them has answered, and says so in settled_orders on a later heartbeat. Until
+			// then the order stays held and has no address: shipping it now could mean shipping
+			// goods nobody ever pays for.
+			self::hold_for_payment( $sudemi_id, $order );
+			return;
+		}
+
 		if ( 200 === $status && isset( $body['status'] ) && 'ok' === $body['status'] ) {
 			// The address arrives only now. sudemi withholds it while the order is still being
 			// decided, because answering "do I have stock" needs nobody's address — so this is
@@ -190,6 +201,129 @@ class Sudemi_Orders {
 				__( 'sudemi refused the confirmation of order %1$s: %2$s. The local order was cancelled and stock restored.', 'sudemi' ),
 				$sudemi_id,
 				$reason
+			)
+		);
+	}
+
+	/**
+	 * Keeps an accepted order on hold while the rest of the buyer's payment is still being decided.
+	 *
+	 * Said on the order itself, because that is where the merchant deciding what to pack looks.
+	 *
+	 * @param string   $sudemi_id The sudemi order id.
+	 * @param WC_Order $order     The local order.
+	 */
+	private static function hold_for_payment( $sudemi_id, $order ) {
+		if ( ! $order->has_status( 'on-hold' ) ) {
+			$order->update_status( 'on-hold' );
+		}
+		$order->add_order_note(
+			__( 'Accepted on sudemi. The buyer paid several shops in one payment; sudemi takes the money once every shop has answered. Do NOT ship until this order moves to Processing.', 'sudemi' )
+		);
+		Sudemi_Logger::info(
+			sprintf(
+				/* translators: 1: sudemi order id, 2: local order number. */
+				__( 'Accepted sudemi order %1$s (order #%2$s). Not paid yet: waiting for the other shops in the same payment.', 'sudemi' ),
+				$sudemi_id,
+				$order->get_order_number()
+			)
+		);
+	}
+
+	/**
+	 * Works through the settled_orders block of a heartbeat.
+	 *
+	 * These are orders this shop accepted while the buyer's payment still had other shops to hear
+	 * from. sudemi repeats each one for a week, so applying one must change nothing the second
+	 * time: only an order still on hold here is touched, and every outcome moves it off hold.
+	 *
+	 * @param array $settled The settled_orders block of a heartbeat response.
+	 */
+	public static function handle_settled( $settled ) {
+		if ( empty( $settled ) || ! is_array( $settled ) ) {
+			return;
+		}
+		foreach ( $settled as $entry ) {
+			if ( ! is_array( $entry ) || empty( $entry['order_id'] ) || empty( $entry['status'] ) ) {
+				continue;
+			}
+			try {
+				self::settle( $entry );
+			} catch ( Exception $e ) {
+				Sudemi_Logger::error(
+					sprintf(
+						/* translators: 1: sudemi order id, 2: error message. */
+						__( 'Could not apply the outcome of sudemi order %1$s: %2$s', 'sudemi' ),
+						$entry['order_id'],
+						$e->getMessage()
+					)
+				);
+			}
+		}
+	}
+
+	/**
+	 * Applies one settled order: paid means ship it, declined means it never happened.
+	 *
+	 * @param array $settled One entry of the settled_orders block.
+	 */
+	private static function settle( array $settled ) {
+		$sudemi_id = (string) $settled['order_id'];
+		$state     = (string) $settled['status'];
+
+		if ( 'ACCEPTED' === $state || 'AWAITING_SELLER' === $state ) {
+			// Still undecided. sudemi does not list these, and guessing would be worse than waiting.
+			return;
+		}
+
+		// Only finds an order still on hold. One already processing, completed or cancelled has
+		// been settled before — by an earlier beat, or by an accept that captured straight away —
+		// and is left exactly as it is.
+		$order = self::find_local_order( $sudemi_id );
+		if ( ! $order ) {
+			return;
+		}
+
+		if ( 'DECLINED' === $state ) {
+			// Released without being charged: the capture failed, or the authorisation lapsed
+			// before the last shop answered. Same as a refused acceptance — the local order must
+			// not survive, and the stock it reserved goes back on the shelf.
+			$reason = ! empty( $settled['declined_reason'] )
+				? (string) $settled['declined_reason']
+				: __( 'reason not given', 'sudemi' );
+			wc_increase_stock_levels( $order );
+			$order->update_status(
+				'cancelled',
+				sprintf(
+					/* translators: %s: the reason sudemi gave. */
+					__( 'sudemi released the buyer\'s payment: %s. Nothing was charged and the stock has been restored.', 'sudemi' ),
+					$reason
+				)
+			);
+			Sudemi_Logger::warn(
+				sprintf(
+					/* translators: 1: sudemi order id, 2: reason. */
+					__( 'sudemi order %1$s was released after all: %2$s. The local order was cancelled and stock restored.', 'sudemi' ),
+					$sudemi_id,
+					$reason
+				)
+			);
+			return;
+		}
+
+		// PAID, or already further along (SHIPPED, DELIVERED…): either way the money was taken,
+		// and only now does sudemi release the address.
+		self::fill_customer( $order, $sudemi_id );
+		$order->update_status(
+			'processing',
+			__( 'Paid on sudemi: every shop in the buyer\'s payment has answered and the buyer has been charged. This order can be shipped.', 'sudemi' )
+		);
+		Sudemi_Logger::info(
+			sprintf(
+				/* translators: 1: sudemi order id, 2: local order number. */
+				__( 'sudemi order %1$s is paid; order #%2$s moved to Processing.', 'sudemi' ),
+				$sudemi_id,
+				$order->get_order_number()
 			)
 		);
 	}

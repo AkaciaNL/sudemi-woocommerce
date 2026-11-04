@@ -24,6 +24,10 @@ final class Sudemi_Logger {
 		self::write( 'warn', $message );
 	}
 
+	public static function error( $message ) {
+		self::write( 'error', $message );
+	}
+
 	public static function entries() {
 		$log = get_option( self::OPTION );
 		return is_array( $log ) ? $log : array();

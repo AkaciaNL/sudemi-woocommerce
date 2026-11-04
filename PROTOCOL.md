@@ -186,6 +186,38 @@ seller to confirm in the portal rather than applied silently.
 
 ---
 
+### Orders: answering, and one payment for several shops
+
+The heartbeat answer lists `pending_orders`: orders whose buyer's card is authorised but not
+charged. The plugin answers each with `POST /integration/v1/orders/{order_id}/accept` or
+`/reject` (`{"reason": "..."}`). Rejecting, or not answering by `respond_by`, releases the
+money; nothing is ever charged on silence.
+
+A buyer pays **once for a whole cart**, which can hold several shops' items. A card
+authorisation can be captured only once, so the money is taken when **every** shop in that
+payment has answered, and only for the orders that were accepted. The accept answer says which
+case applies:
+
+| `payment` in the accept answer | Meaning | What the plugin does |
+|---|---|---|
+| `"captured"` (or absent, from older servers) | The money is taken. | Fetch the address (`GET /orders/{id}/fulfilment`), mark the local order paid, and ship. |
+| `"waiting_for_other_shops"` | Accepted, but another shop in the same payment has not answered. The order is `ACCEPTED`, and the address is withheld (`/fulfilment` answers 409 `payment_pending`). | Keep the local order on hold and unpaid. **Do not ship.** |
+
+Both answers carry `"status": "ok"`. Later heartbeats carry `settled_orders` for orders this
+shop accepted that are no longer waiting. Each entry is repeated for 7 days, so apply them
+idempotently:
+
+```json
+"settled_orders": [
+  {"order_id": "…", "status": "PAID"},
+  {"order_id": "…", "status": "DECLINED", "declined_reason": "…"}
+]
+```
+
+- `PAID` (or `SHIPPED`/`DELIVERED`): the money is taken. Fetch the address, mark the local order paid, and ship.
+- `DECLINED`: released without charge (the capture failed or the authorisation lapsed). Cancel the local order and restore its stock.
+- Only a local order still on hold is touched; anything else was settled before.
+
 ## 5. What a plugin may **not** change
 
 These are returned by `GET /integration/v1/shop` in a `locked_fields` array, and every plugin
