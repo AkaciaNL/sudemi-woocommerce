@@ -564,6 +564,90 @@ class Sudemi_Orders {
 		// WooCommerce has no 'delivered' status of its own. Several shipping plugins add one, and
 		// this catches it when present without depending on any of them being installed.
 		add_action( 'woocommerce_order_status_delivered', array( __CLASS__, 'report_delivered' ), 10, 1 );
+		// sudemi holds the buyer's payment, so a refund or cancellation made here has to reach it:
+		// otherwise the shop records a refund and the buyer never gets the money back.
+		add_action( 'woocommerce_refund_created', array( __CLASS__, 'on_refund_created' ), 10, 2 );
+		add_action( 'woocommerce_order_status_changed', array( __CLASS__, 'on_status_changed' ), 10, 3 );
+	}
+
+	/**
+	 * A refund made in the WooCommerce admin (full or partial) is passed to sudemi, which pays it
+	 * back to the buyer from the payment it holds and takes it from this shop's payout.
+	 *
+	 * @param int   $refund_id The WooCommerce refund.
+	 * @param array $args      Its arguments (order_id, amount, reason...).
+	 */
+	public static function on_refund_created( $refund_id, $args ) {
+		$refund = wc_get_order( $refund_id );
+		if ( ! $refund ) {
+			return;
+		}
+		$order = wc_get_order( $refund->get_parent_id() );
+		if ( ! $order ) {
+			return;
+		}
+		$sudemi_id = $order->get_meta( self::META_ORDER_ID );
+		if ( empty( $sudemi_id ) ) {
+			return;
+		}
+		$amount   = (int) round( (float) $refund->get_amount() * 100 );
+		$reason   = (string) $refund->get_reason();
+		$response = Sudemi_Client::post_signed(
+			'/integration/v1/orders/' . rawurlencode( $sudemi_id ) . '/refund',
+			array(
+				'amountMinor' => $amount,
+				'reason'      => '' === $reason ? null : $reason,
+			)
+		);
+		self::note_money_result( $order, $response, wc_price( $amount / 100 ) );
+	}
+
+	/**
+	 * Cancelling an order the buyer has already paid for refunds it in full on sudemi. Orders
+	 * this plugin cancels itself (a released payment) never were paid, so they are left alone.
+	 */
+	public static function on_status_changed( $order_id, $from, $to ) {
+		if ( 'cancelled' !== $to || ! in_array( $from, array( 'processing', 'completed' ), true ) ) {
+			return;
+		}
+		$order = wc_get_order( $order_id );
+		if ( ! $order ) {
+			return;
+		}
+		$sudemi_id = $order->get_meta( self::META_ORDER_ID );
+		if ( empty( $sudemi_id ) ) {
+			return;
+		}
+		$response = Sudemi_Client::post_signed(
+			'/integration/v1/orders/' . rawurlencode( $sudemi_id ) . '/cancel',
+			array( 'reason' => 'Cancelled by the shop' )
+		);
+		self::note_money_result( $order, $response, __( 'the full amount', 'sudemi' ) );
+	}
+
+	/** Puts the outcome on the order, where the merchant looks, and in the sudemi log. */
+	private static function note_money_result( $order, $response, $what ) {
+		if ( ! is_wp_error( $response ) && 200 === (int) $response['status'] ) {
+			$order->add_order_note(
+				sprintf(
+					/* translators: %s: the amount refunded, e.g. "€12.00" or "the full amount". */
+					__( 'Refunded %s to the buyer through sudemi.', 'sudemi' ),
+					$what
+				)
+			);
+			return;
+		}
+		$message = is_wp_error( $response )
+			? $response->get_error_message()
+			: ( isset( $response['body']['message'] ) ? (string) $response['body']['message'] : (string) $response['status'] );
+		$order->add_order_note(
+			sprintf(
+				/* translators: %s: the reason sudemi gave. */
+				__( 'sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support.', 'sudemi' ),
+				$message
+			)
+		);
+		Sudemi_Logger::error( 'Refund for order ' . $order->get_id() . ' refused by sudemi: ' . $message );
 	}
 
 	public static function report_shipped( $order_id ) {

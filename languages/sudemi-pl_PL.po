@@ -528,3 +528,14 @@ msgstr "sudemi odmówiło rozpoczęcia połączenia."
 #, php-format
 msgid "Synced %d products."
 msgstr "Zsynchronizowane produkty: %d."
+
+msgid "the full amount"
+msgstr "pełną kwotę"
+
+#, php-format
+msgid "Refunded %s to the buyer through sudemi."
+msgstr "Zwrócono kupującemu %s przez sudemi."
+
+#, php-format
+msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support."
+msgstr "sudemi nie zwróciło tej kwoty: %s. Kupujący NIE otrzymał zwrotu; skontaktuj się z pomocą sudemi."

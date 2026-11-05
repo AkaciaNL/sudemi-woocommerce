@@ -527,3 +527,14 @@ msgstr "sudemi bağlantıyı başlatmayı reddetti."
 #, php-format
 msgid "Synced %d products."
 msgstr "%d ürün eşitlendi."
+
+msgid "the full amount"
+msgstr "tutarın tamamını"
+
+#, php-format
+msgid "Refunded %s to the buyer through sudemi."
+msgstr "%s sudemi üzerinden alıcıya iade edildi."
+
+#, php-format
+msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support."
+msgstr "sudemi bunu iade etmedi: %s. Alıcıya ödeme iade EDİLMEDİ; sudemi destek ile iletişime geçin."

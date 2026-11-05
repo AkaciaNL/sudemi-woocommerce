@@ -527,3 +527,14 @@ msgstr "sudemi weigerde de koppeling te starten."
 #, php-format
 msgid "Synced %d products."
 msgstr "%d producten gesynchroniseerd."
+
+msgid "the full amount"
+msgstr "het volledige bedrag"
+
+#, php-format
+msgid "Refunded %s to the buyer through sudemi."
+msgstr "%s via sudemi terugbetaald aan de koper."
+
+#, php-format
+msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support."
+msgstr "sudemi heeft dit niet terugbetaald: %s. De koper heeft het geld NIET terug; neem contact op met sudemi-support."
