@@ -141,7 +141,7 @@ final class Sudemi_Sync {
 	private static function push_delta( $product ) {
 		$update = array(
 			'externalId' => (string) $product->get_id(),
-			'priceMinor' => self::minor( $product->get_price() ),
+			'priceMinor' => self::minor( self::price_with_tax( $product ) ),
 			'currency'   => get_woocommerce_currency(),
 			'inStock'    => (bool) $product->is_in_stock(),
 			'quantity'   => $product->managing_stock() ? (int) $product->get_stock_quantity() : null,
@@ -304,7 +304,7 @@ final class Sudemi_Sync {
 			'title'       => self::title( $product, $parent ),
 			'description' => wp_strip_all_tags( $product->get_description() ? $product->get_description() : $base->get_description() ),
 			'url'         => $product->get_permalink(),
-			'priceMinor'  => self::minor( $product->get_price() ),
+			'priceMinor'  => self::minor( self::price_with_tax( $product ) ),
 			'currency'    => get_woocommerce_currency(),
 			'inStock'     => (bool) $product->is_in_stock(),
 			'quantity'    => $product->managing_stock() ? (int) $product->get_stock_quantity() : null,
@@ -355,6 +355,20 @@ final class Sudemi_Sync {
 		}
 		$names = wp_get_post_terms( $product_id, 'product_brand', array( 'fields' => 'names' ) );
 		return is_array( $names ) && ! empty( $names ) ? (string) $names[0] : null;
+	}
+
+	/**
+	 * The price a buyer pays, with VAT. Shops that enter prices without tax ("prices exclusive of
+	 * tax") let WooCommerce add it at checkout; sending get_price() as-is sold their products on
+	 * sudemi without the VAT. wc_get_price_including_tax() gives the price for the shop's own
+	 * country, as the storefront shows it; for shops that enter prices with tax it is unchanged.
+	 */
+	private static function price_with_tax( $product ) {
+		$price = $product->get_price();
+		if ( '' === $price || null === $price ) {
+			return $price;
+		}
+		return wc_get_price_including_tax( $product, array( 'qty' => 1, 'price' => $price ) );
 	}
 
 	/** Money in minor units, because a float price is a rounding error waiting for a checkout. */
