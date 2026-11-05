@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,13 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.2.0 =
+* Shipping prices are now sent to sudemi, read from your WooCommerce shipping zones (flat rate with a fixed cost, plus the product's shipping-class cost; unconditional free shipping). Without them sudemi buyers could not find or order your products. Countries without a fixed price are left out, not guessed.
+* Delivery times: two new settings on the sudemi screen (days until dispatch, days in transit), sent with every product.
+* The product barcode (WooCommerce's GTIN/EAN/UPC/ISBN field) and brand are sent, so your offer can appear next to other shops selling the same item.
+* Changing a shipping zone or method re-sends the catalogue.
+* Fixed: stock was reduced twice for an order received through sudemi.
 
 = 1.1.0 =
 * One payment per cart: when the buyer paid several shops at once, an accepted order stays On hold (not paid, no address) until every shop has answered. It then moves to Processing, or is cancelled with the stock restored if the payment was released.

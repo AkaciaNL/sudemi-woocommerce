@@ -186,7 +186,7 @@ class Sudemi_Orders {
 		// stock it reserved has to go back on the shelf or this shop slowly loses inventory to
 		// orders that never happened.
 		$reason = isset( $body['message'] ) ? (string) $body['message'] : sprintf( 'HTTP %d', $status );
-		wc_increase_stock_levels( $order );
+		wc_maybe_increase_stock_levels( $order->get_id() ); // guarded: once per order, whatever copy is in memory
 		$order->update_status(
 			'cancelled',
 			sprintf(
@@ -291,7 +291,7 @@ class Sudemi_Orders {
 			$reason = ! empty( $settled['declined_reason'] )
 				? (string) $settled['declined_reason']
 				: __( 'reason not given', 'sudemi' );
-			wc_increase_stock_levels( $order );
+			wc_maybe_increase_stock_levels( $order->get_id() ); // guarded: once per order, whatever copy is in memory
 			$order->update_status(
 				'cancelled',
 				sprintf(
@@ -480,7 +480,10 @@ class Sudemi_Orders {
 
 		// Taken now, with the order, so this shop's storefront cannot sell the same unit while
 		// the confirmation is in flight. Put back by accept() if sudemi refuses.
-		wc_reduce_stock_levels( $order );
+		// The guarded call: the on-hold status above already fired WooCommerce's own
+		// wc_maybe_reduce_stock_levels on a freshly loaded copy of this order, and an unguarded
+		// wc_reduce_stock_levels on this (stale) object took the stock a second time.
+		wc_maybe_reduce_stock_levels( $order->get_id() );
 
 		return $order;
 	}

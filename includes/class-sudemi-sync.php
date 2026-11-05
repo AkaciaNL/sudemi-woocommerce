@@ -23,7 +23,18 @@ final class Sudemi_Sync {
 		add_action( self::CRON_FULL, array( __CLASS__, 'run_full' ) );
 		// Price and stock, as they change. Guarded inside so an unconnected shop does nothing.
 		add_action( 'woocommerce_update_product', array( __CLASS__, 'on_product_changed' ), 10, 1 );
+		// Shipping prices come from the shipping zones: a change there re-sends the catalogue.
+		foreach ( array( 'woocommerce_after_shipping_zone_object_save', 'woocommerce_shipping_zone_method_added', 'woocommerce_shipping_zone_method_deleted', 'woocommerce_shipping_zone_method_status_toggled', 'woocommerce_update_options_shipping' ) as $hook ) {
+			add_action( $hook, array( __CLASS__, 'schedule_soon' ) );
+		}
 		add_action( 'woocommerce_product_set_stock', array( __CLASS__, 'on_product_object_changed' ), 10, 1 );
+	}
+
+	/** A full sync shortly, once, however many changes trigger it. */
+	public static function schedule_soon() {
+		if ( ! wp_next_scheduled( self::CRON_FULL ) || wp_next_scheduled( self::CRON_FULL ) > time() + 120 ) {
+			wp_schedule_single_event( time() + 60, self::CRON_FULL );
+		}
 	}
 
 	public static function schedule() {
@@ -265,7 +276,32 @@ final class Sudemi_Sync {
 			'categoryExternalIds' => array_map( 'strval', is_array( $categories ) ? $categories : array() ),
 			'images'      => $images,
 			'specs'       => $specs,
+			// Without a shipping price for the buyer's country sudemi cannot offer the product.
+			'shipping'    => Sudemi_Shipping::rates_for( $product ),
+			'maxHandlingTimeDays' => Sudemi_Shipping::handling_days(),
+			'maxTransitTimeDays'  => Sudemi_Shipping::transit_days(),
+			// WooCommerce's own barcode field (GTIN/EAN/UPC/ISBN, WooCommerce 9.2+): lets sudemi
+			// show this shop's offer next to other shops selling the same item.
+			'gtin'        => self::gtin( $product ),
+			'brand'       => self::brand( $product_id ),
 		);
+	}
+
+	private static function gtin( $product ) {
+		if ( ! is_callable( array( $product, 'get_global_unique_id' ) ) ) {
+			return null;
+		}
+		$value = preg_replace( '/[^0-9]/', '', (string) $product->get_global_unique_id() );
+		return '' === $value ? null : $value;
+	}
+
+	/** WooCommerce's brand taxonomy (9.6+), when the shop uses it. */
+	private static function brand( $product_id ) {
+		if ( ! taxonomy_exists( 'product_brand' ) ) {
+			return null;
+		}
+		$names = wp_get_post_terms( $product_id, 'product_brand', array( 'fields' => 'names' ) );
+		return is_array( $names ) && ! empty( $names ) ? (string) $names[0] : null;
 	}
 
 	/** Money in minor units, because a float price is a rounding error waiting for a checkout. */

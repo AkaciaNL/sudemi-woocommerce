@@ -22,6 +22,7 @@ final class Sudemi_Admin {
 		add_action( 'admin_post_sudemi_connect', array( __CLASS__, 'handle_connect' ) );
 		add_action( 'admin_post_sudemi_disconnect', array( __CLASS__, 'handle_disconnect' ) );
 		add_action( 'admin_post_sudemi_sync_now', array( __CLASS__, 'handle_sync_now' ) );
+		add_action( 'admin_post_sudemi_delivery', array( __CLASS__, 'handle_delivery' ) );
 	}
 
 	public static function add_page() {
@@ -100,6 +101,7 @@ final class Sudemi_Admin {
 		echo '</tbody></table>';
 
 		self::render_listing_status();
+		self::render_delivery();
 		self::render_order_history();
 
 		echo '<h2>' . esc_html__( 'Set on sudemi, not here', 'sudemi' ) . '</h2>';
@@ -346,6 +348,48 @@ final class Sudemi_Admin {
 		// shop that believes it has disconnected.
 		Sudemi_Keys::forget();
 		Sudemi_Logger::info( __( 'Disconnected from sudemi.', 'sudemi' ) );
+		self::back();
+	}
+
+	/**
+	 * Shipping prices and delivery times as sudemi buyers see them.
+	 *
+	 * Prices come from this shop's WooCommerce shipping zones (a country with no fixed price is
+	 * not offered to buyers there); the delivery times are this plugin's own two settings.
+	 */
+	private static function render_delivery() {
+		echo '<h2>' . esc_html__( 'Delivery to sudemi buyers', 'sudemi' ) . '</h2>';
+		$sample = wc_get_products( array( 'limit' => 1, 'status' => 'publish', 'virtual' => false ) );
+		$rates  = $sample ? Sudemi_Shipping::rates_for( $sample[0] ) : array();
+		if ( empty( $rates ) ) {
+			echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'No shipping price could be read from your WooCommerce shipping zones, so sudemi buyers cannot order. Add a zone with a flat rate (a fixed amount) or unconditional free shipping for the countries you ship to.', 'sudemi' ) . '</p></div>';
+		} else {
+			$list = array();
+			foreach ( $rates as $rate ) {
+				$list[] = $rate['country'] . ' ' . wc_price( $rate['costMinor'] / 100 );
+			}
+			echo '<p>' . esc_html__( 'Shipping prices sent to sudemi (from your shipping zones; one item, your first product):', 'sudemi' ) . ' ' . wp_kses_post( implode( ', ', $list ) ) . '</p>';
+			echo '<p class="description">' . esc_html__( 'Countries without a fixed price (cost formulas, free shipping with a minimum, postcode-only zones) are left out rather than guessed.', 'sudemi' ) . '</p>';
+		}
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
+		wp_nonce_field( 'sudemi_delivery' );
+		echo '<input type="hidden" name="action" value="sudemi_delivery" />';
+		echo '<p><label>' . esc_html__( 'Days until you dispatch an order (at most)', 'sudemi' ) . ' <input type="number" min="0" max="60" name="handling_days" value="' . esc_attr( Sudemi_Shipping::handling_days() ) . '" class="small-text" /></label></p>';
+		echo '<p><label>' . esc_html__( 'Days the carrier takes (at most)', 'sudemi' ) . ' <input type="number" min="0" max="60" name="transit_days" value="' . esc_attr( Sudemi_Shipping::transit_days() ) . '" class="small-text" /></label></p>';
+		echo '<p class="description">' . esc_html__( 'Buyers see the sum as the latest delivery estimate. Set your real times; the defaults are deliberately cautious.', 'sudemi' ) . '</p>';
+		submit_button( __( 'Save delivery times', 'sudemi' ), 'secondary', 'submit', false );
+		echo '</form>';
+	}
+
+	public static function handle_delivery() {
+		self::guard( 'sudemi_delivery' );
+		foreach ( array( 'handling_days' => Sudemi_Shipping::OPTION_HANDLING_DAYS, 'transit_days' => Sudemi_Shipping::OPTION_TRANSIT_DAYS ) as $field => $option ) {
+			if ( isset( $_POST[ $field ] ) && is_numeric( wp_unslash( $_POST[ $field ] ) ) ) {
+				update_option( $option, max( 0, min( 60, (int) wp_unslash( $_POST[ $field ] ) ) ), false );
+			}
+		}
+		// Every product carries the times, so the catalogue is sent again.
+		wp_schedule_single_event( time() + 5, Sudemi_Sync::CRON_FULL );
 		self::back();
 	}
 
