@@ -1,0 +1,528 @@
+# Copyright (C) 2026 Akacia
+# This file is distributed under the same license as the sudemi Connector plugin (GPL-2.0-or-later).
+msgid ""
+msgstr ""
+"Project-Id-Version: sudemi Connector 1.2.0\n"
+"Report-Msgid-Bugs-To: https://github.com/AkaciaNL/sudemi-woocommerce/issues\n"
+"POT-Creation-Date: 2026-11-05 00:00+0000\n"
+"PO-Revision-Date: 2026-11-05 00:00+0000\n"
+"Last-Translator: Akacia\n"
+"Language-Team: zh_CN\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Domain: sudemi\n"
+
+#. Plugin Name of the plugin
+#: sudemi-connector.php
+msgid "sudemi Connector"
+msgstr "sudemi 连接器"
+
+#. Description of the plugin
+#: sudemi-connector.php
+msgid "Lists this shop's products on sudemi, so an AI assistant can find them and send buyers to you. You stay the merchant of record."
+msgstr "将本店商品发布到 sudemi，让 AI 助手能找到它们并为您带来买家。您仍是交易的销售方。"
+
+#: sudemi-connector.php:49
+msgid "Every minute (sudemi pairing)"
+msgstr "每分钟（sudemi 配对）"
+
+#: sudemi-connector.php:56
+msgid "Every five minutes (sudemi heartbeat)"
+msgstr "每五分钟（sudemi 心跳）"
+
+#: sudemi-connector.php:71
+msgid "sudemi Connector needs WooCommerce to be active."
+msgstr "sudemi 连接器需要启用 WooCommerce。"
+
+#: admin/class-sudemi-admin.php:31 admin/class-sudemi-admin.php:32
+#: admin/class-sudemi-admin.php:50
+msgid "sudemi"
+msgstr "sudemi"
+
+#: admin/class-sudemi-admin.php:43
+msgid "You do not have permission to manage this shop."
+msgstr "您无权管理此店铺。"
+
+#: admin/class-sudemi-admin.php:54
+msgid "This server is missing the sodium extension. The connection needs it to sign requests, and will not work without it. Ask your host to enable it."
+msgstr "此服务器缺少 sodium 扩展。连接需要它来签名请求，没有它将无法工作。请联系您的主机服务商启用它。"
+
+#: admin/class-sudemi-admin.php:71
+msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account — this plugin never asks for your sudemi password."
+msgstr "连接此店铺后，AI 助手即可找到您的商品并为您带来买家。您需要登录自己的账户，在 sudemi 上确认连接——本插件绝不会索要您的 sudemi 密码。"
+
+#: admin/class-sudemi-admin.php:75
+msgid "Connect this shop"
+msgstr "连接此店铺"
+
+#: admin/class-sudemi-admin.php:81
+msgid "Almost there. Open the link below, sign in to sudemi and confirm that this shop is yours. This page will pick it up by itself."
+msgstr "快完成了。打开下方链接，登录 sudemi 并确认此店铺归您所有。本页面会自动检测到。"
+
+#: admin/class-sudemi-admin.php:84
+msgid "Confirm this shop on sudemi"
+msgstr "在 sudemi 上确认此店铺"
+
+#. translators: %s: the public path the token is served at.
+#: admin/class-sudemi-admin.php:88
+#, php-format
+msgid "While this is open, the shop answers at %s with a one-time token so sudemi can confirm the request came from here. It stops being served the moment the connection completes."
+msgstr "在此页面打开期间，店铺会在 %s 提供一个一次性令牌，以便 sudemi 确认请求来自这里。连接完成后将立即停止提供。"
+
+#: admin/class-sudemi-admin.php:95
+msgid "This shop is connected to sudemi."
+msgstr "此店铺已连接到 sudemi。"
+
+#: admin/class-sudemi-admin.php:98
+msgid "Shop address"
+msgstr "店铺地址"
+
+#: admin/class-sudemi-admin.php:98
+msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from — so changing it means connecting again from the new address."
+msgstr "已固定。sudemi 已核实此店铺从该地址作出响应，且商品信息会告诉买家其来源——因此更改地址意味着需要从新地址重新连接。"
+
+#: admin/class-sudemi-admin.php:99
+msgid "Install"
+msgstr "安装"
+
+#: admin/class-sudemi-admin.php:99
+msgid "Which installation this is. Revoke it on sudemi to cut this shop off immediately."
+msgstr "这是哪一个安装实例。在 sudemi 上将其撤销即可立即切断此店铺的连接。"
+
+#: admin/class-sudemi-admin.php:100
+msgid "Signing key"
+msgstr "签名密钥"
+
+#: admin/class-sudemi-admin.php:100
+msgid "held on this server"
+msgstr "保存在此服务器上"
+
+#: admin/class-sudemi-admin.php:100
+msgid "The private half never leaves this server and is never sent to sudemi. It cannot be shown here either."
+msgstr "私钥部分绝不会离开此服务器，也绝不会发送给 sudemi。它也无法在此显示。"
+
+#: admin/class-sudemi-admin.php:107
+msgid "Set on sudemi, not here"
+msgstr "在 sudemi 上设置，而非此处"
+
+#: admin/class-sudemi-admin.php:108
+msgid "Your legal name, country, trader status and VAT number decide what a buyer is owed, so they are confirmed once on sudemi and changed there. This plugin cannot edit them."
+msgstr "您的法定名称、国家/地区、经营者身份和增值税号决定了买家享有哪些权益，因此它们只在 sudemi 上确认一次，并在那里修改。本插件无法编辑这些信息。"
+
+#: admin/class-sudemi-admin.php:113
+msgid "Sync the catalogue now"
+msgstr "立即同步商品目录"
+
+#: admin/class-sudemi-admin.php:119
+msgid "Disconnect"
+msgstr "断开连接"
+
+#: admin/class-sudemi-admin.php:137
+msgid "Listing status"
+msgstr "上架状态"
+
+#: admin/class-sudemi-admin.php:141
+msgid "This shop has not reported in to sudemi yet. That happens within a few minutes of connecting, and needs WP-Cron to be running on this site."
+msgstr "此店铺尚未向 sudemi 报告。这通常在连接后几分钟内完成，并且需要本站点运行 WP-Cron。"
+
+#: admin/class-sudemi-admin.php:149
+#, php-format
+msgid "%s ago"
+msgstr "%s前"
+
+#: admin/class-sudemi-admin.php:150
+msgid "never"
+msgstr "从未"
+
+#: admin/class-sudemi-admin.php:154
+msgid "This shop could not reach sudemi. Its products stay listed for a short while and are then paused, because sudemi will not quote a price it cannot confirm."
+msgstr "此店铺无法连接到 sudemi。其商品会继续上架一小段时间，然后被暂停，因为 sudemi 不会报出无法确认的价格。"
+
+#: admin/class-sudemi-admin.php:158
+msgid "sudemi refused this shop."
+msgstr "sudemi 拒绝了此店铺。"
+
+#: admin/class-sudemi-admin.php:162
+msgid "This shop is connected but its products are not being shown."
+msgstr "此店铺已连接，但其商品目前未展示。"
+
+#: admin/class-sudemi-admin.php:166
+msgid "Products are being shown on sudemi."
+msgstr "商品正在 sudemi 上展示。"
+
+#: admin/class-sudemi-admin.php:171
+msgid "Last reported in"
+msgstr "最近一次报告"
+
+#: admin/class-sudemi-admin.php:171
+msgid "This shop tells sudemi every five minutes that it is still here and that its prices still stand. When that stops, the listings are paused rather than left at prices nobody is confirming."
+msgstr "此店铺每五分钟告知 sudemi 它仍在运行且价格依然有效。一旦停止报告，商品将被暂停，而不是继续以无人确认的价格展示。"
+
+#: admin/class-sudemi-admin.php:173
+msgid "Prices confirmed until"
+msgstr "价格确认有效至"
+
+#: admin/class-sudemi-admin.php:173
+msgid "After this, sudemi stops showing this shop until it reports in again. Nothing is deleted."
+msgstr "此时间之后，sudemi 将停止展示此店铺，直到它再次报告。不会删除任何内容。"
+
+#: admin/class-sudemi-admin.php:177
+msgid "Price changes waiting"
+msgstr "待发送的价格变更"
+
+#: admin/class-sudemi-admin.php:180
+msgid "Price or stock changes that could not be sent yet. They are retried on the next report and are not lost."
+msgstr "尚未能发送的价格或库存变更。它们会在下次报告时重试，不会丢失。"
+
+#: admin/class-sudemi-admin.php:181
+msgid "Every price change has reached sudemi."
+msgstr "所有价格变更均已送达 sudemi。"
+
+#: admin/class-sudemi-admin.php:184
+msgid "Confirming orders"
+msgstr "订单确认方式"
+
+#: admin/class-sudemi-admin.php:186
+msgid "automatically"
+msgstr "自动"
+
+#: admin/class-sudemi-admin.php:187
+msgid "by hand"
+msgstr "手动"
+
+#: admin/class-sudemi-admin.php:189
+msgid "A buyer on sudemi is authorised but not charged until this shop confirms it has the item. That check runs against this shop's live stock every five minutes: in stock means the order is accepted and the money taken, out of stock means it is declined and the buyer's money released. Nothing is ever charged without this shop agreeing to it."
+msgstr "sudemi 上的买家付款已获授权，但在此店铺确认有货之前不会扣款。系统每五分钟根据此店铺的实时库存进行检查：有货则接受订单并扣款，缺货则拒绝订单并释放买家的款项。未经此店铺同意，绝不会扣款。"
+
+#: admin/class-sudemi-admin.php:190
+msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing — an unanswered order is never treated as accepted."
+msgstr "订单需要等待这里有人处理。如果在 sudemi 显示的截止时间前无人处理，买家将被释放且不会被扣款——未答复的订单绝不会被视为已接受。"
+
+#: admin/class-sudemi-admin.php:213
+msgid "Orders through sudemi"
+msgstr "通过 sudemi 的订单"
+
+#: admin/class-sudemi-admin.php:218
+msgid "Could not reach sudemi to load the order history just now. Nothing is wrong with the orders themselves; try again shortly."
+msgstr "目前无法连接 sudemi 加载订单历史。订单本身没有问题，请稍后重试。"
+
+#: admin/class-sudemi-admin.php:231
+#, php-format
+msgid "%d order is waiting to be confirmed. The buyer has not been charged for it yet."
+msgid_plural "%d orders are waiting to be confirmed. Those buyers have not been charged yet."
+msgstr[0] "%d 个订单正在等待确认。这些买家尚未被扣款。"
+
+#: admin/class-sudemi-admin.php:245
+msgid "No orders through sudemi yet."
+msgstr "尚无通过 sudemi 的订单。"
+
+#: admin/class-sudemi-admin.php:251
+msgid "Order"
+msgstr "订单"
+
+#: admin/class-sudemi-admin.php:252
+msgid "What sold"
+msgstr "售出商品"
+
+#: admin/class-sudemi-admin.php:253
+msgid "Status"
+msgstr "状态"
+
+#: admin/class-sudemi-admin.php:254
+msgid "You receive"
+msgstr "您的收入"
+
+#: admin/class-sudemi-admin.php:255
+msgid "Customer"
+msgstr "客户"
+
+#: admin/class-sudemi-admin.php:289
+msgid "Waiting for you — buyer not charged"
+msgstr "等待您处理——买家未扣款"
+
+#: admin/class-sudemi-admin.php:291
+msgid "Accepted — waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
+msgstr "已接受——正在等待买家本次付款中的其他店铺；买家尚未扣款，请勿发货"
+
+#: admin/class-sudemi-admin.php:293
+msgid "Confirmed and charged"
+msgstr "已确认并扣款"
+
+#. translators: %s: the reason the order was declined.
+#: admin/class-sudemi-admin.php:298
+#, php-format
+msgid "Declined (%s) — nothing charged"
+msgstr "已拒绝（%s）——未扣款"
+
+#: admin/class-sudemi-admin.php:301
+msgid "Declined — nothing charged"
+msgstr "已拒绝——未扣款"
+
+#: admin/class-sudemi-admin.php:303
+msgid "Shipped"
+msgstr "已发货"
+
+#: admin/class-sudemi-admin.php:305
+msgid "Delivered"
+msgstr "已送达"
+
+#: admin/class-sudemi-admin.php:316
+msgid "Recent activity"
+msgstr "最近活动"
+
+#: admin/class-sudemi-admin.php:350
+msgid "Disconnected from sudemi."
+msgstr "已与 sudemi 断开连接。"
+
+#: admin/class-sudemi-admin.php:361
+msgid "Delivery to sudemi buyers"
+msgstr "向 sudemi 买家配送"
+
+#: admin/class-sudemi-admin.php:365
+msgid "No shipping price could be read from your WooCommerce shipping zones, so sudemi buyers cannot order. Add a zone with a flat rate (a fixed amount) or unconditional free shipping for the countries you ship to."
+msgstr "无法从您的 WooCommerce 配送区域读取运费，因此 sudemi 买家无法下单。请为您配送的国家/地区添加一个使用统一费率（固定金额）或无条件免运费的区域。"
+
+#: admin/class-sudemi-admin.php:371
+msgid "Shipping prices sent to sudemi (from your shipping zones; one item, your first product):"
+msgstr "发送给 sudemi 的运费（来自您的配送区域；按一件商品、以您的第一个商品计算）："
+
+#: admin/class-sudemi-admin.php:372
+msgid "Countries without a fixed price (cost formulas, free shipping with a minimum, postcode-only zones) are left out rather than guessed."
+msgstr "没有固定价格的国家/地区（费用公式、有最低消费的免运费、仅限邮编的区域）将被略去，而不是估算。"
+
+#: admin/class-sudemi-admin.php:377
+msgid "Days until you dispatch an order (at most)"
+msgstr "您发出订单所需天数（最多）"
+
+#: admin/class-sudemi-admin.php:378
+msgid "Days the carrier takes (at most)"
+msgstr "承运商运送所需天数（最多）"
+
+#: admin/class-sudemi-admin.php:379
+msgid "Buyers see the sum as the latest delivery estimate. Set your real times; the defaults are deliberately cautious."
+msgstr "买家看到的两者之和即为最晚预计送达时间。请设置您的真实时间；默认值特意设得较为保守。"
+
+#: admin/class-sudemi-admin.php:380
+msgid "Save delivery times"
+msgstr "保存配送时间"
+
+#: admin/class-sudemi-admin.php:401
+msgid "A catalogue sync was queued."
+msgstr "商品目录同步已加入队列。"
+
+#: admin/class-sudemi-admin.php:408
+msgid "You do not have permission to do that."
+msgstr "您无权执行此操作。"
+
+#: includes/class-sudemi-client.php:99
+msgid "sudemi is still asking this shop to slow down. Stopping for now; this will continue on the next scheduled run and nothing has been lost."
+msgstr "sudemi 仍在要求此店铺放慢速度。暂时停止；将在下一次计划运行时继续，没有丢失任何数据。"
+
+#. translators: %d: seconds to wait.
+#: includes/class-sudemi-client.php:110
+#, php-format
+msgid "sudemi asked this shop to slow down; waiting %d seconds before continuing."
+msgstr "sudemi 要求此店铺放慢速度；将等待 %d 秒后继续。"
+
+#: includes/class-sudemi-client.php:126
+msgid "The payload could not be encoded."
+msgstr "无法对请求数据进行编码。"
+
+#: includes/class-sudemi-client.php:135
+msgid "This shop is not connected to sudemi."
+msgstr "此店铺未连接到 sudemi。"
+
+#: includes/class-sudemi-client.php:145
+msgid "This site has no signing key."
+msgstr "此站点没有签名密钥。"
+
+#. translators: %d: HTTP status code.
+#: includes/class-sudemi-client.php:181
+#, php-format
+msgid "sudemi answered %d with something that was not JSON."
+msgstr "sudemi 返回了 %d，但内容不是 JSON。"
+
+#: includes/class-sudemi-heartbeat.php:105
+msgid "sudemi no longer recognises this shop. Connect it again."
+msgstr "sudemi 已不再识别此店铺。请重新连接。"
+
+#. translators: %d: HTTP status code.
+#: includes/class-sudemi-heartbeat.php:117
+#, php-format
+msgid "sudemi answered %d."
+msgstr "sudemi 返回了 %d。"
+
+#: includes/class-sudemi-heartbeat.php:166
+msgid "sudemi asked for a full sync; scheduling one."
+msgstr "sudemi 请求完整同步；正在安排。"
+
+#. translators: %d: number of orders waiting.
+#: includes/class-sudemi-orders.php:46
+#, php-format
+msgid "%d order(s) are waiting for confirmation. Automatic confirmation is off, so they must be answered by hand before their window closes."
+msgstr "%d 个订单正在等待确认。自动确认已关闭，因此必须在其期限结束前手动处理。"
+
+#. translators: 1: sudemi order id, 2: error message.
+#: includes/class-sudemi-orders.php:63
+#, php-format
+msgid "Could not answer sudemi order %1$s: %2$s"
+msgstr "无法答复 sudemi 订单 %1$s：%2$s"
+
+#. translators: 1: sudemi order id, 2: reason.
+#: includes/class-sudemi-orders.php:104
+#, php-format
+msgid "Declined sudemi order %1$s: %2$s. Nothing was charged."
+msgstr "已拒绝 sudemi 订单 %1$s：%2$s。未扣款。"
+
+#: includes/class-sudemi-orders.php:116
+msgid "this shop could not record the order"
+msgstr "此店铺无法记录该订单"
+
+#. translators: 1: sudemi order id, 2: error message.
+#: includes/class-sudemi-orders.php:142
+#, php-format
+msgid "Could not reach sudemi to confirm order %1$s (%2$s). Will try again on the next heartbeat."
+msgstr "无法连接 sudemi 以确认订单 %1$s（%2$s）。将在下一次心跳时重试。"
+
+#: includes/class-sudemi-orders.php:171
+msgid "Confirmed with sudemi; the buyer has been charged."
+msgstr "已与 sudemi 确认；买家已被扣款。"
+
+#. translators: 1: sudemi order id, 2: local order number.
+#: includes/class-sudemi-orders.php:176
+#, php-format
+msgid "Confirmed sudemi order %1$s as order #%2$s."
+msgstr "已确认 sudemi 订单 %1$s，对应订单 #%2$s。"
+
+#. translators: %s: the reason sudemi gave.
+#: includes/class-sudemi-orders.php:194
+#, php-format
+msgid "sudemi did not accept the confirmation: %s. Nothing was charged and the stock has been restored."
+msgstr "sudemi 未接受此确认：%s。未扣款，库存已恢复。"
+
+#. translators: 1: sudemi order id, 2: reason.
+#: includes/class-sudemi-orders.php:201
+#, php-format
+msgid "sudemi refused the confirmation of order %1$s: %2$s. The local order was cancelled and stock restored."
+msgstr "sudemi 拒绝了订单 %1$s 的确认：%2$s。本地订单已取消，库存已恢复。"
+
+#: includes/class-sudemi-orders.php:221
+msgid "Accepted on sudemi. The buyer paid several shops in one payment; sudemi takes the money once every shop has answered. Do NOT ship until this order moves to Processing."
+msgstr "已在 sudemi 上接受。买家在一次付款中向多家店铺付款；所有店铺答复后，sudemi 才会扣款。在此订单变为“处理中”之前，请勿发货。"
+
+#. translators: 1: sudemi order id, 2: local order number.
+#: includes/class-sudemi-orders.php:226
+#, php-format
+msgid "Accepted sudemi order %1$s (order #%2$s). Not paid yet: waiting for the other shops in the same payment."
+msgstr "已接受 sudemi 订单 %1$s（订单 #%2$s）。尚未付款：正在等待同一笔付款中的其他店铺。"
+
+#. translators: 1: sudemi order id, 2: error message.
+#: includes/class-sudemi-orders.php:256
+#, php-format
+msgid "Could not apply the outcome of sudemi order %1$s: %2$s"
+msgstr "无法应用 sudemi 订单 %1$s 的结果：%2$s"
+
+#: includes/class-sudemi-orders.php:293 includes/class-sudemi-orders.php:365
+msgid "reason not given"
+msgstr "未提供原因"
+
+#. translators: %s: the reason sudemi gave.
+#: includes/class-sudemi-orders.php:299
+#, php-format
+msgid "sudemi released the buyer's payment: %s. Nothing was charged and the stock has been restored."
+msgstr "sudemi 已释放买家的款项：%s。未扣款，库存已恢复。"
+
+#. translators: 1: sudemi order id, 2: reason.
+#: includes/class-sudemi-orders.php:306
+#, php-format
+msgid "sudemi order %1$s was released after all: %2$s. The local order was cancelled and stock restored."
+msgstr "sudemi 订单 %1$s 最终被释放：%2$s。本地订单已取消，库存已恢复。"
+
+#: includes/class-sudemi-orders.php:319
+msgid "Paid on sudemi: every shop in the buyer's payment has answered and the buyer has been charged. This order can be shipped."
+msgstr "已在 sudemi 上付款：买家付款中的所有店铺均已答复，买家已被扣款。此订单可以发货。"
+
+#. translators: 1: sudemi order id, 2: local order number.
+#: includes/class-sudemi-orders.php:324
+#, php-format
+msgid "sudemi order %1$s is paid; order #%2$s moved to Processing."
+msgstr "sudemi 订单 %1$s 已付款；订单 #%2$s 已转为“处理中”。"
+
+#: includes/class-sudemi-orders.php:354
+msgid "Could not fetch the delivery address from sudemi yet. The order is paid; open it again shortly or contact support before shipping."
+msgstr "暂时无法从 sudemi 获取收货地址。订单已付款；请稍后重新打开，或在发货前联系支持团队。"
+
+#. translators: %s: the explanation sudemi gave.
+#: includes/class-sudemi-orders.php:364
+#, php-format
+msgid "sudemi has no delivery address for this order: %s"
+msgstr "sudemi 没有此订单的收货地址：%s"
+
+#: includes/class-sudemi-orders.php:403
+msgid "the order had no recognisable items"
+msgstr "订单中没有可识别的商品"
+
+#. translators: %s: the product title as sudemi knows it.
+#: includes/class-sudemi-orders.php:411
+#, php-format
+msgid "\"%s\" is no longer sold here"
+msgstr "\"%s\" 已不在本店销售"
+
+#: includes/class-sudemi-orders.php:412
+msgid "an item"
+msgstr "某件商品"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php:419
+#, php-format
+msgid "\"%s\" is out of stock"
+msgstr "\"%s\" 缺货"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php:426
+#, php-format
+msgid "\"%s\" cannot currently be bought"
+msgstr "\"%s\" 目前无法购买"
+
+#. translators: %s: the sudemi order id.
+#: includes/class-sudemi-orders.php:471
+#, php-format
+msgid "Placed through sudemi (order %s). The buyer has been authorised but not yet charged."
+msgstr "通过 sudemi 下单（订单 %s）。买家付款已获授权，但尚未扣款。"
+
+#: includes/class-sudemi-orders.php:478
+msgid "Awaiting confirmation with sudemi."
+msgstr "等待 sudemi 确认。"
+
+#. translators: 1: event name, 2: sudemi order id, 3: error message.
+#: includes/class-sudemi-orders.php:610
+#, php-format
+msgid "Could not report %1$s for sudemi order %2$s: %3$s"
+msgstr "无法为 sudemi 订单 %2$s 报告 %1$s：%3$s"
+
+#. translators: 1: event name, 2: sudemi order id.
+#: includes/class-sudemi-orders.php:621
+#, php-format
+msgid "Reported %1$s for sudemi order %2$s."
+msgstr "已为 sudemi 订单 %2$s 报告 %1$s。"
+
+#: includes/class-sudemi-pairing.php:36
+msgid "This server is missing the sodium extension, which the connection needs in order to sign requests. Ask your host to enable it."
+msgstr "此服务器缺少 sodium 扩展，连接需要它来签名请求。请联系您的主机服务商启用它。"
+
+#: includes/class-sudemi-pairing.php:40
+msgid "A signing key could not be created on this server."
+msgstr "无法在此服务器上创建签名密钥。"
+
+#: includes/class-sudemi-pairing.php:60
+msgid "sudemi refused to start the connection."
+msgstr "sudemi 拒绝建立连接。"
+
+#. translators: %d: number of products.
+#: includes/class-sudemi-sync.php:108
+#, php-format
+msgid "Synced %d products."
+msgstr "已同步 %d 个商品。"

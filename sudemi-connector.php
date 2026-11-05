@@ -11,6 +11,7 @@
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       sudemi
+ * Domain Path:       /languages
  * WC requires at least: 8.0
  *
  * @package Sudemi
@@ -36,6 +37,14 @@ require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-heartbeat.php';
 if ( is_admin() ) {
 	require_once SUDEMI_PLUGIN_DIR . 'admin/class-sudemi-admin.php';
 }
+
+// The admin screens ship in twelve languages; the files live in languages/.
+add_action(
+	'init',
+	function () {
+		load_plugin_textdomain( 'sudemi', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+	}
+);
 
 /**
  * A one-minute schedule, for the short window while a shop owner is claiming the shop in

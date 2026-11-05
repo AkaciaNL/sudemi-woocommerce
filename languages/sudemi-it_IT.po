@@ -1,0 +1,529 @@
+# Copyright (C) 2026 Akacia
+# This file is distributed under the same license as the sudemi Connector plugin (GPL-2.0-or-later).
+msgid ""
+msgstr ""
+"Project-Id-Version: sudemi Connector 1.2.0\n"
+"Report-Msgid-Bugs-To: https://github.com/AkaciaNL/sudemi-woocommerce/issues\n"
+"POT-Creation-Date: 2026-11-05 00:00+0000\n"
+"PO-Revision-Date: 2026-11-05 00:00+0000\n"
+"Last-Translator: Akacia\n"
+"Language-Team: it_IT\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: sudemi\n"
+
+#. Plugin Name of the plugin
+#: sudemi-connector.php
+msgid "sudemi Connector"
+msgstr "sudemi Connector"
+
+#. Description of the plugin
+#: sudemi-connector.php
+msgid "Lists this shop's products on sudemi, so an AI assistant can find them and send buyers to you. You stay the merchant of record."
+msgstr "Pubblica i prodotti di questo negozio su sudemi, così un assistente IA può trovarli e inviarti acquirenti. Il venditore ufficiale resti sempre tu."
+
+#: sudemi-connector.php:49
+msgid "Every minute (sudemi pairing)"
+msgstr "Ogni minuto (abbinamento sudemi)"
+
+#: sudemi-connector.php:56
+msgid "Every five minutes (sudemi heartbeat)"
+msgstr "Ogni cinque minuti (heartbeat sudemi)"
+
+#: sudemi-connector.php:71
+msgid "sudemi Connector needs WooCommerce to be active."
+msgstr "sudemi Connector richiede che WooCommerce sia attivo."
+
+#: admin/class-sudemi-admin.php:31 admin/class-sudemi-admin.php:32
+#: admin/class-sudemi-admin.php:50
+msgid "sudemi"
+msgstr "sudemi"
+
+#: admin/class-sudemi-admin.php:43
+msgid "You do not have permission to manage this shop."
+msgstr "Non hai i permessi per gestire questo negozio."
+
+#: admin/class-sudemi-admin.php:54
+msgid "This server is missing the sodium extension. The connection needs it to sign requests, and will not work without it. Ask your host to enable it."
+msgstr "Su questo server manca l'estensione sodium. La connessione ne ha bisogno per firmare le richieste e senza di essa non funziona. Chiedi al tuo provider di hosting di attivarla."
+
+#: admin/class-sudemi-admin.php:71
+msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account — this plugin never asks for your sudemi password."
+msgstr "Collegando questo negozio, un assistente IA può trovare i tuoi prodotti e inviarti acquirenti. Confermi il collegamento su sudemi, dopo aver effettuato l'accesso al tuo account — questo plugin non ti chiede mai la password di sudemi."
+
+#: admin/class-sudemi-admin.php:75
+msgid "Connect this shop"
+msgstr "Collega questo negozio"
+
+#: admin/class-sudemi-admin.php:81
+msgid "Almost there. Open the link below, sign in to sudemi and confirm that this shop is yours. This page will pick it up by itself."
+msgstr "Ci siamo quasi. Apri il link qui sotto, accedi a sudemi e conferma che questo negozio è tuo. Questa pagina lo rileverà da sola."
+
+#: admin/class-sudemi-admin.php:84
+msgid "Confirm this shop on sudemi"
+msgstr "Conferma questo negozio su sudemi"
+
+#. translators: %s: the public path the token is served at.
+#: admin/class-sudemi-admin.php:88
+#, php-format
+msgid "While this is open, the shop answers at %s with a one-time token so sudemi can confirm the request came from here. It stops being served the moment the connection completes."
+msgstr "Finché questa pagina è aperta, il negozio risponde su %s con un token monouso, così sudemi può verificare che la richiesta provenga da qui. Il token non viene più fornito non appena il collegamento è completato."
+
+#: admin/class-sudemi-admin.php:95
+msgid "This shop is connected to sudemi."
+msgstr "Questo negozio è collegato a sudemi."
+
+#: admin/class-sudemi-admin.php:98
+msgid "Shop address"
+msgstr "Indirizzo del negozio"
+
+#: admin/class-sudemi-admin.php:98
+msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from — so changing it means connecting again from the new address."
+msgstr "Fisso. sudemi ha verificato che questo negozio rispondesse da questo indirizzo e ogni inserzione indica all'acquirente da dove proviene — per cambiarlo, quindi, devi ricollegare il negozio dal nuovo indirizzo."
+
+#: admin/class-sudemi-admin.php:99
+msgid "Install"
+msgstr "Installazione"
+
+#: admin/class-sudemi-admin.php:99
+msgid "Which installation this is. Revoke it on sudemi to cut this shop off immediately."
+msgstr "Indica di quale installazione si tratta. Revocala su sudemi per scollegare subito questo negozio."
+
+#: admin/class-sudemi-admin.php:100
+msgid "Signing key"
+msgstr "Chiave di firma"
+
+#: admin/class-sudemi-admin.php:100
+msgid "held on this server"
+msgstr "conservata su questo server"
+
+#: admin/class-sudemi-admin.php:100
+msgid "The private half never leaves this server and is never sent to sudemi. It cannot be shown here either."
+msgstr "La parte privata non lascia mai questo server e non viene mai inviata a sudemi. Non può nemmeno essere mostrata qui."
+
+#: admin/class-sudemi-admin.php:107
+msgid "Set on sudemi, not here"
+msgstr "Si imposta su sudemi, non qui"
+
+#: admin/class-sudemi-admin.php:108
+msgid "Your legal name, country, trader status and VAT number decide what a buyer is owed, so they are confirmed once on sudemi and changed there. This plugin cannot edit them."
+msgstr "Ragione sociale, paese, qualifica di professionista e partita IVA determinano i diritti dell'acquirente, per questo vengono confermati una sola volta su sudemi e si modificano lì. Questo plugin non può modificarli."
+
+#: admin/class-sudemi-admin.php:113
+msgid "Sync the catalogue now"
+msgstr "Sincronizza ora il catalogo"
+
+#: admin/class-sudemi-admin.php:119
+msgid "Disconnect"
+msgstr "Scollega"
+
+#: admin/class-sudemi-admin.php:137
+msgid "Listing status"
+msgstr "Stato delle inserzioni"
+
+#: admin/class-sudemi-admin.php:141
+msgid "This shop has not reported in to sudemi yet. That happens within a few minutes of connecting, and needs WP-Cron to be running on this site."
+msgstr "Questo negozio non ha ancora inviato segnalazioni a sudemi. Succede entro pochi minuti dal collegamento e richiede che WP-Cron sia attivo su questo sito."
+
+#: admin/class-sudemi-admin.php:149
+#, php-format
+msgid "%s ago"
+msgstr "%s fa"
+
+#: admin/class-sudemi-admin.php:150
+msgid "never"
+msgstr "mai"
+
+#: admin/class-sudemi-admin.php:154
+msgid "This shop could not reach sudemi. Its products stay listed for a short while and are then paused, because sudemi will not quote a price it cannot confirm."
+msgstr "Questo negozio non è riuscito a raggiungere sudemi. I suoi prodotti restano pubblicati per un breve periodo e poi vengono sospesi, perché sudemi non propone un prezzo che non può confermare."
+
+#: admin/class-sudemi-admin.php:158
+msgid "sudemi refused this shop."
+msgstr "sudemi ha rifiutato questo negozio."
+
+#: admin/class-sudemi-admin.php:162
+msgid "This shop is connected but its products are not being shown."
+msgstr "Questo negozio è collegato, ma i suoi prodotti non vengono mostrati."
+
+#: admin/class-sudemi-admin.php:166
+msgid "Products are being shown on sudemi."
+msgstr "I prodotti vengono mostrati su sudemi."
+
+#: admin/class-sudemi-admin.php:171
+msgid "Last reported in"
+msgstr "Ultima segnalazione"
+
+#: admin/class-sudemi-admin.php:171
+msgid "This shop tells sudemi every five minutes that it is still here and that its prices still stand. When that stops, the listings are paused rather than left at prices nobody is confirming."
+msgstr "Ogni cinque minuti questo negozio comunica a sudemi di essere ancora attivo e che i suoi prezzi sono ancora validi. Se le segnalazioni si interrompono, le inserzioni vengono sospese anziché restare online con prezzi che nessuno conferma."
+
+#: admin/class-sudemi-admin.php:173
+msgid "Prices confirmed until"
+msgstr "Prezzi confermati fino al"
+
+#: admin/class-sudemi-admin.php:173
+msgid "After this, sudemi stops showing this shop until it reports in again. Nothing is deleted."
+msgstr "Dopo questo momento, sudemi smette di mostrare questo negozio finché non invia una nuova segnalazione. Non viene eliminato nulla."
+
+#: admin/class-sudemi-admin.php:177
+msgid "Price changes waiting"
+msgstr "Variazioni di prezzo in attesa"
+
+#: admin/class-sudemi-admin.php:180
+msgid "Price or stock changes that could not be sent yet. They are retried on the next report and are not lost."
+msgstr "Variazioni di prezzo o di disponibilità che non è stato ancora possibile inviare. Verranno ritentate alla prossima segnalazione e non vanno perse."
+
+#: admin/class-sudemi-admin.php:181
+msgid "Every price change has reached sudemi."
+msgstr "Tutte le variazioni di prezzo sono arrivate a sudemi."
+
+#: admin/class-sudemi-admin.php:184
+msgid "Confirming orders"
+msgstr "Conferma degli ordini"
+
+#: admin/class-sudemi-admin.php:186
+msgid "automatically"
+msgstr "automatica"
+
+#: admin/class-sudemi-admin.php:187
+msgid "by hand"
+msgstr "manuale"
+
+#: admin/class-sudemi-admin.php:189
+msgid "A buyer on sudemi is authorised but not charged until this shop confirms it has the item. That check runs against this shop's live stock every five minutes: in stock means the order is accepted and the money taken, out of stock means it is declined and the buyer's money released. Nothing is ever charged without this shop agreeing to it."
+msgstr "Su sudemi il pagamento dell'acquirente viene autorizzato ma non addebitato finché questo negozio non conferma di avere l'articolo. Il controllo viene eseguito ogni cinque minuti sulle giacenze effettive del negozio: se l'articolo è disponibile l'ordine viene accettato e l'importo incassato, se non è disponibile l'ordine viene rifiutato e il denaro dell'acquirente sbloccato. Non viene mai addebitato nulla senza il consenso di questo negozio."
+
+#: admin/class-sudemi-admin.php:190
+msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing — an unanswered order is never treated as accepted."
+msgstr "Gli ordini attendono che qualcuno qui risponda. Se nessuno risponde entro la scadenza indicata da sudemi, l'acquirente viene svincolato e non gli viene addebitato nulla — un ordine senza risposta non viene mai considerato accettato."
+
+#: admin/class-sudemi-admin.php:213
+msgid "Orders through sudemi"
+msgstr "Ordini tramite sudemi"
+
+#: admin/class-sudemi-admin.php:218
+msgid "Could not reach sudemi to load the order history just now. Nothing is wrong with the orders themselves; try again shortly."
+msgstr "Al momento non è possibile raggiungere sudemi per caricare lo storico degli ordini. Gli ordini in sé non hanno alcun problema; riprova tra poco."
+
+#: admin/class-sudemi-admin.php:231
+#, php-format
+msgid "%d order is waiting to be confirmed. The buyer has not been charged for it yet."
+msgid_plural "%d orders are waiting to be confirmed. Those buyers have not been charged yet."
+msgstr[0] "%d ordine è in attesa di conferma. All'acquirente non è stato ancora addebitato nulla."
+msgstr[1] "%d ordini sono in attesa di conferma. A questi acquirenti non è stato ancora addebitato nulla."
+
+#: admin/class-sudemi-admin.php:245
+msgid "No orders through sudemi yet."
+msgstr "Ancora nessun ordine tramite sudemi."
+
+#: admin/class-sudemi-admin.php:251
+msgid "Order"
+msgstr "Ordine"
+
+#: admin/class-sudemi-admin.php:252
+msgid "What sold"
+msgstr "Articoli venduti"
+
+#: admin/class-sudemi-admin.php:253
+msgid "Status"
+msgstr "Stato"
+
+#: admin/class-sudemi-admin.php:254
+msgid "You receive"
+msgstr "Ricevi"
+
+#: admin/class-sudemi-admin.php:255
+msgid "Customer"
+msgstr "Cliente"
+
+#: admin/class-sudemi-admin.php:289
+msgid "Waiting for you — buyer not charged"
+msgstr "In attesa di tua risposta — nessun addebito all'acquirente"
+
+#: admin/class-sudemi-admin.php:291
+msgid "Accepted — waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
+msgstr "Accettato — in attesa degli altri negozi compresi nel pagamento dell'acquirente; nessun addebito ancora, non spedire"
+
+#: admin/class-sudemi-admin.php:293
+msgid "Confirmed and charged"
+msgstr "Confermato e addebitato"
+
+#. translators: %s: the reason the order was declined.
+#: admin/class-sudemi-admin.php:298
+#, php-format
+msgid "Declined (%s) — nothing charged"
+msgstr "Rifiutato (%s) — nessun addebito"
+
+#: admin/class-sudemi-admin.php:301
+msgid "Declined — nothing charged"
+msgstr "Rifiutato — nessun addebito"
+
+#: admin/class-sudemi-admin.php:303
+msgid "Shipped"
+msgstr "Spedito"
+
+#: admin/class-sudemi-admin.php:305
+msgid "Delivered"
+msgstr "Consegnato"
+
+#: admin/class-sudemi-admin.php:316
+msgid "Recent activity"
+msgstr "Attività recenti"
+
+#: admin/class-sudemi-admin.php:350
+msgid "Disconnected from sudemi."
+msgstr "Scollegato da sudemi."
+
+#: admin/class-sudemi-admin.php:361
+msgid "Delivery to sudemi buyers"
+msgstr "Consegna agli acquirenti sudemi"
+
+#: admin/class-sudemi-admin.php:365
+msgid "No shipping price could be read from your WooCommerce shipping zones, so sudemi buyers cannot order. Add a zone with a flat rate (a fixed amount) or unconditional free shipping for the countries you ship to."
+msgstr "Non è stato possibile leggere alcun costo di spedizione dalle tue zone di spedizione WooCommerce, quindi gli acquirenti sudemi non possono ordinare. Aggiungi una zona con una tariffa fissa (un importo fisso) o con la spedizione gratuita senza condizioni per i paesi in cui spedisci."
+
+#: admin/class-sudemi-admin.php:371
+msgid "Shipping prices sent to sudemi (from your shipping zones; one item, your first product):"
+msgstr "Costi di spedizione inviati a sudemi (dalle tue zone di spedizione; un articolo, il tuo primo prodotto):"
+
+#: admin/class-sudemi-admin.php:372
+msgid "Countries without a fixed price (cost formulas, free shipping with a minimum, postcode-only zones) are left out rather than guessed."
+msgstr "I paesi senza un prezzo fisso (formule di calcolo dei costi, spedizione gratuita con importo minimo, zone basate solo sul CAP) vengono esclusi anziché stimati."
+
+#: admin/class-sudemi-admin.php:377
+msgid "Days until you dispatch an order (at most)"
+msgstr "Giorni prima della spedizione di un ordine (al massimo)"
+
+#: admin/class-sudemi-admin.php:378
+msgid "Days the carrier takes (at most)"
+msgstr "Giorni di trasporto del corriere (al massimo)"
+
+#: admin/class-sudemi-admin.php:379
+msgid "Buyers see the sum as the latest delivery estimate. Set your real times; the defaults are deliberately cautious."
+msgstr "Gli acquirenti vedono la somma come data di consegna più tardiva prevista. Inserisci i tuoi tempi reali; i valori predefiniti sono volutamente prudenti."
+
+#: admin/class-sudemi-admin.php:380
+msgid "Save delivery times"
+msgstr "Salva i tempi di consegna"
+
+#: admin/class-sudemi-admin.php:401
+msgid "A catalogue sync was queued."
+msgstr "Una sincronizzazione del catalogo è stata messa in coda."
+
+#: admin/class-sudemi-admin.php:408
+msgid "You do not have permission to do that."
+msgstr "Non hai i permessi per eseguire questa operazione."
+
+#: includes/class-sudemi-client.php:99
+msgid "sudemi is still asking this shop to slow down. Stopping for now; this will continue on the next scheduled run and nothing has been lost."
+msgstr "sudemi chiede ancora a questo negozio di rallentare. Per ora l'operazione si ferma; riprenderà alla prossima esecuzione programmata e non è andato perso nulla."
+
+#. translators: %d: seconds to wait.
+#: includes/class-sudemi-client.php:110
+#, php-format
+msgid "sudemi asked this shop to slow down; waiting %d seconds before continuing."
+msgstr "sudemi ha chiesto a questo negozio di rallentare; attesa di %d secondi prima di continuare."
+
+#: includes/class-sudemi-client.php:126
+msgid "The payload could not be encoded."
+msgstr "Non è stato possibile codificare i dati da inviare."
+
+#: includes/class-sudemi-client.php:135
+msgid "This shop is not connected to sudemi."
+msgstr "Questo negozio non è collegato a sudemi."
+
+#: includes/class-sudemi-client.php:145
+msgid "This site has no signing key."
+msgstr "Questo sito non ha una chiave di firma."
+
+#. translators: %d: HTTP status code.
+#: includes/class-sudemi-client.php:181
+#, php-format
+msgid "sudemi answered %d with something that was not JSON."
+msgstr "sudemi ha risposto %d con un contenuto che non era JSON."
+
+#: includes/class-sudemi-heartbeat.php:105
+msgid "sudemi no longer recognises this shop. Connect it again."
+msgstr "sudemi non riconosce più questo negozio. Collegalo di nuovo."
+
+#. translators: %d: HTTP status code.
+#: includes/class-sudemi-heartbeat.php:117
+#, php-format
+msgid "sudemi answered %d."
+msgstr "sudemi ha risposto %d."
+
+#: includes/class-sudemi-heartbeat.php:166
+msgid "sudemi asked for a full sync; scheduling one."
+msgstr "sudemi ha richiesto una sincronizzazione completa; programmazione in corso."
+
+#. translators: %d: number of orders waiting.
+#: includes/class-sudemi-orders.php:46
+#, php-format
+msgid "%d order(s) are waiting for confirmation. Automatic confirmation is off, so they must be answered by hand before their window closes."
+msgstr "%d ordine/i in attesa di conferma. La conferma automatica è disattivata, quindi bisogna rispondere manualmente prima della scadenza."
+
+#. translators: 1: sudemi order id, 2: error message.
+#: includes/class-sudemi-orders.php:63
+#, php-format
+msgid "Could not answer sudemi order %1$s: %2$s"
+msgstr "Impossibile rispondere all'ordine sudemi %1$s: %2$s"
+
+#. translators: 1: sudemi order id, 2: reason.
+#: includes/class-sudemi-orders.php:104
+#, php-format
+msgid "Declined sudemi order %1$s: %2$s. Nothing was charged."
+msgstr "Ordine sudemi %1$s rifiutato: %2$s. Non è stato addebitato nulla."
+
+#: includes/class-sudemi-orders.php:116
+msgid "this shop could not record the order"
+msgstr "questo negozio non è riuscito a registrare l'ordine"
+
+#. translators: 1: sudemi order id, 2: error message.
+#: includes/class-sudemi-orders.php:142
+#, php-format
+msgid "Could not reach sudemi to confirm order %1$s (%2$s). Will try again on the next heartbeat."
+msgstr "Impossibile raggiungere sudemi per confermare l'ordine %1$s (%2$s). Nuovo tentativo al prossimo heartbeat."
+
+#: includes/class-sudemi-orders.php:171
+msgid "Confirmed with sudemi; the buyer has been charged."
+msgstr "Confermato con sudemi; l'importo è stato addebitato all'acquirente."
+
+#. translators: 1: sudemi order id, 2: local order number.
+#: includes/class-sudemi-orders.php:176
+#, php-format
+msgid "Confirmed sudemi order %1$s as order #%2$s."
+msgstr "Ordine sudemi %1$s confermato come ordine #%2$s."
+
+#. translators: %s: the reason sudemi gave.
+#: includes/class-sudemi-orders.php:194
+#, php-format
+msgid "sudemi did not accept the confirmation: %s. Nothing was charged and the stock has been restored."
+msgstr "sudemi non ha accettato la conferma: %s. Non è stato addebitato nulla e le giacenze sono state ripristinate."
+
+#. translators: 1: sudemi order id, 2: reason.
+#: includes/class-sudemi-orders.php:201
+#, php-format
+msgid "sudemi refused the confirmation of order %1$s: %2$s. The local order was cancelled and stock restored."
+msgstr "sudemi ha rifiutato la conferma dell'ordine %1$s: %2$s. L'ordine locale è stato annullato e le giacenze ripristinate."
+
+#: includes/class-sudemi-orders.php:221
+msgid "Accepted on sudemi. The buyer paid several shops in one payment; sudemi takes the money once every shop has answered. Do NOT ship until this order moves to Processing."
+msgstr "Accettato su sudemi. L'acquirente ha pagato più negozi con un unico pagamento; sudemi incassa l'importo quando tutti i negozi hanno risposto. NON spedire finché questo ordine non passa a In lavorazione."
+
+#. translators: 1: sudemi order id, 2: local order number.
+#: includes/class-sudemi-orders.php:226
+#, php-format
+msgid "Accepted sudemi order %1$s (order #%2$s). Not paid yet: waiting for the other shops in the same payment."
+msgstr "Ordine sudemi %1$s accettato (ordine #%2$s). Non ancora pagato: in attesa degli altri negozi compresi nello stesso pagamento."
+
+#. translators: 1: sudemi order id, 2: error message.
+#: includes/class-sudemi-orders.php:256
+#, php-format
+msgid "Could not apply the outcome of sudemi order %1$s: %2$s"
+msgstr "Impossibile applicare l'esito dell'ordine sudemi %1$s: %2$s"
+
+#: includes/class-sudemi-orders.php:293 includes/class-sudemi-orders.php:365
+msgid "reason not given"
+msgstr "motivo non indicato"
+
+#. translators: %s: the reason sudemi gave.
+#: includes/class-sudemi-orders.php:299
+#, php-format
+msgid "sudemi released the buyer's payment: %s. Nothing was charged and the stock has been restored."
+msgstr "sudemi ha sbloccato il pagamento dell'acquirente: %s. Non è stato addebitato nulla e le giacenze sono state ripristinate."
+
+#. translators: 1: sudemi order id, 2: reason.
+#: includes/class-sudemi-orders.php:306
+#, php-format
+msgid "sudemi order %1$s was released after all: %2$s. The local order was cancelled and stock restored."
+msgstr "L'ordine sudemi %1$s è stato comunque sbloccato: %2$s. L'ordine locale è stato annullato e le giacenze ripristinate."
+
+#: includes/class-sudemi-orders.php:319
+msgid "Paid on sudemi: every shop in the buyer's payment has answered and the buyer has been charged. This order can be shipped."
+msgstr "Pagato su sudemi: tutti i negozi compresi nel pagamento dell'acquirente hanno risposto e l'importo è stato addebitato. Questo ordine può essere spedito."
+
+#. translators: 1: sudemi order id, 2: local order number.
+#: includes/class-sudemi-orders.php:324
+#, php-format
+msgid "sudemi order %1$s is paid; order #%2$s moved to Processing."
+msgstr "L'ordine sudemi %1$s è pagato; l'ordine #%2$s è passato a In lavorazione."
+
+#: includes/class-sudemi-orders.php:354
+msgid "Could not fetch the delivery address from sudemi yet. The order is paid; open it again shortly or contact support before shipping."
+msgstr "Non è stato ancora possibile recuperare l'indirizzo di consegna da sudemi. L'ordine è pagato; riaprilo tra poco o contatta l'assistenza prima di spedire."
+
+#. translators: %s: the explanation sudemi gave.
+#: includes/class-sudemi-orders.php:364
+#, php-format
+msgid "sudemi has no delivery address for this order: %s"
+msgstr "sudemi non ha un indirizzo di consegna per questo ordine: %s"
+
+#: includes/class-sudemi-orders.php:403
+msgid "the order had no recognisable items"
+msgstr "l'ordine non conteneva articoli riconoscibili"
+
+#. translators: %s: the product title as sudemi knows it.
+#: includes/class-sudemi-orders.php:411
+#, php-format
+msgid "\"%s\" is no longer sold here"
+msgstr "\"%s\" non è più in vendita qui"
+
+#: includes/class-sudemi-orders.php:412
+msgid "an item"
+msgstr "un articolo"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php:419
+#, php-format
+msgid "\"%s\" is out of stock"
+msgstr "\"%s\" non è disponibile"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php:426
+#, php-format
+msgid "\"%s\" cannot currently be bought"
+msgstr "\"%s\" al momento non può essere acquistato"
+
+#. translators: %s: the sudemi order id.
+#: includes/class-sudemi-orders.php:471
+#, php-format
+msgid "Placed through sudemi (order %s). The buyer has been authorised but not yet charged."
+msgstr "Effettuato tramite sudemi (ordine %s). Il pagamento dell'acquirente è stato autorizzato ma non ancora addebitato."
+
+#: includes/class-sudemi-orders.php:478
+msgid "Awaiting confirmation with sudemi."
+msgstr "In attesa di conferma con sudemi."
+
+#. translators: 1: event name, 2: sudemi order id, 3: error message.
+#: includes/class-sudemi-orders.php:610
+#, php-format
+msgid "Could not report %1$s for sudemi order %2$s: %3$s"
+msgstr "Impossibile segnalare %1$s per l'ordine sudemi %2$s: %3$s"
+
+#. translators: 1: event name, 2: sudemi order id.
+#: includes/class-sudemi-orders.php:621
+#, php-format
+msgid "Reported %1$s for sudemi order %2$s."
+msgstr "Segnalato %1$s per l'ordine sudemi %2$s."
+
+#: includes/class-sudemi-pairing.php:36
+msgid "This server is missing the sodium extension, which the connection needs in order to sign requests. Ask your host to enable it."
+msgstr "Su questo server manca l'estensione sodium, necessaria alla connessione per firmare le richieste. Chiedi al tuo provider di hosting di attivarla."
+
+#: includes/class-sudemi-pairing.php:40
+msgid "A signing key could not be created on this server."
+msgstr "Non è stato possibile creare una chiave di firma su questo server."
+
+#: includes/class-sudemi-pairing.php:60
+msgid "sudemi refused to start the connection."
+msgstr "sudemi ha rifiutato di avviare il collegamento."
+
+#. translators: %d: number of products.
+#: includes/class-sudemi-sync.php:108
+#, php-format
+msgid "Synced %d products."
+msgstr "%d prodotti sincronizzati."
