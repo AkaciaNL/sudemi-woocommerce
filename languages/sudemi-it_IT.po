@@ -536,5 +536,5 @@ msgid "Refunded %s to the buyer through sudemi."
 msgstr "%s rimborsato all'acquirente tramite sudemi."
 
 #, php-format
-msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support."
-msgstr "sudemi non ha rimborsato questo: %s. L'acquirente NON è stato rimborsato; contatta l'assistenza sudemi."
+msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com)."
+msgstr "sudemi non ha rimborsato questo: %s. L'acquirente NON è stato rimborsato; contatta l'assistenza sudemi (support@sudemi.com)."

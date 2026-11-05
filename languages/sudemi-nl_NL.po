@@ -536,5 +536,5 @@ msgid "Refunded %s to the buyer through sudemi."
 msgstr "%s via sudemi terugbetaald aan de koper."
 
 #, php-format
-msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support."
-msgstr "sudemi heeft dit niet terugbetaald: %s. De koper heeft het geld NIET terug; neem contact op met sudemi-support."
+msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com)."
+msgstr "sudemi heeft dit niet terugbetaald: %s. De koper heeft het geld NIET terug; neem contact op met sudemi-support (support@sudemi.com)."

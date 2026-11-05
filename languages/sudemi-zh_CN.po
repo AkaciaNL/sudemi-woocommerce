@@ -535,5 +535,5 @@ msgid "Refunded %s to the buyer through sudemi."
 msgstr "已通过 sudemi 向买家退款 %s。"
 
 #, php-format
-msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support."
-msgstr "sudemi 未退款：%s。买家尚未收到退款；请联系 sudemi 支持。"
+msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com)."
+msgstr "sudemi 未退款：%s。买家尚未收到退款；请联系 sudemi 支持 (support@sudemi.com)。"

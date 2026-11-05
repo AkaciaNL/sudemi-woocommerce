@@ -643,7 +643,7 @@ class Sudemi_Orders {
 		$order->add_order_note(
 			sprintf(
 				/* translators: %s: the reason sudemi gave. */
-				__( 'sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support.', 'sudemi' ),
+				__( 'sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com).', 'sudemi' ),
 				$message
 			)
 		);

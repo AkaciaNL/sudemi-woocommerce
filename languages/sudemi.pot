@@ -535,5 +535,5 @@ msgid "Refunded %s to the buyer through sudemi."
 msgstr ""
 
 #, php-format
-msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support."
+msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com)."
 msgstr ""
