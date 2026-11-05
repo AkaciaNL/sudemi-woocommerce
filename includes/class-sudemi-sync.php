@@ -28,6 +28,8 @@ final class Sudemi_Sync {
 			add_action( $hook, array( __CLASS__, 'schedule_soon' ) );
 		}
 		add_action( 'woocommerce_product_set_stock', array( __CLASS__, 'on_product_object_changed' ), 10, 1 );
+		add_action( 'woocommerce_update_product_variation', array( __CLASS__, 'on_product_changed' ), 10, 1 );
+		add_action( 'woocommerce_variation_set_stock', array( __CLASS__, 'on_product_object_changed' ), 10, 1 );
 	}
 
 	/** A full sync shortly, once, however many changes trigger it. */
@@ -208,7 +210,9 @@ final class Sudemi_Sync {
 	private static function product_ids( $page ) {
 		$query = new WP_Query(
 			array(
-				'post_type'              => 'product',
+				// Variations are listings of their own (size, colour...): a buyer buys one of them,
+				// never the variable "parent", which has no single price, stock or barcode.
+				'post_type'              => array( 'product', 'product_variation' ),
 				'post_status'            => 'publish',
 				'posts_per_page'         => self::BATCH_SIZE,
 				'paged'                  => $page,
@@ -230,12 +234,31 @@ final class Sudemi_Sync {
 	 */
 	private static function product_payload( $product_id ) {
 		$product = wc_get_product( $product_id );
-		if ( ! $product || ! $product->is_visible() ) {
+		if ( ! $product ) {
 			return null;
 		}
+		// Not sellable as one item through sudemi: a variable parent (its variations are sent
+		// instead), a grouped product (a set of other products) and an external/affiliate link.
+		if ( $product->is_type( array( 'variable', 'grouped', 'external' ) ) ) {
+			return null;
+		}
+		$parent = $product->is_type( 'variation' ) ? wc_get_product( $product->get_parent_id() ) : null;
+		if ( $parent ) {
+			if ( ! $parent->is_visible() || 'publish' !== $parent->get_status() || ! $product->variation_is_visible() ) {
+				return null;
+			}
+		} elseif ( ! $product->is_visible() ) {
+			return null;
+		}
+		// Categories, brand and the shared attributes live on the parent of a variation.
+		$base_id = $parent ? $parent->get_id() : $product_id;
+		$base    = $parent ? $parent : $product;
 
 		$images = array();
-		$image_ids = array_merge( array( $product->get_image_id() ), $product->get_gallery_image_ids() );
+		$image_ids = array_merge(
+			array( $product->get_image_id() ? $product->get_image_id() : $base->get_image_id() ),
+			$base->get_gallery_image_ids()
+		);
 		foreach ( array_filter( $image_ids ) as $image_id ) {
 			$url = wp_get_attachment_url( $image_id );
 			if ( $url ) {
@@ -243,16 +266,29 @@ final class Sudemi_Sync {
 			}
 		}
 
-		$categories = wp_get_post_terms( $product_id, 'product_cat', array( 'fields' => 'ids' ) );
+		$categories = wp_get_post_terms( $base_id, 'product_cat', array( 'fields' => 'ids' ) );
 
 		$specs = array();
-		foreach ( $product->get_attributes() as $attribute ) {
-			if ( ! $attribute instanceof WC_Product_Attribute ) {
+		if ( $parent ) {
+			// This variation's own choices (Colour: Red, Size: L) first.
+			foreach ( $product->get_variation_attributes( false ) as $taxonomy => $value ) {
+				if ( '' === $value ) {
+					continue;
+				}
+				$term = taxonomy_exists( $taxonomy ) ? get_term_by( 'slug', $value, $taxonomy ) : null;
+				$specs[] = array(
+					'name'   => wc_attribute_label( $taxonomy, $parent ),
+					'values' => array( $term ? $term->name : (string) $value ),
+				);
+			}
+		}
+		foreach ( $base->get_attributes() as $attribute ) {
+			if ( ! $attribute instanceof WC_Product_Attribute || ( $parent && $attribute->get_variation() ) ) {
 				continue;
 			}
 			$name = wc_attribute_label( $attribute->get_name() );
 			$values = $attribute->is_taxonomy()
-				? wc_get_product_terms( $product_id, $attribute->get_name(), array( 'fields' => 'names' ) )
+				? wc_get_product_terms( $base_id, $attribute->get_name(), array( 'fields' => 'names' ) )
 				: $attribute->get_options();
 			if ( ! empty( $values ) ) {
 				$specs[] = array(
@@ -265,9 +301,9 @@ final class Sudemi_Sync {
 		return array(
 			'externalId'  => (string) $product->get_id(),
 			'sku'         => $product->get_sku(),
-			'title'       => $product->get_name(),
-			'description' => wp_strip_all_tags( $product->get_description() ),
-			'url'         => get_permalink( $product_id ),
+			'title'       => self::title( $product, $parent ),
+			'description' => wp_strip_all_tags( $product->get_description() ? $product->get_description() : $base->get_description() ),
+			'url'         => $product->get_permalink(),
 			'priceMinor'  => self::minor( $product->get_price() ),
 			'currency'    => get_woocommerce_currency(),
 			'inStock'     => (bool) $product->is_in_stock(),
@@ -283,8 +319,25 @@ final class Sudemi_Sync {
 			// WooCommerce's own barcode field (GTIN/EAN/UPC/ISBN, WooCommerce 9.2+): lets sudemi
 			// show this shop's offer next to other shops selling the same item.
 			'gtin'        => self::gtin( $product ),
-			'brand'       => self::brand( $product_id ),
+			'brand'       => self::brand( $base_id ),
 		);
+	}
+
+	/** A variation's title names its options ("T-shirt - Red, L"), so each size reads as itself. */
+	private static function title( $product, $parent ) {
+		$name = $product->get_name();
+		if ( ! $parent || $name !== $parent->get_name() ) {
+			return $name;
+		}
+		$values = array();
+		foreach ( $product->get_variation_attributes( false ) as $taxonomy => $value ) {
+			if ( '' === $value ) {
+				continue;
+			}
+			$term     = taxonomy_exists( $taxonomy ) ? get_term_by( 'slug', $value, $taxonomy ) : null;
+			$values[] = $term ? $term->name : (string) $value;
+		}
+		return empty( $values ) ? $name : $name . ' - ' . implode( ', ', $values );
 	}
 
 	private static function gtin( $product ) {

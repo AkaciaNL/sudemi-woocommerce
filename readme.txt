@@ -51,6 +51,7 @@ Ask your host to enable it; it ships with PHP 7.2 and later.
 * The product barcode (WooCommerce's GTIN/EAN/UPC/ISBN field) and brand are sent, so your offer can appear next to other shops selling the same item.
 * Changing a shipping zone or method re-sends the catalogue.
 * Fixed: stock was reduced twice for an order received through sudemi.
+* Variable products: each variation (size, colour...) is sent as its own listing with its own price, stock, SKU and barcode, and an order adds exactly that variation. The variable parent, grouped and external products are no longer sent (they cannot be bought as one item).
 
 = 1.1.0 =
 * One payment per cart: when the buyer paid several shops at once, an accepted order stays On hold (not paid, no address) until every shop has answered. It then moves to Processing, or is cancelled with the stock restored if the payment was released.
