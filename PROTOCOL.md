@@ -154,7 +154,7 @@ plugin never invents sudemi ids.
 | --- | --- |
 | `PUT /integration/v1/shop` | Shop metadata: display name, description, languages, currency, dispatch country, shipping destinations, returns window, support e-mail |
 | `PUT /integration/v1/categories` | The shop's own category tree: `external_id`, `parent_external_id`, names per language |
-| `POST /integration/v1/products` | Products in batches of ≤ 500: identity, titles and descriptions per language, category, brand, GTIN/MPN, **specs** as typed attributes, images as URLs, price, stock, shipping, and the GPSR safety block FR-34 requires |
+| `POST /integration/v1/products` | Products in batches of ≤ 500: identity, titles and descriptions per language, category, brand, GTIN/MPN, **specs** as typed attributes, images as URLs, price, stock, shipping, the GPSR safety block FR-34 requires, and an optional `withdrawalExclusion` (`hygiene`, `custom`, `perishable`, `media`, `press`, `mixed`, `alcohol`: the Directive 2011/83/EU art. 16 exception the shop marked the product with; omitted when the normal right of withdrawal applies) |
 | `PATCH /integration/v1/products/prices` | Price and stock deltas only — the hot path, called on a shop's own `product_updated` hook |
 | `POST /integration/v1/sync/{id}/commit` | Ends a full sync and tells the platform which products were *not* in it |
 

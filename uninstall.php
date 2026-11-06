@@ -39,3 +39,6 @@ delete_option( 'sudemi_pending_prices' );
 wp_clear_scheduled_hook( 'sudemi_full_sync' );
 wp_clear_scheduled_hook( 'sudemi_pairing_poll' );
 wp_clear_scheduled_hook( 'sudemi_heartbeat' );
+
+// The per-product right-of-withdrawal setting only means something to sudemi.
+delete_post_meta_by_key( '_sudemi_withdrawal_exclusion' );

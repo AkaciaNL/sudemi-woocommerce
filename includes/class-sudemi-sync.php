@@ -298,7 +298,7 @@ final class Sudemi_Sync {
 			}
 		}
 
-		return array(
+		$payload = array(
 			'externalId'  => (string) $product->get_id(),
 			'sku'         => $product->get_sku(),
 			'title'       => self::title( $product, $parent ),
@@ -321,6 +321,9 @@ final class Sudemi_Sync {
 			'gtin'        => self::gtin( $product ),
 			'brand'       => self::brand( $base_id ),
 		);
+		// Excluded from the right of withdrawal (EU 2011/83 art. 16), with the reason; a
+		// variation carries its parent's setting. Omitted when the normal right applies.
+		return Sudemi_Withdrawal::apply( $payload, Sudemi_Withdrawal::for_product( $base_id ) );
 	}
 
 	/** A variation's title names its options ("T-shirt - Red, L"), so each size reads as itself. */

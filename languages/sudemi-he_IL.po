@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the sudemi Connector plugin (GPL-2.0-or-later).
 msgid ""
 msgstr ""
-"Project-Id-Version: sudemi Connector 1.2.0\n"
+"Project-Id-Version: sudemi Connector 1.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/AkaciaNL/sudemi-woocommerce/issues\n"
 "POT-Creation-Date: 2026-11-05 00:00+0000\n"
 "PO-Revision-Date: 2026-11-05 00:00+0000\n"
@@ -538,3 +538,43 @@ msgstr "הוחזר לקונה %s דרך sudemi."
 #, php-format
 msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com)."
 msgstr "sudemi לא החזיר זאת: %s. הקונה לא קיבל את הכסף בחזרה; פנו לתמיכה של sudemi (support@sudemi.com)."
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Right of withdrawal"
+msgstr "זכות ביטול"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "None — normal right of withdrawal applies"
+msgstr "אין — חלה זכות הביטול הרגילה"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed."
+msgstr "רק עבור מוצרים שחל עליהם חריג על פי חוק. הקונים רואים זאת לפני התשלום; שימוש לרעה אסור."
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Sealed for health or hygiene reasons (not returnable once unsealed)"
+msgstr "אטום מטעמי בריאות או היגיינה (לא ניתן להחזיר לאחר פתיחת האריזה)"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Made to the buyer’s specifications or personalised"
+msgstr "מיוצר לפי מפרט הקונה או מותאם אישית"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Perishable or quickly expiring"
+msgstr "מתכלה או בעל תוקף קצר"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Sealed audio, video or software (not returnable once unsealed)"
+msgstr "הקלטות שמע, וידאו או תוכנה באריזה אטומה (לא ניתן להחזיר לאחר פתיחה)"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Newspaper, periodical or magazine"
+msgstr "עיתון, כתב עת או מגזין"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Inseparably mixed with other items after delivery"
+msgstr "מתערבב לאחר המסירה באופן בלתי נפרד עם פריטים אחרים"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Alcohol with a market-dependent price, delivered after 30+ days"
+msgstr "משקאות אלכוהוליים במחיר תלוי שוק, הנמסרים לאחר יותר מ-30 יום"

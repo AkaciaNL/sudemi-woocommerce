@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the sudemi Connector plugin (GPL-2.0-or-later).
 msgid ""
 msgstr ""
-"Project-Id-Version: sudemi Connector 1.2.0\n"
+"Project-Id-Version: sudemi Connector 1.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/AkaciaNL/sudemi-woocommerce/issues\n"
 "POT-Creation-Date: 2026-11-05 00:00+0000\n"
 "PO-Revision-Date: 2026-11-05 00:00+0000\n"
@@ -538,3 +538,43 @@ msgstr "%s remboursé à l’acheteur via sudemi."
 #, php-format
 msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com)."
 msgstr "sudemi n’a pas remboursé ceci : %s. L’acheteur n’a PAS été remboursé ; contactez le support sudemi (support@sudemi.com)."
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Right of withdrawal"
+msgstr "Droit de rétractation"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "None — normal right of withdrawal applies"
+msgstr "Aucune — le droit de rétractation normal s’applique"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed."
+msgstr "Uniquement pour les produits qui relèvent légalement d’une exception. Les acheteurs le voient avant de payer ; tout abus est interdit."
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Sealed for health or hygiene reasons (not returnable once unsealed)"
+msgstr "Scellé pour des raisons de santé ou d’hygiène (non retournable une fois descellé)"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Made to the buyer’s specifications or personalised"
+msgstr "Confectionné selon les spécifications de l’acheteur ou personnalisé"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Perishable or quickly expiring"
+msgstr "Périssable ou à péremption rapide"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Sealed audio, video or software (not returnable once unsealed)"
+msgstr "Enregistrement audio, vidéo ou logiciel scellé (non retournable une fois descellé)"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Newspaper, periodical or magazine"
+msgstr "Journal, périodique ou magazine"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Inseparably mixed with other items after delivery"
+msgstr "Mélangé de manière indissociable à d’autres articles après la livraison"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Alcohol with a market-dependent price, delivered after 30+ days"
+msgstr "Boissons alcoolisées à prix dépendant du marché, livrées après plus de 30 jours"
