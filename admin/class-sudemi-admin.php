@@ -79,7 +79,7 @@ final class Sudemi_Admin {
 	}
 
 	private static function render_disconnected( $supported ) {
-		echo '<p>' . esc_html__( 'Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account — this plugin never asks for your sudemi password.', 'sudemi' ) . '</p>';
+		echo '<p>' . esc_html__( 'Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account - this plugin never asks for your sudemi password.', 'sudemi' ) . '</p>';
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
 		wp_nonce_field( 'sudemi_connect' );
 		echo '<input type="hidden" name="action" value="sudemi_connect" />';
@@ -106,7 +106,7 @@ final class Sudemi_Admin {
 		echo '<div class="notice notice-success"><p>' . esc_html__( 'This shop is connected to sudemi.', 'sudemi' ) . '</p></div>';
 
 		echo '<table class="widefat striped" style="max-width:48rem"><tbody>';
-		self::row( __( 'Shop address', 'sudemi' ), home_url( '/' ), __( 'Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from — so changing it means connecting again from the new address.', 'sudemi' ) );
+		self::row( __( 'Shop address', 'sudemi' ), home_url( '/' ), __( 'Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from - so changing it means connecting again from the new address.', 'sudemi' ) );
 		self::row( __( 'Install', 'sudemi' ), (string) Sudemi_Client::install_id(), __( 'Which installation this is. Revoke it on sudemi to cut this shop off immediately.', 'sudemi' ) );
 		self::row( __( 'Signing key', 'sudemi' ), __( 'held on this server', 'sudemi' ), __( 'The private half never leaves this server and is never sent to sudemi. It cannot be shown here either.', 'sudemi' ) );
 		echo '</tbody></table>';
@@ -137,9 +137,9 @@ final class Sudemi_Admin {
 	 * Worth a panel of its own because the failure it reports is otherwise invisible from here.
 	 * Products stop being listed when the heartbeat stops arriving, and from this side everything
 	 * looks normal: the plugin is active, the catalogue is intact, the settings are right. The
-	 * cause is usually something that has nothing to do with sudemi — WP-Cron disabled on a host
+	 * cause is usually something that has nothing to do with sudemi - WP-Cron disabled on a host
 	 * that never set up a real cron, an outbound firewall, a plugin conflict killing scheduled
-	 * events — and without this panel the first sign of it is a seller wondering where their
+	 * events - and without this panel the first sign of it is a seller wondering where their
 	 * orders went.
 	 */
 	private static function render_listing_status() {
@@ -198,7 +198,7 @@ final class Sudemi_Admin {
 				: __( 'by hand', 'sudemi' ),
 			Sudemi_Orders::auto_confirm_enabled()
 				? __( 'A buyer on sudemi is authorised but not charged until this shop confirms it has the item. That check runs against this shop\'s live stock every five minutes: in stock means the order is accepted and the money taken, out of stock means it is declined and the buyer\'s money released. Nothing is ever charged without this shop agreeing to it.', 'sudemi' )
-				: __( 'Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing — an unanswered order is never treated as accepted.', 'sudemi' )
+				: __( 'Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted.', 'sudemi' )
 		);
 		echo '</tbody></table>';
 	}
@@ -286,7 +286,7 @@ final class Sudemi_Admin {
 			echo '<td>' . esc_html( self::order_status_label( $order ) ) . '</td>';
 			echo '<td>' . esc_html( number_format_i18n( $net / 100, 2 ) . ' ' . $currency ) . '</td>';
 			// Only present once sudemi has released it, which is only after this shop confirmed.
-			echo '<td>' . esc_html( isset( $order['customer_name'] ) ? (string) $order['customer_name'] : '—' ) . '</td>';
+			echo '<td>' . esc_html( isset( $order['customer_name'] ) ? (string) $order['customer_name'] : ' - ' ) . '</td>';
 			echo '</tr>';
 		}
 		echo '</tbody></table>';
@@ -297,19 +297,19 @@ final class Sudemi_Admin {
 		$status = isset( $order['status'] ) ? (string) $order['status'] : '';
 		switch ( $status ) {
 			case 'AWAITING_SELLER':
-				return __( 'Waiting for you — buyer not charged', 'sudemi' );
+				return __( 'Waiting for you - buyer not charged', 'sudemi' );
 			case 'ACCEPTED':
-				return __( 'Accepted — waiting for the other shops in the buyer\'s payment; buyer not charged yet, do not ship', 'sudemi' );
+				return __( 'Accepted - waiting for the other shops in the buyer\'s payment; buyer not charged yet, do not ship', 'sudemi' );
 			case 'PAID':
 				return __( 'Confirmed and charged', 'sudemi' );
 			case 'DECLINED':
 				return isset( $order['declined_reason'] )
 					? sprintf(
 						/* translators: %s: the reason the order was declined. */
-						__( 'Declined (%s) — nothing charged', 'sudemi' ),
+						__( 'Declined (%s) - nothing charged', 'sudemi' ),
 						(string) $order['declined_reason']
 					)
-					: __( 'Declined — nothing charged', 'sudemi' );
+					: __( 'Declined - nothing charged', 'sudemi' );
 			case 'SHIPPED':
 				return __( 'Shipped', 'sudemi' );
 			case 'DELIVERED':

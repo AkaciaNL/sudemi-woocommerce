@@ -4,7 +4,7 @@
  *
  * sudemi cannot call this shop: it sits behind this host's firewall and accepts no connection
  * from outside. Everything therefore has to start here, which makes this the only two-way
- * channel the integration has — the request says what this shop believes its catalogue to be,
+ * channel the integration has - the request says what this shop believes its catalogue to be,
  * and the reply is where sudemi asks for anything it needs.
  *
  * Why it exists at all: from sudemi's side a shop with nothing to report and a shop whose server
@@ -13,8 +13,8 @@
  * taking orders at them. So this shop says so, every few minutes, and sudemi stops listing it
  * when it stops saying so. The listings come back on the next beat; nothing is deleted.
  *
- * The revision is the part that catches the quiet failure. A delta push can be lost — sudemi
- * restarting, a DNS blip, a proxy — and no amount of liveness notices that, because the shop is
+ * The revision is the part that catches the quiet failure. A delta push can be lost - sudemi
+ * restarting, a DNS blip, a proxy - and no amount of liveness notices that, because the shop is
  * healthy and the beats keep arriving. Sending a cheap statement of what this catalogue is lets
  * sudemi disagree, and a disagreement costs one full sync instead of weeks of a wrong price.
  *
@@ -155,7 +155,7 @@ final class Sudemi_Heartbeat {
 
 		// Orders this shop accepted while the buyer's payment still covered other shops: now
 		// paid (ship them) or released after all (cancel them). Not gated on automatic
-		// confirmation — these are outcomes to record, not questions to answer.
+		// confirmation - these are outcomes to record, not questions to answer.
 		if ( ! empty( $body['settled_orders'] ) ) {
 			Sudemi_Orders::handle_settled( $body['settled_orders'] );
 		}
@@ -176,11 +176,11 @@ final class Sudemi_Heartbeat {
 	 * A cheap statement of what this catalogue is.
 	 *
 	 * Count, newest modification time and a local change counter, hashed. It does not have to
-	 * describe the catalogue — it only has to change whenever the catalogue does, so that
+	 * describe the catalogue - it only has to change whenever the catalogue does, so that
 	 * sudemi's copy of it can disagree.
 	 *
 	 * All three are needed. The count alone misses an edited price. The timestamp alone misses a
-	 * deletion. And both of those are post fields, which a stock movement does not always touch —
+	 * deletion. And both of those are post fields, which a stock movement does not always touch
 	 * so the counter, bumped by the save hook itself, is what makes a lost stock push detectable
 	 * rather than invisible.
 	 */

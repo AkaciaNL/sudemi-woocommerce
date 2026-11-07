@@ -51,8 +51,8 @@ msgid "This server is missing the sodium extension. The connection needs it to s
 msgstr "На этом сервере отсутствует расширение sodium. Оно нужно соединению для подписи запросов, без него ничего работать не будет. Попросите хостинг-провайдера включить его."
 
 #: admin/class-sudemi-admin.php:71
-msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account — this plugin never asks for your sudemi password."
-msgstr "Подключение магазина позволяет ИИ-ассистенту находить ваши товары и направлять к вам покупателей. Подключение вы подтверждаете на sudemi, войдя в свою учётную запись, — этот плагин никогда не запрашивает ваш пароль от sudemi."
+msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account - this plugin never asks for your sudemi password."
+msgstr "Подключение магазина позволяет ИИ-ассистенту находить ваши товары и направлять к вам покупателей. Подключение вы подтверждаете на sudemi, войдя в свою учётную запись, - этот плагин никогда не запрашивает ваш пароль от sudemi."
 
 #: admin/class-sudemi-admin.php:75
 msgid "Connect this shop"
@@ -81,8 +81,8 @@ msgid "Shop address"
 msgstr "Адрес магазина"
 
 #: admin/class-sudemi-admin.php:98
-msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from — so changing it means connecting again from the new address."
-msgstr "Не меняется. sudemi проверил, что магазин отвечает с этого адреса, а в каждом предложении покупатель видит, откуда оно, — поэтому для смены адреса нужно заново подключиться с нового адреса."
+msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from - so changing it means connecting again from the new address."
+msgstr "Не меняется. sudemi проверил, что магазин отвечает с этого адреса, а в каждом предложении покупатель видит, откуда оно, - поэтому для смены адреса нужно заново подключиться с нового адреса."
 
 #: admin/class-sudemi-admin.php:99
 msgid "Install"
@@ -195,11 +195,11 @@ msgstr "вручную"
 
 #: admin/class-sudemi-admin.php:189
 msgid "A buyer on sudemi is authorised but not charged until this shop confirms it has the item. That check runs against this shop's live stock every five minutes: in stock means the order is accepted and the money taken, out of stock means it is declined and the buyer's money released. Nothing is ever charged without this shop agreeing to it."
-msgstr "Оплата покупателя на sudemi авторизуется, но не списывается, пока магазин не подтвердит наличие товара. Каждые пять минут выполняется проверка по актуальным остаткам магазина: если товар в наличии, заказ принимается и деньги списываются; если нет — заказ отклоняется и средства покупателя разблокируются. Без согласия магазина деньги никогда не списываются."
+msgstr "Оплата покупателя на sudemi авторизуется, но не списывается, пока магазин не подтвердит наличие товара. Каждые пять минут выполняется проверка по актуальным остаткам магазина: если товар в наличии, заказ принимается и деньги списываются; если нет - заказ отклоняется и средства покупателя разблокируются. Без согласия магазина деньги никогда не списываются."
 
 #: admin/class-sudemi-admin.php:190
-msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing — an unanswered order is never treated as accepted."
-msgstr "Заказы ждут, пока кто-то здесь на них ответит. Если до срока, указанного на sudemi, ответа не будет, средства покупателя разблокируются и ничего не списывается — заказ без ответа никогда не считается принятым."
+msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted."
+msgstr "Заказы ждут, пока кто-то здесь на них ответит. Если до срока, указанного на sudemi, ответа не будет, средства покупателя разблокируются и ничего не списывается - заказ без ответа никогда не считается принятым."
 
 #: admin/class-sudemi-admin.php:213
 msgid "Orders through sudemi"
@@ -242,12 +242,12 @@ msgid "Customer"
 msgstr "Покупатель"
 
 #: admin/class-sudemi-admin.php:289
-msgid "Waiting for you — buyer not charged"
-msgstr "Ждёт вашего ответа — деньги не списаны"
+msgid "Waiting for you - buyer not charged"
+msgstr "Ждёт вашего ответа - деньги не списаны"
 
 #: admin/class-sudemi-admin.php:291
-msgid "Accepted — waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
-msgstr "Принят — ожидаются ответы других магазинов из платежа покупателя; деньги ещё не списаны, не отправляйте"
+msgid "Accepted - waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
+msgstr "Принят - ожидаются ответы других магазинов из платежа покупателя; деньги ещё не списаны, не отправляйте"
 
 #: admin/class-sudemi-admin.php:293
 msgid "Confirmed and charged"
@@ -256,12 +256,12 @@ msgstr "Подтверждён, оплата списана"
 #. translators: %s: the reason the order was declined.
 #: admin/class-sudemi-admin.php:298
 #, php-format
-msgid "Declined (%s) — nothing charged"
-msgstr "Отклонён (%s) — ничего не списано"
+msgid "Declined (%s) - nothing charged"
+msgstr "Отклонён (%s) - ничего не списано"
 
 #: admin/class-sudemi-admin.php:301
-msgid "Declined — nothing charged"
-msgstr "Отклонён — ничего не списано"
+msgid "Declined - nothing charged"
+msgstr "Отклонён - ничего не списано"
 
 #: admin/class-sudemi-admin.php:303
 msgid "Shipped"
@@ -387,7 +387,7 @@ msgstr "магазину не удалось зарегистрировать з
 #: includes/class-sudemi-orders.php:142
 #, php-format
 msgid "Could not reach sudemi to confirm order %1$s (%2$s). Will try again on the next heartbeat."
-msgstr "Не удалось связаться с sudemi для подтверждения заказа %1$s (%2$s). Повторная попытка — при следующем контрольном сигнале."
+msgstr "Не удалось связаться с sudemi для подтверждения заказа %1$s (%2$s). Повторная попытка - при следующем контрольном сигнале."
 
 #: includes/class-sudemi-orders.php:171
 msgid "Confirmed with sudemi; the buyer has been charged."
@@ -545,8 +545,8 @@ msgid "Right of withdrawal"
 msgstr "Право на отказ от договора"
 
 #: includes/class-sudemi-withdrawal.php
-msgid "None — normal right of withdrawal applies"
-msgstr "Нет — действует обычное право на отказ от договора"
+msgid "None - normal right of withdrawal applies"
+msgstr "Нет - действует обычное право на отказ от договора"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed."
@@ -671,7 +671,7 @@ msgstr "Поддержка станет доступна, как только э
 
 #: admin/class-sudemi-admin.php
 msgid "Questions about an order, a payment, payouts or this plugin? Open a ticket and sudemi support answers here. You also get an e-mail when they reply."
-msgstr "Есть вопрос о заказе, оплате, выплатах или этом плагине? Создайте обращение — поддержка sudemi ответит здесь. Об ответе вы также получите письмо."
+msgstr "Есть вопрос о заказе, оплате, выплатах или этом плагине? Создайте обращение - поддержка sudemi ответит здесь. Об ответе вы также получите письмо."
 
 #: admin/class-sudemi-admin.php
 msgid "Your tickets"

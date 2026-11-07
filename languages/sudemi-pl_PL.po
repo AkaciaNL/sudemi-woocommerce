@@ -51,8 +51,8 @@ msgid "This server is missing the sodium extension. The connection needs it to s
 msgstr "Na tym serwerze brakuje rozszerzenia sodium. Połączenie potrzebuje go do podpisywania żądań i bez niego nie zadziała. Poproś dostawcę hostingu o jego włączenie."
 
 #: admin/class-sudemi-admin.php:71
-msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account — this plugin never asks for your sudemi password."
-msgstr "Połączenie tego sklepu pozwala asystentowi AI znajdować Twoje produkty i kierować do Ciebie kupujących. Połączenie potwierdzasz w sudemi, zalogowany na własne konto — ta wtyczka nigdy nie prosi o Twoje hasło do sudemi."
+msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account - this plugin never asks for your sudemi password."
+msgstr "Połączenie tego sklepu pozwala asystentowi AI znajdować Twoje produkty i kierować do Ciebie kupujących. Połączenie potwierdzasz w sudemi, zalogowany na własne konto - ta wtyczka nigdy nie prosi o Twoje hasło do sudemi."
 
 #: admin/class-sudemi-admin.php:75
 msgid "Connect this shop"
@@ -81,8 +81,8 @@ msgid "Shop address"
 msgstr "Adres sklepu"
 
 #: admin/class-sudemi-admin.php:98
-msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from — so changing it means connecting again from the new address."
-msgstr "Stały. sudemi sprawdziło, że ten sklep odpowiadał spod tego adresu, a oferta informuje kupującego, skąd pochodzi — dlatego zmiana adresu oznacza ponowne połączenie z nowego adresu."
+msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from - so changing it means connecting again from the new address."
+msgstr "Stały. sudemi sprawdziło, że ten sklep odpowiadał spod tego adresu, a oferta informuje kupującego, skąd pochodzi - dlatego zmiana adresu oznacza ponowne połączenie z nowego adresu."
 
 #: admin/class-sudemi-admin.php:99
 msgid "Install"
@@ -198,8 +198,8 @@ msgid "A buyer on sudemi is authorised but not charged until this shop confirms 
 msgstr "Płatność kupującego w sudemi jest autoryzowana, ale nie zostaje pobrana, dopóki ten sklep nie potwierdzi, że ma dany produkt. Sprawdzenie odbywa się co pięć minut na podstawie bieżących stanów magazynowych sklepu: jeśli produkt jest dostępny, zamówienie zostaje przyjęte i środki pobrane; jeśli go brak, zamówienie zostaje odrzucone, a środki kupującego zwolnione. Nic nie zostanie pobrane bez zgody tego sklepu."
 
 #: admin/class-sudemi-admin.php:190
-msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing — an unanswered order is never treated as accepted."
-msgstr "Zamówienia czekają, aż ktoś tutaj na nie odpowie. Jeśli nikt tego nie zrobi przed terminem podanym w sudemi, kupujący zostaje zwolniony i nic nie jest pobierane — zamówienie bez odpowiedzi nigdy nie jest traktowane jako przyjęte."
+msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted."
+msgstr "Zamówienia czekają, aż ktoś tutaj na nie odpowie. Jeśli nikt tego nie zrobi przed terminem podanym w sudemi, kupujący zostaje zwolniony i nic nie jest pobierane - zamówienie bez odpowiedzi nigdy nie jest traktowane jako przyjęte."
 
 #: admin/class-sudemi-admin.php:213
 msgid "Orders through sudemi"
@@ -242,12 +242,12 @@ msgid "Customer"
 msgstr "Klient"
 
 #: admin/class-sudemi-admin.php:289
-msgid "Waiting for you — buyer not charged"
-msgstr "Czeka na Ciebie — kupujący nie został obciążony"
+msgid "Waiting for you - buyer not charged"
+msgstr "Czeka na Ciebie - kupujący nie został obciążony"
 
 #: admin/class-sudemi-admin.php:291
-msgid "Accepted — waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
-msgstr "Przyjęte — oczekiwanie na pozostałe sklepy objęte płatnością kupującego; kupujący nie został jeszcze obciążony, nie wysyłaj"
+msgid "Accepted - waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
+msgstr "Przyjęte - oczekiwanie na pozostałe sklepy objęte płatnością kupującego; kupujący nie został jeszcze obciążony, nie wysyłaj"
 
 #: admin/class-sudemi-admin.php:293
 msgid "Confirmed and charged"
@@ -256,12 +256,12 @@ msgstr "Potwierdzone i opłacone"
 #. translators: %s: the reason the order was declined.
 #: admin/class-sudemi-admin.php:298
 #, php-format
-msgid "Declined (%s) — nothing charged"
-msgstr "Odrzucone (%s) — nic nie pobrano"
+msgid "Declined (%s) - nothing charged"
+msgstr "Odrzucone (%s) - nic nie pobrano"
 
 #: admin/class-sudemi-admin.php:301
-msgid "Declined — nothing charged"
-msgstr "Odrzucone — nic nie pobrano"
+msgid "Declined - nothing charged"
+msgstr "Odrzucone - nic nie pobrano"
 
 #: admin/class-sudemi-admin.php:303
 msgid "Shipped"
@@ -545,8 +545,8 @@ msgid "Right of withdrawal"
 msgstr "Prawo odstąpienia od umowy"
 
 #: includes/class-sudemi-withdrawal.php
-msgid "None — normal right of withdrawal applies"
-msgstr "Brak — obowiązuje zwykłe prawo odstąpienia od umowy"
+msgid "None - normal right of withdrawal applies"
+msgstr "Brak - obowiązuje zwykłe prawo odstąpienia od umowy"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed."

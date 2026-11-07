@@ -35,7 +35,7 @@ host and sends sudemi only the public half.
 
 = Does this send my customers' data anywhere? =
 
-No. It sends your catalogue — products, prices, stock, images — and nothing about your orders or
+No. It sends your catalogue - products, prices, stock, images - and nothing about your orders or
 your customers.
 
 = What if my host does not have the sodium extension? =

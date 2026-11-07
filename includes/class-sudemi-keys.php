@@ -4,7 +4,7 @@
  *
  * The private key is generated here, on this host, and never leaves it. sudemi receives only
  * the public half, which is why a breach of their database cannot be used to push a price of
- * zero into this shop's listings — and why there is no secret to lose in transit, in a log, or
+ * zero into this shop's listings - and why there is no secret to lose in transit, in a log, or
  * in a support export.
  *
  * @package Sudemi

@@ -3,7 +3,7 @@
  * Removing the plugin removes the connection with it.
  *
  * A signing key left behind on a site that believes it has removed the plugin is a credential
- * nobody is watching. So the key goes, the install id goes, and sudemi is told — best effort,
+ * nobody is watching. So the key goes, the install id goes, and sudemi is told - best effort,
  * because an uninstall must finish whether or not the network is up.
  *
  * @package Sudemi

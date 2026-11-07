@@ -2,14 +2,14 @@
 /**
  * Answering sudemi's question: can this shop actually fulfil the order?
  *
- * Nobody but this shop can answer it. sudemi holds no stock and never did — it carries a figure
+ * Nobody but this shop can answer it. sudemi holds no stock and never did - it carries a figure
  * this plugin pushed, which was true when it was pushed and may not be now, because the same
  * units are on sale in this storefront at the same time. So sudemi does not decide. It authorises
  * the buyer's card, holds the money without taking it, and asks.
  *
  * Until this plugin answers, nothing has been charged. Answering yes captures the money and
  * splits it; answering no releases the hold; saying nothing releases it too, once the window
- * closes. Silence is never taken as agreement — a shop that has stopped answering is usually a
+ * closes. Silence is never taken as agreement - a shop that has stopped answering is usually a
  * shop that is gone, and charging a buyer because nobody objected is exactly the failure this
  * mechanism exists to prevent.
  *
@@ -75,7 +75,7 @@ class Sudemi_Orders {
 	 * The local order is created *before* the acceptance is sent, not after. If it were the other
 	 * way round, a failure to build the order would leave the buyer charged for something this
 	 * shop has no record of. This way a failure to accept leaves a local order with no money
-	 * behind it — which is recoverable here, and is: it is cancelled and the stock put back.
+	 * behind it - which is recoverable here, and is: it is cancelled and the stock put back.
 	 *
 	 * @param array $pending One entry of the pending_orders block.
 	 */
@@ -153,7 +153,7 @@ class Sudemi_Orders {
 		if ( 200 === $status && isset( $body['status'] ) && 'ok' === $body['status']
 			&& isset( $body['payment'] ) && 'waiting_for_other_shops' === $body['payment'] ) {
 			// Accepted, but not paid. The buyer paid several shops in one payment, and a card
-			// authorisation can be captured only once — so sudemi takes the money when the last
+			// authorisation can be captured only once - so sudemi takes the money when the last
 			// of them has answered, and says so in settled_orders on a later heartbeat. Until
 			// then the order stays held and has no address: shipping it now could mean shipping
 			// goods nobody ever pays for.
@@ -163,7 +163,7 @@ class Sudemi_Orders {
 
 		if ( 200 === $status && isset( $body['status'] ) && 'ok' === $body['status'] ) {
 			// The address arrives only now. sudemi withholds it while the order is still being
-			// decided, because answering "do I have stock" needs nobody's address — so this is
+			// decided, because answering "do I have stock" needs nobody's address - so this is
 			// the first moment there is a customer to put on the order at all.
 			self::fill_customer( $order, $sudemi_id );
 			$order->update_status(
@@ -182,7 +182,7 @@ class Sudemi_Orders {
 		}
 
 		// Refused: the window closed, or the buyer's authorisation lapsed before this shop got
-		// round to answering. No money was taken, so the local order must not survive — and the
+		// round to answering. No money was taken, so the local order must not survive - and the
 		// stock it reserved has to go back on the shelf or this shop slowly loses inventory to
 		// orders that never happened.
 		$reason = isset( $body['message'] ) ? (string) $body['message'] : sprintf( 'HTTP %d', $status );
@@ -277,7 +277,7 @@ class Sudemi_Orders {
 		}
 
 		// Only finds an order still on hold. One already processing, completed or cancelled has
-		// been settled before — by an earlier beat, or by an accept that captured straight away —
+		// been settled before - by an earlier beat, or by an accept that captured straight away
 		// and is left exactly as it is.
 		$order = self::find_local_order( $sudemi_id );
 		if ( ! $order ) {
@@ -286,7 +286,7 @@ class Sudemi_Orders {
 
 		if ( 'DECLINED' === $state ) {
 			// Released without being charged: the capture failed, or the authorisation lapsed
-			// before the last shop answered. Same as a refused acceptance — the local order must
+			// before the last shop answered. Same as a refused acceptance - the local order must
 			// not survive, and the stock it reserved goes back on the shelf.
 			$reason = ! empty( $settled['declined_reason'] )
 				? (string) $settled['declined_reason']
@@ -491,7 +491,7 @@ class Sudemi_Orders {
 	/**
 	 * The WooCommerce product behind a line.
 	 *
-	 * external_id is this shop's own product id — it is what the sync pushes as the identifier,
+	 * external_id is this shop's own product id - it is what the sync pushes as the identifier,
 	 * which is the whole reason sudemi stores it.
 	 *
 	 * @param array $line One entry of a pending order's lines.

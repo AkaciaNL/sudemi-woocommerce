@@ -3,7 +3,7 @@
  * Proves the key encoding and the signature this plugin produces are the ones sudemi verifies.
  *
  * Runs without WordPress on purpose: it exercises the two things that cannot be checked by
- * reading the code — that libsodium's raw public key, wrapped in the fixed Ed25519 prefix, is a
+ * reading the code - that libsodium's raw public key, wrapped in the fixed Ed25519 prefix, is a
  * parseable X.509 key, and that a signature over the canonical string verifies against it.
  *
  * The same vector is asserted on the platform side, so a change to either encoding fails a

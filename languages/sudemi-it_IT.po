@@ -51,8 +51,8 @@ msgid "This server is missing the sodium extension. The connection needs it to s
 msgstr "Su questo server manca l'estensione sodium. La connessione ne ha bisogno per firmare le richieste e senza di essa non funziona. Chiedi al tuo provider di hosting di attivarla."
 
 #: admin/class-sudemi-admin.php:71
-msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account — this plugin never asks for your sudemi password."
-msgstr "Collegando questo negozio, un assistente IA può trovare i tuoi prodotti e inviarti acquirenti. Confermi il collegamento su sudemi, dopo aver effettuato l'accesso al tuo account — questo plugin non ti chiede mai la password di sudemi."
+msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account - this plugin never asks for your sudemi password."
+msgstr "Collegando questo negozio, un assistente IA può trovare i tuoi prodotti e inviarti acquirenti. Confermi il collegamento su sudemi, dopo aver effettuato l'accesso al tuo account - questo plugin non ti chiede mai la password di sudemi."
 
 #: admin/class-sudemi-admin.php:75
 msgid "Connect this shop"
@@ -81,8 +81,8 @@ msgid "Shop address"
 msgstr "Indirizzo del negozio"
 
 #: admin/class-sudemi-admin.php:98
-msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from — so changing it means connecting again from the new address."
-msgstr "Fisso. sudemi ha verificato che questo negozio rispondesse da questo indirizzo e ogni inserzione indica all'acquirente da dove proviene — per cambiarlo, quindi, devi ricollegare il negozio dal nuovo indirizzo."
+msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from - so changing it means connecting again from the new address."
+msgstr "Fisso. sudemi ha verificato che questo negozio rispondesse da questo indirizzo e ogni inserzione indica all'acquirente da dove proviene - per cambiarlo, quindi, devi ricollegare il negozio dal nuovo indirizzo."
 
 #: admin/class-sudemi-admin.php:99
 msgid "Install"
@@ -198,8 +198,8 @@ msgid "A buyer on sudemi is authorised but not charged until this shop confirms 
 msgstr "Su sudemi il pagamento dell'acquirente viene autorizzato ma non addebitato finché questo negozio non conferma di avere l'articolo. Il controllo viene eseguito ogni cinque minuti sulle giacenze effettive del negozio: se l'articolo è disponibile l'ordine viene accettato e l'importo incassato, se non è disponibile l'ordine viene rifiutato e il denaro dell'acquirente sbloccato. Non viene mai addebitato nulla senza il consenso di questo negozio."
 
 #: admin/class-sudemi-admin.php:190
-msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing — an unanswered order is never treated as accepted."
-msgstr "Gli ordini attendono che qualcuno qui risponda. Se nessuno risponde entro la scadenza indicata da sudemi, l'acquirente viene svincolato e non gli viene addebitato nulla — un ordine senza risposta non viene mai considerato accettato."
+msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted."
+msgstr "Gli ordini attendono che qualcuno qui risponda. Se nessuno risponde entro la scadenza indicata da sudemi, l'acquirente viene svincolato e non gli viene addebitato nulla - un ordine senza risposta non viene mai considerato accettato."
 
 #: admin/class-sudemi-admin.php:213
 msgid "Orders through sudemi"
@@ -241,12 +241,12 @@ msgid "Customer"
 msgstr "Cliente"
 
 #: admin/class-sudemi-admin.php:289
-msgid "Waiting for you — buyer not charged"
-msgstr "In attesa di tua risposta — nessun addebito all'acquirente"
+msgid "Waiting for you - buyer not charged"
+msgstr "In attesa di tua risposta - nessun addebito all'acquirente"
 
 #: admin/class-sudemi-admin.php:291
-msgid "Accepted — waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
-msgstr "Accettato — in attesa degli altri negozi compresi nel pagamento dell'acquirente; nessun addebito ancora, non spedire"
+msgid "Accepted - waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
+msgstr "Accettato - in attesa degli altri negozi compresi nel pagamento dell'acquirente; nessun addebito ancora, non spedire"
 
 #: admin/class-sudemi-admin.php:293
 msgid "Confirmed and charged"
@@ -255,12 +255,12 @@ msgstr "Confermato e addebitato"
 #. translators: %s: the reason the order was declined.
 #: admin/class-sudemi-admin.php:298
 #, php-format
-msgid "Declined (%s) — nothing charged"
-msgstr "Rifiutato (%s) — nessun addebito"
+msgid "Declined (%s) - nothing charged"
+msgstr "Rifiutato (%s) - nessun addebito"
 
 #: admin/class-sudemi-admin.php:301
-msgid "Declined — nothing charged"
-msgstr "Rifiutato — nessun addebito"
+msgid "Declined - nothing charged"
+msgstr "Rifiutato - nessun addebito"
 
 #: admin/class-sudemi-admin.php:303
 msgid "Shipped"
@@ -544,8 +544,8 @@ msgid "Right of withdrawal"
 msgstr "Diritto di recesso"
 
 #: includes/class-sudemi-withdrawal.php
-msgid "None — normal right of withdrawal applies"
-msgstr "Nessuna — si applica il normale diritto di recesso"
+msgid "None - normal right of withdrawal applies"
+msgstr "Nessuna - si applica il normale diritto di recesso"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed."

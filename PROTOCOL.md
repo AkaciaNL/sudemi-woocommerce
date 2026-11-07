@@ -1,6 +1,6 @@
 # Seller Integration Protocol v1
 
-How a shop plugin — WooCommerce, PrestaShop, OpenCart, Shopify — claims a seller account on
+How a shop plugin - WooCommerce, PrestaShop, OpenCart, Shopify - claims a seller account on
 sudemi and keeps a catalogue in step with it.
 
 This document is the contract. The plugins are open source and run on servers we do not
@@ -75,7 +75,7 @@ wants that shop attached to it. Either alone is insufficient: the challenge alon
 anyone who can write files to a shop attach it to *their* seller account, and the claim alone
 would let anyone type any domain.
 
-The challenge is fetched through the **FR-36 egress guard** — https only, DNS resolved by the
+The challenge is fetched through the **FR-36 egress guard** - https only, DNS resolved by the
 fetcher, resolved IP checked against the private/loopback/link-local/metadata blocklist, checked
 again after every redirect, with a redirect cap, a size cap and a timeout. A shop URL that
 resolves to a private address is refused, which is also why a plugin on localhost cannot pair
@@ -127,7 +127,7 @@ accidentally logged, and nothing for a plugin to leak by writing credentials to 
 web root.
 
 Ed25519 rather than RSA: small keys, small signatures, no parameter choices to get wrong, and
-deterministic signing — so a plugin on a shared host with a poor entropy source does not leak
+deterministic signing - so a plugin on a shared host with a poor entropy source does not leak
 its key the way ECDSA can.
 
 Requests are rejected when the timestamp is more than **300 s** from server time, when the nonce
@@ -155,7 +155,7 @@ plugin never invents sudemi ids.
 | `PUT /integration/v1/shop` | Shop metadata: display name, description, languages, currency, dispatch country, shipping destinations, returns window, support e-mail |
 | `PUT /integration/v1/categories` | The shop's own category tree: `external_id`, `parent_external_id`, names per language |
 | `POST /integration/v1/products` | Products in batches of ≤ 500: identity, titles and descriptions per language, category, brand, GTIN/MPN, **specs** as typed attributes, images as URLs, price, stock, shipping, the GPSR safety block FR-34 requires, and an optional `withdrawalExclusion` (`hygiene`, `custom`, `perishable`, `media`, `press`, `mixed`, `alcohol`: the Directive 2011/83/EU art. 16 exception the shop marked the product with; omitted when the normal right of withdrawal applies) |
-| `PATCH /integration/v1/products/prices` | Price and stock deltas only — the hot path, called on a shop's own `product_updated` hook |
+| `PATCH /integration/v1/products/prices` | Price and stock deltas only - the hot path, called on a shop's own `product_updated` hook |
 | `POST /integration/v1/sync/{id}/commit` | Ends a full sync and tells the platform which products were *not* in it |
 
 ### Images
@@ -252,7 +252,7 @@ Non-negotiable for anything carrying our name, and each repo's review checklist 
   form and every AJAX route.
 - **Escape on output, parameterise on query.** No string-built SQL, no unescaped echo.
 - **Fail closed.** A signature that does not verify, a response that does not parse, a field
-  that is missing — stop and report, do not guess.
+  that is missing - stop and report, do not guess.
 - **Clean up on uninstall**, and revoke the install while doing it.
 - **Licence per ecosystem**: GPLv2-or-later for WooCommerce and OpenCart, AFL-3.0 for the
   PrestaShop module, so each can be distributed where its users expect to find it.

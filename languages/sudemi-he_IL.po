@@ -51,8 +51,8 @@ msgid "This server is missing the sodium extension. The connection needs it to s
 msgstr "בשרת הזה חסרה ההרחבה sodium. החיבור זקוק לה כדי לחתום על בקשות, והוא לא יעבוד בלעדיה. יש לבקש מספק האחסון להפעיל אותה."
 
 #: admin/class-sudemi-admin.php:71
-msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account — this plugin never asks for your sudemi password."
-msgstr "חיבור החנות הזו מאפשר לעוזר בינה מלאכותית למצוא את המוצרים שלך ולשלוח אליך קונים. את החיבור מאשרים ב-sudemi, כשמחוברים לחשבון שלך — התוסף הזה לעולם לא מבקש את הסיסמה שלך ב-sudemi."
+msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account - this plugin never asks for your sudemi password."
+msgstr "חיבור החנות הזו מאפשר לעוזר בינה מלאכותית למצוא את המוצרים שלך ולשלוח אליך קונים. את החיבור מאשרים ב-sudemi, כשמחוברים לחשבון שלך - התוסף הזה לעולם לא מבקש את הסיסמה שלך ב-sudemi."
 
 #: admin/class-sudemi-admin.php:75
 msgid "Connect this shop"
@@ -81,8 +81,8 @@ msgid "Shop address"
 msgstr "כתובת החנות"
 
 #: admin/class-sudemi-admin.php:98
-msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from — so changing it means connecting again from the new address."
-msgstr "קבועה. sudemi בדק שהחנות הזו ענתה מהכתובת הזו, ורישום מוצר מציין לקונה מאיפה הוא הגיע — לכן שינוי הכתובת פירושו חיבור מחדש מהכתובת החדשה."
+msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from - so changing it means connecting again from the new address."
+msgstr "קבועה. sudemi בדק שהחנות הזו ענתה מהכתובת הזו, ורישום מוצר מציין לקונה מאיפה הוא הגיע - לכן שינוי הכתובת פירושו חיבור מחדש מהכתובת החדשה."
 
 #: admin/class-sudemi-admin.php:99
 msgid "Install"
@@ -198,8 +198,8 @@ msgid "A buyer on sudemi is authorised but not charged until this shop confirms 
 msgstr "התשלום של קונה ב-sudemi מאושר אך לא נגבה עד שהחנות הזו מאשרת שהפריט במלאי. הבדיקה הזו רצה מול המלאי החי של החנות כל חמש דקות: אם הפריט במלאי, ההזמנה מתקבלת והכסף נגבה; אם אזל מהמלאי, ההזמנה נדחית והכסף של הקונה משתחרר. שום חיוב לא מתבצע לעולם בלי הסכמת החנות הזו."
 
 #: admin/class-sudemi-admin.php:190
-msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing — an unanswered order is never treated as accepted."
-msgstr "ההזמנות ממתינות שמישהו כאן יענה להן. אם איש לא עונה לפני המועד האחרון ש-sudemi מציג, הקונה משוחרר ולא מחויב בדבר — הזמנה שלא נענתה לעולם לא נחשבת כמאושרת."
+msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted."
+msgstr "ההזמנות ממתינות שמישהו כאן יענה להן. אם איש לא עונה לפני המועד האחרון ש-sudemi מציג, הקונה משוחרר ולא מחויב בדבר - הזמנה שלא נענתה לעולם לא נחשבת כמאושרת."
 
 #: admin/class-sudemi-admin.php:213
 msgid "Orders through sudemi"
@@ -241,12 +241,12 @@ msgid "Customer"
 msgstr "לקוח"
 
 #: admin/class-sudemi-admin.php:289
-msgid "Waiting for you — buyer not charged"
-msgstr "ממתין לך — הקונה לא חויב"
+msgid "Waiting for you - buyer not charged"
+msgstr "ממתין לך - הקונה לא חויב"
 
 #: admin/class-sudemi-admin.php:291
-msgid "Accepted — waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
-msgstr "התקבלה — ממתינה לחנויות האחרות בתשלום של הקונה; הקונה עדיין לא חויב, אין לשלוח"
+msgid "Accepted - waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
+msgstr "התקבלה - ממתינה לחנויות האחרות בתשלום של הקונה; הקונה עדיין לא חויב, אין לשלוח"
 
 #: admin/class-sudemi-admin.php:293
 msgid "Confirmed and charged"
@@ -255,12 +255,12 @@ msgstr "אושרה וחויבה"
 #. translators: %s: the reason the order was declined.
 #: admin/class-sudemi-admin.php:298
 #, php-format
-msgid "Declined (%s) — nothing charged"
-msgstr "נדחתה (%s) — לא בוצע חיוב"
+msgid "Declined (%s) - nothing charged"
+msgstr "נדחתה (%s) - לא בוצע חיוב"
 
 #: admin/class-sudemi-admin.php:301
-msgid "Declined — nothing charged"
-msgstr "נדחתה — לא בוצע חיוב"
+msgid "Declined - nothing charged"
+msgstr "נדחתה - לא בוצע חיוב"
 
 #: admin/class-sudemi-admin.php:303
 msgid "Shipped"
@@ -544,8 +544,8 @@ msgid "Right of withdrawal"
 msgstr "זכות ביטול"
 
 #: includes/class-sudemi-withdrawal.php
-msgid "None — normal right of withdrawal applies"
-msgstr "אין — חלה זכות הביטול הרגילה"
+msgid "None - normal right of withdrawal applies"
+msgstr "אין - חלה זכות הביטול הרגילה"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed."

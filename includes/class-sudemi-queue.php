@@ -3,7 +3,7 @@
  * Price changes that have not reached sudemi yet.
  *
  * A delta push happens while someone is saving a product in wp-admin, which means it gets one
- * attempt and a short timeout — holding that screen for a retry would make a sudemi outage look
+ * attempt and a short timeout - holding that screen for a retry would make a sudemi outage look
  * like a WooCommerce fault. So a failed push is not retried in place; it is written down, and
  * the heartbeat drains it a few minutes later.
  *

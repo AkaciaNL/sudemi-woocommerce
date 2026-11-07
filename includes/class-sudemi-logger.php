@@ -3,8 +3,8 @@
  * A short log a shop owner can read, and which never contains a credential.
  *
  * Bounded on purpose: an unbounded log in an option is a way to fill a database, and a log that
- * holds a signing key is a way to lose one. Nothing here ever receives key material — the key
- * class does not expose it — and messages are the plugin's own text rather than raw responses.
+ * holds a signing key is a way to lose one. Nothing here ever receives key material - the key
+ * class does not expose it - and messages are the plugin's own text rather than raw responses.
  *
  * @package Sudemi
  */

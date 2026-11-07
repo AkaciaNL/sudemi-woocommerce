@@ -51,8 +51,8 @@ msgid "This server is missing the sodium extension. The connection needs it to s
 msgstr "此服务器缺少 sodium 扩展。连接需要它来签名请求，没有它将无法工作。请联系您的主机服务商启用它。"
 
 #: admin/class-sudemi-admin.php:71
-msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account — this plugin never asks for your sudemi password."
-msgstr "连接此店铺后，AI 助手即可找到您的商品并为您带来买家。您需要登录自己的账户，在 sudemi 上确认连接——本插件绝不会索要您的 sudemi 密码。"
+msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account - this plugin never asks for your sudemi password."
+msgstr "连接此店铺后，AI 助手即可找到您的商品并为您带来买家。您需要登录自己的账户，在 sudemi 上确认连接，本插件绝不会索要您的 sudemi 密码。"
 
 #: admin/class-sudemi-admin.php:75
 msgid "Connect this shop"
@@ -81,8 +81,8 @@ msgid "Shop address"
 msgstr "店铺地址"
 
 #: admin/class-sudemi-admin.php:98
-msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from — so changing it means connecting again from the new address."
-msgstr "已固定。sudemi 已核实此店铺从该地址作出响应，且商品信息会告诉买家其来源——因此更改地址意味着需要从新地址重新连接。"
+msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from - so changing it means connecting again from the new address."
+msgstr "已固定。sudemi 已核实此店铺从该地址作出响应，且商品信息会告诉买家其来源，因此更改地址意味着需要从新地址重新连接。"
 
 #: admin/class-sudemi-admin.php:99
 msgid "Install"
@@ -198,8 +198,8 @@ msgid "A buyer on sudemi is authorised but not charged until this shop confirms 
 msgstr "sudemi 上的买家付款已获授权，但在此店铺确认有货之前不会扣款。系统每五分钟根据此店铺的实时库存进行检查：有货则接受订单并扣款，缺货则拒绝订单并释放买家的款项。未经此店铺同意，绝不会扣款。"
 
 #: admin/class-sudemi-admin.php:190
-msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing — an unanswered order is never treated as accepted."
-msgstr "订单需要等待这里有人处理。如果在 sudemi 显示的截止时间前无人处理，买家将被释放且不会被扣款——未答复的订单绝不会被视为已接受。"
+msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted."
+msgstr "订单需要等待这里有人处理。如果在 sudemi 显示的截止时间前无人处理，买家将被释放且不会被扣款，未答复的订单绝不会被视为已接受。"
 
 #: admin/class-sudemi-admin.php:213
 msgid "Orders through sudemi"
@@ -240,12 +240,12 @@ msgid "Customer"
 msgstr "客户"
 
 #: admin/class-sudemi-admin.php:289
-msgid "Waiting for you — buyer not charged"
-msgstr "等待您处理——买家未扣款"
+msgid "Waiting for you - buyer not charged"
+msgstr "等待您处理，买家未扣款"
 
 #: admin/class-sudemi-admin.php:291
-msgid "Accepted — waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
-msgstr "已接受——正在等待买家本次付款中的其他店铺；买家尚未扣款，请勿发货"
+msgid "Accepted - waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
+msgstr "已接受，正在等待买家本次付款中的其他店铺；买家尚未扣款，请勿发货"
 
 #: admin/class-sudemi-admin.php:293
 msgid "Confirmed and charged"
@@ -254,12 +254,12 @@ msgstr "已确认并扣款"
 #. translators: %s: the reason the order was declined.
 #: admin/class-sudemi-admin.php:298
 #, php-format
-msgid "Declined (%s) — nothing charged"
-msgstr "已拒绝（%s）——未扣款"
+msgid "Declined (%s) - nothing charged"
+msgstr "已拒绝（%s），未扣款"
 
 #: admin/class-sudemi-admin.php:301
-msgid "Declined — nothing charged"
-msgstr "已拒绝——未扣款"
+msgid "Declined - nothing charged"
+msgstr "已拒绝，未扣款"
 
 #: admin/class-sudemi-admin.php:303
 msgid "Shipped"
@@ -543,8 +543,8 @@ msgid "Right of withdrawal"
 msgstr "撤回权"
 
 #: includes/class-sudemi-withdrawal.php
-msgid "None — normal right of withdrawal applies"
-msgstr "无 — 适用正常的撤回权"
+msgid "None - normal right of withdrawal applies"
+msgstr "无 - 适用正常的撤回权"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed."

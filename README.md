@@ -14,7 +14,7 @@ hook, so the two agree within seconds rather than within an import cycle.
 
 The shop address, the legal name, the country of establishment, the trader status and the VAT
 number are **confirmed once on sudemi and locked afterwards**. A buyer's withdrawal rights turn
-on those being true, and a listing tells a buyer which shop it came from — so they are not
+on those being true, and a listing tells a buyer which shop it came from - so they are not
 editable from inside a plugin that anyone can install.
 
 The plugin also cannot list the shop. Products stay unlisted until the payment rail reports that

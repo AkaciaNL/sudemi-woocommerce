@@ -4,8 +4,8 @@
  *
  * The flow has three parts and this class owns two of them. It generates the keypair and asks
  * sudemi to start a pairing; it serves the challenge token so sudemi can prove this shop
- * consented; and it polls until a human has claimed the shop in a browser. The third part —
- * signing in and confirming — happens on sudemi, not here, which is why this plugin never asks
+ * consented; and it polls until a human has claimed the shop in a browser. The third part
+ * signing in and confirming - happens on sudemi, not here, which is why this plugin never asks
  * for a sudemi password and could not use one if it had it.
  *
  * @package Sudemi

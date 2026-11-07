@@ -69,7 +69,7 @@ final class Sudemi_Client {
 	 * take the service away from every other shop. A 429 is therefore an ordinary part of a full
 	 * sync rather than a failure: it means "not yet", and it carries how long to wait.
 	 *
-	 * Treating it as a failure is what makes a large catalogue impossible to sync at all — the
+	 * Treating it as a failure is what makes a large catalogue impossible to sync at all - the
 	 * batch aborts, the sync is abandoned, and the next attempt gets exactly as far. So it is
 	 * retried, bounded, and only then given up on.
 	 */

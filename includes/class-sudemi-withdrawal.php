@@ -67,7 +67,7 @@ final class Sudemi_Withdrawal {
 	/** reason => label, translated. */
 	public static function labels() {
 		return array(
-			''           => __( 'None — normal right of withdrawal applies', 'sudemi' ),
+			''           => __( 'None - normal right of withdrawal applies', 'sudemi' ),
 			'hygiene'    => __( 'Sealed for health or hygiene reasons (not returnable once unsealed)', 'sudemi' ),
 			'custom'     => __( 'Made to the buyer’s specifications or personalised', 'sudemi' ),
 			'perishable' => __( 'Perishable or quickly expiring', 'sudemi' ),

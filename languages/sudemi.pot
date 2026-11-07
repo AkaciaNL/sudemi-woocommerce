@@ -50,7 +50,7 @@ msgid "This server is missing the sodium extension. The connection needs it to s
 msgstr ""
 
 #: admin/class-sudemi-admin.php:71
-msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account — this plugin never asks for your sudemi password."
+msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account - this plugin never asks for your sudemi password."
 msgstr ""
 
 #: admin/class-sudemi-admin.php:75
@@ -80,7 +80,7 @@ msgid "Shop address"
 msgstr ""
 
 #: admin/class-sudemi-admin.php:98
-msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from — so changing it means connecting again from the new address."
+msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from - so changing it means connecting again from the new address."
 msgstr ""
 
 #: admin/class-sudemi-admin.php:99
@@ -197,7 +197,7 @@ msgid "A buyer on sudemi is authorised but not charged until this shop confirms 
 msgstr ""
 
 #: admin/class-sudemi-admin.php:190
-msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing — an unanswered order is never treated as accepted."
+msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted."
 msgstr ""
 
 #: admin/class-sudemi-admin.php:213
@@ -240,11 +240,11 @@ msgid "Customer"
 msgstr ""
 
 #: admin/class-sudemi-admin.php:289
-msgid "Waiting for you — buyer not charged"
+msgid "Waiting for you - buyer not charged"
 msgstr ""
 
 #: admin/class-sudemi-admin.php:291
-msgid "Accepted — waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
+msgid "Accepted - waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
 msgstr ""
 
 #: admin/class-sudemi-admin.php:293
@@ -254,11 +254,11 @@ msgstr ""
 #. translators: %s: the reason the order was declined.
 #: admin/class-sudemi-admin.php:298
 #, php-format
-msgid "Declined (%s) — nothing charged"
+msgid "Declined (%s) - nothing charged"
 msgstr ""
 
 #: admin/class-sudemi-admin.php:301
-msgid "Declined — nothing charged"
+msgid "Declined - nothing charged"
 msgstr ""
 
 #: admin/class-sudemi-admin.php:303
@@ -543,7 +543,7 @@ msgid "Right of withdrawal"
 msgstr ""
 
 #: includes/class-sudemi-withdrawal.php
-msgid "None — normal right of withdrawal applies"
+msgid "None - normal right of withdrawal applies"
 msgstr ""
 
 #: includes/class-sudemi-withdrawal.php
