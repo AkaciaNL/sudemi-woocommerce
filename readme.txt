@@ -53,6 +53,7 @@ Ask your host to enable it; it ships with PHP 7.2 and later.
 * Shipped and delivered reports (and those cancellations) that do not get through are queued and sent again on every heartbeat until sudemi answers; before, a failure was logged as a success and lost.
 * Price changes queued while sudemi was unreachable: a newer price saved while an older one was being sent is no longer dropped, and a batch sudemi refuses for good is not resent forever (a full sync carries it).
 * A catalogue sync that sudemi holds back (it would remove many products) is reported as on hold, not as synced.
+* After a full catalogue sync the plugin tells sudemi at once which catalogue state the sync described. Before, sudemi adopted whatever the next heartbeat reported, so a product removed in the minutes after a sync could stay listed on sudemi.
 * The sudemi screen shows when the last report succeeded, how many order updates are waiting, and how to set up a real cron job (WP-Cron only runs on visits; call wp-cron.php every 5 minutes and set DISABLE_WP_CRON). In all 12 languages.
 
 = 1.2.4 =

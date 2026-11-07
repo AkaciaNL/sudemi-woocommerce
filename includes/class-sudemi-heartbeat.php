@@ -265,6 +265,35 @@ final class Sudemi_Heartbeat {
 		update_option( self::OPTION_CHANGES, self::changes() + 1, false );
 	}
 
+	/**
+	 * Tells sudemi which catalogue revision a just-committed full sync describes.
+	 *
+	 * After a commit sudemi forgets the revision it held and adopts the next one it is told. If
+	 * that were the next regular beat, a product switched off or deleted in the minutes between
+	 * the sync and that beat would be adopted as already synced and stay listed. So the revision
+	 * taken when the sync started is sent at once: anything that changed since then makes the
+	 * next beat disagree, and sudemi asks for another sync.
+	 *
+	 * @param string|null $revision The revision computed before the sync read the catalogue.
+	 */
+	public static function anchor( $revision ) {
+		if ( null === $revision || ! Sudemi_Client::is_connected() ) {
+			return;
+		}
+		$response = Sudemi_Client::post_signed(
+			'/integration/v1/heartbeat',
+			array(
+				'catalogueRevision' => $revision,
+				'productCount'      => self::product_count(),
+				'intervalSeconds'   => self::DEFAULT_INTERVAL,
+				'pluginVersion'     => SUDEMI_VERSION,
+			)
+		);
+		if ( is_array( $response ) && 200 === (int) $response['status'] ) {
+			update_option( self::OPTION_LAST_OK, time(), false );
+		}
+	}
+
 	/** What the admin screen says when sudemi refuses this site as not being the connected shop. */
 	public static function site_mismatch_message( $paired ) {
 		if ( is_string( $paired ) && '' !== $paired ) {

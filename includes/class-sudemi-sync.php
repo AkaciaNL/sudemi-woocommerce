@@ -65,6 +65,9 @@ final class Sudemi_Sync {
 			return;
 		}
 		$sync_id = (string) $started['body']['sync_id'];
+		// What the catalogue was when this sync started reading it. Sent right after the commit
+		// (below), so sudemi holds the revision this sync describes; see Sudemi_Heartbeat::anchor().
+		$anchor = Sudemi_Heartbeat::revision();
 
 		self::push_shop();
 		self::push_categories();
@@ -119,6 +122,7 @@ final class Sudemi_Sync {
 			);
 			return;
 		}
+		Sudemi_Heartbeat::anchor( $anchor );
 		/* translators: %d: number of products. */
 		Sudemi_Logger::info( sprintf( __( 'Synced %d products.', 'sudemi' ), $count ) );
 	}
