@@ -763,3 +763,111 @@ msgstr "sudemi weigert verzoeken van deze site: deze winkel is onder een ander a
 #: includes/class-sudemi-heartbeat.php
 msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address. If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
 msgstr "sudemi weigert verzoeken van deze site: deze winkel is onder een ander adres aan sudemi gekoppeld. Is deze site een testkopie (staging) of een teruggezette back-up, ontkoppel sudemi dan hier. Is de winkel naar dit adres verhuisd, koppel hem dan opnieuw."
+
+#. translators: 1: the buyer's reason, 2: the date the shop has to answer by.
+#: includes/class-sudemi-requests.php
+#, php-format
+msgid "The buyer asked on sudemi to return this order. Reason: %1$s. Accept or reject (with a reason) by %2$s on this order or under WooCommerce > sudemi."
+msgstr "De koper heeft op sudemi gevraagd deze bestelling te retourneren. Reden: %1$s. Accepteer of weiger (met een reden) vóór %2$s op deze bestelling of onder WooCommerce > sudemi."
+
+#: includes/class-sudemi-requests.php
+msgid "none given"
+msgstr "niet opgegeven"
+
+#: includes/class-sudemi-requests.php
+msgid "A rejection needs a reason. The buyer is shown it."
+msgstr "Een weigering heeft een reden nodig. De koper krijgt die te zien."
+
+#: includes/class-sudemi-requests.php
+msgid "That is not a sudemi order."
+msgstr "Dat is geen sudemi-bestelling."
+
+#: includes/class-sudemi-requests.php
+msgid "Return request accepted on sudemi. Refund the buyer here (WooCommerce refund) once the item is back; the refund goes through sudemi and closes the request."
+msgstr "Retourverzoek geaccepteerd op sudemi. Betaal de koper hier terug (WooCommerce-terugbetaling) zodra het artikel terug is; de terugbetaling loopt via sudemi en sluit het verzoek."
+
+#. translators: %s: the reason the shop gave, shown to the buyer.
+#: includes/class-sudemi-requests.php
+#, php-format
+msgid "Return request rejected on sudemi. Reason shown to the buyer: %s"
+msgstr "Retourverzoek geweigerd op sudemi. Reden die de koper ziet: %s"
+
+#: includes/class-sudemi-requests.php
+msgid "Return accepted. Refund the buyer once the item is back, with a WooCommerce refund on the order."
+msgstr "Retour geaccepteerd. Betaal de koper terug zodra het artikel terug is, met een WooCommerce-terugbetaling op de bestelling."
+
+#: includes/class-sudemi-requests.php
+msgid "Return rejected. The buyer is shown your reason."
+msgstr "Retour geweigerd. De koper ziet je reden."
+
+#: includes/class-sudemi-requests.php
+msgid "This request was already answered."
+msgstr "Dit verzoek was al beantwoord."
+
+#: includes/class-sudemi-requests.php
+msgid "This order has no open return request on sudemi any more."
+msgstr "Deze bestelling heeft op sudemi geen open retourverzoek meer."
+
+#. translators: %s: error message.
+#: includes/class-sudemi-requests.php
+#, php-format
+msgid "Could not reach sudemi: %s. Nothing was sent; try again."
+msgstr "sudemi niet bereikbaar: %s. Er is niets verstuurd; probeer het opnieuw."
+
+#: includes/class-sudemi-orders.php
+msgid "Cancelled by the buyer on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
+msgstr "Geannuleerd door de koper op sudemi vóór verzending; de koper is volledig terugbetaald. Verstuur deze bestelling niet."
+
+#. translators: 1: sudemi order id, 2: local order number.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "sudemi order %1$s was cancelled by the buyer before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi-bestelling %1$s is vóór verzending door de koper geannuleerd; bestelling #%2$s is hier geannuleerd en de voorraad is hersteld."
+
+#: admin/class-sudemi-admin.php
+msgid "return requested"
+msgstr "retour gevraagd"
+
+#: admin/class-sudemi-admin.php
+msgid "Return requests"
+msgstr "Retourverzoeken"
+
+#: admin/class-sudemi-admin.php
+msgid "No return requests waiting for an answer."
+msgstr "Geen retourverzoeken die op een antwoord wachten."
+
+#: admin/class-sudemi-admin.php
+msgid "Buyers asked to return these delivered orders. Answer each by the date shown: accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on the order."
+msgstr "Kopers hebben gevraagd deze geleverde bestellingen te retourneren. Beantwoord elk verzoek vóór de getoonde datum: accepteer, of weiger met een reden (de koper krijgt die te zien). Zonder antwoord beslist sudemi. Na acceptatie betaal je de koper terug zodra het artikel terug is, met een WooCommerce-terugbetaling op de bestelling."
+
+#: admin/class-sudemi-admin.php
+msgid "Buyer's reason"
+msgstr "Reden van de koper"
+
+#: admin/class-sudemi-admin.php
+msgid "Answer by"
+msgstr "Antwoorden vóór"
+
+#: admin/class-sudemi-admin.php
+msgid "Your answer"
+msgstr "Je antwoord"
+
+#: admin/class-sudemi-admin.php
+msgid "Accept the return"
+msgstr "Retour accepteren"
+
+#: admin/class-sudemi-admin.php
+msgid "Reject the return"
+msgstr "Retour weigeren"
+
+#: admin/class-sudemi-admin.php
+msgid "Reason for rejecting (shown to the buyer)"
+msgstr "Reden van weigering (de koper ziet deze)"
+
+#: admin/class-sudemi-admin.php
+msgid "sudemi: the buyer asked to return this order"
+msgstr "sudemi: de koper vraagt deze bestelling te retourneren"
+
+#: admin/class-sudemi-admin.php
+msgid "Accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on this order."
+msgstr "Accepteer, of weiger met een reden (de koper krijgt die te zien). Zonder antwoord beslist sudemi. Na acceptatie betaal je de koper terug zodra het artikel terug is, met een WooCommerce-terugbetaling op deze bestelling."

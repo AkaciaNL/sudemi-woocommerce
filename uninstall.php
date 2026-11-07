@@ -29,6 +29,7 @@ delete_option( 'sudemi_pairing_poll_token' );
 delete_option( 'sudemi_pairing_claim_url' );
 delete_option( 'sudemi_log' );
 delete_option( 'sudemi_status' );
+delete_option( 'sudemi_open_requests' );
 delete_option( 'sudemi_auto_confirm' );
 delete_option( 'sudemi_heartbeat_seconds' );
 delete_option( 'sudemi_change_counter' );

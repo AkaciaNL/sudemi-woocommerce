@@ -763,3 +763,111 @@ msgstr "sudemi ha rifiutato le richieste da questo sito: questo negozio è colle
 #: includes/class-sudemi-heartbeat.php
 msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address. If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
 msgstr "sudemi ha rifiutato le richieste da questo sito: questo negozio è collegato a sudemi con un altro indirizzo. Se questo sito è una copia di staging o un backup ripristinato, scollega sudemi qui. Se il negozio si è trasferito a questo indirizzo, collegalo di nuovo."
+
+#. translators: 1: the buyer's reason, 2: the date the shop has to answer by.
+#: includes/class-sudemi-requests.php
+#, php-format
+msgid "The buyer asked on sudemi to return this order. Reason: %1$s. Accept or reject (with a reason) by %2$s on this order or under WooCommerce > sudemi."
+msgstr "L'acquirente ha chiesto su sudemi di restituire questo ordine. Motivo: %1$s. Accetta o rifiuta (con un motivo) entro il %2$s su questo ordine o in WooCommerce > sudemi."
+
+#: includes/class-sudemi-requests.php
+msgid "none given"
+msgstr "non indicato"
+
+#: includes/class-sudemi-requests.php
+msgid "A rejection needs a reason. The buyer is shown it."
+msgstr "Un rifiuto richiede un motivo. L'acquirente lo vedrà."
+
+#: includes/class-sudemi-requests.php
+msgid "That is not a sudemi order."
+msgstr "Questo non è un ordine sudemi."
+
+#: includes/class-sudemi-requests.php
+msgid "Return request accepted on sudemi. Refund the buyer here (WooCommerce refund) once the item is back; the refund goes through sudemi and closes the request."
+msgstr "Richiesta di reso accettata su sudemi. Rimborsa l'acquirente qui (rimborso WooCommerce) quando l'articolo è tornato; il rimborso passa da sudemi e chiude la richiesta."
+
+#. translators: %s: the reason the shop gave, shown to the buyer.
+#: includes/class-sudemi-requests.php
+#, php-format
+msgid "Return request rejected on sudemi. Reason shown to the buyer: %s"
+msgstr "Richiesta di reso rifiutata su sudemi. Motivo mostrato all'acquirente: %s"
+
+#: includes/class-sudemi-requests.php
+msgid "Return accepted. Refund the buyer once the item is back, with a WooCommerce refund on the order."
+msgstr "Reso accettato. Rimborsa l'acquirente quando l'articolo è tornato, con un rimborso WooCommerce sull'ordine."
+
+#: includes/class-sudemi-requests.php
+msgid "Return rejected. The buyer is shown your reason."
+msgstr "Reso rifiutato. L'acquirente vede il tuo motivo."
+
+#: includes/class-sudemi-requests.php
+msgid "This request was already answered."
+msgstr "A questa richiesta è già stata data una risposta."
+
+#: includes/class-sudemi-requests.php
+msgid "This order has no open return request on sudemi any more."
+msgstr "Questo ordine non ha più una richiesta di reso aperta su sudemi."
+
+#. translators: %s: error message.
+#: includes/class-sudemi-requests.php
+#, php-format
+msgid "Could not reach sudemi: %s. Nothing was sent; try again."
+msgstr "Impossibile raggiungere sudemi: %s. Non è stato inviato nulla; riprova."
+
+#: includes/class-sudemi-orders.php
+msgid "Cancelled by the buyer on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
+msgstr "Annullato dall'acquirente su sudemi prima della spedizione; l'acquirente è stato rimborsato per intero. Non spedire questo ordine."
+
+#. translators: 1: sudemi order id, 2: local order number.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "sudemi order %1$s was cancelled by the buyer before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "L'ordine sudemi %1$s è stato annullato dall'acquirente prima della spedizione; l'ordine n. %2$s è stato annullato qui e la giacenza ripristinata."
+
+#: admin/class-sudemi-admin.php
+msgid "return requested"
+msgstr "reso richiesto"
+
+#: admin/class-sudemi-admin.php
+msgid "Return requests"
+msgstr "Richieste di reso"
+
+#: admin/class-sudemi-admin.php
+msgid "No return requests waiting for an answer."
+msgstr "Nessuna richiesta di reso in attesa di risposta."
+
+#: admin/class-sudemi-admin.php
+msgid "Buyers asked to return these delivered orders. Answer each by the date shown: accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on the order."
+msgstr "Alcuni acquirenti hanno chiesto di restituire questi ordini consegnati. Rispondi a ciascuno entro la data indicata: accetta, oppure rifiuta con un motivo (l'acquirente lo vedrà). Senza risposta decide sudemi. Dopo aver accettato, rimborsa l'acquirente quando l'articolo è tornato, con un rimborso WooCommerce sull'ordine."
+
+#: admin/class-sudemi-admin.php
+msgid "Buyer's reason"
+msgstr "Motivo dell'acquirente"
+
+#: admin/class-sudemi-admin.php
+msgid "Answer by"
+msgstr "Rispondere entro"
+
+#: admin/class-sudemi-admin.php
+msgid "Your answer"
+msgstr "La tua risposta"
+
+#: admin/class-sudemi-admin.php
+msgid "Accept the return"
+msgstr "Accetta il reso"
+
+#: admin/class-sudemi-admin.php
+msgid "Reject the return"
+msgstr "Rifiuta il reso"
+
+#: admin/class-sudemi-admin.php
+msgid "Reason for rejecting (shown to the buyer)"
+msgstr "Motivo del rifiuto (mostrato all'acquirente)"
+
+#: admin/class-sudemi-admin.php
+msgid "sudemi: the buyer asked to return this order"
+msgstr "sudemi: l'acquirente chiede di restituire questo ordine"
+
+#: admin/class-sudemi-admin.php
+msgid "Accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on this order."
+msgstr "Accetta, oppure rifiuta con un motivo (l'acquirente lo vedrà). Senza risposta decide sudemi. Dopo aver accettato, rimborsa l'acquirente quando l'articolo è tornato, con un rimborso WooCommerce su questo ordine."

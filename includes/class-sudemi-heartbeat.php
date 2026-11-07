@@ -177,6 +177,10 @@ final class Sudemi_Heartbeat {
 			Sudemi_Orders::handle_settled( $body['settled_orders'] );
 		}
 
+		// Return requests this shop has to answer. The full list on every beat, so the stored
+		// copy is replaced (and emptied when the beat carries none).
+		Sudemi_Requests::replace( isset( $body['open_requests'] ) ? $body['open_requests'] : null );
+
 		// sudemi and this shop disagree about what the catalogue is, so something did not arrive.
 		// A full sync is the only answer that does not involve guessing which product it was.
 		if ( ! empty( $body['full_sync_requested'] ) ) {

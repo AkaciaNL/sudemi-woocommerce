@@ -227,7 +227,31 @@ idempotently:
 
 - `PAID` (or `SHIPPED`/`DELIVERED`): the money is taken. Fetch the address, mark the local order paid, and ship.
 - `DECLINED`: released without charge (the capture failed or the authorisation lapsed). Cancel the local order and restore its stock.
-- Only a local order still on hold is touched; anything else was settled before.
+- `CANCELLED`: cancelled on sudemi before shipping (the buyer may cancel any order free of charge
+  until it is marked shipped, and is refunded at once). Cancel the local order if it is still on
+  hold or paid but not shipped, restore its stock, and do **not** send `/cancel` or `/refund`
+  for it: the buyer already has the money back.
+- Otherwise only a local order still on hold is touched; anything else was settled before.
+
+### Return requests
+
+After delivery a buyer may ask to return an order; the shop answers within 7 days. The heartbeat
+lists every open request on each beat (absent when there are none), so the plugin replaces its
+copy each time:
+
+```json
+"open_requests": [
+  {"request_id": "…", "order_id": "…", "kind": "RETURN", "reason": "Too small",
+   "requested_at": "2026-11-07T10:00:00Z", "respond_by": "2026-11-14T10:00:00Z"}
+]
+```
+
+The order history (`GET /integration/v1/orders`) carries the same object as `customer_request`.
+The shop answers with `POST /integration/v1/orders/{order_id}/request/accept` or
+`/request/reject` (`{"reason": "..."}`, required, shown to the buyer): `200 {"status": "ok"}` or
+`{"status": "already_resolved"}`, `400 invalid_request` without a reason, `404` when no request
+is open. No answer by `respond_by` sends the request to sudemi. After accepting, the shop refunds
+once the item is back through the normal refund call; that refund closes the request.
 
 ## 5. What a plugin may **not** change
 

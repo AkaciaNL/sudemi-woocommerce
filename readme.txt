@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,10 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.2.4 =
+* Return requests: after delivery a sudemi buyer may ask to return an order, and the shop answers within 7 days. Open requests now appear on the WooCommerce order screen and under WooCommerce → sudemi (Return requests), with the buyer's reason and the answer-by date. Accept, or reject with a reason (required; the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back with a normal WooCommerce refund on the order; it goes through sudemi and closes the request. Each new request is also noted on its order. In all 12 languages.
+* A buyer who cancels a paid order on sudemi before it ships (free of charge, refunded at once) now cancels the WooCommerce order too, with a note and the stock restored, so it is not shipped by mistake. The plugin does not send a second cancellation or refund for it.
 
 = 1.2.3 =
 * Every signed call now says which site it comes from (the Sudemi-Site header, this WordPress site's own address). A staging copy or a restored backup of the shop holds the same connection, and sudemi now refuses its calls, so a copy can no longer push its catalogue or answer orders as the live shop.

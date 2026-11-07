@@ -99,6 +99,12 @@ class Sudemi_Queue {
 		return 0;
 	}
 }
+class Sudemi_Requests {
+	public static $replaced = array();
+	public static function replace( $list ) {
+		self::$replaced[] = $list;
+	}
+}
 $wpdb = new class() {
 	public $posts = 'wp_posts';
 	public function get_row( $sql ) {
@@ -176,6 +182,11 @@ $reply = array( 'code' => 200, 'body' => '{"catalogue_listed":true}' );
 Sudemi_Heartbeat::run();
 $status = Sudemi_Heartbeat::status();
 check( 'heartbeat: the next good beat clears it', true === $status['connected'] && ! isset( $status['problem'] ) );
+check( 'heartbeat: a good beat without open_requests empties the stored list', array( null ) === Sudemi_Requests::$replaced );
+
+$reply = array( 'code' => 200, 'body' => '{"catalogue_listed":true,"open_requests":[{"order_id":"x"}]}' );
+Sudemi_Heartbeat::run();
+check( 'heartbeat: open_requests are handed on as they came', array( array( 'order_id' => 'x' ) ) === end( Sudemi_Requests::$replaced ) );
 
 echo $failures ? "\n$failures check(s) failed\n" : "\nall checks passed\n";
 exit( $failures ? 1 : 0 );

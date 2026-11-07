@@ -762,3 +762,111 @@ msgstr ""
 #: includes/class-sudemi-heartbeat.php
 msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address. If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
 msgstr ""
+
+#. translators: 1: the buyer's reason, 2: the date the shop has to answer by.
+#: includes/class-sudemi-requests.php
+#, php-format
+msgid "The buyer asked on sudemi to return this order. Reason: %1$s. Accept or reject (with a reason) by %2$s on this order or under WooCommerce > sudemi."
+msgstr ""
+
+#: includes/class-sudemi-requests.php
+msgid "none given"
+msgstr ""
+
+#: includes/class-sudemi-requests.php
+msgid "A rejection needs a reason. The buyer is shown it."
+msgstr ""
+
+#: includes/class-sudemi-requests.php
+msgid "That is not a sudemi order."
+msgstr ""
+
+#: includes/class-sudemi-requests.php
+msgid "Return request accepted on sudemi. Refund the buyer here (WooCommerce refund) once the item is back; the refund goes through sudemi and closes the request."
+msgstr ""
+
+#. translators: %s: the reason the shop gave, shown to the buyer.
+#: includes/class-sudemi-requests.php
+#, php-format
+msgid "Return request rejected on sudemi. Reason shown to the buyer: %s"
+msgstr ""
+
+#: includes/class-sudemi-requests.php
+msgid "Return accepted. Refund the buyer once the item is back, with a WooCommerce refund on the order."
+msgstr ""
+
+#: includes/class-sudemi-requests.php
+msgid "Return rejected. The buyer is shown your reason."
+msgstr ""
+
+#: includes/class-sudemi-requests.php
+msgid "This request was already answered."
+msgstr ""
+
+#: includes/class-sudemi-requests.php
+msgid "This order has no open return request on sudemi any more."
+msgstr ""
+
+#. translators: %s: error message.
+#: includes/class-sudemi-requests.php
+#, php-format
+msgid "Could not reach sudemi: %s. Nothing was sent; try again."
+msgstr ""
+
+#: includes/class-sudemi-orders.php
+msgid "Cancelled by the buyer on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
+msgstr ""
+
+#. translators: 1: sudemi order id, 2: local order number.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "sudemi order %1$s was cancelled by the buyer before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "return requested"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Return requests"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "No return requests waiting for an answer."
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Buyers asked to return these delivered orders. Answer each by the date shown: accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on the order."
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Buyer's reason"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Answer by"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Your answer"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Accept the return"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Reject the return"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Reason for rejecting (shown to the buyer)"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "sudemi: the buyer asked to return this order"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on this order."
+msgstr ""

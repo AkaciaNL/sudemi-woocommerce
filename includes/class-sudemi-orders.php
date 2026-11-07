@@ -276,6 +276,14 @@ class Sudemi_Orders {
 			return;
 		}
 
+		if ( 'CANCELLED' === $state ) {
+			// Cancelled on sudemi before it was shipped: by the buyer (free of charge before
+			// shipping) or by sudemi. The buyer has their money back, so the local order must not
+			// be shipped. Handled for an order still on hold and for one already paid.
+			self::cancel_from_sudemi( $sudemi_id );
+			return;
+		}
+
 		// Only finds an order still on hold. One already processing, completed or cancelled has
 		// been settled before - by an earlier beat, or by an accept that captured straight away
 		// and is left exactly as it is.
@@ -322,6 +330,52 @@ class Sudemi_Orders {
 			sprintf(
 				/* translators: 1: sudemi order id, 2: local order number. */
 				__( 'sudemi order %1$s is paid; order #%2$s moved to Processing.', 'sudemi' ),
+				$sudemi_id,
+				$order->get_order_number()
+			)
+		);
+	}
+
+	/** Set while this plugin cancels an order sudemi already cancelled, so it is not sent back. */
+	private static $applying_sudemi_cancel = false;
+
+	/**
+	 * Cancels the local order for a sudemi order that was cancelled there (by the buyer before
+	 * shipping). Only an order that has not left the shop (on hold, pending or processing) is
+	 * touched; one already cancelled, refunded or completed is left as it is, so applying the
+	 * same news on every beat changes nothing after the first time.
+	 *
+	 * @param string $sudemi_id The sudemi order id.
+	 */
+	private static function cancel_from_sudemi( $sudemi_id ) {
+		$orders = wc_get_orders(
+			array(
+				'limit'      => 1,
+				'meta_key'   => self::META_ORDER_ID,
+				'meta_value' => $sudemi_id,
+				'status'     => array( 'on-hold', 'pending', 'processing' ),
+			)
+		);
+		if ( empty( $orders ) ) {
+			return;
+		}
+		$order = $orders[0];
+		self::$applying_sudemi_cancel = true;
+		try {
+			// WooCommerce puts the stock back when an order is cancelled; this guard makes sure
+			// it happens once whichever copy of the order is in memory.
+			wc_maybe_increase_stock_levels( $order->get_id() );
+			$order->update_status(
+				'cancelled',
+				__( 'Cancelled by the buyer on sudemi before shipping; the buyer has been refunded in full. Do not ship this order.', 'sudemi' )
+			);
+		} finally {
+			self::$applying_sudemi_cancel = false;
+		}
+		Sudemi_Logger::warn(
+			sprintf(
+				/* translators: 1: sudemi order id, 2: local order number. */
+				__( 'sudemi order %1$s was cancelled by the buyer before shipping; order #%2$s was cancelled here and the stock restored.', 'sudemi' ),
 				$sudemi_id,
 				$order->get_order_number()
 			)
@@ -608,6 +662,10 @@ class Sudemi_Orders {
 	 */
 	public static function on_status_changed( $order_id, $from, $to ) {
 		if ( 'cancelled' !== $to || ! in_array( $from, array( 'processing', 'completed' ), true ) ) {
+			return;
+		}
+		if ( self::$applying_sudemi_cancel ) {
+			// sudemi cancelled it and already refunded the buyer; sending it back would ask twice.
 			return;
 		}
 		$order = wc_get_order( $order_id );

@@ -23,3 +23,5 @@ jobs:
         run: php tests/support-test.php
       - name: Site check (Sudemi-Site, 409 site_mismatch)
         run: php tests/site-test.php
+      - name: Return requests
+        run: php tests/requests-test.php

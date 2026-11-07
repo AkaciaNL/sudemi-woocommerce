@@ -25,6 +25,9 @@ final class Sudemi_Admin {
 		add_action( 'admin_post_sudemi_delivery', array( __CLASS__, 'handle_delivery' ) );
 		add_action( 'admin_post_sudemi_support_open', array( __CLASS__, 'handle_support_open' ) );
 		add_action( 'admin_post_sudemi_support_reply', array( __CLASS__, 'handle_support_reply' ) );
+		add_action( 'admin_post_sudemi_request_answer', array( __CLASS__, 'handle_request_answer' ) );
+		// On the WooCommerce order screen, above the order form (forms cannot be nested in it).
+		add_action( 'admin_notices', array( __CLASS__, 'render_order_screen_request' ) );
 	}
 
 	public static function add_page() {
@@ -113,6 +116,7 @@ final class Sudemi_Admin {
 
 		self::render_listing_status();
 		self::render_delivery();
+		self::render_requests();
 		self::render_order_history();
 
 		echo '<h2>' . esc_html__( 'Set on sudemi, not here', 'sudemi' ) . '</h2>';
@@ -283,7 +287,9 @@ final class Sudemi_Admin {
 			echo '<td><code>' . esc_html( substr( (string) $order['order_id'], 0, 8 ) ) . '</code><br />'
 				. '<span class="description">' . esc_html( isset( $order['placed_at'] ) ? substr( (string) $order['placed_at'], 0, 10 ) : '' ) . '</span></td>';
 			echo '<td>' . esc_html( implode( ', ', $items ) ) . '</td>';
-			echo '<td>' . esc_html( self::order_status_label( $order ) ) . '</td>';
+			$asked = ! empty( $order['customer_request'] ) && is_array( $order['customer_request'] )
+				? ' (' . __( 'return requested', 'sudemi' ) . ')' : '';
+			echo '<td>' . esc_html( self::order_status_label( $order ) . $asked ) . '</td>';
 			echo '<td>' . esc_html( number_format_i18n( $net / 100, 2 ) . ' ' . $currency ) . '</td>';
 			// Only present once sudemi has released it, which is only after this shop confirmed.
 			echo '<td>' . esc_html( isset( $order['customer_name'] ) ? (string) $order['customer_name'] : ' - ' ) . '</td>';
@@ -332,6 +338,143 @@ final class Sudemi_Admin {
 			echo '<tr><td style="width:14rem">' . esc_html( $at ) . '</td><td>' . esc_html( $message ) . '</td></tr>';
 		}
 		echo '</tbody></table>';
+	}
+
+	// ---------------------------------------------------------- return requests ----
+
+	/**
+	 * Every return request this shop still has to answer, with the answer forms.
+	 *
+	 * From the copy the heartbeat keeps (the full list on every beat), so this page does not
+	 * have to ask sudemi before it can show anything.
+	 */
+	private static function render_requests() {
+		$requests = Sudemi_Requests::all();
+		echo '<h2 id="sudemi-requests">' . esc_html__( 'Return requests', 'sudemi' ) . '</h2>';
+		self::render_request_flash();
+		if ( empty( $requests ) ) {
+			echo '<p class="description">' . esc_html__( 'No return requests waiting for an answer.', 'sudemi' ) . '</p>';
+			return;
+		}
+		echo '<p>' . esc_html__( 'Buyers asked to return these delivered orders. Answer each by the date shown: accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on the order.', 'sudemi' ) . '</p>';
+		echo '<table class="widefat striped" style="max-width:60rem"><thead><tr>'
+			. '<th>' . esc_html__( 'Order', 'sudemi' ) . '</th>'
+			. '<th>' . esc_html__( 'Buyer\'s reason', 'sudemi' ) . '</th>'
+			. '<th>' . esc_html__( 'Answer by', 'sudemi' ) . '</th>'
+			. '<th>' . esc_html__( 'Your answer', 'sudemi' ) . '</th>'
+			. '</tr></thead><tbody>';
+		foreach ( $requests as $request ) {
+			$order = Sudemi_Requests::local_order( $request['order_id'] );
+			echo '<tr><td>';
+			if ( $order ) {
+				echo '<a href="' . esc_url( $order->get_edit_order_url() ) . '">#' . esc_html( $order->get_order_number() ) . '</a><br />';
+			}
+			echo '<code>' . esc_html( substr( $request['order_id'], 0, 8 ) ) . '</code></td>';
+			echo '<td>' . esc_html( '' === $request['reason'] ? __( 'none given', 'sudemi' ) : $request['reason'] ) . '</td>';
+			echo '<td>' . esc_html( Sudemi_Requests::date( $request['respond_by'] ) ) . '</td><td>';
+			self::render_request_forms( $request );
+			echo '</td></tr>';
+		}
+		echo '</tbody></table>';
+	}
+
+	/** Accept, and reject with a required reason: two forms, so the reason is required only for one. */
+	private static function render_request_forms( array $request ) {
+		$order_id = $request['order_id'];
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="margin-bottom:.5em">';
+		wp_nonce_field( 'sudemi_request_answer' );
+		echo '<input type="hidden" name="action" value="sudemi_request_answer" />';
+		echo '<input type="hidden" name="order_id" value="' . esc_attr( $order_id ) . '" />';
+		echo '<input type="hidden" name="decision" value="accept" />';
+		submit_button( __( 'Accept the return', 'sudemi' ), 'primary', 'submit', false );
+		echo '</form>';
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
+		wp_nonce_field( 'sudemi_request_answer' );
+		echo '<input type="hidden" name="action" value="sudemi_request_answer" />';
+		echo '<input type="hidden" name="order_id" value="' . esc_attr( $order_id ) . '" />';
+		echo '<input type="hidden" name="decision" value="reject" />';
+		echo '<label>' . esc_html__( 'Reason for rejecting (shown to the buyer)', 'sudemi' )
+			. '<br /><textarea name="reason" rows="2" cols="40" maxlength="1000" required="required"></textarea></label><br />';
+		submit_button( __( 'Reject the return', 'sudemi' ), 'secondary', 'submit', false );
+		echo '</form>';
+	}
+
+	/** On the order edit screen (classic and HPOS), when this order has an open return request. */
+	public static function render_order_screen_request() {
+		if ( ! current_user_can( self::CAPABILITY ) || ! function_exists( 'get_current_screen' ) ) {
+			return;
+		}
+		$screen = get_current_screen();
+		if ( ! $screen || ! in_array( $screen->id, array( 'shop_order', 'woocommerce_page_wc-orders' ), true ) ) {
+			return;
+		}
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation only, nothing changes.
+		$local_id = isset( $_GET['id'] ) ? absint( $_GET['id'] ) : ( isset( $_GET['post'] ) ? absint( $_GET['post'] ) : 0 );
+		$order    = $local_id ? wc_get_order( $local_id ) : null;
+		if ( ! $order ) {
+			return;
+		}
+		$request = Sudemi_Requests::for_order( (string) $order->get_meta( Sudemi_Orders::META_ORDER_ID ) );
+		$flash   = self::take_request_flash();
+		if ( ! $request && ! $flash ) {
+			return;
+		}
+		if ( $flash ) {
+			echo '<div class="notice notice-' . esc_attr( 'success' === $flash['type'] ? 'success' : 'error' ) . '"><p>'
+				. esc_html( $flash['message'] ) . '</p></div>';
+		}
+		if ( ! $request ) {
+			return;
+		}
+		echo '<div class="notice notice-warning sudemi-request"><p><strong>'
+			. esc_html__( 'sudemi: the buyer asked to return this order', 'sudemi' ) . '</strong></p>';
+		echo '<p>' . esc_html__( 'Buyer\'s reason', 'sudemi' ) . ': ' . esc_html( '' === $request['reason'] ? __( 'none given', 'sudemi' ) : $request['reason'] ) . '<br />'
+			. esc_html__( 'Answer by', 'sudemi' ) . ': ' . esc_html( Sudemi_Requests::date( $request['respond_by'] ) ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on this order.', 'sudemi' ) . '</p>';
+		self::render_request_forms( $request );
+		echo '</div>';
+	}
+
+	public static function handle_request_answer() {
+		self::guard( 'sudemi_request_answer' );
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- nonce checked in guard().
+		$order_id = isset( $_POST['order_id'] ) ? sanitize_text_field( wp_unslash( $_POST['order_id'] ) ) : '';
+		$accept   = isset( $_POST['decision'] ) && 'accept' === sanitize_key( wp_unslash( $_POST['decision'] ) );
+		$reason   = isset( $_POST['reason'] ) ? sanitize_textarea_field( wp_unslash( $_POST['reason'] ) ) : '';
+		// phpcs:enable
+		$result = Sudemi_Requests::answer( $order_id, $accept, $reason );
+		set_transient(
+			self::request_flash_key(),
+			array(
+				'type'    => in_array( $result['outcome'], array( 'ok', 'already_resolved' ), true ) ? 'success' : 'error',
+				'message' => $result['message'],
+			),
+			MINUTE_IN_SECONDS
+		);
+		$back = wp_get_referer();
+		wp_safe_redirect( $back ? $back : admin_url( 'admin.php?page=' . self::SLUG ) );
+		exit;
+	}
+
+	private static function request_flash_key() {
+		return 'sudemi_request_flash_' . get_current_user_id();
+	}
+
+	private static function take_request_flash() {
+		$flash = get_transient( self::request_flash_key() );
+		if ( false === $flash ) {
+			return null;
+		}
+		delete_transient( self::request_flash_key() );
+		return is_array( $flash ) && isset( $flash['type'], $flash['message'] ) ? $flash : null;
+	}
+
+	private static function render_request_flash() {
+		$flash = self::take_request_flash();
+		if ( $flash ) {
+			echo '<div class="notice notice-' . esc_attr( 'success' === $flash['type'] ? 'success' : 'error' ) . ' inline"><p>'
+				. esc_html( $flash['message'] ) . '</p></div>';
+		}
 	}
 
 	// ------------------------------------------------------------------ support ----
@@ -611,6 +754,7 @@ final class Sudemi_Admin {
 		Sudemi_Heartbeat::forget();
 		Sudemi_Queue::forget();
 		Sudemi_Challenge::forget();
+		Sudemi_Requests::forget();
 		delete_option( Sudemi_Client::OPTION_INSTALL_ID );
 		// The key goes with the connection. Keeping it would leave a usable credential on a
 		// shop that believes it has disconnected.
