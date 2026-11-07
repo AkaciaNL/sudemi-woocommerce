@@ -113,6 +113,10 @@ final class Sudemi_Support {
 				return 'refused';
 			case 404:
 				return 'not_found';
+			case 409:
+				// This site is not the connected shop (a staging copy or a backup): the overview
+				// tab says why and what to do.
+				return isset( $body['error'] ) && 'site_mismatch' === $body['error'] ? 'refused' : 'unavailable';
 			case 429:
 				return 'too_many_tickets';
 			default:

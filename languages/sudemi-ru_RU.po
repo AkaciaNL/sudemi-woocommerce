@@ -754,3 +754,13 @@ msgstr "Обращение отправлено. Поддержка sudemi от�
 #: admin/class-sudemi-admin.php
 msgid "Your reply was sent."
 msgstr "Ответ отправлен."
+
+#. translators: %s: the address the shop is connected to sudemi under, e.g. https://shop.example.com
+#: includes/class-sudemi-heartbeat.php
+#, php-format
+msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address (%s). If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
+msgstr "sudemi отклонил запросы с этого сайта: этот магазин подключён к sudemi под другим адресом (%s). Если этот сайт является тестовой копией (staging) или восстановленной резервной копией, отключите sudemi здесь. Если магазин переехал на этот адрес, подключите его заново."
+
+#: includes/class-sudemi-heartbeat.php
+msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address. If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
+msgstr "sudemi отклонил запросы с этого сайта: этот магазин подключён к sudemi под другим адресом. Если этот сайт является тестовой копией (staging) или восстановленной резервной копией, отключите sudemi здесь. Если магазин переехал на этот адрес, подключите его заново."

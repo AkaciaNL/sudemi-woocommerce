@@ -752,3 +752,13 @@ msgstr ""
 #: admin/class-sudemi-admin.php
 msgid "Your reply was sent."
 msgstr ""
+
+#. translators: %s: the address the shop is connected to sudemi under, e.g. https://shop.example.com
+#: includes/class-sudemi-heartbeat.php
+#, php-format
+msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address (%s). If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
+msgstr ""
+
+#: includes/class-sudemi-heartbeat.php
+msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address. If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
+msgstr ""

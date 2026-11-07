@@ -757,3 +757,13 @@ msgstr "تم إرسال تذكرتك. سيرد دعم sudemi هنا وعبر ا�
 #: admin/class-sudemi-admin.php
 msgid "Your reply was sent."
 msgstr "تم إرسال ردّك."
+
+#. translators: %s: the address the shop is connected to sudemi under, e.g. https://shop.example.com
+#: includes/class-sudemi-heartbeat.php
+#, php-format
+msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address (%s). If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
+msgstr "رفض sudemi الطلبات القادمة من هذا الموقع: هذا المتجر مربوط بـ sudemi بعنوان آخر (%s). إذا كان هذا الموقع نسخة تجريبية (staging) أو نسخة احتياطية مستعادة، فافصل sudemi هنا. وإذا انتقل المتجر إلى هذا العنوان، فاربطه من جديد."
+
+#: includes/class-sudemi-heartbeat.php
+msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address. If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
+msgstr "رفض sudemi الطلبات القادمة من هذا الموقع: هذا المتجر مربوط بـ sudemi بعنوان آخر. إذا كان هذا الموقع نسخة تجريبية (staging) أو نسخة احتياطية مستعادة، فافصل sudemi هنا. وإذا انتقل المتجر إلى هذا العنوان، فاربطه من جديد."

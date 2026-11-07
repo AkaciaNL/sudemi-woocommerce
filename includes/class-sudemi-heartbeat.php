@@ -109,6 +109,23 @@ final class Sudemi_Heartbeat {
 			return;
 		}
 
+		$paired = Sudemi_Client::site_mismatch( $response );
+		if ( null !== $paired ) {
+			// This site holds the shop's install id and key but is not the shop sudemi knows: a
+			// staging copy, a restored backup, or the shop moved. sudemi refuses it on purpose,
+			// so retrying cannot help; the owner has to disconnect here or connect again.
+			self::remember(
+				array(
+					'reachable' => true,
+					'connected' => false,
+					'problem'   => 'site_mismatch',
+					'message'   => self::site_mismatch_message( $paired ),
+					'checked'   => time(),
+				)
+			);
+			return;
+		}
+
 		if ( 200 !== $response['status'] ) {
 			self::remember(
 				array(
@@ -217,6 +234,18 @@ final class Sudemi_Heartbeat {
 
 	public static function note_change() {
 		update_option( self::OPTION_CHANGES, self::changes() + 1, false );
+	}
+
+	/** What the admin screen says when sudemi refuses this site as not being the connected shop. */
+	public static function site_mismatch_message( $paired ) {
+		if ( is_string( $paired ) && '' !== $paired ) {
+			return sprintf(
+				/* translators: %s: the address the shop is connected to sudemi under, e.g. https://shop.example.com */
+				__( 'sudemi refused requests from this site: this shop is connected to sudemi under a different address (%s). If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again.', 'sudemi' ),
+				$paired
+			);
+		}
+		return __( 'sudemi refused requests from this site: this shop is connected to sudemi under a different address. If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again.', 'sudemi' );
 	}
 
 	private static function product_count() {

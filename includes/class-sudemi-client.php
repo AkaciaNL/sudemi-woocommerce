@@ -40,6 +40,31 @@ final class Sudemi_Client {
 		return is_string( $id ) && '' !== $id ? $id : null;
 	}
 
+	/** This site's own base URL, as WordPress sees it. Sent as Sudemi-Site on every signed call. */
+	public static function site_url() {
+		$url = home_url( '/' );
+		// A header value: no line breaks, whatever a filter on home_url returned.
+		return is_string( $url ) ? trim( preg_replace( '/[\r\n]+/', '', $url ) ) : '';
+	}
+
+	/**
+	 * Whether sudemi refused a call because it came from another site than the connected shop.
+	 *
+	 * @return string|null null when it did not; otherwise the address the shop is connected
+	 *                     under, as sudemi named it, or '' when it could not be read.
+	 */
+	public static function site_mismatch( $response ) {
+		if ( ! is_array( $response ) || 409 !== (int) $response['status']
+			|| ! isset( $response['body']['error'] ) || 'site_mismatch' !== $response['body']['error'] ) {
+			return null;
+		}
+		$message = isset( $response['body']['message'] ) ? (string) $response['body']['message'] : '';
+		if ( preg_match( '#connected to sudemi as (https?://[A-Za-z0-9.:\[\]-]+)#', $message, $match ) ) {
+			return rtrim( $match[1], '.:' );
+		}
+		return '';
+	}
+
 	public static function is_connected() {
 		return null !== self::install_id() && Sudemi_Keys::has_key();
 	}
@@ -160,6 +185,13 @@ final class Sudemi_Client {
 			$headers['Sudemi-Timestamp'] = $timestamp;
 			$headers['Sudemi-Nonce']     = $nonce;
 			$headers['Sudemi-Signature'] = $signature;
+			// Not signed, and not a secret: the address this WordPress believes it lives at. A
+			// staging copy or a restored backup carries this shop's install id and key, and this
+			// is how sudemi tells it apart from the live shop and refuses it (409 site_mismatch).
+			$site = self::site_url();
+			if ( '' !== $site ) {
+				$headers['Sudemi-Site'] = $site;
+			}
 		}
 
 		$response = wp_remote_request(

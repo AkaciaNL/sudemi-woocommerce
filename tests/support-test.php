@@ -124,8 +124,9 @@ $cases = array(
 	429 => array( 'error' => 'too_many_tickets', 'message' => 'slow down' ),
 	500 => array(),
 	403 => array(),
+	409 => array( 'error' => 'site_mismatch', 'message' => 'This shop is connected to sudemi as https://shop.example.com, but ...' ),
 );
-$expect = array( 400 => 'invalid_request', 404 => 'not_found', 429 => 'too_many_tickets', 500 => 'unavailable', 403 => 'refused' );
+$expect = array( 400 => 'invalid_request', 404 => 'not_found', 429 => 'too_many_tickets', 500 => 'unavailable', 403 => 'refused', 409 => 'refused' );
 foreach ( $cases as $status => $body ) {
 	$answer = array( 'status' => $status, 'body' => $body );
 	$result = Sudemi_Support::open_ticket( 'OTHER', 'Subject', 'Hi' );

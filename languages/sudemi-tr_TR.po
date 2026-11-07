@@ -753,3 +753,13 @@ msgstr "Talebiniz gönderildi. sudemi destek ekibi burada ve e-posta ile yanıt 
 #: admin/class-sudemi-admin.php
 msgid "Your reply was sent."
 msgstr "Yanıtınız gönderildi."
+
+#. translators: %s: the address the shop is connected to sudemi under, e.g. https://shop.example.com
+#: includes/class-sudemi-heartbeat.php
+#, php-format
+msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address (%s). If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
+msgstr "sudemi bu siteden gelen istekleri reddetti: bu mağaza sudemi'ye farklı bir adresle bağlı (%s). Bu site bir test (staging) kopyası veya geri yüklenmiş bir yedekse, sudemi bağlantısını burada kesin. Mağaza bu adrese taşındıysa yeniden bağlayın."
+
+#: includes/class-sudemi-heartbeat.php
+msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address. If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
+msgstr "sudemi bu siteden gelen istekleri reddetti: bu mağaza sudemi'ye farklı bir adresle bağlı. Bu site bir test (staging) kopyası veya geri yüklenmiş bir yedekse, sudemi bağlantısını burada kesin. Mağaza bu adrese taşındıysa yeniden bağlayın."

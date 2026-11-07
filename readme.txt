@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,10 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.2.3 =
+* Every signed call now says which site it comes from (the Sudemi-Site header, this WordPress site's own address). A staging copy or a restored backup of the shop holds the same connection, and sudemi now refuses its calls, so a copy can no longer push its catalogue or answer orders as the live shop.
+* When sudemi refuses this site because the shop is connected under another address, the sudemi screen says so: if this site is a staging copy or a restored backup, disconnect sudemi there; if the shop moved, connect it again. In all 12 languages.
 
 = 1.2.2 =
 * New Support tab on WooCommerce → sudemi (once the shop is connected): open a ticket with sudemi support (category, subject, message, optionally a sudemi order ID), see this shop's tickets with their status, read the conversation and reply. Replying to a closed ticket opens it again. Calls are signed with the shop's key like every other call; the plugin sends no e-mail itself (sudemi e-mails the shop's contact address when support answers, in the admin's language). In all 12 languages.

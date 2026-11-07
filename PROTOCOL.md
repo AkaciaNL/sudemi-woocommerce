@@ -140,6 +140,17 @@ old key, and the previous key stays valid for a 10-minute overlap so a shop mid-
 fail every request the moment it rotates. **Revocation** is from the seller portal, and is the
 kill switch for a shop that has been compromised.
 
+**Which site is speaking.** A staging copy or a restored backup of a shop holds the same install
+id and key, so a valid signature does not prove the request came from the live shop. Every signed
+request therefore also carries `Sudemi-Site: <the shop's own base URL as the shop system sees it>`.
+It is outside the canonical string (the signature format is unchanged). sudemi compares its host
+(lower case, without `www.`, default ports ignored) with the paired shop origin and, on a
+mismatch, answers **409** `{"error":"site_mismatch","message":"This shop is connected to sudemi as
+https://shop.example.com, but this request came from https://staging.example.com. ..."}` and
+e-mails the seller (at most daily). The plugin shows it on its settings page as not connected:
+disconnect a copy there, or connect again if the shop moved. A request without the header is
+let through.
+
 > **Availability of Ed25519.** PHP has it through the sodium extension, bundled with PHP since
 > 7.2 and enabled in nearly every distribution build. Each plugin checks for it at install time
 > and refuses to activate with a plain explanation rather than silently falling back to

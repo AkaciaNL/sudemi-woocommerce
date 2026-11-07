@@ -753,3 +753,13 @@ msgstr "Votre ticket a été envoyé. Le support sudemi vous répondra ici et pa
 #: admin/class-sudemi-admin.php
 msgid "Your reply was sent."
 msgstr "Votre réponse a été envoyée."
+
+#. translators: %s: the address the shop is connected to sudemi under, e.g. https://shop.example.com
+#: includes/class-sudemi-heartbeat.php
+#, php-format
+msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address (%s). If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
+msgstr "sudemi a refusé les requêtes de ce site : cette boutique est connectée à sudemi sous une autre adresse (%s). Si ce site est une copie de préproduction (staging) ou une sauvegarde restaurée, déconnectez sudemi ici. Si la boutique a été déplacée vers cette adresse, connectez-la à nouveau."
+
+#: includes/class-sudemi-heartbeat.php
+msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address. If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
+msgstr "sudemi a refusé les requêtes de ce site : cette boutique est connectée à sudemi sous une autre adresse. Si ce site est une copie de préproduction (staging) ou une sauvegarde restaurée, déconnectez sudemi ici. Si la boutique a été déplacée vers cette adresse, connectez-la à nouveau."
