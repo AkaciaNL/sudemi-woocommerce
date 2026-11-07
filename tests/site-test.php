@@ -105,6 +105,12 @@ class Sudemi_Requests {
 		self::$replaced[] = $list;
 	}
 }
+class Sudemi_Orders {
+	public static function reconcile( array $handled ) {}
+}
+class Sudemi_Order_Calls {
+	public static function drain() {}
+}
 $wpdb = new class() {
 	public $posts = 'wp_posts';
 	public function get_row( $sql ) {

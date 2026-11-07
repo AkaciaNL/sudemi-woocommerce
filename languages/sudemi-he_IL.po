@@ -871,3 +871,60 @@ msgstr "sudemi: הקונה מבקש להחזיר הזמנה זו"
 #: admin/class-sudemi-admin.php
 msgid "Accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on this order."
 msgstr "אשרו, או דחו עם סיבה (הקונה יראה אותה). ללא תשובה, sudemi מחליטה. לאחר האישור, החזירו לקונה את הכסף לאחר שהפריט חזר, בהחזר WooCommerce בהזמנה זו."
+
+msgid "1. Add this line to the server's crontab (crontab -e), or as a cron job in your hosting panel:"
+msgstr "1. הוסיפו שורה זו ל-crontab של השרת (crontab -e), או כמשימת cron בלוח הבקרה של האחסון:"
+
+msgid "2. Then switch off the visit-driven WP-Cron by adding this line to wp-config.php, above the line that says to stop editing:"
+msgstr "2. לאחר מכן כבו את WP-Cron המופעל על ידי ביקורים, על ידי הוספת שורה זו ל-wp-config.php, מעל השורה שאומרת להפסיק לערוך:"
+
+msgid "Cancelled on sudemi as well: the buyer was not charged for this order."
+msgstr "בוטלה גם ב-sudemi: הקונה לא חויב עבור הזמנה זו."
+
+msgid "Could not report %1$s for sudemi order %2$s yet (%3$s). It is sent again on the next heartbeat."
+msgstr "עדיין לא ניתן היה לדווח %1$s עבור הזמנת sudemi %2$s (%3$s). הדיווח יישלח שוב בפעימה הבאה."
+
+msgid "Could not tell sudemi about this cancellation yet. It is retried on the next heartbeat; the buyer is not charged for it."
+msgstr "עדיין לא ניתן היה לעדכן את sudemi על הביטול. ניסיון חוזר בפעימה הבאה; הקונה אינו מחויב."
+
+msgid "Keep this shop reporting in (cron)"
+msgstr "שמרו על דיווח קבוע של החנות (cron)"
+
+msgid "Last successful report"
+msgstr "הדיווח המוצלח האחרון"
+
+msgid "More than 15 minutes ago: sudemi pauses this shop's products until it reports in again. Set up the cron job below."
+msgstr "לפני יותר מ-15 דקות: sudemi משהה את מוצרי החנות עד שתדווח שוב. הגדירו את משימת ה-cron למטה."
+
+msgid "Order updates waiting"
+msgstr "עדכוני הזמנות ממתינים"
+
+msgid "Shipped, delivered or cancelled orders that sudemi has not heard about yet. They are sent again on every report until sudemi answers."
+msgstr "הזמנות שנשלחו, נמסרו או בוטלו ו-sudemi עדיין לא יודע עליהן. הן נשלחות שוב בכל דיווח עד ש-sudemi עונה."
+
+msgid "The catalogue sync is on hold: it would remove %1$d of %2$d listed products from sudemi, so nothing was changed. If those products really were removed from this shop, contact sudemi support (support@sudemi.com)."
+msgstr "סנכרון הקטלוג מושהה: הוא היה מסיר מ-sudemi %1$d מתוך %2$d מוצרים מוצגים, ולכן דבר לא שונה. אם המוצרים האלה באמת הוסרו מהחנות, פנו לתמיכה של sudemi (support@sudemi.com)."
+
+msgid "WP-Cron is still visit-driven on this site. It works on busy shops, but a real cron job is more reliable."
+msgstr "באתר זה WP-Cron עדיין מופעל על ידי ביקורים. זה עובד בחנויות עמוסות, אבל משימת cron אמיתית אמינה יותר."
+
+msgid "WP-Cron is switched off on this site (DISABLE_WP_CRON), so the cron job in step 1 is required: without it this shop never reports in."
+msgstr "WP-Cron כבוי באתר זה (DISABLE_WP_CRON), ולכן משימת ה-cron משלב 1 נדרשת: בלעדיה החנות לעולם לא מדווחת."
+
+msgid "WordPress runs its scheduled tasks (WP-Cron) only when someone visits the site. In a quiet hour nobody does, this shop stops reporting in, and sudemi pauses its products and cannot ask it about new orders. Let the server call WP-Cron every 5 minutes instead."
+msgstr "וורדפרס מריצה משימות מתוזמנות (WP-Cron) רק כשמישהו מבקר באתר. בשעה שקטה אף אחד לא מבקר, החנות מפסיקה לדווח, ו-sudemi משהה את מוצריה ואינו יכול לשאול אותה על הזמנות חדשות. במקום זאת, תנו לשרת להפעיל את WP-Cron כל 5 דקות."
+
+msgid "no answer"
+msgstr "אין תשובה"
+
+msgid "sudemi answered the last report in time."
+msgstr "sudemi ענה לדיווח האחרון בזמן."
+
+msgid "sudemi has not answered the confirmation yet. The order stays on hold with its stock reserved and is asked about again on the next heartbeat. Do not ship it until it moves to Processing."
+msgstr "sudemi עדיין לא ענה לאישור. ההזמנה נשארת בהמתנה עם מלאי שמור, ותיבדק שוב בפעימה הבאה. אל תשלחו אותה עד שתעבור למצב בטיפול."
+
+msgid "sudemi says this order is PAID, but it is cancelled here. Either ship it, or refund it to the buyer (set it to Processing and then Cancelled, or contact support@sudemi.com)."
+msgstr "sudemi מציין שההזמנה הזו שולמה, אבל כאן היא מבוטלת. שלחו אותה, או החזירו לקונה את הכסף (העבירו אותה לבטיפול ואז לבוטלה, או פנו אל support@sudemi.com)."
+
+msgid "the order was cancelled in this shop"
+msgstr "ההזמנה בוטלה בחנות זו"

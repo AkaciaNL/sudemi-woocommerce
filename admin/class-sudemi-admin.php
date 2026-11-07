@@ -182,8 +182,23 @@ final class Sudemi_Admin {
 				. '</p></div>';
 		}
 
+		$last_ok = Sudemi_Heartbeat::last_ok();
+		/* translators: %s: human-readable time difference, e.g. "4 mins". */
+		$ok_when = $last_ok ? sprintf( __( '%s ago', 'sudemi' ), human_time_diff( $last_ok, time() ) ) : __( 'never', 'sudemi' );
+
 		echo '<table class="widefat striped" style="max-width:48rem"><tbody>';
 		self::row( __( 'Last reported in', 'sudemi' ), $when, __( 'This shop tells sudemi every five minutes that it is still here and that its prices still stand. When that stops, the listings are paused rather than left at prices nobody is confirming.', 'sudemi' ) );
+		self::row(
+			__( 'Last successful report', 'sudemi' ),
+			$ok_when,
+			( ! $last_ok || $last_ok < time() - 15 * MINUTE_IN_SECONDS )
+				? __( 'More than 15 minutes ago: sudemi pauses this shop\'s products until it reports in again. Set up the cron job below.', 'sudemi' )
+				: __( 'sudemi answered the last report in time.', 'sudemi' )
+		);
+		$calls = Sudemi_Order_Calls::count();
+		if ( $calls > 0 ) {
+			self::row( __( 'Order updates waiting', 'sudemi' ), (string) $calls, __( 'Shipped, delivered or cancelled orders that sudemi has not heard about yet. They are sent again on every report until sudemi answers.', 'sudemi' ) );
+		}
 		if ( ! empty( $status['trusted_until'] ) ) {
 			self::row( __( 'Prices confirmed until', 'sudemi' ), (string) $status['trusted_until'], __( 'After this, sudemi stops showing this shop until it reports in again. Nothing is deleted.', 'sudemi' ) );
 		}
@@ -205,6 +220,29 @@ final class Sudemi_Admin {
 				: __( 'Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted.', 'sudemi' )
 		);
 		echo '</tbody></table>';
+
+		self::render_cron_advice();
+	}
+
+	/**
+	 * WP-Cron only runs when someone visits the site, so a quiet shop stops reporting in and
+	 * sudemi pauses its products. A real cron entry fixes that; shown with the exact lines.
+	 */
+	private static function render_cron_advice() {
+		$cron_url = site_url( 'wp-cron.php?doing_wp_cron' );
+		$disabled = defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON;
+
+		echo '<h3>' . esc_html__( 'Keep this shop reporting in (cron)', 'sudemi' ) . '</h3>';
+		echo '<p>' . esc_html__( 'WordPress runs its scheduled tasks (WP-Cron) only when someone visits the site. In a quiet hour nobody does, this shop stops reporting in, and sudemi pauses its products and cannot ask it about new orders. Let the server call WP-Cron every 5 minutes instead.', 'sudemi' ) . '</p>';
+		echo '<p>' . esc_html__( '1. Add this line to the server\'s crontab (crontab -e), or as a cron job in your hosting panel:', 'sudemi' ) . '</p>';
+		echo '<p><code>' . esc_html( '*/5 * * * * wget -q -O - "' . $cron_url . '" >/dev/null 2>&1' ) . '</code></p>';
+		echo '<p>' . esc_html__( '2. Then switch off the visit-driven WP-Cron by adding this line to wp-config.php, above the line that says to stop editing:', 'sudemi' ) . '</p>';
+		echo '<p><code>' . esc_html( "define( 'DISABLE_WP_CRON', true );" ) . '</code></p>';
+		echo '<p class="description">' . esc_html(
+			$disabled
+				? __( 'WP-Cron is switched off on this site (DISABLE_WP_CRON), so the cron job in step 1 is required: without it this shop never reports in.', 'sudemi' )
+				: __( 'WP-Cron is still visit-driven on this site. It works on busy shops, but a real cron job is more reliable.', 'sudemi' )
+		) . '</p>';
 	}
 
 	private static function row( $label, $value, $note ) {
@@ -753,6 +791,7 @@ final class Sudemi_Admin {
 		Sudemi_Heartbeat::unschedule();
 		Sudemi_Heartbeat::forget();
 		Sudemi_Queue::forget();
+		Sudemi_Order_Calls::forget();
 		Sudemi_Challenge::forget();
 		Sudemi_Requests::forget();
 		delete_option( Sudemi_Client::OPTION_INSTALL_ID );

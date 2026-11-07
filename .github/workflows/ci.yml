@@ -25,3 +25,5 @@ jobs:
         run: php tests/site-test.php
       - name: Return requests
         run: php tests/requests-test.php
+      - name: Order safety (accept/reject/shipped answers, price queue)
+        run: php tests/orders-test.php

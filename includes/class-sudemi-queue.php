@@ -74,20 +74,46 @@ final class Sudemi_Queue {
 		);
 
 		if ( is_wp_error( $response ) || 200 !== $response['status'] ) {
+			if ( ! is_wp_error( $response ) && in_array( (int) $response['status'], array( 400, 403, 413, 422 ), true ) ) {
+				// Refused for good (a malformed batch, or a suspended shop): sending the same
+				// batch on every beat forever changes nothing. Dropped, and the change counter
+				// moves so the catalogue revision disagrees and sudemi asks for a full sync,
+				// which carries these prices with everything else.
+				self::store( self::without_sent( self::all(), $batch ) );
+				Sudemi_Heartbeat::note_change();
+				Sudemi_Logger::error( 'sudemi refused queued price changes (HTTP ' . (int) $response['status'] . '); they were dropped and a full sync will carry them instead.' );
+				return 0;
+			}
 			// Still unreachable. Nothing is dropped, and the next heartbeat tries again.
 			return 0;
 		}
 
-		// Only what was sent is cleared. Anything a save hook added while this request was in
-		// flight stays queued rather than being discarded unsent.
-		$remaining = array_diff_key( self::all(), $batch );
+		// Only what was sent is cleared. A newer change a save hook queued while this request was
+		// in flight, for the same product or another, stays queued rather than being discarded.
+		self::store( self::without_sent( self::all(), $batch ) );
+
+		return isset( $response['body']['applied'] ) ? (int) $response['body']['applied'] : 0;
+	}
+
+	/**
+	 * The queue minus the entries that were sent, compared by value: an entry replaced by a newer
+	 * price while the request was in flight is kept.
+	 */
+	public static function without_sent( array $current, array $sent ) {
+		foreach ( $sent as $key => $value ) {
+			if ( array_key_exists( $key, $current ) && $current[ $key ] == $value ) { // phpcs:ignore Universal.Operators.StrictComparisons.LooseEqual -- arrays compared by content.
+				unset( $current[ $key ] );
+			}
+		}
+		return $current;
+	}
+
+	private static function store( array $remaining ) {
 		if ( empty( $remaining ) ) {
 			delete_option( self::OPTION );
 		} else {
 			update_option( self::OPTION, $remaining, false );
 		}
-
-		return isset( $response['body']['applied'] ) ? (int) $response['body']['applied'] : 0;
 	}
 
 	public static function forget() {

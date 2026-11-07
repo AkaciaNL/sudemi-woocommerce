@@ -29,6 +29,7 @@ final class Sudemi_Heartbeat {
 	const OPTION_STATUS    = 'sudemi_status';
 	const OPTION_INTERVAL  = 'sudemi_heartbeat_seconds';
 	const OPTION_CHANGES   = 'sudemi_change_counter';
+	const OPTION_LAST_OK   = 'sudemi_last_ok';
 
 	/** What this shop asks for. sudemi may hold it to something slower, and says so if it does. */
 	const DEFAULT_INTERVAL = 300;
@@ -61,6 +62,12 @@ final class Sudemi_Heartbeat {
 		delete_option( self::OPTION_STATUS );
 		delete_option( self::OPTION_INTERVAL );
 		delete_option( self::OPTION_CHANGES );
+		delete_option( self::OPTION_LAST_OK );
+	}
+
+	/** When sudemi last answered a heartbeat with 200 (unix time), or 0 when it never has. */
+	public static function last_ok() {
+		return (int) get_option( self::OPTION_LAST_OK, 0 );
 	}
 
 	public static function run() {
@@ -139,6 +146,7 @@ final class Sudemi_Heartbeat {
 		}
 
 		$body = $response['body'];
+		update_option( self::OPTION_LAST_OK, time(), false );
 
 		// A fresh ownership token. sudemi re-proves the domain on a schedule because a listing
 		// names it to buyers as this shop's identity, and domains change hands.
@@ -176,6 +184,23 @@ final class Sudemi_Heartbeat {
 		if ( ! empty( $body['settled_orders'] ) ) {
 			Sudemi_Orders::handle_settled( $body['settled_orders'] );
 		}
+
+		// Local orders still on hold that this beat did not mention: an acceptance whose reply
+		// was lost, or an order whose window closed. Asked about again until sudemi says how
+		// they ended; and calls that did not get through earlier (shipped, delivered, a
+		// cancellation) are sent again.
+		$handled = array();
+		foreach ( array( 'pending_orders', 'settled_orders' ) as $block ) {
+			if ( ! empty( $body[ $block ] ) && is_array( $body[ $block ] ) ) {
+				foreach ( $body[ $block ] as $entry ) {
+					if ( is_array( $entry ) && ! empty( $entry['order_id'] ) ) {
+						$handled[] = (string) $entry['order_id'];
+					}
+				}
+			}
+		}
+		Sudemi_Orders::reconcile( $handled );
+		Sudemi_Order_Calls::drain();
 
 		// Return requests this shop has to answer. The full list on every beat, so the stored
 		// copy is replaced (and emptied when the beat carries none).

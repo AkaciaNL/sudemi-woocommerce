@@ -870,3 +870,60 @@ msgstr "sudemi：买家申请退回此订单"
 #: admin/class-sudemi-admin.php
 msgid "Accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on this order."
 msgstr "接受，或说明原因后拒绝（买家会看到原因）。未答复时由 sudemi 决定。接受后，商品退回时请在此订单上通过 WooCommerce 退款为买家退款。"
+
+msgid "1. Add this line to the server's crontab (crontab -e), or as a cron job in your hosting panel:"
+msgstr "1. 将这一行添加到服务器的 crontab（crontab -e），或在主机控制面板中添加为定时任务："
+
+msgid "2. Then switch off the visit-driven WP-Cron by adding this line to wp-config.php, above the line that says to stop editing:"
+msgstr "2. 然后在 wp-config.php 中提示停止编辑的那一行之上添加这一行，关闭依赖访问触发的 WP-Cron："
+
+msgid "Cancelled on sudemi as well: the buyer was not charged for this order."
+msgstr "已在 sudemi 上一并取消：买家未因此订单被扣款。"
+
+msgid "Could not report %1$s for sudemi order %2$s yet (%3$s). It is sent again on the next heartbeat."
+msgstr "暂时无法为 sudemi 订单 %2$s 报告 %1$s（%3$s）。将在下一次心跳时重新发送。"
+
+msgid "Could not tell sudemi about this cancellation yet. It is retried on the next heartbeat; the buyer is not charged for it."
+msgstr "暂时无法将此取消通知 sudemi。将在下一次心跳时重试；买家不会被扣款。"
+
+msgid "Keep this shop reporting in (cron)"
+msgstr "保持本店定期报到（cron）"
+
+msgid "Last successful report"
+msgstr "上次成功报到"
+
+msgid "More than 15 minutes ago: sudemi pauses this shop's products until it reports in again. Set up the cron job below."
+msgstr "已超过 15 分钟：在本店重新报到之前，sudemi 会暂停其商品。请在下方设置定时任务。"
+
+msgid "Order updates waiting"
+msgstr "待发送的订单更新"
+
+msgid "Shipped, delivered or cancelled orders that sudemi has not heard about yet. They are sent again on every report until sudemi answers."
+msgstr "sudemi 尚未获知的已发货、已送达或已取消的订单。每次报到都会重新发送，直到 sudemi 回复。"
+
+msgid "The catalogue sync is on hold: it would remove %1$d of %2$d listed products from sudemi, so nothing was changed. If those products really were removed from this shop, contact sudemi support (support@sudemi.com)."
+msgstr "目录同步已暂停：它会从 sudemi 下架 %2$d 个在售商品中的 %1$d 个，因此未做任何更改。如果这些商品确实已从本店移除，请联系 sudemi 支持（support@sudemi.com）。"
+
+msgid "WP-Cron is still visit-driven on this site. It works on busy shops, but a real cron job is more reliable."
+msgstr "本站的 WP-Cron 仍依赖访问触发。访问量大的商店可以这样运行，但真正的定时任务更可靠。"
+
+msgid "WP-Cron is switched off on this site (DISABLE_WP_CRON), so the cron job in step 1 is required: without it this shop never reports in."
+msgstr "本站已关闭 WP-Cron（DISABLE_WP_CRON），因此必须设置第 1 步中的定时任务：否则本店永远不会报到。"
+
+msgid "WordPress runs its scheduled tasks (WP-Cron) only when someone visits the site. In a quiet hour nobody does, this shop stops reporting in, and sudemi pauses its products and cannot ask it about new orders. Let the server call WP-Cron every 5 minutes instead."
+msgstr "WordPress 只有在有人访问网站时才会运行计划任务（WP-Cron）。在冷清的时段没有人访问，本店就停止报到，sudemi 会暂停其商品，也无法向其询问新订单。请改由服务器每 5 分钟调用一次 WP-Cron。"
+
+msgid "no answer"
+msgstr "无应答"
+
+msgid "sudemi answered the last report in time."
+msgstr "sudemi 已及时回复上次报到。"
+
+msgid "sudemi has not answered the confirmation yet. The order stays on hold with its stock reserved and is asked about again on the next heartbeat. Do not ship it until it moves to Processing."
+msgstr "sudemi 尚未回复确认。订单保持暂挂并保留库存，将在下一次心跳时再次询问。在状态变为“处理中”之前请勿发货。"
+
+msgid "sudemi says this order is PAID, but it is cancelled here. Either ship it, or refund it to the buyer (set it to Processing and then Cancelled, or contact support@sudemi.com)."
+msgstr "sudemi 显示此订单已付款，但在这里已被取消。请发货，或给买家退款（先设为“处理中”再设为“已取消”，或联系 support@sudemi.com）。"
+
+msgid "the order was cancelled in this shop"
+msgstr "订单已在本店取消"

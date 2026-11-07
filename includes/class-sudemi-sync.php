@@ -106,6 +106,19 @@ final class Sudemi_Sync {
 			Sudemi_Logger::warn( 'The catalogue was sent but the sync could not be committed.' );
 			return;
 		}
+		if ( isset( $committed['body']['status'] ) && 'held' === $committed['body']['status'] ) {
+			// Not applied: it would take a large share of this shop's live products off sudemi,
+			// which sudemi does not do without a person confirming it.
+			Sudemi_Logger::warn(
+				sprintf(
+					/* translators: 1: products that would be removed, 2: products listed now. */
+					__( 'The catalogue sync is on hold: it would remove %1$d of %2$d listed products from sudemi, so nothing was changed. If those products really were removed from this shop, contact sudemi support (support@sudemi.com).', 'sudemi' ),
+					isset( $committed['body']['would_delist'] ) ? (int) $committed['body']['would_delist'] : 0,
+					isset( $committed['body']['live_products'] ) ? (int) $committed['body']['live_products'] : 0
+				)
+			);
+			return;
+		}
 		/* translators: %d: number of products. */
 		Sudemi_Logger::info( sprintf( __( 'Synced %d products.', 'sudemi' ), $count ) );
 	}

@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.2.4
+Stable tag: 1.2.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,16 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.2.5 =
+* Order safety: a paid order is never cancelled because sudemi could not be reached. Only a definitive answer changes the WooCommerce order: "already answered, PAID" (an earlier confirmation landed and its reply was lost) keeps the order and moves it to Processing; DECLINED cancels it and restores the stock. No answer, a server error, "slow down" (429) or a refused site (409) leaves the order on hold with its stock reserved, and it is asked about again on the next heartbeat. Before, any of these cancelled the order and restocked it although the buyer could already have been charged.
+* Orders still on hold are checked with sudemi on every heartbeat until sudemi says how they ended, so an order whose reply was lost, or whose window closed, no longer stays on hold forever.
+* A sudemi order whose WooCommerce order was cancelled is refused on sudemi (the buyer is released), never accepted again.
+* Cancelling an order that is accepted but still waiting for the other shops in the buyer's payment now releases the buyer on sudemi; before, sudemi was not told and could take the money later. If sudemi took the money in the meantime, the order is cancelled there with a full refund.
+* Shipped and delivered reports (and those cancellations) that do not get through are queued and sent again on every heartbeat until sudemi answers; before, a failure was logged as a success and lost.
+* Price changes queued while sudemi was unreachable: a newer price saved while an older one was being sent is no longer dropped, and a batch sudemi refuses for good is not resent forever (a full sync carries it).
+* A catalogue sync that sudemi holds back (it would remove many products) is reported as on hold, not as synced.
+* The sudemi screen shows when the last report succeeded, how many order updates are waiting, and how to set up a real cron job (WP-Cron only runs on visits; call wp-cron.php every 5 minutes and set DISABLE_WP_CRON). In all 12 languages.
 
 = 1.2.4 =
 * Return requests: after delivery a sudemi buyer may ask to return an order, and the shop answers within 7 days. Open requests now appear on the WooCommerce order screen and under WooCommerce → sudemi (Return requests), with the buyer's reason and the answer-by date. Accept, or reject with a reason (required; the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back with a normal WooCommerce refund on the order; it goes through sudemi and closes the request. Each new request is also noted on its order. In all 12 languages.

@@ -875,3 +875,60 @@ msgstr "sudemi: يطلب المشتري إرجاع هذا الطلب"
 #: admin/class-sudemi-admin.php
 msgid "Accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on this order."
 msgstr "اقبل، أو ارفض مع ذكر السبب (سيراه المشتري). من دون رد، تقرر sudemi. بعد القبول، أعد المبلغ إلى المشتري بعد عودة المنتج، باسترداد WooCommerce على هذا الطلب."
+
+msgid "1. Add this line to the server's crontab (crontab -e), or as a cron job in your hosting panel:"
+msgstr "1. أضف هذا السطر إلى crontab الخادم (crontab -e)، أو كمهمة cron في لوحة الاستضافة:"
+
+msgid "2. Then switch off the visit-driven WP-Cron by adding this line to wp-config.php, above the line that says to stop editing:"
+msgstr "2. ثم أوقف WP-Cron المعتمد على الزيارات بإضافة هذا السطر إلى wp-config.php فوق السطر الذي يطلب التوقف عن التعديل:"
+
+msgid "Cancelled on sudemi as well: the buyer was not charged for this order."
+msgstr "أُلغي على sudemi أيضًا: لم يُخصم من المشتري أي مبلغ مقابل هذا الطلب."
+
+msgid "Could not report %1$s for sudemi order %2$s yet (%3$s). It is sent again on the next heartbeat."
+msgstr "تعذّر الإبلاغ عن %1$s لطلب sudemi %2$s حتى الآن (%3$s). سيُرسل مجددًا مع نبضة القلب التالية."
+
+msgid "Could not tell sudemi about this cancellation yet. It is retried on the next heartbeat; the buyer is not charged for it."
+msgstr "تعذّر إبلاغ sudemi بهذا الإلغاء حتى الآن. ستُعاد المحاولة مع نبضة القلب التالية؛ ولن يُخصم من المشتري شيء."
+
+msgid "Keep this shop reporting in (cron)"
+msgstr "حافظ على تواصل هذا المتجر (cron)"
+
+msgid "Last successful report"
+msgstr "آخر إبلاغ ناجح"
+
+msgid "More than 15 minutes ago: sudemi pauses this shop's products until it reports in again. Set up the cron job below."
+msgstr "منذ أكثر من 15 دقيقة: يوقف sudemi منتجات هذا المتجر مؤقتًا حتى يتواصل من جديد. اضبط مهمة cron أدناه."
+
+msgid "Order updates waiting"
+msgstr "تحديثات طلبات بالانتظار"
+
+msgid "Shipped, delivered or cancelled orders that sudemi has not heard about yet. They are sent again on every report until sudemi answers."
+msgstr "طلبات شُحنت أو سُلّمت أو أُلغيت ولم يعلم بها sudemi بعد. تُرسل مجددًا مع كل إبلاغ حتى يرد sudemi."
+
+msgid "The catalogue sync is on hold: it would remove %1$d of %2$d listed products from sudemi, so nothing was changed. If those products really were removed from this shop, contact sudemi support (support@sudemi.com)."
+msgstr "مزامنة الكتالوج معلّقة: كانت ستزيل %1$d من أصل %2$d منتجًا معروضًا على sudemi، لذلك لم يتغير شيء. إذا كانت هذه المنتجات قد أُزيلت فعلًا من هذا المتجر، فتواصل مع دعم sudemi (support@sudemi.com)."
+
+msgid "WP-Cron is still visit-driven on this site. It works on busy shops, but a real cron job is more reliable."
+msgstr "ما زال WP-Cron في هذا الموقع يعتمد على الزيارات. هذا يعمل في المتاجر المزدحمة، لكن مهمة cron حقيقية أكثر موثوقية."
+
+msgid "WP-Cron is switched off on this site (DISABLE_WP_CRON), so the cron job in step 1 is required: without it this shop never reports in."
+msgstr "WP-Cron متوقف في هذا الموقع (DISABLE_WP_CRON)، لذا فإن مهمة cron في الخطوة 1 مطلوبة: بدونها لن يتواصل هذا المتجر أبدًا."
+
+msgid "WordPress runs its scheduled tasks (WP-Cron) only when someone visits the site. In a quiet hour nobody does, this shop stops reporting in, and sudemi pauses its products and cannot ask it about new orders. Let the server call WP-Cron every 5 minutes instead."
+msgstr "لا يشغّل ووردبريس مهامه المجدولة (WP-Cron) إلا عندما يزور أحدٌ الموقع. في ساعة هادئة لا يزوره أحد، فيتوقف هذا المتجر عن التواصل، ويوقف sudemi منتجاته مؤقتًا ولا يستطيع سؤاله عن الطلبات الجديدة. اجعل الخادم يستدعي WP-Cron كل 5 دقائق بدلًا من ذلك."
+
+msgid "no answer"
+msgstr "لا رد"
+
+msgid "sudemi answered the last report in time."
+msgstr "رد sudemi على آخر إبلاغ في الوقت المحدد."
+
+msgid "sudemi has not answered the confirmation yet. The order stays on hold with its stock reserved and is asked about again on the next heartbeat. Do not ship it until it moves to Processing."
+msgstr "لم يرد sudemi على التأكيد بعد. يبقى الطلب معلّقًا مع حجز المخزون، وسيُسأل عنه مجددًا مع نبضة القلب التالية. لا تشحنه حتى تصبح حالته قيد المعالجة."
+
+msgid "sudemi says this order is PAID, but it is cancelled here. Either ship it, or refund it to the buyer (set it to Processing and then Cancelled, or contact support@sudemi.com)."
+msgstr "يقول sudemi إن هذا الطلب مدفوع، لكنه ملغى هنا. إما أن تشحنه أو تردّ المبلغ للمشتري (اجعله قيد المعالجة ثم ملغى، أو راسل support@sudemi.com)."
+
+msgid "the order was cancelled in this shop"
+msgstr "أُلغي الطلب في هذا المتجر"

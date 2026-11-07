@@ -871,3 +871,60 @@ msgstr "sudemi: l'acquirente chiede di restituire questo ordine"
 #: admin/class-sudemi-admin.php
 msgid "Accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on this order."
 msgstr "Accetta, oppure rifiuta con un motivo (l'acquirente lo vedrà). Senza risposta decide sudemi. Dopo aver accettato, rimborsa l'acquirente quando l'articolo è tornato, con un rimborso WooCommerce su questo ordine."
+
+msgid "1. Add this line to the server's crontab (crontab -e), or as a cron job in your hosting panel:"
+msgstr "1. Aggiungi questa riga al crontab del server (crontab -e) oppure come cron job nel pannello del tuo hosting:"
+
+msgid "2. Then switch off the visit-driven WP-Cron by adding this line to wp-config.php, above the line that says to stop editing:"
+msgstr "2. Poi disattiva il WP-Cron basato sulle visite aggiungendo questa riga a wp-config.php, sopra la riga che dice di smettere di modificare:"
+
+msgid "Cancelled on sudemi as well: the buyer was not charged for this order."
+msgstr "Annullato anche su sudemi: all'acquirente non è stato addebitato nulla per questo ordine."
+
+msgid "Could not report %1$s for sudemi order %2$s yet (%3$s). It is sent again on the next heartbeat."
+msgstr "Non è stato ancora possibile segnalare %1$s per l'ordine sudemi %2$s (%3$s). Verrà inviato di nuovo al prossimo heartbeat."
+
+msgid "Could not tell sudemi about this cancellation yet. It is retried on the next heartbeat; the buyer is not charged for it."
+msgstr "Non è stato ancora possibile informare sudemi di questo annullamento. Si riprova al prossimo heartbeat; all'acquirente non viene addebitato nulla."
+
+msgid "Keep this shop reporting in (cron)"
+msgstr "Mantieni attivo questo negozio (cron)"
+
+msgid "Last successful report"
+msgstr "Ultima segnalazione riuscita"
+
+msgid "More than 15 minutes ago: sudemi pauses this shop's products until it reports in again. Set up the cron job below."
+msgstr "Più di 15 minuti fa: sudemi sospende i prodotti di questo negozio finché non si segnala di nuovo. Configura qui sotto il cron job."
+
+msgid "Order updates waiting"
+msgstr "Aggiornamenti ordini in attesa"
+
+msgid "Shipped, delivered or cancelled orders that sudemi has not heard about yet. They are sent again on every report until sudemi answers."
+msgstr "Ordini spediti, consegnati o annullati di cui sudemi non sa ancora nulla. Vengono inviati di nuovo a ogni segnalazione finché sudemi non risponde."
+
+msgid "The catalogue sync is on hold: it would remove %1$d of %2$d listed products from sudemi, so nothing was changed. If those products really were removed from this shop, contact sudemi support (support@sudemi.com)."
+msgstr "La sincronizzazione del catalogo è in attesa: rimuoverebbe da sudemi %1$d dei %2$d prodotti pubblicati, quindi non è stato cambiato nulla. Se quei prodotti sono stati davvero rimossi da questo negozio, contatta il supporto sudemi (support@sudemi.com)."
+
+msgid "WP-Cron is still visit-driven on this site. It works on busy shops, but a real cron job is more reliable."
+msgstr "Su questo sito WP-Cron dipende ancora dalle visite. Funziona per i negozi molto visitati, ma un vero cron job è più affidabile."
+
+msgid "WP-Cron is switched off on this site (DISABLE_WP_CRON), so the cron job in step 1 is required: without it this shop never reports in."
+msgstr "WP-Cron è disattivato su questo sito (DISABLE_WP_CRON), quindi il cron job del passo 1 è obbligatorio: senza di esso questo negozio non si segnala mai."
+
+msgid "WordPress runs its scheduled tasks (WP-Cron) only when someone visits the site. In a quiet hour nobody does, this shop stops reporting in, and sudemi pauses its products and cannot ask it about new orders. Let the server call WP-Cron every 5 minutes instead."
+msgstr "WordPress esegue le attività pianificate (WP-Cron) solo quando qualcuno visita il sito. In un'ora tranquilla nessuno lo fa, questo negozio smette di segnalarsi e sudemi sospende i suoi prodotti e non può sottoporgli nuovi ordini. Fai invece chiamare WP-Cron dal server ogni 5 minuti."
+
+msgid "no answer"
+msgstr "nessuna risposta"
+
+msgid "sudemi answered the last report in time."
+msgstr "sudemi ha risposto in tempo all'ultima segnalazione."
+
+msgid "sudemi has not answered the confirmation yet. The order stays on hold with its stock reserved and is asked about again on the next heartbeat. Do not ship it until it moves to Processing."
+msgstr "sudemi non ha ancora risposto alla conferma. L'ordine resta in sospeso con le scorte riservate e verrà verificato di nuovo al prossimo heartbeat. Non spedirlo finché non passa a In lavorazione."
+
+msgid "sudemi says this order is PAID, but it is cancelled here. Either ship it, or refund it to the buyer (set it to Processing and then Cancelled, or contact support@sudemi.com)."
+msgstr "sudemi indica questo ordine come PAGATO, ma qui è annullato. Spediscilo oppure rimborsa l'acquirente (impostalo su In lavorazione e poi su Annullato, oppure scrivi a support@sudemi.com)."
+
+msgid "the order was cancelled in this shop"
+msgstr "l'ordine è stato annullato in questo negozio"

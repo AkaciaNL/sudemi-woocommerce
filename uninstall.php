@@ -36,6 +36,8 @@ delete_option( 'sudemi_change_counter' );
 // Price changes that never got through. They are worthless without the credential that would
 // have signed them, and leaving them behind would mean a reinstall pushing stale prices.
 delete_option( 'sudemi_pending_prices' );
+delete_option( 'sudemi_pending_order_calls' );
+delete_option( 'sudemi_last_ok' );
 
 wp_clear_scheduled_hook( 'sudemi_full_sync' );
 wp_clear_scheduled_hook( 'sudemi_pairing_poll' );
