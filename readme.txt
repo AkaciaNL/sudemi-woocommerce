@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,9 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.2.2 =
+* New Support tab on WooCommerce → sudemi (once the shop is connected): open a ticket with sudemi support (category, subject, message, optionally a sudemi order ID), see this shop's tickets with their status, read the conversation and reply. Replying to a closed ticket opens it again. Calls are signed with the shop's key like every other call; the plugin sends no e-mail itself (sudemi e-mails the shop's contact address when support answers, in the admin's language). In all 12 languages.
 
 = 1.2.1 =
 * New per-product setting (Product data → sudemi tab): "Right of withdrawal". For products that legally fall under an exception of the EU right of withdrawal (Directive 2011/83/EU, art. 16): sealed for hygiene reasons, made to the buyer's specifications or personalised, perishable, sealed audio/video/software, newspapers and magazines, inseparably mixed after delivery, or alcohol with a market-dependent price delivered after 30+ days. sudemi shows the exception to the buyer before payment. Default: none (the normal right of withdrawal applies). Variations follow their parent product. A change re-sends the catalogue within a minute.

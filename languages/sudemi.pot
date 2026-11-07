@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the sudemi Connector plugin (GPL-2.0-or-later).
 msgid ""
 msgstr ""
-"Project-Id-Version: sudemi Connector 1.2.1\n"
+"Project-Id-Version: sudemi Connector 1.2.2\n"
 "Report-Msgid-Bugs-To: https://github.com/AkaciaNL/sudemi-woocommerce/issues\n"
-"POT-Creation-Date: 2026-11-05 00:00+0000\n"
+"POT-Creation-Date: 2026-11-06 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -576,4 +576,179 @@ msgstr ""
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Alcohol with a market-dependent price, delivered after 30+ days"
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "Choose a category."
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "The subject must be between 3 and 200 characters."
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "The message cannot be empty or longer than 10,000 characters."
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "That does not look like a sudemi order ID. Copy the full ID, or leave the field empty."
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "sudemi could not accept this. Check the subject and the message, and that the order ID belongs to an order of this shop."
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "This ticket was not found. It may belong to another shop or to an earlier connection."
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "This shop has too many open tickets, or opened several in the last hour. Please wait a while, or reply to an existing ticket instead."
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "sudemi refused this shop. Check the connection on the overview tab."
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "Could not reach sudemi just now. Please try again shortly."
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "Payment"
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "Refund or return"
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "Account"
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "Shop plugin or connection"
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "Payouts"
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "Other"
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgctxt "support ticket status"
+msgid "Open"
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "Waiting for your reply"
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "Answered"
+msgstr ""
+
+#: includes/class-sudemi-support.php
+msgid "Closed"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Overview"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Support"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Support is available once this shop is connected to sudemi."
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Questions about an order, a payment, payouts or this plugin? Open a ticket and sudemi support answers here. You also get an e-mail when they reply."
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Your tickets"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "No tickets yet."
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Number"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Subject"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Last updated"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Open a ticket"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Category"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Message"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "sudemi order ID (optional)"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "The full order ID as sudemi shows it, if your question is about one order."
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Send ticket"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Back to your tickets"
+msgstr ""
+
+#. translators: 1: ticket number, e.g. S-000123; 2: ticket subject.
+#: admin/class-sudemi-admin.php
+#, php-format
+msgid "Ticket %1$s: %2$s"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "sudemi support"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "You"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Reply"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "This ticket is closed. Replying opens it again."
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Send reply"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Your ticket was sent. sudemi support answers here, and by e-mail."
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Your reply was sent."
 msgstr ""

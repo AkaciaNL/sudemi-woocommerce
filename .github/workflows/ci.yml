@@ -19,3 +19,5 @@ jobs:
         run: php tests/signature-test.php
       - name: Right-of-withdrawal exclusion
         run: php tests/withdrawal-test.php
+      - name: Support tickets
+        run: php tests/support-test.php

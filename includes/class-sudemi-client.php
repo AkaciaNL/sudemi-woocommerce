@@ -84,6 +84,18 @@ final class Sudemi_Client {
 		return self::request_with_backoff( $path, array(), true, 'GET' );
 	}
 
+	/**
+	 * A signed call made exactly once, for a person waiting on an admin screen.
+	 *
+	 * No backoff: on the support endpoints a 429 means "too many tickets", a limit that a few
+	 * seconds of waiting does not lift, and an admin page must not sit for minutes in sleep().
+	 * Signed exactly like every other call (a GET signs an empty body, the query string is part
+	 * of the signed path).
+	 */
+	public static function send_signed( $method, $path, array $body = array() ) {
+		return self::request( $path, $body, true, 'GET' === $method ? 'GET' : 'POST' );
+	}
+
 	private static function request_with_backoff( $path, array $body, $signed, $method = 'POST' ) {
 		$attempt = 0;
 		while ( true ) {

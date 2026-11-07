@@ -23,6 +23,8 @@ final class Sudemi_Admin {
 		add_action( 'admin_post_sudemi_disconnect', array( __CLASS__, 'handle_disconnect' ) );
 		add_action( 'admin_post_sudemi_sync_now', array( __CLASS__, 'handle_sync_now' ) );
 		add_action( 'admin_post_sudemi_delivery', array( __CLASS__, 'handle_delivery' ) );
+		add_action( 'admin_post_sudemi_support_open', array( __CLASS__, 'handle_support_open' ) );
+		add_action( 'admin_post_sudemi_support_reply', array( __CLASS__, 'handle_support_reply' ) );
 	}
 
 	public static function add_page() {
@@ -48,6 +50,15 @@ final class Sudemi_Admin {
 		$supported  = Sudemi_Keys::is_supported();
 
 		echo '<div class="wrap"><h1>' . esc_html__( 'sudemi', 'sudemi' ) . '</h1>';
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation only, nothing changes.
+		$tab = isset( $_GET['tab'] ) && 'support' === sanitize_key( wp_unslash( $_GET['tab'] ) ) ? 'support' : 'overview';
+		self::render_tabs( $tab );
+		if ( 'support' === $tab ) {
+			self::render_support( $connected );
+			echo '</div>';
+			return;
+		}
 
 		if ( ! $supported ) {
 			echo '<div class="notice notice-error"><p>'
@@ -321,6 +332,263 @@ final class Sudemi_Admin {
 			echo '<tr><td style="width:14rem">' . esc_html( $at ) . '</td><td>' . esc_html( $message ) . '</td></tr>';
 		}
 		echo '</tbody></table>';
+	}
+
+	// ------------------------------------------------------------------ support ----
+
+	private static function render_tabs( $current ) {
+		$tabs = array(
+			'overview' => __( 'Overview', 'sudemi' ),
+			'support'  => __( 'Support', 'sudemi' ),
+		);
+		echo '<nav class="nav-tab-wrapper" style="margin-bottom:1em">';
+		foreach ( $tabs as $key => $label ) {
+			$url = admin_url( 'admin.php?page=' . self::SLUG . ( 'overview' === $key ? '' : '&tab=' . $key ) );
+			echo '<a class="nav-tab' . ( $current === $key ? ' nav-tab-active' : '' ) . '" href="' . esc_url( $url ) . '">'
+				. esc_html( $label ) . '</a>';
+		}
+		echo '</nav>';
+	}
+
+	/**
+	 * Tickets between this shop and sudemi support.
+	 *
+	 * Everything comes from sudemi on each view; nothing is stored here except a one-minute
+	 * notice (and the unsent draft) after a form is submitted.
+	 */
+	private static function render_support( $connected ) {
+		if ( ! $connected ) {
+			echo '<div class="notice notice-info inline"><p>'
+				. esc_html__( 'Support is available once this shop is connected to sudemi.', 'sudemi' )
+				. '</p></div>';
+			return;
+		}
+
+		$flash = self::take_support_flash();
+		if ( $flash ) {
+			echo '<div class="notice ' . ( 'success' === $flash['type'] ? 'notice-success' : 'notice-error' ) . ' inline"><p>'
+				. esc_html( $flash['message'] ) . '</p></div>';
+		}
+		$draft = $flash && isset( $flash['draft'] ) && is_array( $flash['draft'] ) ? $flash['draft'] : array();
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation only, nothing changes.
+		$ticket_id = isset( $_GET['ticket'] ) ? sanitize_text_field( wp_unslash( $_GET['ticket'] ) ) : '';
+		if ( '' !== $ticket_id ) {
+			self::render_support_ticket( $ticket_id, $draft );
+			return;
+		}
+
+		echo '<p>' . esc_html__( 'Questions about an order, a payment, payouts or this plugin? Open a ticket and sudemi support answers here. You also get an e-mail when they reply.', 'sudemi' ) . '</p>';
+
+		echo '<h2>' . esc_html__( 'Your tickets', 'sudemi' ) . '</h2>';
+		$list = Sudemi_Support::list_tickets();
+		if ( ! $list['ok'] ) {
+			echo '<div class="notice notice-warning inline"><p>' . esc_html( Sudemi_Support::error_message( $list['error'] ) ) . '</p></div>';
+		} elseif ( empty( $list['tickets'] ) ) {
+			echo '<p class="description">' . esc_html__( 'No tickets yet.', 'sudemi' ) . '</p>';
+		} else {
+			echo '<table class="widefat striped" style="max-width:60rem"><thead><tr>'
+				. '<th>' . esc_html__( 'Number', 'sudemi' ) . '</th>'
+				. '<th>' . esc_html__( 'Subject', 'sudemi' ) . '</th>'
+				. '<th>' . esc_html__( 'Status', 'sudemi' ) . '</th>'
+				. '<th>' . esc_html__( 'Last updated', 'sudemi' ) . '</th>'
+				. '</tr></thead><tbody>';
+			foreach ( $list['tickets'] as $ticket ) {
+				if ( ! is_array( $ticket ) || empty( $ticket['id'] ) ) {
+					continue;
+				}
+				$url = self::support_url( (string) $ticket['id'] );
+				echo '<tr>';
+				echo '<td><a href="' . esc_url( $url ) . '"><code>' . esc_html( isset( $ticket['number'] ) ? (string) $ticket['number'] : '' ) . '</code></a></td>';
+				echo '<td><a href="' . esc_url( $url ) . '">' . esc_html( isset( $ticket['subject'] ) ? (string) $ticket['subject'] : '' ) . '</a><br />'
+					. '<span class="description">' . esc_html( Sudemi_Support::category_label( isset( $ticket['category'] ) ? (string) $ticket['category'] : '' ) ) . '</span></td>';
+				echo '<td>' . esc_html( Sudemi_Support::status_label( isset( $ticket['status'] ) ? (string) $ticket['status'] : '' ) ) . '</td>';
+				echo '<td>' . esc_html( self::support_time( isset( $ticket['updatedAt'] ) ? $ticket['updatedAt'] : '' ) ) . '</td>';
+				echo '</tr>';
+			}
+			echo '</tbody></table>';
+		}
+
+		self::render_support_open_form( $draft );
+	}
+
+	private static function render_support_open_form( array $draft ) {
+		$value = function ( $key ) use ( $draft ) {
+			return isset( $draft[ $key ] ) && is_string( $draft[ $key ] ) ? $draft[ $key ] : '';
+		};
+
+		echo '<h2>' . esc_html__( 'Open a ticket', 'sudemi' ) . '</h2>';
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="max-width:48rem">';
+		wp_nonce_field( 'sudemi_support_open' );
+		echo '<input type="hidden" name="action" value="sudemi_support_open" />';
+		echo '<table class="form-table" role="presentation"><tbody>';
+
+		echo '<tr><th scope="row"><label for="sudemi-support-category">' . esc_html__( 'Category', 'sudemi' ) . '</label></th><td>'
+			. '<select id="sudemi-support-category" name="category" required>';
+		foreach ( Sudemi_Support::CATEGORIES as $category ) {
+			echo '<option value="' . esc_attr( $category ) . '"' . selected( $value( 'category' ), $category, false ) . '>'
+				. esc_html( Sudemi_Support::category_label( $category ) ) . '</option>';
+		}
+		echo '</select></td></tr>';
+
+		echo '<tr><th scope="row"><label for="sudemi-support-subject">' . esc_html__( 'Subject', 'sudemi' ) . '</label></th><td>'
+			. '<input type="text" id="sudemi-support-subject" name="subject" class="regular-text" required minlength="'
+			. esc_attr( Sudemi_Support::SUBJECT_MIN ) . '" maxlength="' . esc_attr( Sudemi_Support::SUBJECT_MAX ) . '" value="'
+			. esc_attr( $value( 'subject' ) ) . '" /></td></tr>';
+
+		echo '<tr><th scope="row"><label for="sudemi-support-message">' . esc_html__( 'Message', 'sudemi' ) . '</label></th><td>'
+			. '<textarea id="sudemi-support-message" name="message" rows="8" class="large-text" required maxlength="'
+			. esc_attr( Sudemi_Support::MESSAGE_MAX ) . '">' . esc_textarea( $value( 'message' ) ) . '</textarea></td></tr>';
+
+		echo '<tr><th scope="row"><label for="sudemi-support-order">' . esc_html__( 'sudemi order ID (optional)', 'sudemi' ) . '</label></th><td>'
+			. '<input type="text" id="sudemi-support-order" name="order_id" class="regular-text code" maxlength="36" value="'
+			. esc_attr( $value( 'order_id' ) ) . '" />'
+			. '<p class="description">' . esc_html__( 'The full order ID as sudemi shows it, if your question is about one order.', 'sudemi' ) . '</p></td></tr>';
+
+		echo '</tbody></table>';
+		submit_button( __( 'Send ticket', 'sudemi' ), 'primary', 'submit', false );
+		echo '</form>';
+	}
+
+	private static function render_support_ticket( $ticket_id, array $draft ) {
+		echo '<p><a href="' . esc_url( self::support_url() ) . '">&larr; ' . esc_html__( 'Back to your tickets', 'sudemi' ) . '</a></p>';
+
+		$result = Sudemi_Support::get_ticket( $ticket_id );
+		if ( ! $result['ok'] ) {
+			echo '<div class="notice notice-error inline"><p>' . esc_html( Sudemi_Support::error_message( $result['error'] ) ) . '</p></div>';
+			return;
+		}
+		$ticket = $result['ticket'];
+
+		echo '<h2>' . esc_html(
+			sprintf(
+				/* translators: 1: ticket number, e.g. S-000123; 2: ticket subject. */
+				__( 'Ticket %1$s: %2$s', 'sudemi' ),
+				isset( $ticket['number'] ) ? (string) $ticket['number'] : '',
+				isset( $ticket['subject'] ) ? (string) $ticket['subject'] : ''
+			)
+		) . '</h2>';
+		echo '<p class="description">'
+			. esc_html( Sudemi_Support::category_label( isset( $ticket['category'] ) ? (string) $ticket['category'] : '' ) )
+			. ' &middot; ' . esc_html( Sudemi_Support::status_label( isset( $ticket['status'] ) ? (string) $ticket['status'] : '' ) )
+			. ( ! empty( $ticket['orderId'] ) ? ' &middot; ' . esc_html__( 'Order', 'sudemi' ) . ' <code>' . esc_html( (string) $ticket['orderId'] ) . '</code>' : '' )
+			. '</p>';
+
+		$messages = isset( $ticket['messages'] ) && is_array( $ticket['messages'] ) ? $ticket['messages'] : array();
+		echo '<div style="max-width:48rem">';
+		foreach ( $messages as $message ) {
+			if ( ! is_array( $message ) ) {
+				continue;
+			}
+			$from_support = isset( $message['author'] ) && 'SUPPORT' === $message['author'];
+			$style        = $from_support
+				? 'background:#f0f6fc;border-left:4px solid #2271b1;margin:0 3rem 1em 0;'
+				: 'background:#f6f7f7;border-left:4px solid #8c8f94;margin:0 0 1em 3rem;';
+			echo '<div style="' . esc_attr( $style . 'padding:.75em 1em' ) . '">';
+			echo '<p style="margin:0 0 .5em"><strong>'
+				. esc_html( $from_support ? __( 'sudemi support', 'sudemi' ) : __( 'You', 'sudemi' ) )
+				. '</strong> <span class="description">'
+				. esc_html( self::support_time( isset( $message['createdAt'] ) ? $message['createdAt'] : '' ) )
+				. '</span></p>';
+			// Plain text from either side: escaped, never rendered as HTML; line breaks kept.
+			echo '<div style="white-space:pre-wrap;overflow-wrap:anywhere">' . esc_html( isset( $message['body'] ) ? (string) $message['body'] : '' ) . '</div>';
+			echo '</div>';
+		}
+		echo '</div>';
+
+		echo '<h3>' . esc_html__( 'Reply', 'sudemi' ) . '</h3>';
+		if ( isset( $ticket['status'] ) && 'CLOSED' === $ticket['status'] ) {
+			echo '<p class="description">' . esc_html__( 'This ticket is closed. Replying opens it again.', 'sudemi' ) . '</p>';
+		}
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="max-width:48rem">';
+		wp_nonce_field( 'sudemi_support_reply' );
+		echo '<input type="hidden" name="action" value="sudemi_support_reply" />';
+		echo '<input type="hidden" name="ticket" value="' . esc_attr( $ticket_id ) . '" />';
+		echo '<p><textarea name="message" rows="6" class="large-text" required maxlength="' . esc_attr( Sudemi_Support::MESSAGE_MAX ) . '" aria-label="'
+			. esc_attr__( 'Reply', 'sudemi' ) . '">' . esc_textarea( isset( $draft['message'] ) && is_string( $draft['message'] ) ? $draft['message'] : '' ) . '</textarea></p>';
+		submit_button( __( 'Send reply', 'sudemi' ), 'primary', 'submit', false );
+		echo '</form>';
+	}
+
+	public static function handle_support_open() {
+		self::guard( 'sudemi_support_open' );
+		$draft = array(
+			'category' => isset( $_POST['category'] ) ? sanitize_key( wp_unslash( $_POST['category'] ) ) : '',
+			'subject'  => isset( $_POST['subject'] ) ? sanitize_text_field( wp_unslash( $_POST['subject'] ) ) : '',
+			'message'  => self::posted_message(),
+			'order_id' => isset( $_POST['order_id'] ) ? sanitize_text_field( wp_unslash( $_POST['order_id'] ) ) : '',
+		);
+		$draft['category'] = strtoupper( $draft['category'] );
+		$result = Sudemi_Support::open_ticket( $draft['category'], $draft['subject'], $draft['message'], $draft['order_id'], get_user_locale() );
+		if ( $result['ok'] ) {
+			self::put_support_flash( 'success', __( 'Your ticket was sent. sudemi support answers here, and by e-mail.', 'sudemi' ) );
+			self::support_back( isset( $result['ticket']['id'] ) && Sudemi_Support::is_ticket_id( $result['ticket']['id'] ) ? $result['ticket']['id'] : '' );
+		}
+		self::put_support_flash( 'error', Sudemi_Support::error_message( $result['error'] ), $draft );
+		self::support_back();
+	}
+
+	public static function handle_support_reply() {
+		self::guard( 'sudemi_support_reply' );
+		$ticket  = isset( $_POST['ticket'] ) ? sanitize_text_field( wp_unslash( $_POST['ticket'] ) ) : '';
+		$message = self::posted_message();
+		if ( ! Sudemi_Support::is_ticket_id( $ticket ) ) {
+			self::put_support_flash( 'error', Sudemi_Support::error_message( 'not_found' ) );
+			self::support_back();
+		}
+		$result = Sudemi_Support::reply( $ticket, $message );
+		if ( $result['ok'] ) {
+			self::put_support_flash( 'success', __( 'Your reply was sent.', 'sudemi' ) );
+		} else {
+			self::put_support_flash( 'error', Sudemi_Support::error_message( $result['error'] ), array( 'message' => $message ) );
+		}
+		self::support_back( $ticket );
+	}
+
+	/**
+	 * The message as typed. Not run through sanitize_textarea_field(), which would silently drop
+	 * anything that looks like a tag -- and a pasted error message often does. It is sent as JSON
+	 * and is escaped wherever it is shown, here and on sudemi; only invalid UTF-8 and control
+	 * characters other than line breaks and tabs are removed.
+	 */
+	private static function posted_message() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- nonce checked in guard(); cleaned below.
+		$raw = isset( $_POST['message'] ) ? (string) wp_unslash( $_POST['message'] ) : '';
+		$raw = wp_check_invalid_utf8( $raw );
+		return (string) preg_replace( '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', '', $raw );
+	}
+
+	private static function support_url( $ticket_id = '' ) {
+		$url = admin_url( 'admin.php?page=' . self::SLUG . '&tab=support' );
+		return '' === $ticket_id ? $url : add_query_arg( 'ticket', rawurlencode( $ticket_id ), $url );
+	}
+
+	private static function support_back( $ticket_id = '' ) {
+		wp_safe_redirect( self::support_url( $ticket_id ) );
+		exit;
+	}
+
+	private static function support_flash_key() {
+		return 'sudemi_support_flash_' . get_current_user_id();
+	}
+
+	/** Per admin user, one minute: the result of the form just sent, and the draft if it failed. */
+	private static function put_support_flash( $type, $message, array $draft = array() ) {
+		set_transient( self::support_flash_key(), array( 'type' => $type, 'message' => $message, 'draft' => $draft ), MINUTE_IN_SECONDS );
+	}
+
+	private static function take_support_flash() {
+		$flash = get_transient( self::support_flash_key() );
+		if ( false === $flash ) {
+			return null;
+		}
+		delete_transient( self::support_flash_key() );
+		return is_array( $flash ) && isset( $flash['type'], $flash['message'] ) ? $flash : null;
+	}
+
+	private static function support_time( $iso ) {
+		$ts = is_string( $iso ) && '' !== $iso ? strtotime( $iso ) : false;
+		return $ts ? wp_date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $ts ) : '';
 	}
 
 	// ------------------------------------------------------------------ actions ----
