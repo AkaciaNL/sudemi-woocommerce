@@ -1,0 +1,9 @@
+# Left out of the release zip (git archive, .github/workflows/release.yml): tests, CI and
+# developer documentation. Shops get the plugin, readme.txt and the licence.
+/tests export-ignore
+/.github export-ignore
+/.gitignore export-ignore
+/.gitattributes export-ignore
+/README.md export-ignore
+/PROTOCOL.md export-ignore
+/SECURITY.md export-ignore

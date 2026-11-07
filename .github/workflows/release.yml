@@ -1,0 +1,70 @@
+name: Release
+
+# Owner decision 2026-11-07: the plugin stays closed source and is distributed as a GitHub release
+# of this private repository; sudemi.com/downloads serves the latest release zip to shops.
+#
+# Push a tag v<version> (for example v1.2.2). The tag must equal the version inside the plugin
+# (plugin header, SUDEMI_VERSION, readme.txt Stable tag and a readme.txt changelog entry), or the
+# release fails. The zip is what WordPress expects under Plugins > Add New > Upload Plugin: one
+# folder sudemi-connector/ with the plugin inside. Files marked export-ignore in .gitattributes
+# (tests, CI, developer docs) are left out.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tag matches the plugin version
+        run: |
+          set -eu
+          v="${GITHUB_REF_NAME#v}"
+          echo "$v" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' || { echo "tag $GITHUB_REF_NAME is not v<major>.<minor>.<patch>"; exit 1; }
+          header="$(sed -nE 's/^ \* Version:[[:space:]]+([^[:space:]]+).*/\1/p' sudemi-connector.php)"
+          constant="$(sed -nE "s/^define\( 'SUDEMI_VERSION', '([^']+)' \);.*/\1/p" sudemi-connector.php)"
+          stable="$(sed -nE 's/^Stable tag:[[:space:]]+([^[:space:]]+).*/\1/p' readme.txt)"
+          echo "tag $v, header $header, SUDEMI_VERSION $constant, Stable tag $stable"
+          [ "$header" = "$v" ] && [ "$constant" = "$v" ] && [ "$stable" = "$v" ] \
+            || { echo "tag and plugin version differ"; exit 1; }
+          grep -qx "= $v =" readme.txt || { echo "readme.txt has no changelog entry = $v ="; exit 1; }
+          echo "VERSION=$v" >> "$GITHUB_ENV"
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: sodium
+
+      # The same checks as CI, so a tag on an untested commit cannot ship.
+      - name: Lint and tests
+        run: |
+          find . -name '*.php' -print0 | xargs -0 -n1 php -l
+          for t in tests/*-test.php; do php "$t"; done
+
+      - name: Build the zip
+        run: |
+          set -eu
+          zip="sudemi-connector-$VERSION.zip"
+          git archive --format=zip --prefix=sudemi-connector/ -o "$zip" HEAD
+          unzip -Z1 "$zip" > files.txt
+          grep -vq '^sudemi-connector/' files.txt && { echo "file outside sudemi-connector/"; exit 1; } || true
+          grep -q '^sudemi-connector/sudemi-connector.php$' files.txt || { echo "main plugin file missing"; exit 1; }
+          grep -Eq '^sudemi-connector/(tests|\.github)/|\.git(ignore|attributes)$' files.txt && { echo "dev files in the zip"; exit 1; } || true
+          sha256sum "$zip" > "$zip.sha256"
+          cat "$zip.sha256"; ls -l "$zip"
+          echo "ZIP=$zip" >> "$GITHUB_ENV"
+
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          awk -v h="= $VERSION =" '$0 == h {on=1; next} on && /^= / {exit} on' readme.txt > notes.md
+          printf '\nInstall: WordPress admin, Plugins > Add New > Upload Plugin, choose %s.\n' "$ZIP" >> notes.md
+          gh release create "$GITHUB_REF_NAME" "$ZIP" "$ZIP.sha256" \
+            --title "sudemi Connector for WooCommerce $VERSION" --notes-file notes.md --verify-tag
