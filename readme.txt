@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.2.6
+Stable tag: 1.2.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,13 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.2.7 =
+* No full catalogue sync runs inside a page request. The full sync was already a WP-Cron event (never run by an admin or storefront page itself), but with ALTERNATE_WP_CRON WordPress runs due events inside the visitor's own page request, where a whole sync kept that request busy for minutes. The sync now remembers where it stopped: inside a page request it sends at most 25 products (about two seconds) and schedules the rest as a follow-up event; from wp-cron.php (a real cron entry or WordPress's own background request) it runs to the end. A database lock keeps two requests from sending it at once; a sync stopped halfway resumes where it stopped.
+* Editing a variable product or one of its variations sends every variation's whole listing in one push, with the shop's catalogue revision computed after the save, so such an edit no longer costs a full catalogue sync. The revision is only sent when no price change is queued, the category tree sudemi holds is current, every request of the push was accepted whole, and no listing removed in the shop is still waiting for a full sync to take it off sudemi.
+* A product or variation that stops being sellable (unpublished, disabled, hidden, trashed, deleted) is counted as a removal: until a full sync has taken it off sudemi, no push carries the catalogue revision. Before, editing another product after such a change could make sudemi agree with the shop while the removed product stayed listed.
+* Product changes are pushed once at the end of the request (after WooCommerce's own parent sync), instead of once per save hook.
+* PROTOCOL.md: current copy (a full sync never runs inside a page request).
 
 = 1.2.6 =
 * The full sync's commit carries the catalogue revision the shop had when the sync started. sudemi adopts it, so a product changed or removed while the sync ran is caught by the next heartbeat and synced. The heartbeat right after the commit is still sent.

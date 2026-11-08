@@ -552,6 +552,10 @@ Non-negotiable for anything carrying our name, and each repo's review checklist 
   never include it in a support export or a debug dump.
 - **Never block the shop.** Sync runs in the background, on the host's own scheduler. A sudemi
   outage must not slow a checkout or an admin page. Every call has a timeout and a backoff.
+  **A full catalogue sync never runs inside a page request** (admin or storefront, a "send the
+  catalogue now" button included): a page may only ask for one (a flag) and send a heartbeat.
+  The plugin's cron entry runs it; without cron it runs in small resumable steps (25 products,
+  about two seconds) after a page was produced, under a database lock (owner, 2026-11-08).
 - **Verify TLS.** No disabling of certificate verification, not even behind an option.
 - **Authorise the admin screens.** Capability checks plus the platform's CSRF token on every
   form and every AJAX route.

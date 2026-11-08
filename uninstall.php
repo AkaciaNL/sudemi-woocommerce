@@ -37,12 +37,17 @@ delete_option( 'sudemi_change_counter' );
 // have signed them, and leaving them behind would mean a reinstall pushing stale prices.
 delete_option( 'sudemi_pending_prices' );
 delete_option( 'sudemi_categories_sent' );
+delete_option( 'sudemi_removals' );
+delete_option( 'sudemi_sync_state' );
+delete_option( 'sudemi_removals_synced' );
 delete_option( 'sudemi_pending_order_calls' );
 delete_option( 'sudemi_last_ok' );
 
 wp_clear_scheduled_hook( 'sudemi_full_sync' );
+wp_clear_scheduled_hook( 'sudemi_full_sync', array( 'continue' ) );
 wp_clear_scheduled_hook( 'sudemi_pairing_poll' );
 wp_clear_scheduled_hook( 'sudemi_heartbeat' );
 
 // The per-product right-of-withdrawal setting only means something to sudemi.
 delete_post_meta_by_key( '_sudemi_withdrawal_exclusion' );
+delete_post_meta_by_key( '_sudemi_unlisted' );

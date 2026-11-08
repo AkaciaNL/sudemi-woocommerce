@@ -20,7 +20,7 @@ final class Sudemi_Sync {
 	const BATCH_SIZE  = 100;
 
 	public static function boot() {
-		add_action( self::CRON_FULL, array( __CLASS__, 'run_full' ) );
+		add_action( self::CRON_FULL, array( __CLASS__, 'cron_full' ), 10, 1 );
 		// Price and stock, as they change. Guarded inside so an unconnected shop does nothing.
 		add_action( 'woocommerce_update_product', array( __CLASS__, 'on_product_changed' ), 10, 1 );
 		// Shipping prices come from the shipping zones: a change there re-sends the catalogue.
@@ -30,6 +30,10 @@ final class Sudemi_Sync {
 		add_action( 'woocommerce_product_set_stock', array( __CLASS__, 'on_product_object_changed' ), 10, 1 );
 		add_action( 'woocommerce_update_product_variation', array( __CLASS__, 'on_product_changed' ), 10, 1 );
 		add_action( 'woocommerce_variation_set_stock', array( __CLASS__, 'on_product_object_changed' ), 10, 1 );
+		// A listing gone from the shop (unpublished, trashed, deleted) stays on sudemi until a
+		// full sync's commit removes it; see note_removal().
+		add_action( 'transition_post_status', array( __CLASS__, 'on_status_changed' ), 10, 3 );
+		add_action( 'before_delete_post', array( __CLASS__, 'on_post_deleted' ), 10, 1 );
 	}
 
 	/** A full sync shortly, once, however many changes trigger it. */
@@ -51,34 +55,128 @@ final class Sudemi_Sync {
 			wp_unschedule_event( $timestamp, self::CRON_FULL );
 			$timestamp = wp_next_scheduled( self::CRON_FULL );
 		}
+		// Follow-up steps of a sync that ran inside page requests (see cron_full()).
+		wp_clear_scheduled_hook( self::CRON_FULL, array( 'continue' ) );
 	}
 
-	/** A full pass: shop metadata, the category tree, then every product, then commit. */
-	public static function run_full() {
-		if ( ! Sudemi_Client::is_connected() ) {
-			return;
-		}
+	/** The full sync in progress: its id, where it stopped, the revision it started from. */
+	const OPTION_STATE = 'sudemi_sync_state';
 
+	/** A cron run inside a visitor's page request sends at most this many products / seconds. */
+	const STEP_PRODUCTS = 25;
+	const STEP_SECONDS  = 2;
+
+	/** sudemi drops an uncommitted sync after 6 hours; one older than this is started again. */
+	const MAX_SYNC_AGE = 19800;
+
+	/**
+	 * The full-sync event. WP-Cron normally runs it in its own background request (wp-cron.php),
+	 * where the whole sync runs. With ALTERNATE_WP_CRON, WordPress runs due events inside the
+	 * visitor's own page request; a full sync there kept that PHP request busy for minutes, so
+	 * then only a small step is sent and the rest is scheduled as a follow-up event.
+	 *
+	 * @param string|null $mode 'continue' for a follow-up event: it never starts a new sync.
+	 */
+	public static function cron_full( $mode = null ) {
+		$inline = self::inside_page_request();
+		$result = self::work( $inline ? self::STEP_PRODUCTS : 0, $inline ? self::STEP_SECONDS : 0, 'continue' !== $mode );
+		if ( 'more' === $result ) {
+			wp_schedule_single_event( time(), self::CRON_FULL, array( 'continue' ) );
+		}
+	}
+
+	/** Whether this cron run is inside a visitor's page request (ALTERNATE_WP_CRON). */
+	private static function inside_page_request() {
+		$inline = defined( 'ALTERNATE_WP_CRON' ) && ALTERNATE_WP_CRON
+			&& ! ( defined( 'WP_CLI' ) && WP_CLI )
+			&& ( empty( $_SERVER['SCRIPT_FILENAME'] ) || 'wp-cron.php' !== basename( (string) $_SERVER['SCRIPT_FILENAME'] ) );
+		/**
+		 * Whether the full sync is running inside a page request, and so sends only a step.
+		 *
+		 * @param bool $inline What the plugin determined.
+		 */
+		return (bool) apply_filters( 'sudemi_full_sync_in_page_request', $inline );
+	}
+
+	/** A whole full sync, now: for WP-CLI and scripts. Continues one already in progress. */
+	public static function run_full() {
+		do {
+			$result = self::work( 0, 0, true );
+		} while ( 'more' === $result );
+		return 'done' === $result;
+	}
+
+	/**
+	 * Sends the full sync in progress, or starts one, for at most $max_products products and
+	 * $max_seconds seconds (0 = to the end), and remembers where it stopped. A MySQL named lock
+	 * keeps two requests from sending it at once.
+	 *
+	 * @return string 'idle', 'busy', 'more', 'done', 'held' or 'failed'.
+	 */
+	private static function work( $max_products, $max_seconds, $start_new ) {
+		if ( ! Sudemi_Client::is_connected() ) {
+			return 'idle';
+		}
+		if ( ! self::lock() ) {
+			return 'busy';
+		}
+		try {
+			$state = self::state();
+			if ( null !== $state && time() - (int) $state['started'] > self::MAX_SYNC_AGE ) {
+				Sudemi_Logger::warn( 'An unfinished catalogue sync was too old and is started again.' );
+				delete_option( self::OPTION_STATE );
+				$state     = null;
+				$start_new = true;
+			}
+			if ( null === $state ) {
+				if ( ! $start_new ) {
+					return 'idle';
+				}
+				$state = self::start();
+				if ( null === $state ) {
+					return 'failed';
+				}
+			}
+			return self::advance( $state, (int) $max_products, (int) $max_seconds );
+		} finally {
+			self::unlock();
+		}
+	}
+
+	/** Opens a sync on sudemi and sends the shop and its categories; null when sudemi refused. */
+	private static function start() {
 		$started = Sudemi_Client::post_signed( '/integration/v1/sync', array() );
 		if ( is_wp_error( $started ) || 200 !== $started['status'] || empty( $started['body']['sync_id'] ) ) {
 			Sudemi_Logger::warn( 'Could not start a catalogue sync.' );
-			return;
+			return null;
 		}
-		$sync_id = (string) $started['body']['sync_id'];
-		// What the catalogue was when this sync started reading it. Sent with the commit and in a
-		// heartbeat right after it, so sudemi holds the revision this sync describes; see
-		// Sudemi_Heartbeat::anchor().
-		$anchor = Sudemi_Heartbeat::revision();
-
+		$state = array(
+			'id'       => (string) $started['body']['sync_id'],
+			// What the catalogue was when this sync started reading it. Sent with the commit and
+			// in a heartbeat right after it, so sudemi holds the revision this sync describes;
+			// see Sudemi_Heartbeat::anchor().
+			'anchor'   => Sudemi_Heartbeat::revision(),
+			// Listings removed in the shop so far; this sync's commit takes them off sudemi.
+			'removals' => self::removals(),
+			'cursor'   => 0,
+			'sent'     => 0,
+			'started'  => time(),
+		);
+		update_option( self::OPTION_STATE, $state, false );
 		self::push_shop();
 		self::push_categories();
+		return $state;
+	}
 
-		$page  = 1;
-		$count = 0;
-		do {
-			$ids = self::product_ids( $page );
+	/** Sends products after the cursor, page by page, then commits; see work(). */
+	private static function advance( array $state, $max_products, $max_seconds ) {
+		$began = microtime( true );
+		$done  = 0;
+		while ( true ) {
+			$size = $max_products > 0 ? min( self::BATCH_SIZE, $max_products - $done ) : self::BATCH_SIZE;
+			$ids  = self::product_ids_after( (int) $state['cursor'], $size );
 			if ( empty( $ids ) ) {
-				break;
+				return self::commit( $state );
 			}
 			$products = array();
 			foreach ( $ids as $id ) {
@@ -91,30 +189,37 @@ final class Sudemi_Sync {
 				$sent = Sudemi_Client::post_signed(
 					'/integration/v1/products',
 					array(
-						'syncId'   => $sync_id,
+						'syncId'   => $state['id'],
 						'products' => $products,
 					)
 				);
 				if ( is_wp_error( $sent ) || 200 !== $sent['status'] ) {
-					// Abandon rather than commit. An uncommitted sync delists nothing.
-					Sudemi_Logger::warn( 'A batch failed; the sync was abandoned and nothing was delisted.' );
-					return;
+					return self::failed( $sent, 'A batch failed' );
 				}
-				$count += count( $products );
 			}
-			++$page;
-		} while ( true );
+			// Moved on only once the page is in: a step stopped halfway sends it again.
+			$state['cursor'] = (int) end( $ids );
+			$state['sent']   = (int) $state['sent'] + count( $products );
+			update_option( self::OPTION_STATE, $state, false );
+			$done += count( $ids );
+			if ( ( $max_products > 0 && $done >= $max_products ) || ( $max_seconds > 0 && microtime( true ) - $began >= $max_seconds ) ) {
+				return 'more';
+			}
+		}
+	}
 
+	private static function commit( array $state ) {
 		// The commit carries the revision the sync started from: sudemi adopts it, so anything
 		// changed while the sync ran makes the next heartbeat disagree and is synced next time.
+		$anchor    = isset( $state['anchor'] ) ? $state['anchor'] : null;
 		$committed = Sudemi_Client::post_signed(
-			'/integration/v1/sync/' . rawurlencode( $sync_id ) . '/commit',
+			'/integration/v1/sync/' . rawurlencode( (string) $state['id'] ) . '/commit',
 			null === $anchor ? array() : array( 'catalogueRevision' => $anchor )
 		);
 		if ( is_wp_error( $committed ) || 200 !== $committed['status'] ) {
-			Sudemi_Logger::warn( 'The catalogue was sent but the sync could not be committed.' );
-			return;
+			return self::failed( $committed, 'The catalogue was sent but the sync could not be committed' );
 		}
+		delete_option( self::OPTION_STATE );
 		if ( isset( $committed['body']['status'] ) && 'held' === $committed['body']['status'] ) {
 			// Not applied: it would take a large share of this shop's live products off sudemi,
 			// which sudemi does not do without a person confirming it.
@@ -126,11 +231,62 @@ final class Sudemi_Sync {
 					isset( $committed['body']['live_products'] ) ? (int) $committed['body']['live_products'] : 0
 				)
 			);
-			return;
+			return 'held';
+		}
+		if ( (int) $state['removals'] > (int) get_option( self::OPTION_REMOVALS_SYNCED, 0 ) ) {
+			update_option( self::OPTION_REMOVALS_SYNCED, (int) $state['removals'], false );
 		}
 		Sudemi_Heartbeat::anchor( $anchor );
 		/* translators: %d: number of products. */
-		Sudemi_Logger::info( sprintf( __( 'Synced %d products.', 'sudemi' ), $count ) );
+		Sudemi_Logger::info( sprintf( __( 'Synced %d products.', 'sudemi' ), (int) $state['sent'] ) );
+		return 'done';
+	}
+
+	/**
+	 * A request of the sync that did not get through. Unanswered, throttled or a server error:
+	 * kept for the next run. Refused (the sync expired or closed, the shop is suspended):
+	 * abandoned, which delists nothing.
+	 */
+	private static function failed( $response, $what ) {
+		$status = is_wp_error( $response ) ? 0 : (int) $response['status'];
+		if ( 0 === $status || 429 === $status || $status >= 500 ) {
+			Sudemi_Logger::warn( $what . '; it is retried on the next run.' );
+			return 'failed';
+		}
+		delete_option( self::OPTION_STATE );
+		Sudemi_Logger::warn( $what . ' (HTTP ' . $status . '); the sync was abandoned and nothing was delisted.' );
+		return 'failed';
+	}
+
+	/** The state as the database holds it now (another request may have moved it on). */
+	private static function state() {
+		global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$raw   = $wpdb->get_var( $wpdb->prepare( "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", self::OPTION_STATE ) );
+		$state = null === $raw ? null : maybe_unserialize( $raw );
+		return is_array( $state ) && ! empty( $state['id'] ) ? $state : null;
+	}
+
+	/** Whether a full sync was started and has not finished. */
+	public static function in_progress() {
+		return null !== self::state();
+	}
+
+	private static function lock() {
+		global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		return 1 === (int) $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK(%s, 0)', self::lock_name() ) );
+	}
+
+	private static function unlock() {
+		global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->get_var( $wpdb->prepare( 'SELECT RELEASE_LOCK(%s)', self::lock_name() ) );
+	}
+
+	private static function lock_name() {
+		global $wpdb;
+		return 'sudemi_sync_' . substr( md5( DB_NAME . '|' . $wpdb->prefix ), 0, 16 );
 	}
 
 	public static function on_product_changed( $product_id ) {
@@ -141,18 +297,73 @@ final class Sudemi_Sync {
 		if ( ! $product ) {
 			return;
 		}
-		self::push_delta( $product );
+		self::defer( $product );
 	}
 
 	public static function on_product_object_changed( $product ) {
 		if ( ! Sudemi_Client::is_connected() || ! $product ) {
 			return;
 		}
-		self::push_delta( $product );
+		self::defer( $product );
+	}
+
+	/** A product or variation that was published is not any more (draft, private, trash). */
+	public static function on_status_changed( $new_status, $old_status, $post ) {
+		if ( 'publish' === $old_status && 'publish' !== $new_status && isset( $post->post_type )
+			&& in_array( $post->post_type, array( 'product', 'product_variation' ), true ) ) {
+			self::note_removal();
+		}
+	}
+
+	public static function on_post_deleted( $post_id ) {
+		if ( in_array( get_post_type( $post_id ), array( 'product', 'product_variation' ), true ) ) {
+			self::note_removal();
+		}
+	}
+
+	/** Products changed in this request, pushed once when it ends; see defer(). */
+	private static $changed = array();
+
+	/**
+	 * Queues a changed product (or the variable product a variation belongs to) for a push when
+	 * this request ends.
+	 *
+	 * Once per product and at the end, not from each hook: saving a variable product saves every
+	 * variation and then the parent (WooCommerce syncs the parent on shutdown too), and the
+	 * catalogue revision a push carries has to be the one that holds after all of them.
+	 */
+	private static function defer( $product ) {
+		$family = $product->is_type( 'variation' ) ? (int) $product->get_parent_id() : (int) $product->get_id();
+		if ( $family <= 0 ) {
+			return;
+		}
+		// Counted now, not after a push: the counter is what lets sudemi notice a change that
+		// never arrived, so it has to move even when the push fails or never runs.
+		Sudemi_Heartbeat::note_change();
+		if ( empty( self::$changed ) ) {
+			// After WooCommerce's own deferred parent sync (shutdown, priority 10).
+			add_action( 'shutdown', array( __CLASS__, 'push_changed' ), 100 );
+		}
+		self::$changed[ $family ] = true;
+	}
+
+	/** Sends what defer() collected. Runs when the request ends. */
+	public static function push_changed() {
+		$ids           = array_keys( self::$changed );
+		self::$changed = array();
+		foreach ( $ids as $id ) {
+			try {
+				self::push_delta( $id );
+			} catch ( \Throwable $e ) {
+				Sudemi_Logger::warn( 'A product change could not be sent: ' . $e->getMessage() );
+			}
+		}
 	}
 
 	/**
-	 * One product's price and stock, on its way out now rather than at the next import.
+	 * One product's listings, on their way out now rather than at the next import: a simple
+	 * product's own, or every variation of a variable product. Sent whole, they can carry the
+	 * catalogue revision (see push_listings).
 	 *
 	 * This is the call that decides whether sudemi's prices are true, so the failure path matters
 	 * more than the success path. It gets one attempt and a short timeout, because it runs while
@@ -161,11 +372,42 @@ final class Sudemi_Sync {
 	 * wrong price on a marketplace until the next full sync. So a failure is written to the queue
 	 * and the heartbeat sends it a few minutes later.
 	 */
-	private static function push_delta( $product ) {
-		$listing = self::change_listing( $product );
-		if ( null !== $listing ) {
-			self::push_listing( $product, $listing );
+	private static function push_delta( $product_id ) {
+		$product = wc_get_product( $product_id );
+		if ( ! $product ) {
+			// Deleted while this request ran: its listings wait for a full sync to remove them.
+			self::note_removal();
 			return;
+		}
+
+		if ( $product->is_type( 'variable' ) ) {
+			// Every variation, sellable or not: one that is not (disabled, no price, its parent
+			// hidden) has no listing, and if it had one, only a full sync can remove it.
+			$listings = array();
+			foreach ( $product->get_children() as $child_id ) {
+				$listing = self::product_payload( $child_id );
+				self::mark_listed( $child_id, null !== $listing );
+				if ( null !== $listing ) {
+					$listings[] = $listing;
+				}
+			}
+			if ( ! empty( $listings ) ) {
+				self::push_listings( $listings );
+			}
+			// Without a sellable variation nothing is sent; the change counter already moved,
+			// so the next heartbeat disagrees and sudemi asks for a full sync.
+			return;
+		}
+
+		if ( $product->is_type( 'simple' ) ) {
+			// A product that is no longer sellable (hidden, a draft) has no listing: its removal
+			// is a full sync's job.
+			$listing = 'publish' === $product->get_status() ? self::product_payload( $product->get_id() ) : null;
+			self::mark_listed( $product->get_id(), null !== $listing );
+			if ( null !== $listing ) {
+				self::push_listings( array( $listing ) );
+				return;
+			}
 		}
 
 		$update = array(
@@ -175,10 +417,6 @@ final class Sudemi_Sync {
 			'inStock'    => (bool) $product->is_in_stock(),
 			'quantity'   => $product->managing_stock() ? (int) $product->get_stock_quantity() : null,
 		);
-
-		// Counted before the attempt, not after a success: the counter is what lets sudemi
-		// notice a change that never arrived, so it has to move even when the push fails.
-		Sudemi_Heartbeat::note_change();
 
 		$response = Sudemi_Client::post_signed(
 			'/integration/v1/products/prices',
@@ -198,65 +436,96 @@ final class Sudemi_Sync {
 		}
 	}
 
+	/** Listings removed in the shop, counted, and the count the last committed full sync covered. */
+	const OPTION_REMOVALS        = 'sudemi_removals';
+	const OPTION_REMOVALS_SYNCED = 'sudemi_removals_synced';
+
+	/** Set on a product or variation found without a listing, so it is counted as removed once. */
+	const META_UNLISTED = '_sudemi_unlisted';
+
 	/**
-	 * The whole listing of a simple product, for a change push that can say "this is the catalogue
-	 * now": or null, and the change goes as a plain price push.
-	 *
-	 * Only a simple, visible product. A price push carries price and stock and nothing else, so
-	 * sending the catalogue revision with it would tell sudemi a renamed product or a changed
-	 * description had arrived when it had not. The whole listing carries everything about the
-	 * product. A variable product or a variation is left out: a change to one can change its
-	 * siblings, which this push does not carry. A product that is no longer sellable (hidden, a
-	 * draft) is left out too: its removal is a full sync's job, which the revision asks for.
+	 * A listing stopped being listed here. Only a full sync's commit can take a listing off
+	 * sudemi, so until one has, no push carries the catalogue revision: sudemi would adopt it
+	 * and the gone listing would stay listed.
 	 */
-	private static function change_listing( $product ) {
-		if ( ! $product->is_type( 'simple' ) || 'publish' !== $product->get_status() ) {
-			return null;
+	public static function note_removal() {
+		update_option( self::OPTION_REMOVALS, self::removals() + 1, false );
+	}
+
+	private static function removals() {
+		return (int) get_option( self::OPTION_REMOVALS, 0 );
+	}
+
+	private static function removals_synced() {
+		return self::removals() <= (int) get_option( self::OPTION_REMOVALS_SYNCED, 0 );
+	}
+
+	/** Remembers whether a product has a listing; losing it counts as a removal, once. */
+	private static function mark_listed( $id, $listed ) {
+		$unlisted = (bool) get_post_meta( $id, self::META_UNLISTED, true );
+		if ( $listed && $unlisted ) {
+			delete_post_meta( $id, self::META_UNLISTED );
+		} elseif ( ! $listed && ! $unlisted ) {
+			self::note_removal();
+			update_post_meta( $id, self::META_UNLISTED, 1 );
 		}
-		return self::product_payload( $product->get_id() );
 	}
 
 	/**
-	 * Sends one product's whole listing as a change push, with the catalogue revision when
-	 * nothing else is waiting to be sent.
+	 * Sends one product's listings (a simple product's own, or every variation) as a change push,
+	 * with the catalogue revision when nothing else is waiting to be sent.
+	 *
+	 * A price push carries price and stock and nothing else, so sending the revision with it
+	 * would tell sudemi a renamed product or a changed description had arrived when it had not.
+	 * The whole listings carry everything about the product.
 	 *
 	 * The revision is computed here, after WooCommerce has saved the change and after the change
-	 * counter moved, exactly as the next heartbeat computes it. If every item applied, sudemi
-	 * adopts it (catalogue_revision_agreed) and no full sync follows the edit. Price changes still
-	 * waiting in the queue would make the revision a claim that they arrived, so then it is left
-	 * out and the heartbeat's disagreement asks for a sync as before.
+	 * counter moved, exactly as the next heartbeat computes it, and only sent when: no price
+	 * change is queued, no listing removed in the shop is still waiting for a full sync to take
+	 * it off sudemi, the category tree sudemi holds is current, and every earlier request of this
+	 * push was accepted whole. If every item applied, sudemi adopts it (catalogue_revision_agreed)
+	 * and no full sync follows the edit; otherwise the heartbeat's disagreement asks for one.
 	 */
-	private static function push_listing( $product, array $listing ) {
-		$update = array(
-			'externalId' => (string) $product->get_id(),
-			'priceMinor' => $listing['priceMinor'],
-			'currency'   => $listing['currency'],
-			'inStock'    => $listing['inStock'],
-			'quantity'   => $listing['quantity'],
-		);
-
-		// Counted before the attempt, not after a success: the counter is what lets sudemi
-		// notice a change that never arrived, so it has to move even when the push fails.
-		Sudemi_Heartbeat::note_change();
-		// This push carries the newest state of the product; an older queued price for it would
-		// otherwise be sent after it and put the old price back.
-		Sudemi_Queue::discard( $update['externalId'] );
-
-		$body = array( 'products' => array( $listing ) );
-		// A product moved into a category sudemi has not been sent would get past sudemi's
-		// category checks until a full sync, which an agreed revision makes rare. So the category
-		// tree is sent first when it changed, and without it there is no revision.
-		if ( 0 === Sudemi_Queue::count() && self::categories_current() ) {
-			$revision = Sudemi_Heartbeat::revision();
-			if ( null !== $revision ) {
-				$body['catalogueRevision'] = $revision;
-			}
+	private static function push_listings( array $listings ) {
+		foreach ( $listings as $listing ) {
+			// This push carries the newest state of the product; an older queued price for it
+			// would otherwise be sent after it and put the old price back.
+			Sudemi_Queue::discard( $listing['externalId'] );
 		}
 
-		$response = Sudemi_Client::post_signed( '/integration/v1/products', $body );
-		if ( is_wp_error( $response ) || 200 !== $response['status'] ) {
-			Sudemi_Queue::enqueue( $update );
-			Sudemi_Logger::warn( 'A price update could not be sent; it is queued for retry.' );
+		$batches = array_chunk( $listings, 500 );
+		$clean   = true;
+		$last    = count( $batches ) - 1;
+		foreach ( $batches as $i => $batch ) {
+			$body = array( 'products' => $batch );
+			// A product moved into a category sudemi has not been sent would get past sudemi's
+			// category checks until a full sync, which an agreed revision makes rare. So the
+			// category tree is sent first when it changed, and without it there is no revision.
+			if ( $i === $last && $clean && 0 === Sudemi_Queue::count() && self::removals_synced() && self::categories_current() ) {
+				$revision = Sudemi_Heartbeat::revision();
+				if ( null !== $revision ) {
+					$body['catalogueRevision'] = $revision;
+				}
+			}
+
+			$response = Sudemi_Client::post_signed( '/integration/v1/products', $body );
+			if ( is_wp_error( $response ) || 200 !== $response['status'] ) {
+				$clean = false;
+				foreach ( $batch as $listing ) {
+					Sudemi_Queue::enqueue(
+						array(
+							'externalId' => $listing['externalId'],
+							'priceMinor' => $listing['priceMinor'],
+							'currency'   => $listing['currency'],
+							'inStock'    => $listing['inStock'],
+							'quantity'   => $listing['quantity'],
+						)
+					);
+				}
+				Sudemi_Logger::warn( 'A price update could not be sent; it is queued for retry.' );
+			} elseif ( ! empty( $response['body']['rejected'] ) ) {
+				$clean = false;
+			}
 		}
 	}
 
@@ -295,6 +564,9 @@ final class Sudemi_Sync {
 
 	public static function forget() {
 		delete_option( self::OPTION_CATEGORIES );
+		delete_option( self::OPTION_STATE );
+		delete_option( self::OPTION_REMOVALS );
+		delete_option( self::OPTION_REMOVALS_SYNCED );
 	}
 
 	private static function push_shop() {
@@ -342,22 +614,22 @@ final class Sudemi_Sync {
 		return $categories;
 	}
 
-	private static function product_ids( $page ) {
-		$query = new WP_Query(
-			array(
-				// Variations are listings of their own (size, colour...): a buyer buys one of them,
-				// never the variable "parent", which has no single price, stock or barcode.
-				'post_type'              => array( 'product', 'product_variation' ),
-				'post_status'            => 'publish',
-				'posts_per_page'         => self::BATCH_SIZE,
-				'paged'                  => $page,
-				'fields'                 => 'ids',
-				'no_found_rows'          => true,
-				'update_post_meta_cache' => false,
-				'update_post_term_cache' => false,
+	/**
+	 * Published products and variations after $after, in id order. Variations are listings of
+	 * their own (size, colour...): a buyer buys one of them, never the variable "parent", which
+	 * has no single price, stock or barcode (product_payload() skips it).
+	 */
+	private static function product_ids_after( $after, $limit ) {
+		global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$ids = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT ID FROM {$wpdb->posts} WHERE post_type IN ('product', 'product_variation') AND post_status = 'publish' AND ID > %d ORDER BY ID ASC LIMIT %d",
+				(int) $after,
+				max( 1, (int) $limit )
 			)
 		);
-		return $query->posts;
+		return array_map( 'intval', is_array( $ids ) ? $ids : array() );
 	}
 
 	/**
