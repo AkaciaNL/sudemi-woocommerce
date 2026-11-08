@@ -927,3 +927,6 @@ msgstr "sudemi 显示此订单已付款，但在这里已被取消。请发货�
 
 msgid "the order was cancelled in this shop"
 msgstr "订单已在本店取消"
+
+msgid "sudemi shipping"
+msgstr "sudemi 配送"

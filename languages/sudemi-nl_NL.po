@@ -928,3 +928,6 @@ msgstr "sudemi zegt dat deze bestelling BETAALD is, maar hier is ze geannuleerd.
 
 msgid "the order was cancelled in this shop"
 msgstr "de bestelling is in deze winkel geannuleerd"
+
+msgid "sudemi shipping"
+msgstr "Verzending via sudemi"

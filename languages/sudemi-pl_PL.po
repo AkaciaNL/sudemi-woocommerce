@@ -929,3 +929,6 @@ msgstr "sudemi podaje, że to zamówienie jest OPŁACONE, ale tutaj jest anulowa
 
 msgid "the order was cancelled in this shop"
 msgstr "zamówienie zostało anulowane w tym sklepie"
+
+msgid "sudemi shipping"
+msgstr "Wysyłka sudemi"

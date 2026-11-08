@@ -928,3 +928,6 @@ msgstr "sudemi meldet diese Bestellung als BEZAHLT, hier ist sie aber storniert.
 
 msgid "the order was cancelled in this shop"
 msgstr "die Bestellung wurde in diesem Shop storniert"
+
+msgid "sudemi shipping"
+msgstr "Versand über sudemi"

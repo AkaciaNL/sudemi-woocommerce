@@ -927,3 +927,6 @@ msgstr ""
 
 msgid "the order was cancelled in this shop"
 msgstr ""
+
+msgid "sudemi shipping"
+msgstr ""

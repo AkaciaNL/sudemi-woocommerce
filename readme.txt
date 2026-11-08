@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.2.7
+Stable tag: 1.2.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,12 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.2.8 =
+* A sudemi order is booked in WooCommerce at what the buyer paid. Each line gets the price the buyer paid on sudemi (not the shop's current price, which may have changed since the last sync), the shipping the buyer paid is added as a shipping line ("sudemi shipping"), and the payment method is sudemi. The order total now equals the amount the buyer paid. Before, the order had the goods at the catalogue price, no shipping and no payment method, so the shop's books missed the shipping.
+* The VAT is taken out of the paid amounts using the shop's tax rates for the destination country, rather than added on top, so the total never moves away from what was paid. Shops without taxes enabled get the amounts as they are.
+* With a sudemi core that does not send the paid amounts yet, orders are built from the catalogue as before.
+* PROTOCOL.md: current copy (shipping_minor and unit_price_minor on pending orders).
 
 = 1.2.7 =
 * No full catalogue sync runs inside a page request. The full sync was already a WP-Cron event (never run by an admin or storefront page itself), but with ALTERNATE_WP_CRON WordPress runs due events inside the visitor's own page request, where a whole sync kept that request busy for minutes. The sync now remembers where it stopped: inside a page request it sends at most 25 products (about two seconds) and schedules the rest as a follow-up event; from wp-cron.php (a real cron entry or WordPress's own background request) it runs to the end. A database lock keeps two requests from sending it at once; a sync stopped halfway resumes where it stopped.

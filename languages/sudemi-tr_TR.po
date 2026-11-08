@@ -928,3 +928,6 @@ msgstr "sudemi bu siparişin ÖDENDİĞİNİ söylüyor, ancak burada iptal edil
 
 msgid "the order was cancelled in this shop"
 msgstr "sipariş bu mağazada iptal edildi"
+
+msgid "sudemi shipping"
+msgstr "sudemi kargo"

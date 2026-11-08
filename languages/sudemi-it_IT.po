@@ -928,3 +928,6 @@ msgstr "sudemi indica questo ordine come PAGATO, ma qui è annullato. Spediscilo
 
 msgid "the order was cancelled in this shop"
 msgstr "l'ordine è stato annullato in questo negozio"
+
+msgid "sudemi shipping"
+msgstr "Spedizione sudemi"

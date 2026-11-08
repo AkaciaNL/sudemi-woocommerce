@@ -928,3 +928,6 @@ msgstr "sudemi מציין שההזמנה הזו שולמה, אבל כאן היא
 
 msgid "the order was cancelled in this shop"
 msgstr "ההזמנה בוטלה בחנות זו"
+
+msgid "sudemi shipping"
+msgstr "משלוח sudemi"

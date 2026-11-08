@@ -932,3 +932,6 @@ msgstr "يقول sudemi إن هذا الطلب مدفوع، لكنه ملغى ه
 
 msgid "the order was cancelled in this shop"
 msgstr "أُلغي الطلب في هذا المتجر"
+
+msgid "sudemi shipping"
+msgstr "شحن sudemi"

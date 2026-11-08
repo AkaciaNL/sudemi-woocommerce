@@ -928,3 +928,6 @@ msgstr "sudemi indica que este pedido está PAGADO, pero aquí está cancelado. 
 
 msgid "the order was cancelled in this shop"
 msgstr "el pedido se canceló en esta tienda"
+
+msgid "sudemi shipping"
+msgstr "Envío de sudemi"

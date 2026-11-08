@@ -929,3 +929,6 @@ msgstr "sudemi сообщает, что этот заказ ОПЛАЧЕН, но
 
 msgid "the order was cancelled in this shop"
 msgstr "заказ был отменён в этом магазине"
+
+msgid "sudemi shipping"
+msgstr "Доставка sudemi"

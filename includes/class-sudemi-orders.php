@@ -732,19 +732,70 @@ class Sudemi_Orders {
 			return null;
 		}
 
-		foreach ( $pending['lines'] as $line ) {
+		// What the buyer paid, from sudemi. Null from a core that does not send it yet, and then
+		// the order is priced from the catalogue as before.
+		$paid    = self::paid_amounts( $pending );
+		$country = isset( $pending['destination_country'] ) ? (string) $pending['destination_country'] : '';
+		if ( null !== $paid && ! empty( $pending['currency_code'] ) ) {
+			$order->set_currency( strtoupper( (string) $pending['currency_code'] ) );
+		}
+
+		foreach ( $pending['lines'] as $index => $line ) {
 			$product = self::resolve_product( $line );
 			if ( ! $product ) {
 				$order->delete( true );
 				return null;
 			}
-			$order->add_product( $product, isset( $line['quantity'] ) ? (int) $line['quantity'] : 1 );
+			$quantity = isset( $line['quantity'] ) ? (int) $line['quantity'] : 1;
+			if ( null === $paid ) {
+				$order->add_product( $product, $quantity );
+				continue;
+			}
+			// The buyer's price wins over today's catalogue price: the price may have changed
+			// since the last sync, and the shop's order has to say what was actually paid.
+			$gross   = $paid['lines'][ $index ] * $quantity;
+			$rates   = self::tax_rates( $country, $product->is_taxable() ? $product->get_tax_class() : null, false );
+			$taxes   = self::taxes_within( $gross, $rates );
+			$net     = self::major( $gross - array_sum( $taxes ) );
+			$item_id = $order->add_product(
+				$product,
+				$quantity,
+				array(
+					'subtotal' => $net,
+					'total'    => $net,
+				)
+			);
+			if ( ! $item_id ) {
+				$order->delete( true );
+				return null;
+			}
+			// The order's own copy (not a fresh one from the database): the order saves its cached
+			// items later, and taxes set on another copy would be overwritten by that save.
+			$item = $order->get_item( $item_id, false );
+			if ( $item ) {
+				$item->set_taxes( self::tax_array( $taxes, true ) );
+				$item->save();
+			}
 		}
 
+		if ( null !== $paid ) {
+			$shipping = new WC_Order_Item_Shipping();
+			$shipping->set_method_title( __( 'sudemi shipping', 'sudemi' ) );
+			$shipping->set_method_id( 'sudemi' );
+			$taxes = self::taxes_within( $paid['shipping'], self::tax_rates( $country, '', true ) );
+			$shipping->set_total( self::major( $paid['shipping'] - array_sum( $taxes ) ) );
+			$shipping->set_taxes( self::tax_array( $taxes, false ) );
+			$order->add_item( $shipping );
+		}
+
+		// The buyer paid on sudemi, so the order says so; a blank payment method reads in the
+		// shop's books as an order nobody has paid for.
+		$order->set_payment_method( 'sudemi' );
+		$order->set_payment_method_title( __( 'sudemi', 'sudemi' ) );
 		$order->update_meta_data( self::META_ORDER_ID, $sudemi_id );
 		$order->set_created_via( 'sudemi' );
-		if ( ! empty( $pending['destination_country'] ) ) {
-			$order->set_shipping_country( (string) $pending['destination_country'] );
+		if ( '' !== $country ) {
+			$order->set_shipping_country( $country );
 		}
 		// Deliberately no buyer name, address or contact: sudemi does not send them with the
 		// question, because a shop deciding whether it has stock does not need to know who is
@@ -756,7 +807,19 @@ class Sudemi_Orders {
 				$sudemi_id
 			)
 		);
-		$order->calculate_totals();
+		if ( null === $paid ) {
+			$order->calculate_totals();
+		} else {
+			// The VAT was split out of the paid amounts above; recalculating it here from the
+			// shop's own settings could move the total away from what the buyer paid.
+			$order->update_taxes();
+			$order->calculate_totals( false );
+			if ( self::minor_of( $order->get_total() ) !== $paid['total'] ) {
+				// Only reachable through rounding in a shop's tax set-up; the total is what the
+				// buyer paid, whatever the parts add up to.
+				$order->set_total( self::major( $paid['total'] ) );
+			}
+		}
 		// Held rather than processing until sudemi confirms the capture: an order that looks
 		// payable before the money is taken is one somebody ships too early.
 		$order->update_status( 'on-hold', __( 'Awaiting confirmation with sudemi.', 'sudemi' ) );
@@ -770,6 +833,111 @@ class Sudemi_Orders {
 		wc_maybe_reduce_stock_levels( $order->get_id() );
 
 		return $order;
+	}
+
+	/**
+	 * What the buyer paid for a pending order, in minor units: the shipping, each line's unit
+	 * price (keyed like the lines) and the total.
+	 *
+	 * Null when sudemi did not send them (a core older than this plugin) or sent something that
+	 * is not money; the order is then priced from the catalogue, as before.
+	 *
+	 * @param array $pending One entry of the pending_orders block.
+	 * @return array|null
+	 */
+	public static function paid_amounts( array $pending ) {
+		if ( ! isset( $pending['shipping_minor'], $pending['total_minor'] ) || empty( $pending['lines'] )
+			|| ! is_array( $pending['lines'] ) || ! is_numeric( $pending['shipping_minor'] )
+			|| ! is_numeric( $pending['total_minor'] ) || (int) $pending['shipping_minor'] < 0 ) {
+			return null;
+		}
+		$lines = array();
+		foreach ( $pending['lines'] as $index => $line ) {
+			if ( ! is_array( $line ) || ! isset( $line['unit_price_minor'] ) || ! is_numeric( $line['unit_price_minor'] )
+				|| (int) $line['unit_price_minor'] < 0 ) {
+				return null;
+			}
+			$lines[ $index ] = (int) $line['unit_price_minor'];
+		}
+		return array(
+			'shipping' => (int) $pending['shipping_minor'],
+			'lines'    => $lines,
+			'total'    => (int) $pending['total_minor'],
+		);
+	}
+
+	/**
+	 * The VAT inside a gross amount, per tax rate id, in minor units.
+	 *
+	 * The amounts sudemi sends include VAT (the sync sends prices with tax), so the tax is taken
+	 * out of them rather than added on top: net plus tax is always exactly what was paid.
+	 *
+	 * @param int   $gross_minor The amount with VAT.
+	 * @param array $rates       WC_Tax rates, as find_rates() returns them.
+	 * @return array<int,int> Rate id to tax.
+	 */
+	private static function taxes_within( $gross_minor, array $rates ) {
+		if ( $gross_minor <= 0 || empty( $rates ) ) {
+			return array();
+		}
+		$out = array();
+		foreach ( WC_Tax::calc_tax( $gross_minor / 100, $rates, true ) as $rate_id => $tax ) {
+			$out[ $rate_id ] = (int) round( (float) $tax * 100 );
+		}
+		if ( array_sum( $out ) >= $gross_minor ) {
+			return array();
+		}
+		return $out;
+	}
+
+	/**
+	 * The shop's tax rates for the destination, or none when the shop does not charge tax.
+	 *
+	 * @param string      $country   ISO country code of the destination.
+	 * @param string|null $tax_class The product's tax class; null for a product that is not taxable.
+	 * @param bool        $shipping  Rates for shipping rather than goods.
+	 * @return array
+	 */
+	private static function tax_rates( $country, $tax_class, $shipping ) {
+		if ( null === $tax_class || '' === $country || ! wc_tax_enabled() ) {
+			return array();
+		}
+		$args = array(
+			'country'   => $country,
+			'tax_class' => $tax_class,
+		);
+		return $shipping ? WC_Tax::find_shipping_rates( $args ) : WC_Tax::find_rates( $args );
+	}
+
+	/**
+	 * Taxes in the shape an order item stores them.
+	 *
+	 * @param array<int,int> $taxes        Rate id to tax, in minor units.
+	 * @param bool           $with_subtotal Line items carry a subtotal tax as well.
+	 * @return array
+	 */
+	private static function tax_array( array $taxes, $with_subtotal ) {
+		$total = array();
+		foreach ( $taxes as $rate_id => $tax ) {
+			$total[ $rate_id ] = self::major( $tax );
+		}
+		return $with_subtotal ? array(
+			'total'    => $total,
+			'subtotal' => $total,
+		) : array( 'total' => $total );
+	}
+
+	/** Minor units as the decimal string WooCommerce stores ("8.50"). */
+	public static function major( $minor ) {
+		$minor = (int) $minor;
+		$sign  = $minor < 0 ? '-' : '';
+		$minor = abs( $minor );
+		return $sign . intdiv( $minor, 100 ) . '.' . str_pad( (string) ( $minor % 100 ), 2, '0', STR_PAD_LEFT );
+	}
+
+	/** A WooCommerce amount in minor units. */
+	public static function minor_of( $amount ) {
+		return (int) round( (float) $amount * 100 );
 	}
 
 	/**

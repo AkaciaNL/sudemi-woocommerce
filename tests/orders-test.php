@@ -87,6 +87,29 @@ $sent    = array( '7' => array( 'externalId' => '7', 'priceMinor' => 1000 ), '8'
 $current = array( '7' => array( 'externalId' => '7', 'priceMinor' => 1200 ), '8' => array( 'externalId' => '8', 'priceMinor' => 500 ), '9' => array( 'externalId' => '9', 'priceMinor' => 1 ) );
 expect( 'queue keeps the newer price and the new product, clears the sent one', array_keys( Sudemi_Queue::without_sent( $current, $sent ) ), array( 7, 9 ) );
 
+// what the buyer paid: the shop's order is booked at it, shipping included
+$mug = array(
+	'total_minor'    => 1345,
+	'shipping_minor' => 495,
+	'currency_code'  => 'EUR',
+	'lines'          => array( array( 'external_id' => '14', 'quantity' => 1, 'unit_price_minor' => 850 ) ),
+);
+expect( 'paid amounts read', Sudemi_Orders::paid_amounts( $mug ), array( 'shipping' => 495, 'lines' => array( 0 => 850 ), 'total' => 1345 ) );
+$older = $mug;
+unset( $older['shipping_minor'] );
+expect( 'older core without shipping -> catalogue prices', Sudemi_Orders::paid_amounts( $older ), null );
+$older = $mug;
+unset( $older['lines'][0]['unit_price_minor'] );
+expect( 'older core without line prices -> catalogue prices', Sudemi_Orders::paid_amounts( $older ), null );
+$bad = $mug;
+$bad['shipping_minor'] = 'x';
+expect( 'not money -> catalogue prices', Sudemi_Orders::paid_amounts( $bad ), null );
+expect( 'major 850', Sudemi_Orders::major( 850 ), '8.50' );
+expect( 'major 5', Sudemi_Orders::major( 5 ), '0.05' );
+expect( 'major 1345', Sudemi_Orders::major( 1345 ), '13.45' );
+expect( 'minor_of 13.45', Sudemi_Orders::minor_of( '13.45' ), 1345 );
+expect( 'minor_of float 8.5 + 4.95', Sudemi_Orders::minor_of( 8.5 + 4.95 ), 1345 );
+
 if ( $failures ) {
 	echo "$failures failure(s)\n";
 	exit( 1 );

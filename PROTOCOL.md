@@ -381,10 +381,12 @@ On the heartbeat, because that is the only channel to a plugin (§3a). The respo
       "order_id": "a8c4695b-21ef-4d6c-b745-5412cb1e8bd3",
       "respond_by": "2026-11-05T14:53:45Z",
       "total_minor": 5495,
+      "shipping_minor": 495,
       "currency_code": "EUR",
       "destination_country": "NL",
       "lines": [
-        { "product_id": "…", "external_id": "appr-1", "title": "A thing", "quantity": 1 }
+        { "product_id": "…", "external_id": "appr-1", "title": "A thing", "quantity": 1,
+          "unit_price_minor": 5000 }
       ]
     }
   ]
@@ -393,6 +395,15 @@ On the heartbeat, because that is the only channel to a plugin (§3a). The respo
 
 `external_id` is the shop's own product id, so the plugin can look the item up in its own
 catalogue without storing a mapping. At most 25 ride on one beat; the rest arrive on the next.
+
+`shipping_minor` and each line's `unit_price_minor` are what the buyer paid, VAT included, in the
+order's currency: `total_minor` is the sum of `unit_price_minor` x `quantity` over the lines plus
+`shipping_minor`. **Book the local order at these amounts, not at the shop's current catalogue
+price:** the price may have changed since the last sync, and an order built from the catalogue
+without the shipping leaves the shop's books short of what was paid. Add the shipping as the
+order's shipping line, take any VAT out of the amounts rather than adding it on top, and record
+the payment method as sudemi. (Added 2026-11-08; a plugin talking to an older core that does not
+send them falls back to the catalogue prices.)
 
 **There is no buyer name, address or contact in this.** A shop deciding whether it has stock does
 not need to know who is asking (NFR-38). Those arrive once the order is confirmed.
@@ -474,7 +485,7 @@ array are `{"externalId", "reason"}`). Unknown request fields are ignored.
 
 | Endpoint | Body | Answer |
 | --- | --- | --- |
-| `POST /heartbeat` | `catalogueRevision`, `productCount`, `intervalSeconds` (clamped to 60-900), `pluginVersion`; body optional | `status`, `heartbeat_seconds`, `trusted_until`, `catalogue_listed`, `not_listed_reason`, `full_sync_requested`, `domain_challenge{token,path,why}`, `pending_orders[]` + `pending_orders_note`, `settled_orders[{order_id,status,declined_reason}]`, `open_requests[{request_id,order_id,kind,reason,requested_at,respond_by}]` + `open_requests_note` (each list only when not empty) |
+| `POST /heartbeat` | `catalogueRevision`, `productCount`, `intervalSeconds` (clamped to 60-900), `pluginVersion`; body optional | `status`, `heartbeat_seconds`, `trusted_until`, `catalogue_listed`, `not_listed_reason`, `full_sync_requested`, `domain_challenge{token,path,why}`, `pending_orders[{order_id,respond_by,total_minor,shipping_minor,currency_code,destination_country,lines[{product_id,external_id,title,quantity,unit_price_minor}]}]` + `pending_orders_note`, `settled_orders[{order_id,status,declined_reason}]`, `open_requests[{request_id,order_id,kind,reason,requested_at,respond_by}]` + `open_requests_note` (each list only when not empty) |
 | `GET /shop` | - | `install_id`, `seller_id`, `shop_origin`, `locked_fields`, `heartbeat_seconds`, `catalogue_listed`, `not_listed_reason`, `full_sync_requested`, `trusted_until` |
 | `POST /shop` | `displayName`, `description`, `supportEmail`, `returnsWindowDays` (locked fields: 423) | `status`, `locked_fields` |
 | `POST /categories` | `categories[{externalId,parentExternalId,name,description}]`, at least one | `status`, `accepted`, `removed` |
