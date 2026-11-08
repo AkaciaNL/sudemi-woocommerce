@@ -95,7 +95,7 @@ generated it.
 | `POST /pair` per source IP | 10 / hour |
 | `POST /pair` per shop host | 5 / hour |
 | `POST /pair/poll` per pairing | 1 / 5 s, 100 total |
-| Pairing lifetime | 30 minutes |
+| Pairing lifetime | 24 hours |
 
 ---
 
