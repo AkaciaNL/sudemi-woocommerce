@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.2.5
+Stable tag: 1.2.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,11 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.2.6 =
+* The full sync's commit carries the catalogue revision the shop had when the sync started. sudemi adopts it, so a product changed or removed while the sync ran is caught by the next heartbeat and synced. The heartbeat right after the commit is still sent.
+* Saving a simple product (and a stock change) sends the product's whole listing (title, description, price, stock, categories, images, shipping) instead of price and stock only, with the shop's catalogue revision computed after the save when nothing else is waiting to be sent. sudemi adopts it when every item applied, so a product edit no longer costs a full catalogue sync. Variable products and their variations, a product that is not published and visible, and a push while queued price changes wait still go without the revision (a full sync follows, as before). When the category tree changed since it was last sent, it is sent first; if that fails, the push goes without the revision.
+* A newer push for a product drops its older queued price, which could otherwise be sent after it and put the old price back.
 
 = 1.2.5 =
 * Order safety: a paid order is never cancelled because sudemi could not be reached. Only a definitive answer changes the WooCommerce order: "already answered, PAID" (an earlier confirmation landed and its reply was lost) keeps the order and moves it to Processing; DECLINED cancels it and restores the stock. No answer, a server error, "slow down" (429) or a refused site (409) leaves the order on hold with its stock reserved, and it is asked about again on the next heartbeat. Before, any of these cancelled the order and restocked it although the buyer could already have been charged.

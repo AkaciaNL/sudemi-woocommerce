@@ -65,8 +65,9 @@ final class Sudemi_Sync {
 			return;
 		}
 		$sync_id = (string) $started['body']['sync_id'];
-		// What the catalogue was when this sync started reading it. Sent right after the commit
-		// (below), so sudemi holds the revision this sync describes; see Sudemi_Heartbeat::anchor().
+		// What the catalogue was when this sync started reading it. Sent with the commit and in a
+		// heartbeat right after it, so sudemi holds the revision this sync describes; see
+		// Sudemi_Heartbeat::anchor().
 		$anchor = Sudemi_Heartbeat::revision();
 
 		self::push_shop();
@@ -104,7 +105,12 @@ final class Sudemi_Sync {
 			++$page;
 		} while ( true );
 
-		$committed = Sudemi_Client::post_signed( '/integration/v1/sync/' . rawurlencode( $sync_id ) . '/commit', array() );
+		// The commit carries the revision the sync started from: sudemi adopts it, so anything
+		// changed while the sync ran makes the next heartbeat disagree and is synced next time.
+		$committed = Sudemi_Client::post_signed(
+			'/integration/v1/sync/' . rawurlencode( $sync_id ) . '/commit',
+			null === $anchor ? array() : array( 'catalogueRevision' => $anchor )
+		);
 		if ( is_wp_error( $committed ) || 200 !== $committed['status'] ) {
 			Sudemi_Logger::warn( 'The catalogue was sent but the sync could not be committed.' );
 			return;
@@ -156,6 +162,12 @@ final class Sudemi_Sync {
 	 * and the heartbeat sends it a few minutes later.
 	 */
 	private static function push_delta( $product ) {
+		$listing = self::change_listing( $product );
+		if ( null !== $listing ) {
+			self::push_listing( $product, $listing );
+			return;
+		}
+
 		$update = array(
 			'externalId' => (string) $product->get_id(),
 			'priceMinor' => self::minor( self::price_with_tax( $product ) ),
@@ -186,6 +198,105 @@ final class Sudemi_Sync {
 		}
 	}
 
+	/**
+	 * The whole listing of a simple product, for a change push that can say "this is the catalogue
+	 * now": or null, and the change goes as a plain price push.
+	 *
+	 * Only a simple, visible product. A price push carries price and stock and nothing else, so
+	 * sending the catalogue revision with it would tell sudemi a renamed product or a changed
+	 * description had arrived when it had not. The whole listing carries everything about the
+	 * product. A variable product or a variation is left out: a change to one can change its
+	 * siblings, which this push does not carry. A product that is no longer sellable (hidden, a
+	 * draft) is left out too: its removal is a full sync's job, which the revision asks for.
+	 */
+	private static function change_listing( $product ) {
+		if ( ! $product->is_type( 'simple' ) || 'publish' !== $product->get_status() ) {
+			return null;
+		}
+		return self::product_payload( $product->get_id() );
+	}
+
+	/**
+	 * Sends one product's whole listing as a change push, with the catalogue revision when
+	 * nothing else is waiting to be sent.
+	 *
+	 * The revision is computed here, after WooCommerce has saved the change and after the change
+	 * counter moved, exactly as the next heartbeat computes it. If every item applied, sudemi
+	 * adopts it (catalogue_revision_agreed) and no full sync follows the edit. Price changes still
+	 * waiting in the queue would make the revision a claim that they arrived, so then it is left
+	 * out and the heartbeat's disagreement asks for a sync as before.
+	 */
+	private static function push_listing( $product, array $listing ) {
+		$update = array(
+			'externalId' => (string) $product->get_id(),
+			'priceMinor' => $listing['priceMinor'],
+			'currency'   => $listing['currency'],
+			'inStock'    => $listing['inStock'],
+			'quantity'   => $listing['quantity'],
+		);
+
+		// Counted before the attempt, not after a success: the counter is what lets sudemi
+		// notice a change that never arrived, so it has to move even when the push fails.
+		Sudemi_Heartbeat::note_change();
+		// This push carries the newest state of the product; an older queued price for it would
+		// otherwise be sent after it and put the old price back.
+		Sudemi_Queue::discard( $update['externalId'] );
+
+		$body = array( 'products' => array( $listing ) );
+		// A product moved into a category sudemi has not been sent would get past sudemi's
+		// category checks until a full sync, which an agreed revision makes rare. So the category
+		// tree is sent first when it changed, and without it there is no revision.
+		if ( 0 === Sudemi_Queue::count() && self::categories_current() ) {
+			$revision = Sudemi_Heartbeat::revision();
+			if ( null !== $revision ) {
+				$body['catalogueRevision'] = $revision;
+			}
+		}
+
+		$response = Sudemi_Client::post_signed( '/integration/v1/products', $body );
+		if ( is_wp_error( $response ) || 200 !== $response['status'] ) {
+			Sudemi_Queue::enqueue( $update );
+			Sudemi_Logger::warn( 'A price update could not be sent; it is queued for retry.' );
+		}
+	}
+
+	/** What the category tree sent to sudemi is (a hash of it), so a change can be noticed. */
+	const OPTION_CATEGORIES = 'sudemi_categories_sent';
+
+	/** Whether sudemi holds this shop's category tree as it is now; sends it when not. */
+	private static function categories_current() {
+		$categories = self::categories();
+		if ( null === $categories ) {
+			return false;
+		}
+		if ( get_option( self::OPTION_CATEGORIES ) === self::categories_hash( $categories ) ) {
+			return true;
+		}
+		return self::send_categories( $categories );
+	}
+
+	/** Tied to the connection: a shop connected again has sent its new connection nothing. */
+	private static function categories_hash( array $categories ) {
+		return hash( 'sha256', (string) Sudemi_Client::install_id() . '|' . wp_json_encode( $categories ) );
+	}
+
+	private static function send_categories( array $categories ) {
+		if ( empty( $categories ) ) {
+			// sudemi takes at least one; a shop without categories has nothing to be out of date.
+			return true;
+		}
+		$response = Sudemi_Client::post_signed( '/integration/v1/categories', array( 'categories' => $categories ) );
+		if ( is_wp_error( $response ) || 200 !== $response['status'] ) {
+			return false;
+		}
+		update_option( self::OPTION_CATEGORIES, self::categories_hash( $categories ), false );
+		return true;
+	}
+
+	public static function forget() {
+		delete_option( self::OPTION_CATEGORIES );
+	}
+
 	private static function push_shop() {
 		Sudemi_Client::post_signed(
 			'/integration/v1/shop',
@@ -201,14 +312,23 @@ final class Sudemi_Sync {
 	}
 
 	private static function push_categories() {
+		$categories = self::categories();
+		if ( null !== $categories ) {
+			self::send_categories( $categories );
+		}
+	}
+
+	/** The category tree as sudemi takes it, or null when WordPress cannot read it. */
+	private static function categories() {
 		$terms = get_terms(
 			array(
 				'taxonomy'   => 'product_cat',
 				'hide_empty' => false,
+				'orderby'    => 'term_id',
 			)
 		);
 		if ( is_wp_error( $terms ) ) {
-			return;
+			return null;
 		}
 		$categories = array();
 		foreach ( $terms as $term ) {
@@ -219,9 +339,7 @@ final class Sudemi_Sync {
 				'description'      => $term->description,
 			);
 		}
-		if ( ! empty( $categories ) ) {
-			Sudemi_Client::post_signed( '/integration/v1/categories', array( 'categories' => $categories ) );
-		}
+		return $categories;
 	}
 
 	private static function product_ids( $page ) {

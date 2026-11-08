@@ -791,6 +791,7 @@ final class Sudemi_Admin {
 		Sudemi_Heartbeat::unschedule();
 		Sudemi_Heartbeat::forget();
 		Sudemi_Queue::forget();
+		Sudemi_Sync::forget();
 		Sudemi_Order_Calls::forget();
 		Sudemi_Challenge::forget();
 		Sudemi_Requests::forget();

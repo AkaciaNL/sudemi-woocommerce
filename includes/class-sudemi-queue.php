@@ -49,6 +49,15 @@ final class Sudemi_Queue {
 		return is_array( $pending ) ? $pending : array();
 	}
 
+	/** Drops what is waiting for one product: a newer push for it carries its current state. */
+	public static function discard( $external_id ) {
+		$pending = self::all();
+		if ( array_key_exists( (string) $external_id, $pending ) ) {
+			unset( $pending[ (string) $external_id ] );
+			self::store( $pending );
+		}
+	}
+
 	public static function count() {
 		return count( self::all() );
 	}
