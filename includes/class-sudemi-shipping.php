@@ -75,7 +75,7 @@ class Sudemi_Shipping {
 			if ( null !== $cost ) {
 				$rates[] = array(
 					'country'   => $country,
-					'costMinor' => (int) round( $cost * 100 ),
+					'costMinor' => Sudemi_Currency::to_minor( $cost, Sudemi_Currency::shop_currency() ),
 				);
 			}
 		}

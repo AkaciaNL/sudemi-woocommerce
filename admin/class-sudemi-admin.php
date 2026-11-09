@@ -115,6 +115,7 @@ final class Sudemi_Admin {
 		echo '</tbody></table>';
 
 		self::render_listing_status();
+		self::render_currency();
 		self::render_delivery();
 		self::render_requests();
 		self::render_order_history();
@@ -133,6 +134,59 @@ final class Sudemi_Admin {
 		echo '<input type="hidden" name="action" value="sudemi_disconnect" />';
 		submit_button( __( 'Disconnect', 'sudemi' ), 'delete', 'submit', false );
 		echo '</form>';
+	}
+
+	/**
+	 * The shop's currency as sudemi sees it: what buyers' cards are charged in and what orders
+	 * arrive in. A currency sudemi does not support means nothing can be listed or sold.
+	 */
+	private static function render_currency() {
+		$shop      = Sudemi_Currency::shop_currency();
+		$confirmed = Sudemi_Currency::confirmed();
+		$refused   = (string) get_option( Sudemi_Currency::OPTION_REFUSED, '' );
+
+		echo '<h2>' . esc_html__( 'Currency', 'sudemi' ) . '</h2>';
+		echo '<table class="widefat striped" style="max-width:48rem"><tbody>';
+		self::row(
+			__( 'Your shop currency', 'sudemi' ),
+			$shop,
+			__( 'From your WooCommerce settings. Your prices are sent to sudemi in it, buyers pay in it, and orders arrive in it.', 'sudemi' )
+		);
+		self::row(
+			__( 'Currency sudemi has for your shop', 'sudemi' ),
+			'' === $confirmed ? __( 'not confirmed yet', 'sudemi' ) : $confirmed,
+			__( 'What sudemi answered the last time this shop sent its details. It updates after the next sync.', 'sudemi' )
+		);
+		echo '</tbody></table>';
+
+		if ( ! Sudemi_Currency::is_supported( $shop ) || '' !== $refused ) {
+			echo '<div class="notice notice-error inline"><p>'
+				. esc_html(
+					sprintf(
+						/* translators: 1: the shop's currency, 2: the list of supported currencies. */
+						__( 'sudemi cannot sell in %1$s yet, so your products are not shown to buyers and no orders can come in. Currencies sudemi supports: %2$s.', 'sudemi' ),
+						$shop,
+						implode( ', ', Sudemi_Currency::SUPPORTED )
+					)
+				)
+				. '</p></div>';
+		} elseif ( '' !== $confirmed && $confirmed !== $shop ) {
+			echo '<div class="notice notice-warning inline"><p>'
+				. esc_html(
+					sprintf(
+						/* translators: 1: the currency sudemi has, 2: the shop's currency. */
+						__( 'sudemi still has %1$s for your shop, but your shop sells in %2$s. Orders in %1$s are declined until this matches. Click "Sync the catalogue now" to send the new currency.', 'sudemi' ),
+						$confirmed,
+						$shop
+					)
+				)
+				. '</p></div>';
+		}
+		if ( 'EUR' !== $shop && Sudemi_Currency::is_supported( $shop ) ) {
+			echo '<p class="description">'
+				. esc_html__( 'Buyers pay in your currency. sudemi\'s payouts to you are in euros: the payment provider\'s currency conversion fee (about 2%) is taken from your payout, as the terms say.', 'sudemi' )
+				. '</p>';
+		}
 	}
 
 	/**
@@ -318,7 +372,8 @@ final class Sudemi_Admin {
 				}
 			}
 
-			$currency = isset( $order['currency_code'] ) ? (string) $order['currency_code'] : 'EUR';
+			// The currency the buyer's card was charged in; the shop's own for an older core.
+			$currency = ! empty( $order['currency_code'] ) ? Sudemi_Currency::normalise( $order['currency_code'] ) : Sudemi_Currency::shop_currency();
 			$net      = isset( $order['your_net_minor'] ) ? (int) $order['your_net_minor'] : 0;
 
 			echo '<tr>';
@@ -328,7 +383,8 @@ final class Sudemi_Admin {
 			$asked = ! empty( $order['customer_request'] ) && is_array( $order['customer_request'] )
 				? ' (' . __( 'return requested', 'sudemi' ) . ')' : '';
 			echo '<td>' . esc_html( self::order_status_label( $order ) . $asked ) . '</td>';
-			echo '<td>' . esc_html( number_format_i18n( $net / 100, 2 ) . ' ' . $currency ) . '</td>';
+			$places = Sudemi_Currency::decimals( $currency );
+			echo '<td>' . esc_html( number_format_i18n( $net / ( 10 ** $places ), $places ) . ' ' . $currency ) . '</td>';
 			// Only present once sudemi has released it, which is only after this shop confirmed.
 			echo '<td>' . esc_html( isset( $order['customer_name'] ) ? (string) $order['customer_name'] : ' - ' ) . '</td>';
 			echo '</tr>';
@@ -818,7 +874,7 @@ final class Sudemi_Admin {
 		} else {
 			$list = array();
 			foreach ( $rates as $rate ) {
-				$list[] = $rate['country'] . ' ' . wc_price( $rate['costMinor'] / 100 );
+				$list[] = $rate['country'] . ' ' . wc_price( Sudemi_Currency::to_major( $rate['costMinor'], Sudemi_Currency::shop_currency() ) );
 			}
 			echo '<p>' . esc_html__( 'Shipping prices sent to sudemi (from your shipping zones; one item, your first product):', 'sudemi' ) . ' ' . wp_kses_post( implode( ', ', $list ) ) . '</p>';
 			echo '<p class="description">' . esc_html__( 'Countries without a fixed price (cost formulas, free shipping with a minimum, postcode-only zones) are left out rather than guessed.', 'sudemi' ) . '</p>';

@@ -26,6 +26,7 @@ function is_wp_error( $thing ) {
 	return $thing instanceof WP_Error;
 }
 
+require __DIR__ . '/../includes/class-sudemi-currency.php';
 require __DIR__ . '/../includes/class-sudemi-orders.php';
 require __DIR__ . '/../includes/class-sudemi-queue.php';
 

@@ -931,3 +931,51 @@ msgstr "sipariş bu mağazada iptal edildi"
 
 msgid "sudemi shipping"
 msgstr "sudemi kargo"
+
+#, php-format
+msgid "sudemi order %1$s could not be booked: %2$s. Check the shop currency on the sudemi settings page."
+msgstr "sudemi siparişi %1$s kaydedilemedi: %2$s. sudemi ayarlar sayfasında mağaza para birimini kontrol edin."
+
+msgid "the order did not say which currency it was paid in"
+msgstr "sipariş hangi para biriminde ödendiğini belirtmedi"
+
+#, php-format
+msgid "the order was paid in %1$s but this shop sells in %2$s, so it cannot be booked here"
+msgstr "sipariş %1$s ile ödendi ama bu mağaza %2$s ile satıyor, bu yüzden burada kaydedilemez"
+
+#, php-format
+msgid "this refund is in %1$s but the buyer paid in %2$s; change the order back to %2$s and refund again"
+msgstr "bu iade %1$s cinsinden ama alıcı %2$s ile ödedi; siparişi tekrar %2$s yapın ve yeniden iade edin"
+
+#, php-format
+msgid "This refund was NOT sent to sudemi: %s. The buyer has not been paid back."
+msgstr "Bu iade sudemi'ye GÖNDERİLMEDİ: %s. Alıcıya para geri ödenmedi."
+
+msgid "Currency"
+msgstr "Para birimi"
+
+msgid "Your shop currency"
+msgstr "Mağazanızın para birimi"
+
+msgid "From your WooCommerce settings. Your prices are sent to sudemi in it, buyers pay in it, and orders arrive in it."
+msgstr "WooCommerce ayarlarınızdan. Fiyatlarınız sudemi'ye bu para biriminde gönderilir, alıcılar bununla öder ve siparişler bununla gelir."
+
+msgid "Currency sudemi has for your shop"
+msgstr "sudemi'nin mağazanız için kayıtlı para birimi"
+
+msgid "not confirmed yet"
+msgstr "henüz onaylanmadı"
+
+msgid "What sudemi answered the last time this shop sent its details. It updates after the next sync."
+msgstr "Bu mağaza bilgilerini en son gönderdiğinde sudemi'nin verdiği yanıt. Bir sonraki senkronizasyondan sonra güncellenir."
+
+#, php-format
+msgid "sudemi cannot sell in %1$s yet, so your products are not shown to buyers and no orders can come in. Currencies sudemi supports: %2$s."
+msgstr "sudemi henüz %1$s ile satış yapamıyor, bu yüzden ürünleriniz alıcılara gösterilmiyor ve sipariş gelemiyor. sudemi'nin desteklediği para birimleri: %2$s."
+
+#, php-format
+msgid "sudemi still has %1$s for your shop, but your shop sells in %2$s. Orders in %1$s are declined until this matches. Click \"Sync the catalogue now\" to send the new currency."
+msgstr "sudemi'de mağazanız için hâlâ %1$s kayıtlı, ama mağazanız %2$s ile satıyor. Bu eşleşene kadar %1$s cinsinden siparişler reddedilir. Yeni para birimini göndermek için \"Kataloğu şimdi eşitle\" düğmesine tıklayın."
+
+msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
+msgstr "Alıcılar sizin para biriminizle öder. sudemi size euro olarak ödeme yapar: ödeme sağlayıcısının döviz çevirme ücreti (yaklaşık %2) koşullarda yazdığı gibi ödemenizden düşülür."

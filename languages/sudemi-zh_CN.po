@@ -930,3 +930,51 @@ msgstr "订单已在本店取消"
 
 msgid "sudemi shipping"
 msgstr "sudemi 配送"
+
+#, php-format
+msgid "sudemi order %1$s could not be booked: %2$s. Check the shop currency on the sudemi settings page."
+msgstr "无法记录 sudemi 订单 %1$s：%2$s。请在 sudemi 设置页面检查店铺货币。"
+
+msgid "the order did not say which currency it was paid in"
+msgstr "订单没有说明用哪种货币付款"
+
+#, php-format
+msgid "the order was paid in %1$s but this shop sells in %2$s, so it cannot be booked here"
+msgstr "订单用 %1$s 付款，但本店以 %2$s 销售，因此无法在这里记录"
+
+#, php-format
+msgid "this refund is in %1$s but the buyer paid in %2$s; change the order back to %2$s and refund again"
+msgstr "这笔退款是 %1$s，但买家用 %2$s 付款；请把订单改回 %2$s 后重新退款"
+
+#, php-format
+msgid "This refund was NOT sent to sudemi: %s. The buyer has not been paid back."
+msgstr "这笔退款没有发送到 sudemi：%s。买家没有收到退款。"
+
+msgid "Currency"
+msgstr "货币"
+
+msgid "Your shop currency"
+msgstr "你的店铺货币"
+
+msgid "From your WooCommerce settings. Your prices are sent to sudemi in it, buyers pay in it, and orders arrive in it."
+msgstr "来自你的 WooCommerce 设置。你的价格以这种货币发送到 sudemi，买家用它付款，订单也以它到达。"
+
+msgid "Currency sudemi has for your shop"
+msgstr "sudemi 为你的店铺记录的货币"
+
+msgid "not confirmed yet"
+msgstr "尚未确认"
+
+msgid "What sudemi answered the last time this shop sent its details. It updates after the next sync."
+msgstr "本店上次发送资料时 sudemi 的回复。下次同步后更新。"
+
+#, php-format
+msgid "sudemi cannot sell in %1$s yet, so your products are not shown to buyers and no orders can come in. Currencies sudemi supports: %2$s."
+msgstr "sudemi 暂时无法以 %1$s 销售，因此买家看不到你的商品，也不会有订单。sudemi 支持的货币：%2$s。"
+
+#, php-format
+msgid "sudemi still has %1$s for your shop, but your shop sells in %2$s. Orders in %1$s are declined until this matches. Click \"Sync the catalogue now\" to send the new currency."
+msgstr "sudemi 仍为你的店铺记录 %1$s，但你的店铺以 %2$s 销售。在两者一致之前，%1$s 的订单会被拒绝。点击“立即同步商品目录”发送新的货币。"
+
+msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
+msgstr "买家用你的货币付款。sudemi 以欧元向你付款：支付服务商的货币兑换费（约 2%）会按条款从你的付款中扣除。"

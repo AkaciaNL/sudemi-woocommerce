@@ -3,7 +3,7 @@
  * Plugin Name:       sudemi Connector
  * Plugin URI:        https://sudemi.com/integrations/woocommerce
  * Description:       Lists this shop's products on sudemi, so an AI assistant can find them and send buyers to you. You stay the merchant of record.
- * Version:           1.2.8
+ * Version:           1.2.12
  * Requires at least: 6.2
  * Requires PHP:      8.0
  * Author:            Akacia
@@ -19,11 +19,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SUDEMI_VERSION', '1.2.8' );
+define( 'SUDEMI_VERSION', '1.2.12' );
 define( 'SUDEMI_PLUGIN_FILE', __FILE__ );
 define( 'SUDEMI_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-logger.php';
+require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-currency.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-keys.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-client.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-challenge.php';

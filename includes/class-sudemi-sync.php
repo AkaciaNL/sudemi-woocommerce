@@ -570,7 +570,7 @@ final class Sudemi_Sync {
 	}
 
 	private static function push_shop() {
-		Sudemi_Client::post_signed(
+		$response = Sudemi_Client::post_signed(
 			'/integration/v1/shop',
 			array(
 				'displayName'   => get_bloginfo( 'name' ),
@@ -581,6 +581,9 @@ final class Sudemi_Sync {
 				'shipsTo'       => self::shipping_countries(),
 			)
 		);
+		// sudemi echoes the currency it holds for this shop, or refuses one it does not support;
+		// the settings page shows either.
+		Sudemi_Currency::remember_shop_answer( $response );
 	}
 
 	private static function push_categories() {
@@ -786,7 +789,7 @@ final class Sudemi_Sync {
 		if ( '' === $price || null === $price ) {
 			return null;
 		}
-		return (int) round( (float) $price * 100 );
+		return Sudemi_Currency::to_minor( $price, Sudemi_Currency::shop_currency() );
 	}
 
 	private static function weight_grams( $weight ) {

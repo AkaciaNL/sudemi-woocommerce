@@ -931,3 +931,51 @@ msgstr "ההזמנה בוטלה בחנות זו"
 
 msgid "sudemi shipping"
 msgstr "משלוח sudemi"
+
+#, php-format
+msgid "sudemi order %1$s could not be booked: %2$s. Check the shop currency on the sudemi settings page."
+msgstr "לא ניתן היה לרשום את הזמנת sudemi %1$s: %2$s. בדקו את מטבע החנות בדף ההגדרות של sudemi."
+
+msgid "the order did not say which currency it was paid in"
+msgstr "ההזמנה לא ציינה באיזה מטבע שולמה"
+
+#, php-format
+msgid "the order was paid in %1$s but this shop sells in %2$s, so it cannot be booked here"
+msgstr "ההזמנה שולמה ב-%1$s אבל החנות הזו מוכרת ב-%2$s, ולכן אי אפשר לרשום אותה כאן"
+
+#, php-format
+msgid "this refund is in %1$s but the buyer paid in %2$s; change the order back to %2$s and refund again"
+msgstr "ההחזר הזה הוא ב-%1$s אבל הקונה שילם ב-%2$s; החזירו את ההזמנה ל-%2$s ובצעו את ההחזר שוב"
+
+#, php-format
+msgid "This refund was NOT sent to sudemi: %s. The buyer has not been paid back."
+msgstr "ההחזר הזה לא נשלח ל-sudemi: %s. הקונה לא קיבל את הכסף בחזרה."
+
+msgid "Currency"
+msgstr "מטבע"
+
+msgid "Your shop currency"
+msgstr "מטבע החנות שלך"
+
+msgid "From your WooCommerce settings. Your prices are sent to sudemi in it, buyers pay in it, and orders arrive in it."
+msgstr "מהגדרות WooCommerce שלך. המחירים שלך נשלחים ל-sudemi במטבע הזה, קונים משלמים בו והזמנות מגיעות בו."
+
+msgid "Currency sudemi has for your shop"
+msgstr "המטבע ש-sudemi רושם לחנות שלך"
+
+msgid "not confirmed yet"
+msgstr "עדיין לא אושר"
+
+msgid "What sudemi answered the last time this shop sent its details. It updates after the next sync."
+msgstr "מה ש-sudemi ענה בפעם האחרונה שהחנות הזו שלחה את פרטיה. מתעדכן אחרי הסנכרון הבא."
+
+#, php-format
+msgid "sudemi cannot sell in %1$s yet, so your products are not shown to buyers and no orders can come in. Currencies sudemi supports: %2$s."
+msgstr "sudemi עדיין לא יכול למכור ב-%1$s, ולכן המוצרים שלך לא מוצגים לקונים ולא יכולות להגיע הזמנות. מטבעות ש-sudemi תומך בהם: %2$s."
+
+#, php-format
+msgid "sudemi still has %1$s for your shop, but your shop sells in %2$s. Orders in %1$s are declined until this matches. Click \"Sync the catalogue now\" to send the new currency."
+msgstr "אצל sudemi עדיין רשום %1$s לחנות שלך, אבל החנות שלך מוכרת ב-%2$s. הזמנות ב-%1$s נדחות עד שזה יתאים. לחצו על \"סנכרון הקטלוג עכשיו\" כדי לשלוח את המטבע החדש."
+
+msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
+msgstr "קונים משלמים במטבע שלך. sudemi משלם לך באירו: עמלת המרת המטבע של ספק התשלומים (כ-2%) מנוכה מהתשלום שלך, כפי שכתוב בתנאים."

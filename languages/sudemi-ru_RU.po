@@ -932,3 +932,51 @@ msgstr "заказ был отменён в этом магазине"
 
 msgid "sudemi shipping"
 msgstr "Доставка sudemi"
+
+#, php-format
+msgid "sudemi order %1$s could not be booked: %2$s. Check the shop currency on the sudemi settings page."
+msgstr "Заказ sudemi %1$s не удалось оформить: %2$s. Проверьте валюту магазина на странице настроек sudemi."
+
+msgid "the order did not say which currency it was paid in"
+msgstr "в заказе не указано, в какой валюте он оплачен"
+
+#, php-format
+msgid "the order was paid in %1$s but this shop sells in %2$s, so it cannot be booked here"
+msgstr "заказ оплачен в %1$s, а этот магазин продаёт в %2$s, поэтому его нельзя оформить здесь"
+
+#, php-format
+msgid "this refund is in %1$s but the buyer paid in %2$s; change the order back to %2$s and refund again"
+msgstr "этот возврат в %1$s, а покупатель платил в %2$s; верните заказу валюту %2$s и сделайте возврат снова"
+
+#, php-format
+msgid "This refund was NOT sent to sudemi: %s. The buyer has not been paid back."
+msgstr "Этот возврат НЕ отправлен в sudemi: %s. Покупателю деньги не вернули."
+
+msgid "Currency"
+msgstr "Валюта"
+
+msgid "Your shop currency"
+msgstr "Валюта вашего магазина"
+
+msgid "From your WooCommerce settings. Your prices are sent to sudemi in it, buyers pay in it, and orders arrive in it."
+msgstr "Из настроек WooCommerce. Ваши цены отправляются в sudemi в этой валюте, покупатели платят в ней, и заказы приходят в ней."
+
+msgid "Currency sudemi has for your shop"
+msgstr "Валюта вашего магазина в sudemi"
+
+msgid "not confirmed yet"
+msgstr "ещё не подтверждена"
+
+msgid "What sudemi answered the last time this shop sent its details. It updates after the next sync."
+msgstr "Что ответил sudemi, когда этот магазин в последний раз отправлял свои данные. Обновится после следующей синхронизации."
+
+#, php-format
+msgid "sudemi cannot sell in %1$s yet, so your products are not shown to buyers and no orders can come in. Currencies sudemi supports: %2$s."
+msgstr "sudemi пока не может продавать в %1$s, поэтому покупатели не видят ваши товары и заказы не могут поступать. Валюты, которые поддерживает sudemi: %2$s."
+
+#, php-format
+msgid "sudemi still has %1$s for your shop, but your shop sells in %2$s. Orders in %1$s are declined until this matches. Click \"Sync the catalogue now\" to send the new currency."
+msgstr "У sudemi для вашего магазина всё ещё указана валюта %1$s, а ваш магазин продаёт в %2$s. Заказы в %1$s отклоняются, пока они не совпадут. Нажмите \"Синхронизировать каталог сейчас\", чтобы отправить новую валюту."
+
+msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
+msgstr "Покупатели платят в вашей валюте. sudemi выплачивает вам деньги в евро: комиссия платёжного провайдера за конвертацию валюты (около 2%) удерживается из вашей выплаты, как сказано в условиях."

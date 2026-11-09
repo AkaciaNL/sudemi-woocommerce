@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.2.8
+Stable tag: 1.2.12
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,12 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.2.12 =
+* Currencies: a sudemi order is booked in the currency the buyer paid in. An order in another currency than the shop's is declined straight away (the buyer is not charged) and the reason is logged.
+* Money is converted with each currency's own minor units (no fixed x100), for prices, shipping, orders and refunds.
+* Refunds sent to sudemi say their currency; a refund in another currency than the buyer paid in is not sent, and the order says why.
+* The settings page shows the shop currency and the currency sudemi has for the shop, with a warning when sudemi does not support it. Order history shows the currency each order was paid in.
 
 = 1.2.8 =
 * A sudemi order is booked in WooCommerce at what the buyer paid. Each line gets the price the buyer paid on sudemi (not the shop's current price, which may have changed since the last sync), the shipping the buyer paid is added as a shipping line ("sudemi shipping"), and the payment method is sudemi. The order total now equals the amount the buyer paid. Before, the order had the goods at the catalogue price, no shipping and no payment method, so the shop's books missed the shipping.

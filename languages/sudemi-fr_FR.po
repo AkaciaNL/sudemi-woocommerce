@@ -931,3 +931,51 @@ msgstr "la commande a été annulée dans cette boutique"
 
 msgid "sudemi shipping"
 msgstr "Livraison sudemi"
+
+#, php-format
+msgid "sudemi order %1$s could not be booked: %2$s. Check the shop currency on the sudemi settings page."
+msgstr "La commande sudemi %1$s n'a pas pu être enregistrée : %2$s. Vérifiez la devise de la boutique sur la page de réglages sudemi."
+
+msgid "the order did not say which currency it was paid in"
+msgstr "la commande n'indiquait pas dans quelle devise elle a été payée"
+
+#, php-format
+msgid "the order was paid in %1$s but this shop sells in %2$s, so it cannot be booked here"
+msgstr "la commande a été payée en %1$s mais cette boutique vend en %2$s, elle ne peut donc pas être enregistrée ici"
+
+#, php-format
+msgid "this refund is in %1$s but the buyer paid in %2$s; change the order back to %2$s and refund again"
+msgstr "ce remboursement est en %1$s mais l'acheteur a payé en %2$s ; remettez la commande en %2$s et remboursez à nouveau"
+
+#, php-format
+msgid "This refund was NOT sent to sudemi: %s. The buyer has not been paid back."
+msgstr "Ce remboursement n'a PAS été envoyé à sudemi : %s. L'acheteur n'a pas été remboursé."
+
+msgid "Currency"
+msgstr "Devise"
+
+msgid "Your shop currency"
+msgstr "Devise de votre boutique"
+
+msgid "From your WooCommerce settings. Your prices are sent to sudemi in it, buyers pay in it, and orders arrive in it."
+msgstr "D'après vos réglages WooCommerce. Vos prix sont envoyés à sudemi dans cette devise, les acheteurs paient dans cette devise et les commandes arrivent dans cette devise."
+
+msgid "Currency sudemi has for your shop"
+msgstr "Devise que sudemi a pour votre boutique"
+
+msgid "not confirmed yet"
+msgstr "pas encore confirmée"
+
+msgid "What sudemi answered the last time this shop sent its details. It updates after the next sync."
+msgstr "Ce que sudemi a répondu la dernière fois que cette boutique a envoyé ses informations. Mis à jour après la prochaine synchronisation."
+
+#, php-format
+msgid "sudemi cannot sell in %1$s yet, so your products are not shown to buyers and no orders can come in. Currencies sudemi supports: %2$s."
+msgstr "sudemi ne peut pas encore vendre en %1$s : vos produits ne sont donc pas montrés aux acheteurs et aucune commande ne peut arriver. Devises prises en charge par sudemi : %2$s."
+
+#, php-format
+msgid "sudemi still has %1$s for your shop, but your shop sells in %2$s. Orders in %1$s are declined until this matches. Click \"Sync the catalogue now\" to send the new currency."
+msgstr "sudemi a encore %1$s pour votre boutique, mais votre boutique vend en %2$s. Les commandes en %1$s sont refusées tant que ce n'est pas identique. Cliquez sur \"Synchroniser le catalogue maintenant\" pour envoyer la nouvelle devise."
+
+msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
+msgstr "Les acheteurs paient dans votre devise. sudemi vous verse vos paiements en euros : les frais de conversion du prestataire de paiement (environ 2%) sont retirés de votre versement, comme le prévoient les conditions."

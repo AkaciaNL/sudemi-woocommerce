@@ -935,3 +935,51 @@ msgstr "أُلغي الطلب في هذا المتجر"
 
 msgid "sudemi shipping"
 msgstr "شحن sudemi"
+
+#, php-format
+msgid "sudemi order %1$s could not be booked: %2$s. Check the shop currency on the sudemi settings page."
+msgstr "تعذّر تسجيل طلب sudemi %1$s: %2$s. تحقّق من عملة المتجر في صفحة إعدادات sudemi."
+
+msgid "the order did not say which currency it was paid in"
+msgstr "لم يذكر الطلب العملة التي دُفع بها"
+
+#, php-format
+msgid "the order was paid in %1$s but this shop sells in %2$s, so it cannot be booked here"
+msgstr "دُفع الطلب بعملة %1$s لكن هذا المتجر يبيع بعملة %2$s، لذلك لا يمكن تسجيله هنا"
+
+#, php-format
+msgid "this refund is in %1$s but the buyer paid in %2$s; change the order back to %2$s and refund again"
+msgstr "هذا الاسترداد بعملة %1$s لكن المشتري دفع بعملة %2$s؛ أعد الطلب إلى %2$s ثم استرد المبلغ من جديد"
+
+#, php-format
+msgid "This refund was NOT sent to sudemi: %s. The buyer has not been paid back."
+msgstr "لم يُرسَل هذا الاسترداد إلى sudemi: %s. لم يستعد المشتري ماله."
+
+msgid "Currency"
+msgstr "العملة"
+
+msgid "Your shop currency"
+msgstr "عملة متجرك"
+
+msgid "From your WooCommerce settings. Your prices are sent to sudemi in it, buyers pay in it, and orders arrive in it."
+msgstr "من إعدادات WooCommerce. تُرسَل أسعارك إلى sudemi بهذه العملة، ويدفع المشترون بها، وتصل الطلبات بها."
+
+msgid "Currency sudemi has for your shop"
+msgstr "العملة المسجّلة لمتجرك لدى sudemi"
+
+msgid "not confirmed yet"
+msgstr "لم تُؤكَّد بعد"
+
+msgid "What sudemi answered the last time this shop sent its details. It updates after the next sync."
+msgstr "ما ردّ به sudemi آخر مرة أرسل فيها هذا المتجر بياناته. يُحدَّث بعد المزامنة التالية."
+
+#, php-format
+msgid "sudemi cannot sell in %1$s yet, so your products are not shown to buyers and no orders can come in. Currencies sudemi supports: %2$s."
+msgstr "لا يستطيع sudemi البيع بعملة %1$s بعد، لذلك لا تظهر منتجاتك للمشترين ولا يمكن أن تصل طلبات. العملات التي يدعمها sudemi: %2$s."
+
+#, php-format
+msgid "sudemi still has %1$s for your shop, but your shop sells in %2$s. Orders in %1$s are declined until this matches. Click \"Sync the catalogue now\" to send the new currency."
+msgstr "ما زال sudemi يسجّل %1$s لمتجرك، لكن متجرك يبيع بعملة %2$s. تُرفض الطلبات بعملة %1$s حتى تتطابق العملتان. انقر \"مزامنة الكتالوج الآن\" لإرسال العملة الجديدة."
+
+msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
+msgstr "يدفع المشترون بعملتك. يدفع لك sudemi باليورو: تُخصم رسوم تحويل العملة لدى مزوّد الدفع (نحو 2%) من دفعتك، كما تنص الشروط."

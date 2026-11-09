@@ -97,7 +97,22 @@ class Sudemi_Orders {
 			return;
 		}
 
-		$shortfall = self::first_shortfall( $pending );
+		// Booked in the currency the buyer's card was charged in, or not at all: an order of
+		// 100 PLN booked here as 100 EUR is a different order. Declined at once, so the buyer's
+		// hold is released instead of the order waiting out its window.
+		$shortfall = Sudemi_Currency::order_problem( $pending, Sudemi_Currency::shop_currency() );
+		if ( null !== $shortfall ) {
+			Sudemi_Logger::error(
+				sprintf(
+					/* translators: 1: sudemi order id, 2: reason. */
+					__( 'sudemi order %1$s could not be booked: %2$s. Check the shop currency on the sudemi settings page.', 'sudemi' ),
+					$sudemi_id,
+					$shortfall
+				)
+			);
+		} else {
+			$shortfall = self::first_shortfall( $pending );
+		}
 		if ( null !== $shortfall ) {
 			// The ordinary case, and not a failure: a shop that says so promptly is behaving
 			// exactly as intended. The buyer's hold is released within the minute.
@@ -736,9 +751,13 @@ class Sudemi_Orders {
 		// the order is priced from the catalogue as before.
 		$paid    = self::paid_amounts( $pending );
 		$country = isset( $pending['destination_country'] ) ? (string) $pending['destination_country'] : '';
-		if ( null !== $paid && ! empty( $pending['currency_code'] ) ) {
-			$order->set_currency( strtoupper( (string) $pending['currency_code'] ) );
-		}
+		// The currency the buyer's card was charged in (answer() declined any other); a core
+		// that does not send one charged in the shop's currency.
+		$currency = ! empty( $pending['currency_code'] )
+			? Sudemi_Currency::normalise( $pending['currency_code'] )
+			: Sudemi_Currency::shop_currency();
+		$order->set_currency( $currency );
+		$order->update_meta_data( Sudemi_Currency::META_ORDER_CURRENCY, $currency );
 
 		foreach ( $pending['lines'] as $index => $line ) {
 			$product = self::resolve_product( $line );
@@ -755,8 +774,8 @@ class Sudemi_Orders {
 			// since the last sync, and the shop's order has to say what was actually paid.
 			$gross   = $paid['lines'][ $index ] * $quantity;
 			$rates   = self::tax_rates( $country, $product->is_taxable() ? $product->get_tax_class() : null, false );
-			$taxes   = self::taxes_within( $gross, $rates );
-			$net     = self::major( $gross - array_sum( $taxes ) );
+			$taxes   = self::taxes_within( $gross, $rates, $currency );
+			$net     = self::major( $gross - array_sum( $taxes ), $currency );
 			$item_id = $order->add_product(
 				$product,
 				$quantity,
@@ -773,7 +792,7 @@ class Sudemi_Orders {
 			// items later, and taxes set on another copy would be overwritten by that save.
 			$item = $order->get_item( $item_id, false );
 			if ( $item ) {
-				$item->set_taxes( self::tax_array( $taxes, true ) );
+				$item->set_taxes( self::tax_array( $taxes, true, $currency ) );
 				$item->save();
 			}
 		}
@@ -782,9 +801,9 @@ class Sudemi_Orders {
 			$shipping = new WC_Order_Item_Shipping();
 			$shipping->set_method_title( __( 'sudemi shipping', 'sudemi' ) );
 			$shipping->set_method_id( 'sudemi' );
-			$taxes = self::taxes_within( $paid['shipping'], self::tax_rates( $country, '', true ) );
-			$shipping->set_total( self::major( $paid['shipping'] - array_sum( $taxes ) ) );
-			$shipping->set_taxes( self::tax_array( $taxes, false ) );
+			$taxes = self::taxes_within( $paid['shipping'], self::tax_rates( $country, '', true ), $currency );
+			$shipping->set_total( self::major( $paid['shipping'] - array_sum( $taxes ), $currency ) );
+			$shipping->set_taxes( self::tax_array( $taxes, false, $currency ) );
 			$order->add_item( $shipping );
 		}
 
@@ -814,10 +833,10 @@ class Sudemi_Orders {
 			// shop's own settings could move the total away from what the buyer paid.
 			$order->update_taxes();
 			$order->calculate_totals( false );
-			if ( self::minor_of( $order->get_total() ) !== $paid['total'] ) {
+			if ( self::minor_of( $order->get_total(), $currency ) !== $paid['total'] ) {
 				// Only reachable through rounding in a shop's tax set-up; the total is what the
 				// buyer paid, whatever the parts add up to.
-				$order->set_total( self::major( $paid['total'] ) );
+				$order->set_total( self::major( $paid['total'], $currency ) );
 			}
 		}
 		// Held rather than processing until sudemi confirms the capture: an order that looks
@@ -872,17 +891,18 @@ class Sudemi_Orders {
 	 * The amounts sudemi sends include VAT (the sync sends prices with tax), so the tax is taken
 	 * out of them rather than added on top: net plus tax is always exactly what was paid.
 	 *
-	 * @param int   $gross_minor The amount with VAT.
-	 * @param array $rates       WC_Tax rates, as find_rates() returns them.
+	 * @param int    $gross_minor The amount with VAT.
+	 * @param array  $rates       WC_Tax rates, as find_rates() returns them.
+	 * @param string $currency    The order's currency (decides the minor unit).
 	 * @return array<int,int> Rate id to tax.
 	 */
-	private static function taxes_within( $gross_minor, array $rates ) {
+	private static function taxes_within( $gross_minor, array $rates, $currency ) {
 		if ( $gross_minor <= 0 || empty( $rates ) ) {
 			return array();
 		}
 		$out = array();
-		foreach ( WC_Tax::calc_tax( $gross_minor / 100, $rates, true ) as $rate_id => $tax ) {
-			$out[ $rate_id ] = (int) round( (float) $tax * 100 );
+		foreach ( WC_Tax::calc_tax( self::major( $gross_minor, $currency ), $rates, true ) as $rate_id => $tax ) {
+			$out[ $rate_id ] = self::minor_of( $tax, $currency );
 		}
 		if ( array_sum( $out ) >= $gross_minor ) {
 			return array();
@@ -914,12 +934,13 @@ class Sudemi_Orders {
 	 *
 	 * @param array<int,int> $taxes        Rate id to tax, in minor units.
 	 * @param bool           $with_subtotal Line items carry a subtotal tax as well.
+	 * @param string         $currency      The order's currency.
 	 * @return array
 	 */
-	private static function tax_array( array $taxes, $with_subtotal ) {
+	private static function tax_array( array $taxes, $with_subtotal, $currency ) {
 		$total = array();
 		foreach ( $taxes as $rate_id => $tax ) {
-			$total[ $rate_id ] = self::major( $tax );
+			$total[ $rate_id ] = self::major( $tax, $currency );
 		}
 		return $with_subtotal ? array(
 			'total'    => $total,
@@ -927,17 +948,14 @@ class Sudemi_Orders {
 		) : array( 'total' => $total );
 	}
 
-	/** Minor units as the decimal string WooCommerce stores ("8.50"). */
-	public static function major( $minor ) {
-		$minor = (int) $minor;
-		$sign  = $minor < 0 ? '-' : '';
-		$minor = abs( $minor );
-		return $sign . intdiv( $minor, 100 ) . '.' . str_pad( (string) ( $minor % 100 ), 2, '0', STR_PAD_LEFT );
+	/** Minor units as the decimal string WooCommerce stores ("8.50"), in the currency's own minor unit. */
+	public static function major( $minor, $currency = null ) {
+		return Sudemi_Currency::to_major( $minor, null === $currency ? Sudemi_Currency::shop_currency() : $currency );
 	}
 
-	/** A WooCommerce amount in minor units. */
-	public static function minor_of( $amount ) {
-		return (int) round( (float) $amount * 100 );
+	/** A WooCommerce amount in the currency's minor units. */
+	public static function minor_of( $amount, $currency = null ) {
+		return Sudemi_Currency::to_minor( $amount, null === $currency ? Sudemi_Currency::shop_currency() : $currency );
 	}
 
 	/**
@@ -1061,16 +1079,63 @@ class Sudemi_Orders {
 		if ( empty( $sudemi_id ) ) {
 			return;
 		}
-		$amount   = (int) round( (float) $refund->get_amount() * 100 );
-		$reason   = (string) $refund->get_reason();
+		$body = self::refund_body( $refund, $order );
+		if ( is_string( $body ) ) {
+			// Not sent: a refund in another currency than the buyer paid in would pay back a
+			// different amount than the shop meant. Said on the order, where the merchant looks.
+			$order->add_order_note(
+				sprintf(
+					/* translators: %s: why the refund was not sent. */
+					__( 'This refund was NOT sent to sudemi: %s. The buyer has not been paid back.', 'sudemi' ),
+					$body
+				)
+			);
+			Sudemi_Logger::error( 'Refund for order ' . $order->get_id() . ' not sent to sudemi: ' . $body );
+			return;
+		}
 		$response = Sudemi_Client::post_signed(
 			'/integration/v1/orders/' . rawurlencode( $sudemi_id ) . '/refund',
-			array(
-				'amountMinor' => $amount,
-				'reason'      => '' === $reason ? null : $reason,
-			)
+			$body
 		);
-		self::note_money_result( $order, $response, wc_price( $amount / 100 ) );
+		self::note_money_result(
+			$order,
+			$response,
+			wc_price( self::major( $body['amountMinor'], $body['currency'] ), array( 'currency' => $body['currency'] ) )
+		);
+	}
+
+	/**
+	 * The body of POST /orders/{id}/refund for a WooCommerce refund, or the reason it cannot be
+	 * sent. The amount is in the currency the buyer was charged in, and says which one that is.
+	 *
+	 * @param WC_Order_Refund $refund The refund.
+	 * @param WC_Order        $order  The order it belongs to.
+	 * @return array|string
+	 */
+	public static function refund_body( $refund, $order ) {
+		$charged = (string) $order->get_meta( Sudemi_Currency::META_ORDER_CURRENCY );
+		if ( '' === $charged ) {
+			// Booked before this plugin recorded the currency: the order's own is what was charged.
+			$charged = (string) $order->get_currency();
+		}
+		$charged  = Sudemi_Currency::normalise( $charged );
+		$currency = (string) $refund->get_currency();
+		if ( '' === $currency ) {
+			$currency = (string) $order->get_currency();
+		}
+		$problem = Sudemi_Currency::refund_problem( $currency, $charged );
+		if ( null === $problem ) {
+			$problem = Sudemi_Currency::refund_problem( $order->get_currency(), $charged );
+		}
+		if ( null !== $problem ) {
+			return $problem;
+		}
+		$reason = (string) $refund->get_reason();
+		return array(
+			'amountMinor' => Sudemi_Currency::to_minor( $refund->get_amount(), $charged ),
+			'currency'    => $charged,
+			'reason'      => '' === $reason ? null : $reason,
+		);
 	}
 
 	/**
