@@ -65,4 +65,4 @@ jobs:
           awk -v h="= $VERSION =" '$0 == h {on=1; next} on && /^= / {exit} on' readme.txt > notes.md
           printf '\nInstall: WordPress admin, Plugins > Add New > Upload Plugin, choose %s.\n' "$ZIP" >> notes.md
           gh release create "$GITHUB_REF_NAME" "$ZIP" "$ZIP.sha256" \
-            --title "sudemi Connector for WooCommerce $VERSION" --notes-file notes.md --verify-tag
+            --title "sudemi Connector for WooCommerce $VERSION" --notes-file notes.md
