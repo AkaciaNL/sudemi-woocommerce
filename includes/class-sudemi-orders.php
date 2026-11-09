@@ -757,6 +757,8 @@ class Sudemi_Orders {
 			? Sudemi_Currency::normalise( $pending['currency_code'] )
 			: Sudemi_Currency::shop_currency();
 		$order->set_currency( $currency );
+		// The tax classes of the taxable goods: the shop's shipping tax class can follow them.
+		$item_classes = array();
 		$order->update_meta_data( Sudemi_Currency::META_ORDER_CURRENCY, $currency );
 
 		foreach ( $pending['lines'] as $index => $line ) {
@@ -773,6 +775,9 @@ class Sudemi_Orders {
 			// The buyer's price wins over today's catalogue price: the price may have changed
 			// since the last sync, and the shop's order has to say what was actually paid.
 			$gross   = $paid['lines'][ $index ] * $quantity;
+			if ( $product->is_taxable() ) {
+				$item_classes[] = $product->get_tax_class();
+			}
 			$rates   = self::tax_rates( $country, $product->is_taxable() ? $product->get_tax_class() : null, false );
 			$taxes   = self::taxes_within( $gross, $rates, $currency );
 			$net     = self::major( $gross - array_sum( $taxes ), $currency );
@@ -801,7 +806,8 @@ class Sudemi_Orders {
 			$shipping = new WC_Order_Item_Shipping();
 			$shipping->set_method_title( __( 'sudemi shipping', 'sudemi' ) );
 			$shipping->set_method_id( 'sudemi' );
-			$taxes = self::taxes_within( $paid['shipping'], self::tax_rates( $country, '', true ), $currency );
+			// Taxed the way the shop's own checkout taxes shipping (its shipping tax class setting).
+			$taxes = self::taxes_within( $paid['shipping'], self::tax_rates( $country, Sudemi_Shipping::tax_class( $item_classes ), true ), $currency );
 			$shipping->set_total( self::major( $paid['shipping'] - array_sum( $taxes ), $currency ) );
 			$shipping->set_taxes( self::tax_array( $taxes, false, $currency ) );
 			$order->add_item( $shipping );

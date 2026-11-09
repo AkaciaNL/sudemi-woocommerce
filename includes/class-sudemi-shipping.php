@@ -68,10 +68,11 @@ class Sudemi_Shipping {
 		if ( $product->is_virtual() || ! $product->needs_shipping() ) {
 			return array();
 		}
-		$class_id = (int) $product->get_shipping_class_id();
-		$rates    = array();
+		$class_id  = (int) $product->get_shipping_class_id();
+		$tax_class = self::tax_class( $product->is_taxable() ? array( $product->get_tax_class() ) : array() );
+		$rates     = array();
 		foreach ( self::country_zones() as $country => $zone ) {
-			$cost = self::cheapest( $zone, $class_id, $country );
+			$cost = self::cheapest( $zone, $class_id, $country, $tax_class );
 			if ( null !== $cost ) {
 				$rates[] = array(
 					'country'   => $country,
@@ -141,7 +142,7 @@ class Sudemi_Shipping {
 	}
 
 	/** Cheapest fixed price of the zone's enabled methods for this shipping class, or null. */
-	private static function cheapest( $zone, $class_id, $country ) {
+	private static function cheapest( $zone, $class_id, $country, $tax_class ) {
 		$best = null;
 		foreach ( $zone->get_shipping_methods( true ) as $method ) {
 			$cost = null;
@@ -172,7 +173,7 @@ class Sudemi_Shipping {
 			} else {
 				continue;
 			}
-			$cost += self::shipping_tax( $method, $cost, $country );
+			$cost += self::shipping_tax( $method, $cost, $country, $tax_class );
 			if ( null === $best || $cost < $best ) {
 				$best = $cost;
 			}
@@ -183,9 +184,14 @@ class Sudemi_Shipping {
 	/**
 	 * VAT on a taxable shipping cost for this destination, from WooCommerce's own tax tables:
 	 * shipping costs are entered without tax, and buyers see totals with it.
+	 *
+	 * @param WC_Shipping_Method $method    The shipping method.
+	 * @param float              $cost      The cost without tax.
+	 * @param string             $country   The destination.
+	 * @param string|null        $tax_class The shipping tax class (tax_class()); null for none.
 	 */
-	private static function shipping_tax( $method, $cost, $country ) {
-		if ( $cost <= 0 || ! wc_tax_enabled() || 'taxable' !== $method->get_option( 'tax_status', 'taxable' ) ) {
+	private static function shipping_tax( $method, $cost, $country, $tax_class ) {
+		if ( $cost <= 0 || null === $tax_class || ! wc_tax_enabled() || 'taxable' !== $method->get_option( 'tax_status', 'taxable' ) ) {
 			return 0.0;
 		}
 		$rates = WC_Tax::find_shipping_rates(
@@ -194,9 +200,41 @@ class Sudemi_Shipping {
 				'state'     => '',
 				'postcode'  => '',
 				'city'      => '',
-				'tax_class' => '',
+				'tax_class' => $tax_class,
 			)
 		);
 		return (float) array_sum( WC_Tax::calc_shipping_tax( $cost, $rates ) );
+	}
+
+	/**
+	 * The tax class WooCommerce's own checkout taxes shipping with, for goods of these tax classes:
+	 * the shop's "Shipping tax class" setting, or with "based on cart items" the standard class when
+	 * any item has it, the one class when there is one, else the first in the shop's class order.
+	 * Null when no item is taxable (no tax on the shipping either).
+	 *
+	 * @param string[] $item_classes Tax classes of the taxable items ('' is standard).
+	 * @return string|null
+	 */
+	public static function tax_class( array $item_classes ) {
+		$setting = get_option( 'woocommerce_shipping_tax_class', 'inherit' );
+		if ( false !== $setting && 'inherit' !== $setting ) {
+			return (string) $setting;
+		}
+		$item_classes = array_values( array_unique( array_map( 'strval', $item_classes ) ) );
+		if ( empty( $item_classes ) ) {
+			return null;
+		}
+		if ( in_array( '', $item_classes, true ) ) {
+			return '';
+		}
+		if ( 1 === count( $item_classes ) ) {
+			return $item_classes[0];
+		}
+		foreach ( WC_Tax::get_tax_class_slugs() as $slug ) {
+			if ( in_array( $slug, $item_classes, true ) ) {
+				return $slug;
+			}
+		}
+		return '';
 	}
 }
