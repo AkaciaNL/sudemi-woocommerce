@@ -1552,3 +1552,73 @@ msgstr "Kon sudemi niet bereiken om de levering te melden. Die wordt bij de volg
 #, php-format
 msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
 msgstr "%d bestelling(en) wachten op je antwoord onder WooCommerce > sudemi > Bestellingen. Automatisch bevestigen staat uit, dus ze moeten handmatig worden beantwoord voordat hun termijn verloopt."
+
+msgid "Cancelled by your shop on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
+msgstr "Geannuleerd door je winkel op sudemi vóór verzending; de koper is volledig terugbetaald. Verstuur deze bestelling niet."
+
+msgid "Cancelled by sudemi before shipping (for example because the order was not answered in time); the buyer has been refunded in full. Do not ship this order."
+msgstr "Geannuleerd door sudemi vóór verzending (bijvoorbeeld omdat de bestelling niet op tijd is beantwoord); de koper is volledig terugbetaald. Verstuur deze bestelling niet."
+
+msgid "Cancelled on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
+msgstr "Geannuleerd op sudemi vóór verzending; de koper is volledig terugbetaald. Verstuur deze bestelling niet."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by your shop on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi-bestelling %1$s is vóór verzending door je winkel op sudemi geannuleerd; bestelling #%2$s is hier geannuleerd en de voorraad hersteld."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi-bestelling %1$s is vóór verzending door sudemi geannuleerd; bestelling #%2$s is hier geannuleerd en de voorraad hersteld."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi-bestelling %1$s is vóór verzending op sudemi geannuleerd; bestelling #%2$s is hier geannuleerd en de voorraad hersteld."
+
+msgid "The stock has been restored."
+msgstr "De voorraad is hersteld."
+
+#, php-format
+msgid "New tracking sent to sudemi: %s. sudemi e-mails the buyer the new code."
+msgstr "Nieuwe track & trace naar sudemi gestuurd: %s. sudemi mailt de koper de nieuwe code."
+
+#, php-format
+msgid "Could not send the new tracking (%s) to sudemi yet. It is sent again on the next heartbeat."
+msgstr "Kon de nieuwe track & trace (%s) nog niet naar sudemi sturen. Die wordt bij de volgende heartbeat opnieuw verstuurd."
+
+#, php-format
+msgid "The new tracking (%s) was not sent: on sudemi this order is already delivered, cancelled or refunded, so its tracking can no longer change."
+msgstr "De nieuwe track & trace (%s) is niet verstuurd: op sudemi is deze bestelling al bezorgd, geannuleerd of terugbetaald, dus de track & trace kan niet meer veranderen."
+
+#, php-format
+msgid "sudemi did not take the new tracking (%s). Check the order under WooCommerce > sudemi > Orders."
+msgstr "sudemi heeft de nieuwe track & trace (%s) niet aangenomen. Bekijk de bestelling onder WooCommerce > sudemi > Bestellingen."
+
+#, php-format
+msgid "Could not send the new tracking for sudemi order %1$s yet. It is sent again on the next heartbeat."
+msgstr "Kon de nieuwe track & trace voor sudemi-bestelling %1$s nog niet versturen. Die wordt bij de volgende heartbeat opnieuw verstuurd."
+
+#, php-format
+msgid "Sent the new tracking for sudemi order %1$s."
+msgstr "Nieuwe track & trace voor sudemi-bestelling %1$s verstuurd."
+
+#, php-format
+msgid "The new tracking for sudemi order %1$s was not sent: the order is already delivered, cancelled or refunded on sudemi."
+msgstr "De nieuwe track & trace voor sudemi-bestelling %1$s is niet verstuurd: de bestelling is op sudemi al bezorgd, geannuleerd of terugbetaald."
+
+msgid "The tracking can no longer be changed: on sudemi this order is already delivered, cancelled or refunded."
+msgstr "De track & trace kan niet meer veranderen: op sudemi is deze bestelling al bezorgd, geannuleerd of terugbetaald."
+
+msgid "Enter a tracking code."
+msgstr "Vul een trackingcode in."
+
+msgid "Tracking changed on sudemi. sudemi e-mails the buyer the new code."
+msgstr "Track & trace aangepast op sudemi. sudemi mailt de koper de nieuwe code."
+
+msgid "sudemi already has this tracking. Nothing was changed."
+msgstr "sudemi heeft deze track & trace al. Er is niets veranderd."
+
+msgid "Shipped already. Wrong or missing tracking? Enter the right one: sudemi e-mails the buyer the new code."
+msgstr "Al verzonden. Verkeerde of ontbrekende track & trace? Vul de juiste in: sudemi mailt de koper de nieuwe code."
+
+msgid "Change tracking"
+msgstr "Track & trace aanpassen"

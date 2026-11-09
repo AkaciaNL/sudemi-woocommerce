@@ -1552,3 +1552,73 @@ msgstr "לא ניתן היה להגיע ל-sudemi כדי לדווח על המס�
 #, php-format
 msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
 msgstr "%d הזמנות ממתינות לתשובתכם תחת WooCommerce > sudemi > הזמנות. האישור האוטומטי כבוי, ולכן יש לענות עליהן ידנית לפני שחלון הזמן שלהן נסגר."
+
+msgid "Cancelled by your shop on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
+msgstr "בוטלה על ידי החנות שלכם ב-sudemi לפני המשלוח; הקונה קיבל החזר מלא. אל תשלחו הזמנה זו."
+
+msgid "Cancelled by sudemi before shipping (for example because the order was not answered in time); the buyer has been refunded in full. Do not ship this order."
+msgstr "בוטלה על ידי sudemi לפני המשלוח (למשל כי לא ניתנה תשובה להזמנה בזמן); הקונה קיבל החזר מלא. אל תשלחו הזמנה זו."
+
+msgid "Cancelled on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
+msgstr "בוטלה ב-sudemi לפני המשלוח; הקונה קיבל החזר מלא. אל תשלחו הזמנה זו."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by your shop on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "הזמנת sudemi %1$s בוטלה על ידי החנות שלכם ב-sudemi לפני המשלוח; הזמנה #%2$s בוטלה כאן והמלאי שוחזר."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "הזמנת sudemi %1$s בוטלה על ידי sudemi לפני המשלוח; הזמנה #%2$s בוטלה כאן והמלאי שוחזר."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "הזמנת sudemi %1$s בוטלה ב-sudemi לפני המשלוח; הזמנה #%2$s בוטלה כאן והמלאי שוחזר."
+
+msgid "The stock has been restored."
+msgstr "המלאי שוחזר."
+
+#, php-format
+msgid "New tracking sent to sudemi: %s. sudemi e-mails the buyer the new code."
+msgstr "מספר מעקב חדש נשלח ל-sudemi: %s. sudemi שולח לקונה את המספר החדש בדוא\"ל."
+
+#, php-format
+msgid "Could not send the new tracking (%s) to sudemi yet. It is sent again on the next heartbeat."
+msgstr "עדיין לא ניתן היה לשלוח את מספר המעקב החדש (%s) ל-sudemi. הוא יישלח שוב בפעימה הבאה."
+
+#, php-format
+msgid "The new tracking (%s) was not sent: on sudemi this order is already delivered, cancelled or refunded, so its tracking can no longer change."
+msgstr "מספר המעקב החדש (%s) לא נשלח: ב-sudemi ההזמנה הזו כבר נמסרה, בוטלה או הוחזרה, ולכן לא ניתן עוד לשנות את מספר המעקב."
+
+#, php-format
+msgid "sudemi did not take the new tracking (%s). Check the order under WooCommerce > sudemi > Orders."
+msgstr "sudemi לא קיבל את מספר המעקב החדש (%s). בדקו את ההזמנה תחת WooCommerce > sudemi > הזמנות."
+
+#, php-format
+msgid "Could not send the new tracking for sudemi order %1$s yet. It is sent again on the next heartbeat."
+msgstr "עדיין לא ניתן היה לשלוח את מספר המעקב החדש של הזמנת sudemi %1$s. הוא יישלח שוב בפעימה הבאה."
+
+#, php-format
+msgid "Sent the new tracking for sudemi order %1$s."
+msgstr "מספר המעקב החדש של הזמנת sudemi %1$s נשלח."
+
+#, php-format
+msgid "The new tracking for sudemi order %1$s was not sent: the order is already delivered, cancelled or refunded on sudemi."
+msgstr "מספר המעקב החדש של הזמנת sudemi %1$s לא נשלח: ההזמנה כבר נמסרה, בוטלה או הוחזרה ב-sudemi."
+
+msgid "The tracking can no longer be changed: on sudemi this order is already delivered, cancelled or refunded."
+msgstr "לא ניתן עוד לשנות את מספר המעקב: ב-sudemi ההזמנה הזו כבר נמסרה, בוטלה או הוחזרה."
+
+msgid "Enter a tracking code."
+msgstr "הזינו מספר מעקב."
+
+msgid "Tracking changed on sudemi. sudemi e-mails the buyer the new code."
+msgstr "מספר המעקב שונה ב-sudemi. sudemi שולח לקונה את המספר החדש בדוא\"ל."
+
+msgid "sudemi already has this tracking. Nothing was changed."
+msgstr "ל-sudemi כבר יש את מספר המעקב הזה. דבר לא השתנה."
+
+msgid "Shipped already. Wrong or missing tracking? Enter the right one: sudemi e-mails the buyer the new code."
+msgstr "כבר נשלחה. מספר מעקב שגוי או חסר? הזינו את הנכון: sudemi שולח לקונה את המספר החדש בדוא\"ל."
+
+msgid "Change tracking"
+msgstr "שינוי מספר המעקב"

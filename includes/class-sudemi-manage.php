@@ -24,7 +24,7 @@ final class Sudemi_Manage {
 	const SORTS = array( 'placed', 'total', 'status' );
 
 	/** What a single order can be asked to do here (allowed_actions names). */
-	const ACTIONS = array( 'accept', 'reject', 'shipped', 'delivered', 'refund', 'cancel' );
+	const ACTIONS = array( 'accept', 'reject', 'shipped', 'update_tracking', 'delivered', 'refund', 'cancel' );
 
 	/** What the bulk call takes. Refunds and cancellations are never offered in bulk (4d). */
 	const BULK_ACTIONS = array( 'accept', 'reject', 'shipped', 'delivered' );
@@ -319,6 +319,10 @@ final class Sudemi_Manage {
 				return __( 'Could not reach sudemi. Nothing was changed; try again shortly.', 'sudemi' );
 			case 'not_connected':
 				return __( 'This shop is not connected to sudemi.', 'sudemi' );
+			case 'not_shipped':
+				return __( 'The tracking can no longer be changed: on sudemi this order is already delivered, cancelled or refunded.', 'sudemi' );
+			case 'tracking_code_required':
+				return __( 'Enter a tracking code.', 'sudemi' );
 		}
 		if ( '' !== (string) $message ) {
 			return (string) $message;
@@ -440,6 +444,9 @@ final class Sudemi_Manage {
 		if ( 'accept' === $action ) {
 			return self::accept( $id );
 		}
+		if ( 'update_tracking' === $action || ( 'shipped' === $action && '' !== self::clean_text( isset( $data['tracking'] ) ? $data['tracking'] : '', self::TRACKING_MAX ) ) ) {
+			return self::act_tracking( $id, $action, $data );
+		}
 		$reason  = self::clean_text( isset( $data['reason'] ) ? $data['reason'] : '', self::REASON_MAX );
 		$path    = '/integration/v1/orders/' . rawurlencode( $id ) . '/' . $action;
 		$headers = array();
@@ -488,7 +495,9 @@ final class Sudemi_Manage {
 			}
 			return self::outcome( false, self::error_message( $read['error'], $read['message'] ) );
 		}
-		self::reflect( $id );
+		// Cancelled from here: by this shop, whatever the order page of sudemi says (it has no
+		// cancelled_by), so the WooCommerce order note says so.
+		self::reflect( $id, 'cancel' === $action ? array( 'cancelled_by' => 'shop' ) : array() );
 		Sudemi_Logger::info( 'sudemi order ' . $id . ': ' . $action . ' sent from the sudemi page.' );
 		switch ( $action ) {
 			case 'reject':
@@ -502,6 +511,52 @@ final class Sudemi_Manage {
 			default:
 				return self::outcome( true, __( 'Cancelled on sudemi and refunded in full. The WooCommerce order is cancelled and the stock restored.', 'sudemi' ) );
 		}
+	}
+
+	/**
+	 * Shipped with a tracking code, or a new tracking code for a shipped order. Whichever the
+	 * merchant picked, it lands: sudemi gets `shipped` while the order is PAID and `tracking`
+	 * once it is SHIPPED (it may have been shipped elsewhere a moment ago).
+	 *
+	 * @return array{ok:bool,message:string}
+	 */
+	private static function act_tracking( $id, $action, array $data ) {
+		$carrier = self::clean_text( isset( $data['carrier'] ) ? $data['carrier'] : '', self::TRACKING_MAX );
+		$code    = self::clean_text( isset( $data['tracking'] ) ? $data['tracking'] : '', self::TRACKING_MAX );
+		if ( 'update_tracking' === $action && '' === $code ) {
+			return self::outcome( false, self::error_message( 'tracking_code_required' ) );
+		}
+		$result = Sudemi_Orders::push_tracking(
+			$id,
+			array(
+				'carrier'      => '' === $carrier ? null : $carrier,
+				'trackingCode' => '' === $code ? null : $code,
+			),
+			'shipped' === $action ? 'shipped' : 'tracking'
+		);
+		switch ( $result['verdict'] ) {
+			case 'done':
+				Sudemi_Order_Calls::remove( $id, 'tracking' );
+				if ( 'shipped' === $result['call'] ) {
+					Sudemi_Order_Calls::remove( $id, 'shipped' );
+				}
+				self::reflect( $id );
+				Sudemi_Logger::info( 'sudemi order ' . $id . ': ' . $result['call'] . ' sent from the sudemi page.' );
+				return 'shipped' === $result['call']
+					? self::outcome( true, __( 'Marked shipped on sudemi. The buyer is told.', 'sudemi' ) )
+					: self::outcome( true, __( 'Tracking changed on sudemi. sudemi e-mails the buyer the new code.', 'sudemi' ) );
+			case 'same':
+				self::reflect( $id );
+				return self::outcome( true, __( 'sudemi already has this tracking. Nothing was changed.', 'sudemi' ) );
+			case 'final':
+				self::reflect( $id );
+				return self::outcome( false, self::error_message( 'not_shipped' ) );
+		}
+		$read = self::read( $result['response'] );
+		if ( in_array( $read['error'], array( 'wrong_state', 'not_paid', 'refused', 'already_resolved' ), true ) ) {
+			self::reflect( $id );
+		}
+		return self::outcome( false, self::error_message( $read['ok'] ? 'refused' : $read['error'], $read['message'] ) );
 	}
 
 	/** An Idempotency-Key from the form (one per rendered form), or a fresh one. */
@@ -565,11 +620,16 @@ final class Sudemi_Manage {
 		}
 	}
 
-	/** Reads the order from sudemi again and applies it to the WooCommerce order. */
-	public static function reflect( $id ) {
+	/**
+	 * Reads the order from sudemi again and applies it to the WooCommerce order.
+	 *
+	 * @param string $id    The sudemi order id.
+	 * @param array  $extra Known here but not on sudemi's order page (cancelled_by).
+	 */
+	public static function reflect( $id, array $extra = array() ) {
 		$read = self::order( $id );
 		if ( $read['ok'] ) {
-			Sudemi_Changes::apply_entry( self::entry_from_detail( $read['body'] ) );
+			Sudemi_Changes::apply_entry( array_merge( self::entry_from_detail( $read['body'] ), $extra ) );
 		}
 		return $read;
 	}
@@ -625,6 +685,12 @@ final class Sudemi_Manage {
 			}
 			$oid = strtolower( (string) $result['order_id'] );
 			$ok  = isset( $result['result'] ) && 'done' === $result['result'];
+			if ( ! $ok && 'shipped' === $action ) {
+				$ok = self::bulk_tracking( $oid, $result, $body['items'] );
+				if ( $ok ) {
+					$result = array( 'order_id' => $oid, 'result' => 'done' );
+				}
+			}
 			if ( $ok ) {
 				++$done;
 			} else {
@@ -651,6 +717,32 @@ final class Sudemi_Manage {
 			$message .= ' ' . implode( ' ', $notes );
 		}
 		return self::outcome( 0 === $refused, $message );
+	}
+
+	/**
+	 * Bulk shipped refused for an order sudemi has as SHIPPED already: the tracking code given
+	 * for it is sent as a tracking change instead, so it reaches the buyer all the same.
+	 *
+	 * @return bool true when sudemi has that tracking now.
+	 */
+	private static function bulk_tracking( $oid, array $result, array $items ) {
+		if ( ! isset( $result['error'] ) || 'wrong_state' !== $result['error'] ) {
+			return false;
+		}
+		foreach ( $items as $item ) {
+			if ( isset( $item['orderId'], $item['trackingCode'] ) && $item['orderId'] === $oid && '' !== (string) $item['trackingCode'] ) {
+				$sent = Sudemi_Orders::push_tracking(
+					$oid,
+					array(
+						'carrier'      => isset( $item['carrier'] ) ? $item['carrier'] : null,
+						'trackingCode' => $item['trackingCode'],
+					),
+					'tracking'
+				);
+				return in_array( $sent['verdict'], array( 'done', 'same' ), true );
+			}
+		}
+		return false;
 	}
 
 	/** Removes WooCommerce orders made for an acceptance sudemi refused, with their stock put back. */

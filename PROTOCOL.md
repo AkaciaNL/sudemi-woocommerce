@@ -351,6 +351,7 @@ are `GET` (signed with their query string, see "Signing a GET"). The one `PUT`,
 | `POST /integration/v1/orders/bulk` | Accept, reject, ship or deliver up to 100 orders at once (§4d) |
 | `GET  /integration/v1/orders/{id}/fulfilment` | Where to ship it. Only after the order is accepted; see §4a |
 | `POST /integration/v1/orders/{id}/shipped` | Dispatched. Optional `{"carrier": "...", "trackingCode": "..."}` |
+| `POST /integration/v1/orders/{id}/tracking` | New or corrected tracking on an order already SHIPPED: `{"carrier": "...", "trackingCode": "..."}` (core 2026-11-09, §4d) |
 | `POST /integration/v1/orders/{id}/delivered` | Arrived. **Starts the withdrawal period running** |
 | `GET/POST /integration/v1/shipping` | This shop's shipping settings on sudemi and what buyers pay per country (§4d) |
 | `GET  /integration/v1/payouts` | Read only: the payout account's state and this shop's payouts per currency (§4d) |
@@ -566,6 +567,7 @@ Two more things the shop reports, because nothing on the platform can observe th
 | Call | When | Effect |
 | --- | --- | --- |
 | `shipped` | the parcel leaves | buyer is e-mailed the carrier and tracking |
+| `tracking` | the tracking is added or corrected after `shipped` | buyer is e-mailed the new carrier and tracking (core 2026-11-09, §4d) |
 | `delivered` | it arrives | buyer is e-mailed the date they may withdraw by |
 
 `delivered` is the one with legal weight. The right of withdrawal runs from the day the goods
@@ -604,7 +606,7 @@ array are `{"externalId", "reason"}`). Unknown request fields are ignored.
 
 | Endpoint | Body | Answer |
 | --- | --- | --- |
-| `POST /heartbeat` | `catalogueRevision`, `productCount`, `intervalSeconds` (clamped to 60-900), `pluginVersion`, `changesCursor` (optional: `""` to start, then the last `changes_cursor`); body optional | `status`, `heartbeat_seconds`, `trusted_until`, `catalogue_listed`, `not_listed_reason`, `full_sync_requested`, `domain_challenge{token,path,why}`, `pending_orders[{order_id,respond_by,total_minor,shipping_minor,currency_code,destination_country,lines[{product_id,external_id,title,quantity,unit_price_minor}]}]` + `pending_orders_note`, `settled_orders[{order_id,status,declined_reason}]`, `open_requests[{request_id,order_id,kind,reason,requested_at,respond_by}]` + `open_requests_note` (each list only when not empty). With `changesCursor` in the body (core 2026-11-09, §4d): `changed_orders[{order_id,status,revision,changed_at,refunded_minor,tracking{carrier,code}\|null,shipped_at,delivered_at,request{kind,status}\|null}]` (always present then, may be empty), `changes_cursor`, `changes_more`, `changes_cursor_reset` (only when the cursor sent could not be read) |
+| `POST /heartbeat` | `catalogueRevision`, `productCount`, `intervalSeconds` (clamped to 60-900), `pluginVersion`, `changesCursor` (optional: `""` to start, then the last `changes_cursor`); body optional | `status`, `heartbeat_seconds`, `trusted_until`, `catalogue_listed`, `not_listed_reason`, `full_sync_requested`, `domain_challenge{token,path,why}`, `pending_orders[{order_id,respond_by,total_minor,shipping_minor,currency_code,destination_country,lines[{product_id,external_id,title,quantity,unit_price_minor}]}]` + `pending_orders_note`, `settled_orders[{order_id,status,declined_reason,cancelled_by}]`, `open_requests[{request_id,order_id,kind,reason,requested_at,respond_by}]` + `open_requests_note` (each list only when not empty). With `changesCursor` in the body (core 2026-11-09, §4d): `changed_orders[{order_id,status,revision,changed_at,refunded_minor,tracking{carrier,code}\|null,shipped_at,delivered_at,cancelled_by,request{kind,status}\|null}]` (always present then, may be empty), `changes_cursor`, `changes_more`, `changes_cursor_reset` (only when the cursor sent could not be read) |
 | `GET /shop` | - | `install_id`, `seller_id`, `shop_origin`, `locked_fields`, `heartbeat_seconds`, `catalogue_listed`, `not_listed_reason`, `full_sync_requested`, `trusted_until` |
 | `POST /shop` | `displayName` (fills an empty shop name only), `description`, `supportEmail`, `returnsWindowDays`, `currency` (the shop's currency, §4c; unsupported: 400); `shipsTo` and `languages` accepted and ignored (shipping: §4d); locked fields: 423 | `status`, `currency` (the shop's currency now, or null), `locked_fields` |
 | `POST /categories` | `categories[{externalId,parentExternalId,name,description}]`, at least one (the declared category of the products that name them, for the blocked category list) | `status`, `accepted`, `removed` |
@@ -623,6 +625,7 @@ array are `{"externalId", "reason"}`). Unknown request fields are ignored.
 | `GET /payouts` | - | `account{connected,charges_enabled,details_submitted,payouts_active,state,action_deadline,disabled_reason}`, `payout_delay_days`, `currencies[{currency_code,orders,paid_out_minor,outstanding_minor,waiting_for_shipment_minor,scheduled_minor,processing_minor,held_minor,next_due_at}]`, `note` |
 | `GET /orders/{id}/fulfilment` | - | `deliverable`, `ship_to{recipient_name,line1,line2,postal_code,city,region,country,phone}`, `lines[{product_id,external_id,title,quantity}]`; 409 `not_confirmed_yet`, `payment_pending`, `not_payable` |
 | `POST /orders/{id}/shipped` / `delivered` | shipped: `carrier`, `trackingCode` (optional, max 100 chars each) | `status: ok` / `already_resolved`; 409 `not_paid` |
+| `POST /orders/{id}/tracking` | `trackingCode` (required; `tracking_code` also accepted), `carrier` (optional: left out or blank keeps the current one); max 100 chars each, control characters stripped. Optional `Idempotency-Key` | `status: ok` (changed, buyer e-mailed) / `already_resolved` (the order has exactly this tracking; nothing changed, nobody e-mailed); 400 `tracking_code_required`; 404 `no_such_order` (also another shop's); 409 `not_shipped` (PAID: send `shipped` with the tracking instead; DELIVERED, CANCELLED, REFUNDED: final) |
 | `POST /orders/{id}/refund` | `amountMinor` (omit for the rest), `reason`, optional `currency` (must be the order's, else 409 `currency_mismatch`) | `orderId`, `refundedMinor`, `totalRefundedMinor`, `fullyRefunded`, `providerRefundId`; 409 `refused`; 502 `provider_refused`. Send `Idempotency-Key` (any unique string, max 255): a retry with the same key and body returns the first answer and moves no money (24 h); without it a repeated partial refund refunds again |
 | `POST /orders/{id}/cancel` | `reason` (and `Idempotency-Key` as for refund) | as refund, plus `status: CANCELLED`; only a PAID order that has not shipped |
 | `POST /orders/{id}/request/accept` / `request/reject` | reject needs `reason` (shown to the buyer) | `status: ok` / `already_resolved`; 400 `invalid_request` (no reason); 404 `not_found` (no open request) |
@@ -706,6 +709,11 @@ support, Stripe events, the deadlines that run out).
  "changes_cursor": "c1....", "changes_more": false}
 ```
 
+- `cancelled_by` (core 2026-11-09, also on `settled_orders`): for a CANCELLED or DECLINED order who
+  ended it: `buyer` (the buyer cancelled), `shop` (this shop declined or cancelled it, on the
+  portal, over the seller API or from the plugin) or `sudemi` (no answer in time, the shop was
+  removed, or sudemi support refunded it); `null` for every other status. Say this in the shop's
+  order note instead of assuming the buyer cancelled.
 - Apply an entry only when its `revision` is higher than the one the plugin holds for that order
   (equal: a repeat, ignore it). An entry is a summary; `GET /orders/{id}` has the rest.
 - The feed reads 30 seconds behind real time, so a change shows up on the first heartbeat at least
@@ -744,9 +752,34 @@ in the payout currency, which differs from the order's for a converted payment (
 `external_id`, money with `refunded_minor`, tracking, the `timeline` (`PLACED`, `ACCEPTED`, `PAID`,
 `DECLINED`, `SHIPPED`, `DELIVERED`, `REFUND`, `CANCELLED`, `REQUEST`, `REQUEST_DECIDED`), the open
 `customer_request`, the `payout`, the `revision` and `allowed_actions`: what the shop can do now,
-from `accept`, `reject`, `shipped`, `delivered`, `refund`, `cancel`, `request_accept`,
-`request_reject`, each the existing `/orders/{id}/...` call. The call itself still decides: an
+from `accept`, `reject`, `shipped`, `update_tracking` (`POST /orders/{id}/tracking`, see below),
+`delivered`, `refund`, `cancel`, `request_accept`, `request_reject`, each the existing
+`/orders/{id}/...` call. The call itself still decides: an
 action listed can be refused when the order changed in between.
+
+### Tracking after shipping (`POST /orders/{id}/tracking`)
+
+A shop often marks an order shipped before it has the tracking number, or types a wrong one.
+`shipped` only works on a PAID order, so this call carries tracking that comes later:
+
+```json
+POST /integration/v1/orders/0f6c1c3e-.../tracking
+{"carrier": "DPD", "trackingCode": "09445440012345"}
+```
+
+```json
+{"status": "ok", "order_id": "0f6c1c3e-..."}
+```
+
+- Only while the order is SHIPPED (`update_tracking` in `allowed_actions`). For a PAID order send
+  `shipped` with the tracking; a plugin with a single "send tracking" button sends `shipped` when
+  the order is PAID and `tracking` when it is SHIPPED. After delivery, cancellation or a full
+  refund the answer is 409 `not_shipped` (a partial refund keeps the order SHIPPED).
+- The buyer gets an e-mail with the new carrier and code, and their AI assistant shows the new code
+  (MCP order status). The order's `revision` goes up, so the change feed lists it with the new
+  `tracking`; lines that shipped with the old tracking get the new one too.
+- Safe to repeat: the same carrier and code again answer `already_resolved` and e-mail nobody.
+- Audited as `order.tracking_updated` (actor PLUGIN, the install; old and new values).
 
 ### Export and bulk actions
 

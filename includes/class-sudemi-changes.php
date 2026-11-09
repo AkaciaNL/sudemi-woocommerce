@@ -283,8 +283,11 @@ final class Sudemi_Changes {
 					$order,
 					'DECLINED' === $status
 						? __( 'Declined on sudemi: the buyer was not charged. The stock has been restored.', 'sudemi' )
-						: __( 'Cancelled on sudemi; the buyer has been refunded in full. Do not ship this order. The stock has been restored.', 'sudemi' )
+						: Sudemi_Orders::cancel_note( isset( $entry['cancelled_by'] ) ? $entry['cancelled_by'] : null ) . ' ' . __( 'The stock has been restored.', 'sudemi' )
 				);
+				if ( 'DECLINED' !== $status ) {
+					Sudemi_Logger::warn( Sudemi_Orders::cancel_log( isset( $entry['cancelled_by'] ) ? $entry['cancelled_by'] : null, $id, $order->get_order_number() ) );
+				}
 				break;
 		}
 		$order = wc_get_order( $order->get_id() );
@@ -322,6 +325,12 @@ final class Sudemi_Changes {
 		}
 		$order->update_meta_data( self::META_CARRIER, $carrier );
 		$order->update_meta_data( self::META_CODE, $code );
+		if ( ! is_array( $order->get_meta( Sudemi_Orders::META_TRACKING_SENT ) ) ) {
+			// Shipped on sudemi (portal, this plugin's sudemi page) or before plugin 1.3.0: the
+			// shop's own tracking as it is now is the starting point, so only a later change of it
+			// here is sent back (never an old code over a newer one from the portal).
+			$order->update_meta_data( Sudemi_Orders::META_TRACKING_SENT, Sudemi_Orders::local_tracking( $order ) );
+		}
 		$order->save();
 		$order->add_order_note(
 			sprintf(

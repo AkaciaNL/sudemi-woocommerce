@@ -530,9 +530,10 @@ class Sudemi_Orders {
 
 		if ( 'CANCELLED' === $state ) {
 			// Cancelled on sudemi before it was shipped: by the buyer (free of charge before
-			// shipping) or by sudemi. The buyer has their money back, so the local order must not
-			// be shipped. Handled for an order still on hold and for one already paid.
-			self::cancel_from_sudemi( $sudemi_id );
+			// shipping), by this shop (portal, seller API, this plugin's sudemi page) or by sudemi.
+			// The buyer has their money back, so the local order must not be shipped. Handled for
+			// an order still on hold and for one already paid.
+			self::cancel_from_sudemi( $sudemi_id, isset( $settled['cancelled_by'] ) ? $settled['cancelled_by'] : null );
 			return;
 		}
 
@@ -616,14 +617,76 @@ class Sudemi_Orders {
 	}
 
 	/**
-	 * Cancels the local order for a sudemi order that was cancelled there (by the buyer before
-	 * shipping). Only an order that has not left the shop (on hold, pending or processing) is
-	 * touched; one already cancelled, refunded or completed is left as it is, so applying the
-	 * same news on every beat changes nothing after the first time.
+	 * Who ended a cancelled or declined sudemi order, as sudemi says it (cancelled_by, core
+	 * 2026-11-09): 'buyer', 'shop' or 'sudemi'; '' when sudemi did not say (an older core).
+	 *
+	 * @param mixed $value The cancelled_by field.
+	 * @return string
+	 */
+	public static function cancelled_by( $value ) {
+		$value = is_string( $value ) ? strtolower( trim( $value ) ) : '';
+		return in_array( $value, array( 'buyer', 'shop', 'sudemi' ), true ) ? $value : '';
+	}
+
+	/**
+	 * The order note for an order cancelled on sudemi before it shipped, saying who cancelled it.
+	 * Never "the buyer" unless sudemi said so: a shop that cancelled an order itself must not read
+	 * that its buyer did.
+	 *
+	 * @param mixed $by The cancelled_by field (see cancelled_by()).
+	 * @return string
+	 */
+	public static function cancel_note( $by ) {
+		switch ( self::cancelled_by( $by ) ) {
+			case 'buyer':
+				return __( 'Cancelled by the buyer on sudemi before shipping; the buyer has been refunded in full. Do not ship this order.', 'sudemi' );
+			case 'shop':
+				return __( 'Cancelled by your shop on sudemi before shipping; the buyer has been refunded in full. Do not ship this order.', 'sudemi' );
+			case 'sudemi':
+				return __( 'Cancelled by sudemi before shipping (for example because the order was not answered in time); the buyer has been refunded in full. Do not ship this order.', 'sudemi' );
+		}
+		return __( 'Cancelled on sudemi before shipping; the buyer has been refunded in full. Do not ship this order.', 'sudemi' );
+	}
+
+	/**
+	 * The log line for the same, with who cancelled it.
+	 *
+	 * @param mixed  $by        The cancelled_by field.
+	 * @param string $sudemi_id The sudemi order id.
+	 * @param string $number    The local order number.
+	 * @return string
+	 */
+	public static function cancel_log( $by, $sudemi_id, $number ) {
+		switch ( self::cancelled_by( $by ) ) {
+			case 'buyer':
+				/* translators: 1: sudemi order id, 2: local order number. */
+				$text = __( 'sudemi order %1$s was cancelled by the buyer before shipping; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+				break;
+			case 'shop':
+				/* translators: 1: sudemi order id, 2: local order number. */
+				$text = __( 'sudemi order %1$s was cancelled by your shop on sudemi before shipping; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+				break;
+			case 'sudemi':
+				/* translators: 1: sudemi order id, 2: local order number. */
+				$text = __( 'sudemi order %1$s was cancelled by sudemi before shipping; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+				break;
+			default:
+				/* translators: 1: sudemi order id, 2: local order number. */
+				$text = __( 'sudemi order %1$s was cancelled on sudemi before shipping; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+		}
+		return sprintf( $text, $sudemi_id, $number );
+	}
+
+	/**
+	 * Cancels the local order for a sudemi order that was cancelled there before shipping (by
+	 * the buyer, by this shop, or by sudemi). Only an order that has not left the shop (on hold,
+	 * pending or processing) is touched; one already cancelled, refunded or completed is left as
+	 * it is, so applying the same news on every beat changes nothing after the first time.
 	 *
 	 * @param string $sudemi_id The sudemi order id.
+	 * @param mixed  $by        Who cancelled it (cancelled_by), null when sudemi did not say.
 	 */
-	private static function cancel_from_sudemi( $sudemi_id ) {
+	private static function cancel_from_sudemi( $sudemi_id, $by = null ) {
 		$orders = wc_get_orders(
 			array(
 				'limit'      => 1,
@@ -642,21 +705,11 @@ class Sudemi_Orders {
 			// WooCommerce puts the stock back when an order is cancelled; this guard makes sure
 			// it happens once whichever copy of the order is in memory.
 			wc_maybe_increase_stock_levels( $order->get_id() );
-			$order->update_status(
-				'cancelled',
-				__( 'Cancelled by the buyer on sudemi before shipping; the buyer has been refunded in full. Do not ship this order.', 'sudemi' )
-			);
+			$order->update_status( 'cancelled', self::cancel_note( $by ) );
 		} finally {
 			self::$applying_sudemi_cancel = $before;
 		}
-		Sudemi_Logger::warn(
-			sprintf(
-				/* translators: 1: sudemi order id, 2: local order number. */
-				__( 'sudemi order %1$s was cancelled by the buyer before shipping; order #%2$s was cancelled here and the stock restored.', 'sudemi' ),
-				$sudemi_id,
-				$order->get_order_number()
-			)
-		);
+		Sudemi_Logger::warn( self::cancel_log( $by, $sudemi_id, $order->get_order_number() ) );
 	}
 
 	/**
@@ -1095,6 +1148,14 @@ class Sudemi_Orders {
 		// otherwise the shop records a refund and the buyer never gets the money back.
 		add_action( 'woocommerce_refund_created', array( __CLASS__, 'on_refund_created' ), 10, 2 );
 		add_action( 'woocommerce_order_status_changed', array( __CLASS__, 'on_status_changed' ), 10, 3 );
+		// Tracking typed (or corrected) after the order was reported shipped: sent to sudemi, which
+		// tells the buyer the new code. Every way a shop or a shipment plugin saves it: an order
+		// save (HPOS and posts storage, the admin screen, REST, $order->save()) and post meta
+		// written directly (posts storage). Checked once per order at the end of the request.
+		add_action( 'woocommerce_update_order', array( __CLASS__, 'on_order_saved' ), 10, 1 );
+		add_action( 'woocommerce_process_shop_order_meta', array( __CLASS__, 'on_order_saved' ), 100, 1 );
+		add_action( 'added_post_meta', array( __CLASS__, 'on_post_meta' ), 10, 3 );
+		add_action( 'updated_post_meta', array( __CLASS__, 'on_post_meta' ), 10, 3 );
 	}
 
 	/**
@@ -1314,6 +1375,9 @@ class Sudemi_Orders {
 				'carrier'      => self::tracking_value( $order, 'carrier' ),
 				'trackingCode' => self::tracking_value( $order, 'code' ),
 			);
+			// What went with the dispatch, so a later change of the tracking here is told apart
+			// from an unrelated save of the order (see check_tracking()).
+			self::remember_tracking( $order, self::local_tracking( $order ) );
 		}
 
 		self::send_report( (string) $sudemi_id, $event, $body, $order->get_id() );
@@ -1327,6 +1391,9 @@ class Sudemi_Orders {
 	 * @return bool true when the call is settled (landed, or refused for good).
 	 */
 	public static function send_report( $sudemi_id, $event, array $body, $local_id ) {
+		if ( 'tracking' === $event ) {
+			return 'retry' !== self::send_tracking( $sudemi_id, $body, $local_id );
+		}
 		$response = Sudemi_Client::post_signed(
 			'/integration/v1/orders/' . rawurlencode( $sudemi_id ) . '/' . $event,
 			$body
@@ -1396,22 +1463,26 @@ class Sudemi_Orders {
 	 * Tracking details as the common shipment plugins store them.
 	 *
 	 * There is no standard field for this in WooCommerce, so the usual meta keys are tried in
-	 * turn and a filter is offered for anything else. Returning null is fine.
+	 * turn, then the last parcel of WooCommerce Shipment Tracking and Advanced Shipment Tracking
+	 * (_wc_shipment_tracking_items), and a filter is offered for anything else. Returning null is
+	 * fine.
 	 *
 	 * @param WC_Order $order
 	 * @param string   $part 'carrier' or 'code'
 	 * @return string|null
 	 */
 	private static function tracking_value( $order, $part ) {
-		$keys = 'carrier' === $part
-			? array( '_tracking_provider', '_wc_shipment_tracking_provider', '_shipping_carrier' )
-			: array( '_tracking_number', '_wc_shipment_tracking_number', '_shipping_tracking_code' );
+		$keys = 'carrier' === $part ? self::CARRIER_KEYS : self::CODE_KEYS;
 
 		foreach ( $keys as $key ) {
 			$value = $order->get_meta( $key );
-			if ( ! empty( $value ) ) {
-				return (string) $value;
+			if ( is_scalar( $value ) && '' !== trim( (string) $value ) ) {
+				return trim( (string) $value );
 			}
+		}
+		$value = self::shipment_item_value( $order->get_meta( self::ITEMS_KEY ), $part );
+		if ( null !== $value ) {
+			return $value;
 		}
 		/**
 		 * Filters the tracking value sudemi reports, for shops whose shipment plugin stores it
@@ -1422,5 +1493,347 @@ class Sudemi_Orders {
 		 * @param string      $part 'carrier' or 'code'
 		 */
 		return apply_filters( 'sudemi_tracking_value', null, $order, $part );
+	}
+
+	/** Meta keys read for the carrier, in turn. */
+	const CARRIER_KEYS = array( '_tracking_provider', '_wc_shipment_tracking_provider', '_shipping_carrier' );
+
+	/** Meta keys read for the tracking code, in turn. */
+	const CODE_KEYS = array( '_tracking_number', '_wc_shipment_tracking_number', '_shipping_tracking_code' );
+
+	/** WooCommerce Shipment Tracking and Advanced Shipment Tracking: a list of parcels. */
+	const ITEMS_KEY = '_wc_shipment_tracking_items';
+
+	/** The tracking last sent to sudemi from this shop (carrier, code), on the order. */
+	const META_TRACKING_SENT = '_sudemi_tracking_sent';
+
+	/**
+	 * Pure: the carrier or code of the last parcel in a _wc_shipment_tracking_items list.
+	 *
+	 * @param mixed  $items The meta value.
+	 * @param string $part  'carrier' or 'code'.
+	 * @return string|null
+	 */
+	public static function shipment_item_value( $items, $part ) {
+		if ( ! is_array( $items ) || empty( $items ) ) {
+			return null;
+		}
+		$last = end( $items );
+		if ( ! is_array( $last ) ) {
+			return null;
+		}
+		$fields = 'carrier' === $part ? array( 'custom_tracking_provider', 'tracking_provider', 'formatted_tracking_provider' ) : array( 'tracking_number' );
+		foreach ( $fields as $field ) {
+			if ( isset( $last[ $field ] ) && is_scalar( $last[ $field ] ) && '' !== trim( (string) $last[ $field ] ) ) {
+				return trim( (string) $last[ $field ] );
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * The tracking this shop has for an order, wherever it keeps it.
+	 *
+	 * @param WC_Order $order
+	 * @return array{carrier:string,code:string}
+	 */
+	public static function local_tracking( $order ) {
+		return array(
+			'carrier' => Sudemi_Manage::clean_text( (string) self::tracking_value( $order, 'carrier' ), Sudemi_Manage::TRACKING_MAX ),
+			'code'    => Sudemi_Manage::clean_text( (string) self::tracking_value( $order, 'code' ), Sudemi_Manage::TRACKING_MAX ),
+		);
+	}
+
+	/** Keeps the tracking just sent (or found already on sudemi) on the order. */
+	public static function remember_tracking( $order, array $tracking ) {
+		$before                = self::$saving_tracking;
+		self::$saving_tracking = true;
+		try {
+			$order->update_meta_data(
+				self::META_TRACKING_SENT,
+				array(
+					'carrier' => isset( $tracking['carrier'] ) ? (string) $tracking['carrier'] : '',
+					'code'    => isset( $tracking['code'] ) ? (string) $tracking['code'] : '',
+				)
+			);
+			$order->save();
+		} finally {
+			self::$saving_tracking = $before;
+		}
+	}
+
+	/**
+	 * Pure: whether the shop's tracking for a shipped order is news for sudemi.
+	 *
+	 * Only a change made here is sent: not an order saved for some other reason while sudemi has
+	 * a newer tracking (changed on the portal), and never what came from sudemi itself.
+	 *
+	 * @param array      $local    carrier, code: what the shop has now.
+	 * @param array|null $reported carrier, code: what was last sent from here; null when nothing
+	 *                             was recorded (shipped before plugin 1.3.0, or on sudemi).
+	 * @param array      $sudemi   carrier, code: what sudemi has, as far as this shop knows.
+	 * @return bool
+	 */
+	public static function tracking_is_news( array $local, $reported, array $sudemi ) {
+		$code    = isset( $local['code'] ) ? (string) $local['code'] : '';
+		$carrier = isset( $local['carrier'] ) ? (string) $local['carrier'] : '';
+		if ( '' === $code ) {
+			return false; // sudemi needs a code; a carrier alone changes nothing for the buyer.
+		}
+		if ( is_array( $reported ) && $code === (string) ( isset( $reported['code'] ) ? $reported['code'] : '' )
+			&& $carrier === (string) ( isset( $reported['carrier'] ) ? $reported['carrier'] : '' ) ) {
+			return false; // Unchanged here since it was sent.
+		}
+		$sudemi_code    = isset( $sudemi['code'] ) ? (string) $sudemi['code'] : '';
+		$sudemi_carrier = isset( $sudemi['carrier'] ) ? (string) $sudemi['carrier'] : '';
+		if ( $code === $sudemi_code && ( '' === $carrier || $carrier === $sudemi_carrier ) ) {
+			return false; // sudemi has it already (a blank carrier keeps sudemi's).
+		}
+		return true;
+	}
+
+	/** Set while this plugin saves its own record of the tracking, so that save is not checked. */
+	private static $saving_tracking = false;
+
+	/** Orders saved in this request, checked for new tracking at its end. */
+	private static $tracking_checks = array();
+
+	/** @param int $order_id A WooCommerce order saved. */
+	public static function on_order_saved( $order_id ) {
+		if ( self::$applying_sudemi_cancel || self::$saving_tracking ) {
+			return; // A change from sudemi, or this plugin's own note of what it sent.
+		}
+		$order_id = is_object( $order_id ) && method_exists( $order_id, 'get_id' ) ? $order_id->get_id() : (int) $order_id;
+		if ( $order_id <= 0 ) {
+			return;
+		}
+		if ( empty( self::$tracking_checks ) ) {
+			add_action( 'shutdown', array( __CLASS__, 'check_saved_orders' ), 5 );
+		}
+		self::$tracking_checks[ $order_id ] = true;
+	}
+
+	/** Post meta written straight to an order (posts storage): only the tracking keys matter. */
+	public static function on_post_meta( $meta_id, $object_id, $meta_key ) {
+		if ( in_array( $meta_key, array_merge( self::CARRIER_KEYS, self::CODE_KEYS, array( self::ITEMS_KEY ) ), true ) ) {
+			self::on_order_saved( (int) $object_id );
+		}
+	}
+
+	/** End of the request: every order saved in it is checked once. */
+	public static function check_saved_orders() {
+		$ids                   = array_keys( self::$tracking_checks );
+		self::$tracking_checks = array();
+		foreach ( $ids as $order_id ) {
+			try {
+				self::check_tracking( $order_id );
+			} catch ( Exception $e ) {
+				Sudemi_Logger::error( 'Could not check the tracking of order ' . $order_id . ': ' . $e->getMessage() );
+			}
+		}
+	}
+
+	/**
+	 * Sends tracking added or changed on an order that was already reported shipped (WooCommerce
+	 * order Completed). sudemi e-mails the buyer the new code. The answer is noted on the order;
+	 * without an answer the call is retried on the next heartbeat.
+	 *
+	 * @param int $order_id A WooCommerce order id.
+	 * @return string|null The verdict (see send_tracking()), or null when nothing was sent.
+	 */
+	public static function check_tracking( $order_id ) {
+		$order = wc_get_order( $order_id );
+		if ( ! $order || ! is_a( $order, 'WC_Order' ) || 'shop_order_refund' === $order->get_type() ) {
+			return null;
+		}
+		$sudemi_id = strtolower( (string) $order->get_meta( self::META_ORDER_ID ) );
+		if ( '' === $sudemi_id || ! $order->has_status( 'completed' ) ) {
+			return null; // Not a sudemi order, or not shipped yet: the dispatch report carries it.
+		}
+		if ( in_array( (string) $order->get_meta( Sudemi_Changes::META_STATUS ), array( 'DELIVERED', 'CANCELLED', 'REFUNDED', 'DECLINED' ), true ) ) {
+			return null; // Delivered or closed on sudemi: tracking can no longer change there.
+		}
+		$local    = self::local_tracking( $order );
+		$reported = $order->get_meta( self::META_TRACKING_SENT );
+		$sudemi   = array(
+			'carrier' => (string) $order->get_meta( Sudemi_Changes::META_CARRIER ),
+			'code'    => (string) $order->get_meta( Sudemi_Changes::META_CODE ),
+		);
+		if ( ! self::tracking_is_news( $local, is_array( $reported ) ? $reported : null, $sudemi ) ) {
+			return null;
+		}
+		self::remember_tracking( $order, $local );
+		$body    = array(
+			'carrier'      => '' === $local['carrier'] ? null : $local['carrier'],
+			'trackingCode' => $local['code'],
+		);
+		$verdict = self::send_tracking( $sudemi_id, $body, $order->get_id() );
+		$shown   = esc_html( trim( $local['carrier'] . ' ' . $local['code'] ) );
+		switch ( $verdict ) {
+			case 'done':
+				$note = sprintf(
+					/* translators: %s: carrier and tracking code. */
+					__( 'New tracking sent to sudemi: %s. sudemi e-mails the buyer the new code.', 'sudemi' ),
+					$shown
+				);
+				break;
+			case 'same':
+				$note = null; // sudemi had it already.
+				break;
+			case 'retry':
+				$note = sprintf(
+					/* translators: %s: carrier and tracking code. */
+					__( 'Could not send the new tracking (%s) to sudemi yet. It is sent again on the next heartbeat.', 'sudemi' ),
+					$shown
+				);
+				break;
+			case 'final':
+				$note = sprintf(
+					/* translators: %s: carrier and tracking code. */
+					__( 'The new tracking (%s) was not sent: on sudemi this order is already delivered, cancelled or refunded, so its tracking can no longer change.', 'sudemi' ),
+					$shown
+				);
+				break;
+			default:
+				$note = sprintf(
+					/* translators: %s: carrier and tracking code. */
+					__( 'sudemi did not take the new tracking (%s). Check the order under WooCommerce > sudemi > Orders.', 'sudemi' ),
+					$shown
+				);
+		}
+		if ( null !== $note ) {
+			$fresh = wc_get_order( $order->get_id() );
+			if ( $fresh ) {
+				$fresh->add_order_note( $note );
+			}
+		}
+		return $verdict;
+	}
+
+	/**
+	 * Pure: how sudemi answered a tracking or shipped call carrying tracking.
+	 *
+	 * @param string $call     'tracking' or 'shipped'.
+	 * @param mixed  $response The Sudemi_Client answer.
+	 * @return string 'done' (changed), 'same' (sudemi has this tracking already), 'already' (shipped:
+	 *                the order is past PAID), 'not_shipped' (tracking: the order is not SHIPPED),
+	 *                'refused' or 'retry'.
+	 */
+	public static function tracking_answer( $call, $response ) {
+		if ( ! is_array( $response ) || ! isset( $response['status'] ) ) {
+			return 'retry';
+		}
+		$status = (int) $response['status'];
+		$body   = isset( $response['body'] ) && is_array( $response['body'] ) ? $response['body'] : array();
+		if ( 200 === $status || 204 === $status ) {
+			if ( isset( $body['status'] ) && 'already_resolved' === $body['status'] ) {
+				return 'shipped' === $call ? 'already' : 'same';
+			}
+			return 'done';
+		}
+		if ( 'tracking' === $call && 409 === $status && isset( $body['error'] ) && 'not_shipped' === $body['error'] ) {
+			return 'not_shipped';
+		}
+		return 'refused' === self::report_verdict( $response ) ? 'refused' : 'retry';
+	}
+
+	/**
+	 * Sends tracking to sudemi whichever state it has the order in: `tracking` while SHIPPED,
+	 * `shipped` with the tracking while still PAID (4d). Starts with the call the caller expects
+	 * and switches once when sudemi says the order is in the other state, so a race (the order
+	 * shipped elsewhere a moment ago, or a dispatch report still waiting in the retry queue) ends
+	 * well. At most three calls.
+	 *
+	 * @param string $sudemi_id The sudemi order id.
+	 * @param array  $body      carrier (null keeps sudemi's), trackingCode.
+	 * @param string $first     'tracking' or 'shipped'.
+	 * @return array{verdict:string,call:string,response:mixed} verdict: 'done', 'same', 'final'
+	 *               (delivered, cancelled or refunded on sudemi), 'refused' or 'retry'.
+	 */
+	public static function push_tracking( $sudemi_id, array $body, $first = 'tracking' ) {
+		$code     = isset( $body['trackingCode'] ) ? (string) $body['trackingCode'] : '';
+		$call     = 'shipped' === $first ? 'shipped' : 'tracking';
+		$tried    = array();
+		$response = null;
+		for ( $i = 0; $i < 3; $i++ ) {
+			$tried[ $call ] = true;
+			$response       = Sudemi_Client::post_signed(
+				'/integration/v1/orders/' . rawurlencode( $sudemi_id ) . '/' . $call,
+				$body
+			);
+			$answer         = self::tracking_answer( $call, $response );
+			if ( 'not_shipped' === $answer ) {
+				if ( empty( $tried['shipped'] ) ) {
+					$call = 'shipped'; // Still PAID: the dispatch itself carries the tracking.
+					continue;
+				}
+				return array( 'verdict' => 'final', 'call' => $call, 'response' => $response );
+			}
+			if ( 'already' === $answer ) {
+				if ( '' !== $code && empty( $tried['tracking'] ) ) {
+					$call = 'tracking'; // Shipped already: the tracking call changes it.
+					continue;
+				}
+				return array( 'verdict' => '' === $code ? 'same' : 'final', 'call' => $call, 'response' => $response );
+			}
+			return array( 'verdict' => $answer, 'call' => $call, 'response' => $response );
+		}
+		return array( 'verdict' => 'retry', 'call' => $call, 'response' => $response );
+	}
+
+	/**
+	 * New tracking for an order reported shipped, sent now; queued and retried on the next
+	 * heartbeat when sudemi does not answer.
+	 *
+	 * @return string 'done', 'same', 'final', 'refused' or 'retry'.
+	 */
+	public static function send_tracking( $sudemi_id, array $body, $local_id ) {
+		$result  = self::push_tracking( $sudemi_id, $body, 'tracking' );
+		$verdict = $result['verdict'];
+		if ( 'retry' === $verdict ) {
+			Sudemi_Order_Calls::enqueue( $sudemi_id, 'tracking', $body, $local_id );
+			Sudemi_Logger::warn(
+				sprintf(
+					/* translators: 1: sudemi order id. */
+					__( 'Could not send the new tracking for sudemi order %1$s yet. It is sent again on the next heartbeat.', 'sudemi' ),
+					$sudemi_id
+				)
+			);
+			return $verdict;
+		}
+		Sudemi_Order_Calls::remove( $sudemi_id, 'tracking' );
+		if ( 'shipped' === $result['call'] && 'done' === $verdict ) {
+			// The dispatch went with this tracking: a queued shipped report is not needed any more.
+			Sudemi_Order_Calls::remove( $sudemi_id, 'shipped' );
+		}
+		if ( 'done' === $verdict || 'same' === $verdict ) {
+			Sudemi_Logger::info(
+				sprintf(
+					/* translators: 1: sudemi order id. */
+					__( 'Sent the new tracking for sudemi order %1$s.', 'sudemi' ),
+					$sudemi_id
+				)
+			);
+		} elseif ( 'final' === $verdict ) {
+			Sudemi_Logger::warn(
+				sprintf(
+					/* translators: 1: sudemi order id. */
+					__( 'The new tracking for sudemi order %1$s was not sent: the order is already delivered, cancelled or refunded on sudemi.', 'sudemi' ),
+					$sudemi_id
+				)
+			);
+		} else {
+			$response = $result['response'];
+			Sudemi_Logger::error(
+				sprintf(
+					/* translators: 1: event name, 2: sudemi order id, 3: error message. */
+					__( 'Could not report %1$s for sudemi order %2$s: %3$s', 'sudemi' ),
+					'tracking',
+					$sudemi_id,
+					is_array( $response ) ? 'HTTP ' . (int) $response['status'] . ( isset( $response['body']['error'] ) ? ' ' . (string) $response['body']['error'] : '' ) : ''
+				)
+			);
+		}
+		return $verdict;
 	}
 }

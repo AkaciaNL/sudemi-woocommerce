@@ -1556,3 +1556,73 @@ msgstr "تعذّر الوصول إلى sudemi للإبلاغ عن التسليم
 #, php-format
 msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
 msgstr "عدد الطلبات بانتظار ردك ضمن WooCommerce > sudemi > الطلبات: %d. التأكيد التلقائي متوقف، لذا يجب الرد عليها يدويًا قبل انتهاء مهلتها."
+
+msgid "Cancelled by your shop on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
+msgstr "ألغاه متجرك على sudemi قبل الشحن؛ استرد المشتري المبلغ كاملًا. لا تشحن هذا الطلب."
+
+msgid "Cancelled by sudemi before shipping (for example because the order was not answered in time); the buyer has been refunded in full. Do not ship this order."
+msgstr "ألغاه sudemi قبل الشحن (مثلًا لأن الطلب لم يُرد عليه في الوقت المحدد)؛ استرد المشتري المبلغ كاملًا. لا تشحن هذا الطلب."
+
+msgid "Cancelled on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
+msgstr "أُلغي على sudemi قبل الشحن؛ استرد المشتري المبلغ كاملًا. لا تشحن هذا الطلب."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by your shop on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "ألغى متجرك طلب sudemi رقم %1$s على sudemi قبل الشحن؛ أُلغي الطلب #%2$s هنا وأُعيد المخزون."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "ألغى sudemi طلب sudemi رقم %1$s قبل الشحن؛ أُلغي الطلب #%2$s هنا وأُعيد المخزون."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "أُلغي طلب sudemi رقم %1$s على sudemi قبل الشحن؛ أُلغي الطلب #%2$s هنا وأُعيد المخزون."
+
+msgid "The stock has been restored."
+msgstr "أُعيد المخزون."
+
+#, php-format
+msgid "New tracking sent to sudemi: %s. sudemi e-mails the buyer the new code."
+msgstr "أُرسل رقم التتبع الجديد إلى sudemi: %s. يرسل sudemi الرقم الجديد إلى المشتري بالبريد الإلكتروني."
+
+#, php-format
+msgid "Could not send the new tracking (%s) to sudemi yet. It is sent again on the next heartbeat."
+msgstr "تعذّر إرسال رقم التتبع الجديد (%s) إلى sudemi حتى الآن. سيُرسل مجددًا مع النبضة التالية."
+
+#, php-format
+msgid "The new tracking (%s) was not sent: on sudemi this order is already delivered, cancelled or refunded, so its tracking can no longer change."
+msgstr "لم يُرسل رقم التتبع الجديد (%s): هذا الطلب على sudemi سُلّم أو أُلغي أو استُرد بالفعل، لذا لم يعد بالإمكان تغيير رقم التتبع."
+
+#, php-format
+msgid "sudemi did not take the new tracking (%s). Check the order under WooCommerce > sudemi > Orders."
+msgstr "لم يقبل sudemi رقم التتبع الجديد (%s). راجع الطلب في WooCommerce > sudemi > الطلبات."
+
+#, php-format
+msgid "Could not send the new tracking for sudemi order %1$s yet. It is sent again on the next heartbeat."
+msgstr "تعذّر إرسال رقم التتبع الجديد لطلب sudemi رقم %1$s حتى الآن. سيُرسل مجددًا مع النبضة التالية."
+
+#, php-format
+msgid "Sent the new tracking for sudemi order %1$s."
+msgstr "أُرسل رقم التتبع الجديد لطلب sudemi رقم %1$s."
+
+#, php-format
+msgid "The new tracking for sudemi order %1$s was not sent: the order is already delivered, cancelled or refunded on sudemi."
+msgstr "لم يُرسل رقم التتبع الجديد لطلب sudemi رقم %1$s: الطلب على sudemi سُلّم أو أُلغي أو استُرد بالفعل."
+
+msgid "The tracking can no longer be changed: on sudemi this order is already delivered, cancelled or refunded."
+msgstr "لم يعد بالإمكان تغيير رقم التتبع: هذا الطلب على sudemi سُلّم أو أُلغي أو استُرد بالفعل."
+
+msgid "Enter a tracking code."
+msgstr "أدخل رقم تتبع."
+
+msgid "Tracking changed on sudemi. sudemi e-mails the buyer the new code."
+msgstr "تغيّر رقم التتبع على sudemi. يرسل sudemi الرقم الجديد إلى المشتري بالبريد الإلكتروني."
+
+msgid "sudemi already has this tracking. Nothing was changed."
+msgstr "لدى sudemi رقم التتبع هذا بالفعل. لم يتغيّر شيء."
+
+msgid "Shipped already. Wrong or missing tracking? Enter the right one: sudemi e-mails the buyer the new code."
+msgstr "شُحن بالفعل. رقم التتبع خاطئ أو غير موجود؟ أدخل الرقم الصحيح: يرسل sudemi الرقم الجديد إلى المشتري بالبريد الإلكتروني."
+
+msgid "Change tracking"
+msgstr "تغيير رقم التتبع"

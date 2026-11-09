@@ -1552,3 +1552,73 @@ msgstr "Impossible de joindre sudemi pour signaler la livraison. Elle sera renvo
 #, php-format
 msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
 msgstr "%d commande(s) attendent votre réponse dans WooCommerce > sudemi > Commandes. La confirmation automatique est désactivée : il faut y répondre manuellement avant la fin du délai."
+
+msgid "Cancelled by your shop on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
+msgstr "Annulée par votre boutique sur sudemi avant l’expédition ; l’acheteur a été remboursé intégralement. N’expédiez pas cette commande."
+
+msgid "Cancelled by sudemi before shipping (for example because the order was not answered in time); the buyer has been refunded in full. Do not ship this order."
+msgstr "Annulée par sudemi avant l’expédition (par exemple parce que la commande n’a pas reçu de réponse à temps) ; l’acheteur a été remboursé intégralement. N’expédiez pas cette commande."
+
+msgid "Cancelled on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
+msgstr "Annulée sur sudemi avant l’expédition ; l’acheteur a été remboursé intégralement. N’expédiez pas cette commande."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by your shop on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "La commande sudemi %1$s a été annulée par votre boutique sur sudemi avant l’expédition ; la commande n° %2$s a été annulée ici et le stock rétabli."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "La commande sudemi %1$s a été annulée par sudemi avant l’expédition ; la commande n° %2$s a été annulée ici et le stock rétabli."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "La commande sudemi %1$s a été annulée sur sudemi avant l’expédition ; la commande n° %2$s a été annulée ici et le stock rétabli."
+
+msgid "The stock has been restored."
+msgstr "Le stock a été rétabli."
+
+#, php-format
+msgid "New tracking sent to sudemi: %s. sudemi e-mails the buyer the new code."
+msgstr "Nouveau suivi envoyé à sudemi : %s. sudemi envoie le nouveau numéro à l’acheteur par e-mail."
+
+#, php-format
+msgid "Could not send the new tracking (%s) to sudemi yet. It is sent again on the next heartbeat."
+msgstr "Le nouveau suivi (%s) n’a pas encore pu être envoyé à sudemi. Il sera renvoyé au prochain heartbeat."
+
+#, php-format
+msgid "The new tracking (%s) was not sent: on sudemi this order is already delivered, cancelled or refunded, so its tracking can no longer change."
+msgstr "Le nouveau suivi (%s) n’a pas été envoyé : sur sudemi, cette commande est déjà livrée, annulée ou remboursée, son suivi ne peut donc plus changer."
+
+#, php-format
+msgid "sudemi did not take the new tracking (%s). Check the order under WooCommerce > sudemi > Orders."
+msgstr "sudemi n’a pas accepté le nouveau suivi (%s). Vérifiez la commande dans WooCommerce > sudemi > Commandes."
+
+#, php-format
+msgid "Could not send the new tracking for sudemi order %1$s yet. It is sent again on the next heartbeat."
+msgstr "Le nouveau suivi de la commande sudemi %1$s n’a pas encore pu être envoyé. Il sera renvoyé au prochain heartbeat."
+
+#, php-format
+msgid "Sent the new tracking for sudemi order %1$s."
+msgstr "Nouveau suivi envoyé pour la commande sudemi %1$s."
+
+#, php-format
+msgid "The new tracking for sudemi order %1$s was not sent: the order is already delivered, cancelled or refunded on sudemi."
+msgstr "Le nouveau suivi de la commande sudemi %1$s n’a pas été envoyé : la commande est déjà livrée, annulée ou remboursée sur sudemi."
+
+msgid "The tracking can no longer be changed: on sudemi this order is already delivered, cancelled or refunded."
+msgstr "Le suivi ne peut plus être modifié : sur sudemi, cette commande est déjà livrée, annulée ou remboursée."
+
+msgid "Enter a tracking code."
+msgstr "Saisissez un numéro de suivi."
+
+msgid "Tracking changed on sudemi. sudemi e-mails the buyer the new code."
+msgstr "Suivi modifié sur sudemi. sudemi envoie le nouveau numéro à l’acheteur par e-mail."
+
+msgid "sudemi already has this tracking. Nothing was changed."
+msgstr "sudemi a déjà ce suivi. Rien n’a été modifié."
+
+msgid "Shipped already. Wrong or missing tracking? Enter the right one: sudemi e-mails the buyer the new code."
+msgstr "Déjà expédiée. Suivi erroné ou manquant ? Saisissez le bon : sudemi envoie le nouveau numéro à l’acheteur par e-mail."
+
+msgid "Change tracking"
+msgstr "Modifier le suivi"

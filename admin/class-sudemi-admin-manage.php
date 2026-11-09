@@ -589,7 +589,7 @@ final class Sudemi_Admin_Manage {
 			}
 		}
 
-		self::render_actions( $id, $allowed, $currency, $money );
+		self::render_actions( $id, $allowed, $currency, $money, $tracking );
 
 		// Timeline.
 		echo '<h3>' . esc_html__( 'History', 'sudemi' ) . '</h3><ol class="sudemi-timeline">';
@@ -623,7 +623,7 @@ final class Sudemi_Admin_Manage {
 	}
 
 	/** One form per action sudemi allows now (allowed_actions); sudemi still decides. */
-	private static function render_actions( $id, array $allowed, $currency, array $money ) {
+	private static function render_actions( $id, array $allowed, $currency, array $money, array $tracking = array() ) {
 		$shown = array_values( array_intersect( Sudemi_Manage::ACTIONS, $allowed ) );
 		if ( empty( $shown ) ) {
 			return;
@@ -648,6 +648,12 @@ final class Sudemi_Admin_Manage {
 					echo '<p><label>' . esc_html__( 'Carrier', 'sudemi' ) . ' <input type="text" name="carrier" maxlength="100" /></label> '
 						. '<label>' . esc_html__( 'Tracking code', 'sudemi' ) . ' <input type="text" name="tracking" maxlength="100" /></label></p>';
 					submit_button( __( 'Mark shipped', 'sudemi' ), 'primary', 'submit', false );
+					break;
+				case 'update_tracking':
+					echo '<p>' . esc_html__( 'Shipped already. Wrong or missing tracking? Enter the right one: sudemi e-mails the buyer the new code.', 'sudemi' ) . '</p>';
+					echo '<p><label>' . esc_html__( 'Carrier', 'sudemi' ) . ' <input type="text" name="carrier" maxlength="100" value="' . esc_attr( self::str( $tracking, 'carrier' ) ) . '" /></label> '
+						. '<label>' . esc_html__( 'Tracking code', 'sudemi' ) . ' <input type="text" name="tracking" maxlength="100" required="required" value="' . esc_attr( self::str( $tracking, 'code' ) ) . '" /></label></p>';
+					submit_button( __( 'Change tracking', 'sudemi' ), 'secondary', 'submit', false );
 					break;
 				case 'delivered':
 					submit_button( __( 'Mark delivered', 'sudemi' ), 'secondary', 'submit', false );

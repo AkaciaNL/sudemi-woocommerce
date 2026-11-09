@@ -1551,3 +1551,73 @@ msgstr "无法连接 sudemi 报告送达。将在下一次心跳时重新发送�
 #, php-format
 msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
 msgstr "%d 个订单正在 WooCommerce > sudemi > 订单 中等待您的答复。自动确认已关闭，因此必须在期限结束前手动处理。"
+
+msgid "Cancelled by your shop on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
+msgstr "已由您的店铺在发货前于 sudemi 上取消；已向买家全额退款。请勿发出此订单。"
+
+msgid "Cancelled by sudemi before shipping (for example because the order was not answered in time); the buyer has been refunded in full. Do not ship this order."
+msgstr "已由 sudemi 在发货前取消（例如订单未在规定时间内答复）；已向买家全额退款。请勿发出此订单。"
+
+msgid "Cancelled on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
+msgstr "已在发货前于 sudemi 上取消；已向买家全额退款。请勿发出此订单。"
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by your shop on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi 订单 %1$s 已由您的店铺在发货前于 sudemi 上取消；订单 #%2$s 已在此取消，库存已恢复。"
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi 订单 %1$s 已由 sudemi 在发货前取消；订单 #%2$s 已在此取消，库存已恢复。"
+
+#, php-format
+msgid "sudemi order %1$s was cancelled on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi 订单 %1$s 已在发货前于 sudemi 上取消；订单 #%2$s 已在此取消，库存已恢复。"
+
+msgid "The stock has been restored."
+msgstr "库存已恢复。"
+
+#, php-format
+msgid "New tracking sent to sudemi: %s. sudemi e-mails the buyer the new code."
+msgstr "新的物流单号已发送给 sudemi：%s。sudemi 会通过电子邮件把新单号告诉买家。"
+
+#, php-format
+msgid "Could not send the new tracking (%s) to sudemi yet. It is sent again on the next heartbeat."
+msgstr "新的物流单号（%s）暂时无法发送给 sudemi。将在下一次心跳时重新发送。"
+
+#, php-format
+msgid "The new tracking (%s) was not sent: on sudemi this order is already delivered, cancelled or refunded, so its tracking can no longer change."
+msgstr "新的物流单号（%s）未发送：此订单在 sudemi 上已送达、已取消或已退款，物流单号不能再更改。"
+
+#, php-format
+msgid "sudemi did not take the new tracking (%s). Check the order under WooCommerce > sudemi > Orders."
+msgstr "sudemi 未接受新的物流单号（%s）。请在 WooCommerce > sudemi > 订单 中查看此订单。"
+
+#, php-format
+msgid "Could not send the new tracking for sudemi order %1$s yet. It is sent again on the next heartbeat."
+msgstr "sudemi 订单 %1$s 的新物流单号暂时无法发送。将在下一次心跳时重新发送。"
+
+#, php-format
+msgid "Sent the new tracking for sudemi order %1$s."
+msgstr "已发送 sudemi 订单 %1$s 的新物流单号。"
+
+#, php-format
+msgid "The new tracking for sudemi order %1$s was not sent: the order is already delivered, cancelled or refunded on sudemi."
+msgstr "sudemi 订单 %1$s 的新物流单号未发送：该订单在 sudemi 上已送达、已取消或已退款。"
+
+msgid "The tracking can no longer be changed: on sudemi this order is already delivered, cancelled or refunded."
+msgstr "物流单号不能再更改：此订单在 sudemi 上已送达、已取消或已退款。"
+
+msgid "Enter a tracking code."
+msgstr "请输入物流单号。"
+
+msgid "Tracking changed on sudemi. sudemi e-mails the buyer the new code."
+msgstr "已在 sudemi 上更改物流单号。sudemi 会通过电子邮件把新单号告诉买家。"
+
+msgid "sudemi already has this tracking. Nothing was changed."
+msgstr "sudemi 已有此物流单号。没有任何更改。"
+
+msgid "Shipped already. Wrong or missing tracking? Enter the right one: sudemi e-mails the buyer the new code."
+msgstr "已发货。物流单号有误或缺失？请输入正确的单号：sudemi 会通过电子邮件把新单号告诉买家。"
+
+msgid "Change tracking"
+msgstr "更改物流单号"

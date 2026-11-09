@@ -55,6 +55,9 @@ Ask your host to enable it; it ships with PHP 7.2 and later.
 * Shipping tab: the prices buyers pay per country, as on the portal; keep your WooCommerce zone prices, or set your own countries and prices on sudemi (prefilled from your zones).
 * Payouts tab: your payout account state and this shop's payouts per currency (paid out, scheduled, waiting for shipment, on its way, held).
 * "Mark delivered on sudemi" in the WooCommerce order actions, so no delivery-status plugin is needed.
+* Tracking after shipping: tracking added or corrected on an order that was already reported shipped (the order is Completed) is sent to sudemi, which e-mails the buyer the new code. It works with the tracking fields read before and with WooCommerce Shipment Tracking / Advanced Shipment Tracking. Only a change made in the shop is sent, never sudemi's own tracking back; without an answer it is sent again on the next heartbeat. An order sudemi still has as paid is marked shipped with the new tracking instead.
+* The order page has "Change tracking" for a shipped order (prefilled with the current tracking), and "Mark shipped" with a tracking code also works for an order shipped elsewhere a moment ago (bulk too).
+* A cancelled order's note says who cancelled it: the buyer, your shop, or sudemi (before, every cancellation read "Cancelled by the buyer").
 * All new screens in the 12 languages. PROTOCOL.md: current copy (section 4d).
 
 = 1.2.13 =

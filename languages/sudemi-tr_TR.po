@@ -1552,3 +1552,73 @@ msgstr "Teslimatı bildirmek için sudemi'ye ulaşılamadı. Bir sonraki durum s
 #, php-format
 msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
 msgstr "%d sipariş WooCommerce > sudemi > Siparişler altında yanıtınızı bekliyor. Otomatik onay kapalı olduğundan, süreleri dolmadan elle yanıtlanmaları gerekiyor."
+
+msgid "Cancelled by your shop on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
+msgstr "Kargodan önce mağazanız tarafından sudemi'de iptal edildi; alıcıya tutarın tamamı iade edildi. Bu siparişi kargolamayın."
+
+msgid "Cancelled by sudemi before shipping (for example because the order was not answered in time); the buyer has been refunded in full. Do not ship this order."
+msgstr "Kargodan önce sudemi tarafından iptal edildi (örneğin sipariş zamanında yanıtlanmadığı için); alıcıya tutarın tamamı iade edildi. Bu siparişi kargolamayın."
+
+msgid "Cancelled on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
+msgstr "Kargodan önce sudemi'de iptal edildi; alıcıya tutarın tamamı iade edildi. Bu siparişi kargolamayın."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by your shop on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi siparişi %1$s mağazanız tarafından kargodan önce sudemi'de iptal edildi; #%2$s numaralı sipariş burada iptal edildi ve stok geri yüklendi."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi siparişi %1$s sudemi tarafından kargodan önce iptal edildi; #%2$s numaralı sipariş burada iptal edildi ve stok geri yüklendi."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi siparişi %1$s kargodan önce sudemi'de iptal edildi; #%2$s numaralı sipariş burada iptal edildi ve stok geri yüklendi."
+
+msgid "The stock has been restored."
+msgstr "Stok geri yüklendi."
+
+#, php-format
+msgid "New tracking sent to sudemi: %s. sudemi e-mails the buyer the new code."
+msgstr "Yeni takip bilgisi sudemi'ye gönderildi: %s. sudemi yeni kodu alıcıya e-postayla bildirir."
+
+#, php-format
+msgid "Could not send the new tracking (%s) to sudemi yet. It is sent again on the next heartbeat."
+msgstr "Yeni takip bilgisi (%s) henüz sudemi'ye gönderilemedi. Bir sonraki durum sinyalinde yeniden gönderilir."
+
+#, php-format
+msgid "The new tracking (%s) was not sent: on sudemi this order is already delivered, cancelled or refunded, so its tracking can no longer change."
+msgstr "Yeni takip bilgisi (%s) gönderilmedi: bu sipariş sudemi'de zaten teslim edildi, iptal edildi ya da iade edildi, bu yüzden takip bilgisi artık değişemez."
+
+#, php-format
+msgid "sudemi did not take the new tracking (%s). Check the order under WooCommerce > sudemi > Orders."
+msgstr "sudemi yeni takip bilgisini (%s) kabul etmedi. Siparişi WooCommerce > sudemi > Siparişler altında kontrol edin."
+
+#, php-format
+msgid "Could not send the new tracking for sudemi order %1$s yet. It is sent again on the next heartbeat."
+msgstr "sudemi siparişi %1$s için yeni takip bilgisi henüz gönderilemedi. Bir sonraki durum sinyalinde yeniden gönderilir."
+
+#, php-format
+msgid "Sent the new tracking for sudemi order %1$s."
+msgstr "sudemi siparişi %1$s için yeni takip bilgisi gönderildi."
+
+#, php-format
+msgid "The new tracking for sudemi order %1$s was not sent: the order is already delivered, cancelled or refunded on sudemi."
+msgstr "sudemi siparişi %1$s için yeni takip bilgisi gönderilmedi: sipariş sudemi'de zaten teslim edildi, iptal edildi ya da iade edildi."
+
+msgid "The tracking can no longer be changed: on sudemi this order is already delivered, cancelled or refunded."
+msgstr "Takip bilgisi artık değiştirilemez: bu sipariş sudemi'de zaten teslim edildi, iptal edildi ya da iade edildi."
+
+msgid "Enter a tracking code."
+msgstr "Bir takip kodu girin."
+
+msgid "Tracking changed on sudemi. sudemi e-mails the buyer the new code."
+msgstr "Takip bilgisi sudemi'de değiştirildi. sudemi yeni kodu alıcıya e-postayla bildirir."
+
+msgid "sudemi already has this tracking. Nothing was changed."
+msgstr "sudemi bu takip bilgisine zaten sahip. Hiçbir şey değişmedi."
+
+msgid "Shipped already. Wrong or missing tracking? Enter the right one: sudemi e-mails the buyer the new code."
+msgstr "Zaten kargolandı. Takip bilgisi yanlış mı ya da eksik mi? Doğrusunu girin: sudemi yeni kodu alıcıya e-postayla bildirir."
+
+msgid "Change tracking"
+msgstr "Takip bilgisini değiştir"
