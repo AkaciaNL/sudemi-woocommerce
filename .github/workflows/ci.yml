@@ -3,27 +3,26 @@ on: [push, pull_request]
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    # The org's own runner on the akacia host (owner 2026-11-09): GitHub-hosted machines cost
+    # Actions minutes on this private repository. PHP runs in a php:8.3-cli container (sodium
+    # built in); nothing is installed on the host.
+    runs-on: [self-hosted, akacia]
     steps:
       - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-          extensions: sodium
       # Every file, on the oldest PHP the plugin header claims to support as well as the newest:
       # a syntax that parses on 8.3 and not on 8.0 would break exactly the hosts least able to
       # debug it.
       - name: Lint
-        run: find . -name '*.php' -print0 | xargs -0 -n1 php -l
+        run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "find . -name '*.php' -print0 | xargs -0 -n1 php -l"
       - name: Signature round-trip
-        run: php tests/signature-test.php
+        run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/signature-test.php"
       - name: Right-of-withdrawal exclusion
-        run: php tests/withdrawal-test.php
+        run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/withdrawal-test.php"
       - name: Support tickets
-        run: php tests/support-test.php
+        run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/support-test.php"
       - name: Site check (Sudemi-Site, 409 site_mismatch)
-        run: php tests/site-test.php
+        run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/site-test.php"
       - name: Return requests
-        run: php tests/requests-test.php
+        run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/requests-test.php"
       - name: Order safety (accept/reject/shipped answers, price queue)
-        run: php tests/orders-test.php
+        run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/orders-test.php"

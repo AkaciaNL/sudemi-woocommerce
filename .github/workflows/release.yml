@@ -17,7 +17,10 @@ permissions:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    # The org's own runner on the akacia host (owner 2026-11-09): GitHub-hosted machines cost
+    # Actions minutes on this private repository. PHP runs in a php:8.3-cli container (sodium
+    # built in); nothing is installed on the host.
+    runs-on: [self-hosted, akacia]
     steps:
       - uses: actions/checkout@v4
 
@@ -35,23 +38,18 @@ jobs:
           grep -qx "= $v =" readme.txt || { echo "readme.txt has no changelog entry = $v ="; exit 1; }
           echo "VERSION=$v" >> "$GITHUB_ENV"
 
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-          extensions: sodium
-
       # The same checks as CI, so a tag on an untested commit cannot ship.
       - name: Lint and tests
         run: |
-          find . -name '*.php' -print0 | xargs -0 -n1 php -l
-          for t in tests/*-test.php; do php "$t"; done
+          docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c \
+            'find . -name "*.php" -print0 | xargs -0 -n1 php -l && for t in tests/*-test.php; do php "$t" || exit 1; done'
 
       - name: Build the zip
         run: |
           set -eu
           zip="sudemi-connector-$VERSION.zip"
           git archive --format=zip --prefix=sudemi-connector/ -o "$zip" HEAD
-          unzip -Z1 "$zip" > files.txt
+          python3 -c 'import sys, zipfile; print("\n".join(zipfile.ZipFile(sys.argv[1]).namelist()))' "$zip" > files.txt
           grep -vq '^sudemi-connector/' files.txt && { echo "file outside sudemi-connector/"; exit 1; } || true
           grep -q '^sudemi-connector/sudemi-connector.php$' files.txt || { echo "main plugin file missing"; exit 1; }
           grep -Eq '^sudemi-connector/(tests|\.github)/|\.git(ignore|attributes)$' files.txt && { echo "dev files in the zip"; exit 1; } || true
