@@ -26,8 +26,8 @@ final class Sudemi_Currency {
 	/** On the local order: the currency the buyer's card was charged in, as sudemi sent it. */
 	const META_ORDER_CURRENCY = '_sudemi_currency';
 
-	/** Shop currencies sudemi accepts (contract 4c); anything else is refused on POST /shop. */
-	const SUPPORTED = array( 'EUR', 'PLN', 'CZK', 'HUF', 'RON', 'SEK', 'DKK', 'CHF', 'GBP', 'NOK', 'TRY' );
+	/** Shop currencies sudemi accepts: EUR and every ECB currency except ISK (owner 2026-11-09, contract 4c). */
+	const SUPPORTED = array( 'EUR', 'AUD', 'BRL', 'CAD', 'CHF', 'CNY', 'CZK', 'DKK', 'GBP', 'HKD', 'HUF', 'IDR', 'ILS', 'INR', 'JPY', 'KRW', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PLN', 'RON', 'SEK', 'SGD', 'THB', 'TRY', 'USD', 'ZAR' );
 
 	/** ISO 4217 currencies without minor units. */
 	const ZERO_DECIMALS = array( 'BIF', 'CLP', 'DJF', 'GNF', 'ISK', 'JPY', 'KMF', 'KRW', 'PYG', 'RWF', 'UGX', 'VND', 'VUV', 'XAF', 'XOF', 'XPF' );

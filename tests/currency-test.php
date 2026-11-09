@@ -124,10 +124,10 @@ expect( 'orders minor_of in a zero-decimal shop', Sudemi_Orders::minor_of( '1200
 $shop_currency = 'EUR';
 
 // supported shop currencies (contract 4c)
-foreach ( array( 'EUR', 'PLN', 'CZK', 'HUF', 'RON', 'SEK', 'DKK', 'CHF', 'GBP', 'NOK', 'TRY' ) as $c ) {
+foreach ( array( 'EUR', 'PLN', 'CZK', 'HUF', 'RON', 'SEK', 'DKK', 'CHF', 'GBP', 'NOK', 'TRY', 'USD', 'JPY', 'BRL', 'ZAR' ) as $c ) {
 	expect( "$c supported", Sudemi_Currency::is_supported( $c ), true );
 }
-expect( 'USD not supported', Sudemi_Currency::is_supported( 'USD' ), false );
+expect( 'ISK not supported', Sudemi_Currency::is_supported( 'ISK' ), false );
 expect( 'nonsense not supported', Sudemi_Currency::is_supported( 'euro' ), false );
 
 // an incoming order
@@ -221,10 +221,10 @@ expect( 'refund_problem match', Sudemi_Currency::refund_problem( 'pln', 'PLN' ),
 // what sudemi answered on POST /shop
 Sudemi_Currency::remember_shop_answer( array( 'status' => 200, 'body' => array( 'status' => 'ok', 'currency' => 'pln' ) ) );
 expect( 'confirmed currency kept', Sudemi_Currency::confirmed(), 'PLN' );
-Sudemi_Currency::remember_shop_answer( array( 'status' => 400, 'body' => array( 'error' => 'bad_request', 'message' => 'currency USD is not supported for shops; supported: EUR, PLN' ) ) );
-expect( 'refusal kept', get_option( Sudemi_Currency::OPTION_REFUSED ), 'currency USD is not supported for shops; supported: EUR, PLN' );
+Sudemi_Currency::remember_shop_answer( array( 'status' => 400, 'body' => array( 'error' => 'bad_request', 'message' => 'currency ISK is not supported for shops; supported: EUR, PLN' ) ) );
+expect( 'refusal kept', get_option( Sudemi_Currency::OPTION_REFUSED ), 'currency ISK is not supported for shops; supported: EUR, PLN' );
 Sudemi_Currency::remember_shop_answer( array( 'status' => 400, 'body' => array( 'message' => 'displayName too long' ) ) );
-expect( 'another refusal leaves it alone', get_option( Sudemi_Currency::OPTION_REFUSED ), 'currency USD is not supported for shops; supported: EUR, PLN' );
+expect( 'another refusal leaves it alone', get_option( Sudemi_Currency::OPTION_REFUSED ), 'currency ISK is not supported for shops; supported: EUR, PLN' );
 Sudemi_Currency::remember_shop_answer( array( 'status' => 200, 'body' => array( 'status' => 'ok', 'currency' => 'EUR' ) ) );
 expect( 'accepted again clears the refusal', get_option( Sudemi_Currency::OPTION_REFUSED, 'none' ), 'none' );
 Sudemi_Currency::remember_shop_answer( new WP_Error() );
