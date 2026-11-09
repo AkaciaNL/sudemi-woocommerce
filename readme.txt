@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.2.12
+Stable tag: 1.2.13
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,9 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.2.13 =
+* VAT on shipping follows the shop's own shipping tax class setting: with WooCommerce's default "based on cart items", an order with only reduced-rate goods books (and syncs) the reduced rate on shipping, and a cart with no taxable goods gets untaxed shipping, as in WooCommerce's own checkout.
 
 = 1.2.12 =
 * Currencies: a sudemi order is booked in the currency the buyer paid in. An order in another currency than the shop's is declined straight away (the buyer is not charged) and the reason is logged.
