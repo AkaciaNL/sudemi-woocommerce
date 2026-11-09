@@ -279,14 +279,13 @@ final class Sudemi_Changes {
 				$order->update_status( 'completed', __( 'Marked shipped on sudemi.', 'sudemi' ) );
 				break;
 			case 'cancel':
-				Sudemi_Orders::cancel_locally(
-					$order,
-					'DECLINED' === $status
-						? __( 'Declined on sudemi: the buyer was not charged. The stock has been restored.', 'sudemi' )
-						: Sudemi_Orders::cancel_note( isset( $entry['cancelled_by'] ) ? $entry['cancelled_by'] : null ) . ' ' . __( 'The stock has been restored.', 'sudemi' )
-				);
-				if ( 'DECLINED' !== $status ) {
-					Sudemi_Logger::warn( Sudemi_Orders::cancel_log( isset( $entry['cancelled_by'] ) ? $entry['cancelled_by'] : null, $id, $order->get_order_number() ) );
+				$by = isset( $entry['cancelled_by'] ) ? $entry['cancelled_by'] : null;
+				if ( 'DECLINED' === $status ) {
+					Sudemi_Orders::cancel_locally( $order, Sudemi_Orders::decline_note( $by ) );
+					Sudemi_Logger::warn( Sudemi_Orders::decline_log( $by, $id, $order->get_order_number() ) );
+				} else {
+					Sudemi_Orders::cancel_locally( $order, Sudemi_Orders::cancel_note( $by ) . ' ' . __( 'The stock has been restored.', 'sudemi' ) );
+					Sudemi_Logger::warn( Sudemi_Orders::cancel_log( $by, $id, $order->get_order_number() ) );
 				}
 				break;
 		}

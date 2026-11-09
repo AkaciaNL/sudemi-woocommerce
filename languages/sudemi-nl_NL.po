@@ -1622,3 +1622,32 @@ msgstr "Al verzonden. Verkeerde of ontbrekende track & trace? Vul de juiste in: 
 
 msgid "Change tracking"
 msgstr "Track & trace aanpassen"
+
+msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
+msgstr "Afgewezen door je winkel op sudemi; er is niets bij de koper afgeschreven. De voorraad is hersteld."
+
+msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
+msgstr "Automatisch afgewezen door sudemi (bijvoorbeeld omdat de bestelling niet op tijd is beantwoord); er is niets bij de koper afgeschreven. De voorraad is hersteld."
+
+msgid "Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored."
+msgstr "Geannuleerd door de koper op sudemi voordat de bestelling was bevestigd; er is niets bij de koper afgeschreven. De voorraad is hersteld."
+
+#, php-format
+msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi-bestelling %1$s is door je winkel op sudemi afgewezen; bestelling #%2$s is hier geannuleerd en de voorraad hersteld."
+
+#, php-format
+msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi-bestelling %1$s is automatisch door sudemi afgewezen; bestelling #%2$s is hier geannuleerd en de voorraad hersteld."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi-bestelling %1$s is door de koper geannuleerd voordat deze was bevestigd; bestelling #%2$s is hier geannuleerd en de voorraad hersteld."
+
+#, php-format
+msgid "sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi-bestelling %1$s is op sudemi afgewezen; bestelling #%2$s is hier geannuleerd en de voorraad hersteld."
+
+#, php-format
+msgid "Reason: %s."
+msgstr "Reden: %s."

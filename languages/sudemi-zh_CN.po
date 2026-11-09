@@ -1621,3 +1621,32 @@ msgstr "已发货。物流单号有误或缺失？请输入正确的单号：sud
 
 msgid "Change tracking"
 msgstr "更改物流单号"
+
+msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
+msgstr "已由您的店铺在 sudemi 上拒绝；买家未被扣款。库存已恢复。"
+
+msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
+msgstr "已由 sudemi 自动拒绝（例如因为订单未在规定时间内得到答复）；买家未被扣款。库存已恢复。"
+
+msgid "Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored."
+msgstr "买家在订单确认前已于 sudemi 上取消；买家未被扣款。库存已恢复。"
+
+#, php-format
+msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi 订单 %1$s 已由您的店铺在 sudemi 上拒绝；订单 #%2$s 已在此取消，库存已恢复。"
+
+#, php-format
+msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi 订单 %1$s 已由 sudemi 自动拒绝；订单 #%2$s 已在此取消，库存已恢复。"
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi 订单 %1$s 已由买家在确认前取消；订单 #%2$s 已在此取消，库存已恢复。"
+
+#, php-format
+msgid "sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi 订单 %1$s 已在 sudemi 上被拒绝；订单 #%2$s 已在此取消，库存已恢复。"
+
+#, php-format
+msgid "Reason: %s."
+msgstr "原因：%s。"

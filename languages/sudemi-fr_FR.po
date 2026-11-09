@@ -1622,3 +1622,32 @@ msgstr "Déjà expédiée. Suivi erroné ou manquant ? Saisissez le bon : sudemi
 
 msgid "Change tracking"
 msgstr "Modifier le suivi"
+
+msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
+msgstr "Refusée par votre boutique sur sudemi ; l’acheteur n’a pas été débité. Le stock a été rétabli."
+
+msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
+msgstr "Refusée automatiquement par sudemi (par exemple parce que la commande n’a pas reçu de réponse à temps) ; l’acheteur n’a pas été débité. Le stock a été rétabli."
+
+msgid "Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored."
+msgstr "Annulée par l’acheteur sur sudemi avant la confirmation de la commande ; l’acheteur n’a pas été débité. Le stock a été rétabli."
+
+#, php-format
+msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "La commande sudemi %1$s a été refusée par votre boutique sur sudemi ; la commande n° %2$s a été annulée ici et le stock rétabli."
+
+#, php-format
+msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "La commande sudemi %1$s a été refusée automatiquement par sudemi ; la commande n° %2$s a été annulée ici et le stock rétabli."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored."
+msgstr "La commande sudemi %1$s a été annulée par l’acheteur avant d’être confirmée ; la commande n° %2$s a été annulée ici et le stock rétabli."
+
+#, php-format
+msgid "sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "La commande sudemi %1$s a été refusée sur sudemi ; la commande n° %2$s a été annulée ici et le stock rétabli."
+
+#, php-format
+msgid "Reason: %s."
+msgstr "Motif : %s."

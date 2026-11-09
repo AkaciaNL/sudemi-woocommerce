@@ -1622,3 +1622,32 @@ msgstr "Già spedito. Tracciamento sbagliato o mancante? Inserisci quello giusto
 
 msgid "Change tracking"
 msgstr "Cambia tracciamento"
+
+msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
+msgstr "Rifiutato dal tuo negozio su sudemi; all'acquirente non è stato addebitato nulla. Le giacenze sono state ripristinate."
+
+msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
+msgstr "Rifiutato automaticamente da sudemi (ad esempio perché all'ordine non è stata data risposta in tempo); all'acquirente non è stato addebitato nulla. Le giacenze sono state ripristinate."
+
+msgid "Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored."
+msgstr "Annullato dall'acquirente su sudemi prima che l'ordine fosse confermato; all'acquirente non è stato addebitato nulla. Le giacenze sono state ripristinate."
+
+#, php-format
+msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "L'ordine sudemi %1$s è stato rifiutato dal tuo negozio su sudemi; l'ordine n. %2$s è stato annullato qui e le giacenze ripristinate."
+
+#, php-format
+msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "L'ordine sudemi %1$s è stato rifiutato automaticamente da sudemi; l'ordine n. %2$s è stato annullato qui e le giacenze ripristinate."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored."
+msgstr "L'ordine sudemi %1$s è stato annullato dall'acquirente prima di essere confermato; l'ordine n. %2$s è stato annullato qui e le giacenze ripristinate."
+
+#, php-format
+msgid "sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "L'ordine sudemi %1$s è stato rifiutato su sudemi; l'ordine n. %2$s è stato annullato qui e le giacenze ripristinate."
+
+#, php-format
+msgid "Reason: %s."
+msgstr "Motivo: %s."

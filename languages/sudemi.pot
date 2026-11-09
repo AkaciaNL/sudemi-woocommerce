@@ -1621,3 +1621,32 @@ msgstr ""
 
 msgid "Change tracking"
 msgstr ""
+
+msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
+msgstr ""
+
+msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
+msgstr ""
+
+msgid "Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored."
+msgstr ""
+
+#, php-format
+msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr ""
+
+#, php-format
+msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr ""
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored."
+msgstr ""
+
+#, php-format
+msgid "sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr ""
+
+#, php-format
+msgid "Reason: %s."
+msgstr ""

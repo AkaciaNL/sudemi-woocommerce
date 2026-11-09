@@ -1622,3 +1622,32 @@ msgstr "Zaten kargolandı. Takip bilgisi yanlış mı ya da eksik mi? Doğrusunu
 
 msgid "Change tracking"
 msgstr "Takip bilgisini değiştir"
+
+msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
+msgstr "Mağazanız tarafından sudemi'de reddedildi; alıcıdan ücret alınmadı. Stok geri yüklendi."
+
+msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
+msgstr "sudemi tarafından otomatik olarak reddedildi (örneğin sipariş zamanında yanıtlanmadığı için); alıcıdan ücret alınmadı. Stok geri yüklendi."
+
+msgid "Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored."
+msgstr "Sipariş onaylanmadan önce alıcı tarafından sudemi'de iptal edildi; alıcıdan ücret alınmadı. Stok geri yüklendi."
+
+#, php-format
+msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi siparişi %1$s mağazanız tarafından sudemi'de reddedildi; #%2$s numaralı sipariş burada iptal edildi ve stok geri yüklendi."
+
+#, php-format
+msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi siparişi %1$s sudemi tarafından otomatik olarak reddedildi; #%2$s numaralı sipariş burada iptal edildi ve stok geri yüklendi."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi siparişi %1$s onaylanmadan önce alıcı tarafından iptal edildi; #%2$s numaralı sipariş burada iptal edildi ve stok geri yüklendi."
+
+#, php-format
+msgid "sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi siparişi %1$s sudemi'de reddedildi; #%2$s numaralı sipariş burada iptal edildi ve stok geri yüklendi."
+
+#, php-format
+msgid "Reason: %s."
+msgstr "Neden: %s."

@@ -1622,3 +1622,32 @@ msgstr "כבר נשלחה. מספר מעקב שגוי או חסר? הזינו א
 
 msgid "Change tracking"
 msgstr "שינוי מספר המעקב"
+
+msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
+msgstr "נדחתה על ידי החנות שלכם ב-sudemi; הקונה לא חויב. המלאי שוחזר."
+
+msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
+msgstr "נדחתה אוטומטית על ידי sudemi (למשל כי לא ניתנה תשובה להזמנה בזמן); הקונה לא חויב. המלאי שוחזר."
+
+msgid "Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored."
+msgstr "בוטלה על ידי הקונה ב-sudemi לפני שההזמנה אושרה; הקונה לא חויב. המלאי שוחזר."
+
+#, php-format
+msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "הזמנת sudemi %1$s נדחתה על ידי החנות שלכם ב-sudemi; הזמנה #%2$s בוטלה כאן והמלאי שוחזר."
+
+#, php-format
+msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "הזמנת sudemi %1$s נדחתה אוטומטית על ידי sudemi; הזמנה #%2$s בוטלה כאן והמלאי שוחזר."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored."
+msgstr "הזמנת sudemi %1$s בוטלה על ידי הקונה לפני שאושרה; הזמנה #%2$s בוטלה כאן והמלאי שוחזר."
+
+#, php-format
+msgid "sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "הזמנת sudemi %1$s נדחתה ב-sudemi; הזמנה #%2$s בוטלה כאן והמלאי שוחזר."
+
+#, php-format
+msgid "Reason: %s."
+msgstr "סיבה: %s."

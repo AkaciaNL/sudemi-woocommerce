@@ -495,9 +495,9 @@ final class Sudemi_Manage {
 			}
 			return self::outcome( false, self::error_message( $read['error'], $read['message'] ) );
 		}
-		// Cancelled from here: by this shop, whatever the order page of sudemi says (it has no
-		// cancelled_by), so the WooCommerce order note says so.
-		self::reflect( $id, 'cancel' === $action ? array( 'cancelled_by' => 'shop' ) : array() );
+		// Declined or cancelled from here: by this shop, whatever the order page of sudemi says (it
+		// has no cancelled_by), so the WooCommerce order note says so.
+		self::reflect( $id, in_array( $action, array( 'cancel', 'reject' ), true ) ? array( 'cancelled_by' => 'shop' ) : array() );
 		Sudemi_Logger::info( 'sudemi order ' . $id . ': ' . $action . ' sent from the sudemi page.' );
 		switch ( $action ) {
 			case 'reject':
@@ -803,7 +803,9 @@ final class Sudemi_Manage {
 			}
 			return;
 		}
-		if ( $ok || 'already_resolved' === $error || 'wrong_state' === $error ) {
+		if ( $ok && 'reject' === $action ) {
+			self::reflect( $oid, array( 'cancelled_by' => 'shop' ) ); // declined from here: by this shop
+		} elseif ( $ok || 'already_resolved' === $error || 'wrong_state' === $error ) {
 			self::reflect( $oid );
 		}
 	}

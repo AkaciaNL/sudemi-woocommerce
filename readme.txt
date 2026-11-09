@@ -58,6 +58,7 @@ Ask your host to enable it; it ships with PHP 7.2 and later.
 * Tracking after shipping: tracking added or corrected on an order that was already reported shipped (the order is Completed) is sent to sudemi, which e-mails the buyer the new code. It works with the tracking fields read before and with WooCommerce Shipment Tracking / Advanced Shipment Tracking. Only a change made in the shop is sent, never sudemi's own tracking back; without an answer it is sent again on the next heartbeat. An order sudemi still has as paid is marked shipped with the new tracking instead.
 * The order page has "Change tracking" for a shipped order (prefilled with the current tracking), and "Mark shipped" with a tracking code also works for an order shipped elsewhere a moment ago (bulk too).
 * A cancelled order's note says who cancelled it: the buyer, your shop, or sudemi (before, every cancellation read "Cancelled by the buyer").
+* A declined order's note says who declined it too: your shop (portal, seller API, this plugin), sudemi on its own (for example because the order was not answered in time), or the buyer before the order was confirmed. The buyer was never charged; the stock is restored.
 * All new screens in the 12 languages. PROTOCOL.md: current copy (section 4d).
 
 = 1.2.13 =

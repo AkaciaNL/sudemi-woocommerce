@@ -1622,3 +1622,32 @@ msgstr "Bereits versandt. Falsche oder fehlende Sendungsnummer? Geben Sie die ri
 
 msgid "Change tracking"
 msgstr "Sendungsnummer ändern"
+
+msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
+msgstr "Von Ihrem Shop auf sudemi abgelehnt; dem Käufer wurde nichts belastet. Der Bestand wurde wiederhergestellt."
+
+msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
+msgstr "Automatisch von sudemi abgelehnt (zum Beispiel, weil die Bestellung nicht rechtzeitig beantwortet wurde); dem Käufer wurde nichts belastet. Der Bestand wurde wiederhergestellt."
+
+msgid "Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored."
+msgstr "Vom Käufer auf sudemi storniert, bevor die Bestellung bestätigt war; dem Käufer wurde nichts belastet. Der Bestand wurde wiederhergestellt."
+
+#, php-format
+msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi-Bestellung %1$s wurde von Ihrem Shop auf sudemi abgelehnt; Bestellung #%2$s wurde hier storniert und der Bestand wiederhergestellt."
+
+#, php-format
+msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi-Bestellung %1$s wurde automatisch von sudemi abgelehnt; Bestellung #%2$s wurde hier storniert und der Bestand wiederhergestellt."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi-Bestellung %1$s wurde vom Käufer storniert, bevor sie bestätigt war; Bestellung #%2$s wurde hier storniert und der Bestand wiederhergestellt."
+
+#, php-format
+msgid "sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "sudemi-Bestellung %1$s wurde auf sudemi abgelehnt; Bestellung #%2$s wurde hier storniert und der Bestand wiederhergestellt."
+
+#, php-format
+msgid "Reason: %s."
+msgstr "Grund: %s."

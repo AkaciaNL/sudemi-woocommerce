@@ -8,7 +8,7 @@
  * - tracking_is_news(): only a change made in the shop is sent, never sudemi's own tracking back.
  * - _wc_shipment_tracking_items (Shipment Tracking / Advanced Shipment Tracking) is read.
  * - cancel_note(): the order note says who cancelled (buyer, the shop, sudemi), neutral when
- *   sudemi did not say.
+ *   sudemi did not say. decline_note() / decline_log(): the same for a declined order.
  *
  * Runs without WordPress: sudemi's answers are scripted.
  */
@@ -208,6 +208,27 @@ expect( 'log line: buyer', strpos( Sudemi_Orders::cancel_log( 'buyer', $id, '77'
 expect( 'log line: neutral', strpos( Sudemi_Orders::cancel_log( '', $id, '77' ), 'cancelled on sudemi' ) !== false, true );
 foreach ( array( 'buyer', 'shop', 'sudemi', null ) as $by ) {
 	expect( 'no em dash: ' . var_export( $by, true ), false === strpos( Sudemi_Orders::cancel_note( $by ) . Sudemi_Orders::cancel_log( $by, $id, '1' ), "\u{2014}" ), true );
+}
+
+// Who declined (DECLINED: never charged).
+expect( 'decline: shop', Sudemi_Orders::decline_note( 'shop' ), 'Declined by your shop on sudemi; the buyer was not charged. The stock has been restored.' );
+expect( 'decline: sudemi', Sudemi_Orders::decline_note( 'Sudemi' ), 'Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored.' );
+expect( 'decline: buyer', Sudemi_Orders::decline_note( 'buyer' ), 'Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored.' );
+expect( 'decline: not said (older core), feed: the neutral note of before', Sudemi_Orders::decline_note( null ), 'Declined on sudemi: the buyer was not charged. The stock has been restored.' );
+expect( 'decline: unknown value: neutral', Sudemi_Orders::decline_note( 'robot' ), Sudemi_Orders::decline_note( null ) );
+expect( 'decline: not said, settled with a reason: the note of before', Sudemi_Orders::decline_note( null, 'authorisation lapsed' ), 'sudemi released the buyer\'s payment: authorisation lapsed. Nothing was charged and the stock has been restored.' );
+expect( 'decline: not said, settled without a reason: the note of before', Sudemi_Orders::decline_note( '', '' ), 'sudemi released the buyer\'s payment: reason not given. Nothing was charged and the stock has been restored.' );
+expect( 'decline: shop with a reason: kept', Sudemi_Orders::decline_note( 'shop', 'Out of stock.' ), 'Declined by your shop on sudemi; the buyer was not charged. The stock has been restored. Reason: Out of stock.' );
+expect( 'decline: sudemi with an empty reason: none added', Sudemi_Orders::decline_note( 'sudemi', ' ' ), Sudemi_Orders::decline_note( 'sudemi' ) );
+expect( 'decline: never "your shop" unless sudemi said so', false === strpos( Sudemi_Orders::decline_note( 'sudemi' ) . Sudemi_Orders::decline_note( 'buyer' ) . Sudemi_Orders::decline_note( null ), 'your shop' ), true );
+expect( 'decline log: shop', Sudemi_Orders::decline_log( 'shop', $id, '77' ), "sudemi order $id was declined by your shop on sudemi; order #77 was cancelled here and the stock restored." );
+expect( 'decline log: sudemi', strpos( Sudemi_Orders::decline_log( 'sudemi', $id, '77' ), 'declined automatically by sudemi' ) !== false && strpos( Sudemi_Orders::decline_log( 'sudemi', $id, '77' ), '#77' ) !== false, true );
+expect( 'decline log: buyer', strpos( Sudemi_Orders::decline_log( 'buyer', $id, '77' ), 'cancelled by the buyer before it was confirmed' ) !== false, true );
+expect( 'decline log: neutral (feed)', Sudemi_Orders::decline_log( null, $id, '77' ), "sudemi order $id was declined on sudemi; order #77 was cancelled here and the stock restored." );
+expect( 'decline log: neutral (settled): the line of before', Sudemi_Orders::decline_log( null, $id, '77', 'lapsed' ), "sudemi order $id was released after all: lapsed. The local order was cancelled and stock restored." );
+expect( 'decline log: shop with a reason', substr( Sudemi_Orders::decline_log( 'shop', $id, '77', 'Sold out' ), -18 ), ' Reason: Sold out.' );
+foreach ( array( 'buyer', 'shop', 'sudemi', null ) as $by ) {
+	expect( 'decline, no em dash: ' . var_export( $by, true ), false === strpos( Sudemi_Orders::decline_note( $by, 'x' ) . Sudemi_Orders::decline_log( $by, $id, '1', 'x' ), "\u{2014}" ), true );
 }
 
 echo $failures ? "\n$failures FAILED\n" : "\nALL PASS\n";

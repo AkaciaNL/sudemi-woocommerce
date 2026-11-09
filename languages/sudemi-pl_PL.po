@@ -1623,3 +1623,32 @@ msgstr "Już wysłane. Błędny lub brakujący numer przesyłki? Wpisz właściw
 
 msgid "Change tracking"
 msgstr "Zmień numer przesyłki"
+
+msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
+msgstr "Odrzucone przez Twój sklep w sudemi; kupujący nie został obciążony. Stan magazynowy został przywrócony."
+
+msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
+msgstr "Odrzucone automatycznie przez sudemi (na przykład dlatego, że zamówienie nie zostało rozpatrzone na czas); kupujący nie został obciążony. Stan magazynowy został przywrócony."
+
+msgid "Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored."
+msgstr "Anulowane przez kupującego w sudemi przed potwierdzeniem zamówienia; kupujący nie został obciążony. Stan magazynowy został przywrócony."
+
+#, php-format
+msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "Zamówienie sudemi %1$s zostało odrzucone przez Twój sklep w sudemi; zamówienie nr %2$s zostało tu anulowane, a stan magazynowy przywrócony."
+
+#, php-format
+msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "Zamówienie sudemi %1$s zostało automatycznie odrzucone przez sudemi; zamówienie nr %2$s zostało tu anulowane, a stan magazynowy przywrócony."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored."
+msgstr "Zamówienie sudemi %1$s zostało anulowane przez kupującego przed potwierdzeniem; zamówienie nr %2$s zostało tu anulowane, a stan magazynowy przywrócony."
+
+#, php-format
+msgid "sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "Zamówienie sudemi %1$s zostało odrzucone w sudemi; zamówienie nr %2$s zostało tu anulowane, a stan magazynowy przywrócony."
+
+#, php-format
+msgid "Reason: %s."
+msgstr "Powód: %s."

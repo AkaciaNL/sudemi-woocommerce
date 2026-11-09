@@ -546,28 +546,14 @@ class Sudemi_Orders {
 		}
 
 		if ( 'DECLINED' === $state ) {
-			// Released without being charged: the capture failed, or the authorisation lapsed
-			// before the last shop answered. Same as a refused acceptance - the local order must
-			// not survive, and the stock it reserved goes back on the shelf.
-			$reason = ! empty( $settled['declined_reason'] )
-				? (string) $settled['declined_reason']
-				: __( 'reason not given', 'sudemi' );
-			self::cancel_locally(
-				$order,
-				sprintf(
-					/* translators: %s: the reason sudemi gave. */
-					__( 'sudemi released the buyer\'s payment: %s. Nothing was charged and the stock has been restored.', 'sudemi' ),
-					$reason
-				)
-			);
-			Sudemi_Logger::warn(
-				sprintf(
-					/* translators: 1: sudemi order id, 2: reason. */
-					__( 'sudemi order %1$s was released after all: %2$s. The local order was cancelled and stock restored.', 'sudemi' ),
-					$sudemi_id,
-					$reason
-				)
-			);
+			// Released without being charged: this shop said no after all (portal, seller API),
+			// the buyer withdrew, the capture failed, or the authorisation lapsed before the last
+			// shop answered. Same as a refused acceptance - the local order must not survive, and
+			// the stock it reserved goes back on the shelf. The note says who, when sudemi says.
+			$by     = isset( $settled['cancelled_by'] ) ? $settled['cancelled_by'] : null;
+			$reason = ! empty( $settled['declined_reason'] ) ? (string) $settled['declined_reason'] : '';
+			self::cancel_locally( $order, self::decline_note( $by, $reason ) );
+			Sudemi_Logger::warn( self::decline_log( $by, $sudemi_id, $order->get_order_number(), $reason ) );
 			return;
 		}
 
@@ -675,6 +661,87 @@ class Sudemi_Orders {
 				$text = __( 'sudemi order %1$s was cancelled on sudemi before shipping; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
 		}
 		return sprintf( $text, $sudemi_id, $number );
+	}
+
+	/**
+	 * The order note for an order declined on sudemi (never charged), saying who ended it: this
+	 * shop, sudemi on its own (no answer in time, the shop removed) or the buyer before the shop
+	 * confirmed. Without cancelled_by (an older core) the neutral wording of before.
+	 *
+	 * @param mixed       $by     The cancelled_by field (see cancelled_by()).
+	 * @param string|null $reason settled_orders' declined_reason ('' when not given); null for a
+	 *                            change-feed entry, which carries none.
+	 * @return string
+	 */
+	public static function decline_note( $by, $reason = null ) {
+		switch ( self::cancelled_by( $by ) ) {
+			case 'shop':
+				$note = __( 'Declined by your shop on sudemi; the buyer was not charged. The stock has been restored.', 'sudemi' );
+				break;
+			case 'sudemi':
+				$note = __( 'Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored.', 'sudemi' );
+				break;
+			case 'buyer':
+				$note = __( 'Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored.', 'sudemi' );
+				break;
+			default:
+				if ( null === $reason ) {
+					return __( 'Declined on sudemi: the buyer was not charged. The stock has been restored.', 'sudemi' );
+				}
+				return sprintf(
+					/* translators: %s: the reason sudemi gave. */
+					__( 'sudemi released the buyer\'s payment: %s. Nothing was charged and the stock has been restored.', 'sudemi' ),
+					'' !== (string) $reason ? (string) $reason : __( 'reason not given', 'sudemi' )
+				);
+		}
+		return self::with_reason( $note, $reason );
+	}
+
+	/**
+	 * The log line for the same.
+	 *
+	 * @param mixed       $by        The cancelled_by field.
+	 * @param string      $sudemi_id The sudemi order id.
+	 * @param string      $number    The local order number.
+	 * @param string|null $reason    As for decline_note().
+	 * @return string
+	 */
+	public static function decline_log( $by, $sudemi_id, $number, $reason = null ) {
+		switch ( self::cancelled_by( $by ) ) {
+			case 'shop':
+				/* translators: 1: sudemi order id, 2: local order number. */
+				$text = __( 'sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+				break;
+			case 'sudemi':
+				/* translators: 1: sudemi order id, 2: local order number. */
+				$text = __( 'sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+				break;
+			case 'buyer':
+				/* translators: 1: sudemi order id, 2: local order number. */
+				$text = __( 'sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+				break;
+			default:
+				if ( null !== $reason ) {
+					return sprintf(
+						/* translators: 1: sudemi order id, 2: reason. */
+						__( 'sudemi order %1$s was released after all: %2$s. The local order was cancelled and stock restored.', 'sudemi' ),
+						$sudemi_id,
+						'' !== (string) $reason ? (string) $reason : __( 'reason not given', 'sudemi' )
+					);
+				}
+				/* translators: 1: sudemi order id, 2: local order number. */
+				$text = __( 'sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+		}
+		return self::with_reason( sprintf( $text, $sudemi_id, $number ), $reason );
+	}
+
+	/** $text followed by "Reason: ..." when sudemi gave one. */
+	private static function with_reason( $text, $reason ) {
+		if ( null === $reason || '' === trim( (string) $reason ) ) {
+			return $text;
+		}
+		/* translators: %s: the reason sudemi gave. */
+		return $text . ' ' . sprintf( __( 'Reason: %s.', 'sudemi' ), rtrim( trim( (string) $reason ), '.' ) );
 	}
 
 	/**

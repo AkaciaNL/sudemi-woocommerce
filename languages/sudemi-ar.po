@@ -1626,3 +1626,32 @@ msgstr "شُحن بالفعل. رقم التتبع خاطئ أو غير موجو
 
 msgid "Change tracking"
 msgstr "تغيير رقم التتبع"
+
+msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
+msgstr "رفضه متجرك على sudemi؛ لم يُخصم من المشتري شيء. أُعيد المخزون."
+
+msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
+msgstr "رفضه sudemi تلقائيًا (على سبيل المثال لأن الطلب لم يُرَدّ عليه في الوقت المحدد)؛ لم يُخصم من المشتري شيء. أُعيد المخزون."
+
+msgid "Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored."
+msgstr "ألغاه المشتري على sudemi قبل تأكيد الطلب؛ لم يُخصم من المشتري شيء. أُعيد المخزون."
+
+#, php-format
+msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "رفض متجرك طلب sudemi رقم %1$s على sudemi؛ أُلغي الطلب #%2$s هنا وأُعيد المخزون."
+
+#, php-format
+msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "رفض sudemi طلب sudemi رقم %1$s تلقائيًا؛ أُلغي الطلب #%2$s هنا وأُعيد المخزون."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored."
+msgstr "ألغى المشتري طلب sudemi رقم %1$s قبل تأكيده؛ أُلغي الطلب #%2$s هنا وأُعيد المخزون."
+
+#, php-format
+msgid "sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "رُفض طلب sudemi رقم %1$s على sudemi؛ أُلغي الطلب #%2$s هنا وأُعيد المخزون."
+
+#, php-format
+msgid "Reason: %s."
+msgstr "السبب: %s."

@@ -1622,3 +1622,32 @@ msgstr "Ya enviado. ¿Seguimiento incorrecto o sin seguimiento? Introduzca el co
 
 msgid "Change tracking"
 msgstr "Cambiar el seguimiento"
+
+msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
+msgstr "Rechazado por tu tienda en sudemi; no se ha cobrado al comprador. Se ha restablecido el stock."
+
+msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
+msgstr "Rechazado automáticamente por sudemi (por ejemplo, porque el pedido no se respondió a tiempo); no se ha cobrado al comprador. Se ha restablecido el stock."
+
+msgid "Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored."
+msgstr "Cancelado por el comprador en sudemi antes de que se confirmara el pedido; no se ha cobrado al comprador. Se ha restablecido el stock."
+
+#, php-format
+msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "El pedido de sudemi %1$s fue rechazado por tu tienda en sudemi; el pedido n.º %2$s se ha cancelado aquí y se ha restablecido el stock."
+
+#, php-format
+msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "El pedido de sudemi %1$s fue rechazado automáticamente por sudemi; el pedido n.º %2$s se ha cancelado aquí y se ha restablecido el stock."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored."
+msgstr "El pedido de sudemi %1$s fue cancelado por el comprador antes de confirmarse; el pedido n.º %2$s se ha cancelado aquí y se ha restablecido el stock."
+
+#, php-format
+msgid "sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "El pedido de sudemi %1$s fue rechazado en sudemi; el pedido n.º %2$s se ha cancelado aquí y se ha restablecido el stock."
+
+#, php-format
+msgid "Reason: %s."
+msgstr "Motivo: %s."

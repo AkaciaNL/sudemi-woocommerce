@@ -1623,3 +1623,32 @@ msgstr "Уже отправлен. Неверный трек-номер или �
 
 msgid "Change tracking"
 msgstr "Изменить трек-номер"
+
+msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
+msgstr "Отклонён вашим магазином на sudemi; с покупателя ничего не списано. Остатки восстановлены."
+
+msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
+msgstr "Автоматически отклонён sudemi (например, потому что на заказ не ответили вовремя); с покупателя ничего не списано. Остатки восстановлены."
+
+msgid "Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored."
+msgstr "Отменён покупателем на sudemi до подтверждения заказа; с покупателя ничего не списано. Остатки восстановлены."
+
+#, php-format
+msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "Заказ sudemi %1$s отклонён вашим магазином на sudemi; заказ №%2$s отменён здесь, остатки восстановлены."
+
+#, php-format
+msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "Заказ sudemi %1$s автоматически отклонён sudemi; заказ №%2$s отменён здесь, остатки восстановлены."
+
+#, php-format
+msgid "sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored."
+msgstr "Заказ sudemi %1$s отменён покупателем до подтверждения; заказ №%2$s отменён здесь, остатки восстановлены."
+
+#, php-format
+msgid "sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored."
+msgstr "Заказ sudemi %1$s отклонён на sudemi; заказ №%2$s отменён здесь, остатки восстановлены."
+
+#, php-format
+msgid "Reason: %s."
+msgstr "Причина: %s."
