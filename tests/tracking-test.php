@@ -210,6 +210,15 @@ foreach ( array( 'buyer', 'shop', 'sudemi', null ) as $by ) {
 	expect( 'no em dash: ' . var_export( $by, true ), false === strpos( Sudemi_Orders::cancel_note( $by ) . Sudemi_Orders::cancel_log( $by, $id, '1' ), "\u{2014}" ), true );
 }
 
+// Shipped under 1.2 (before tracking records): the tracking is a starting point, not sent.
+expect( 'baseline: nothing recorded, completed before the upgrade', Sudemi_Orders::needs_tracking_baseline( '', 1000, 2000 ), true );
+expect( 'baseline: nothing recorded, completion date unknown', Sudemi_Orders::needs_tracking_baseline( null, 0, 2000 ), true );
+expect( 'baseline: nothing recorded, completed since (shipped on sudemi without tracking): sent', Sudemi_Orders::needs_tracking_baseline( '', 3000, 2000 ), false );
+expect( 'baseline: recorded (shipped from 1.3.0 on): the normal check', Sudemi_Orders::needs_tracking_baseline( array( 'carrier' => '', 'code' => '' ), 1000, 2000 ), false );
+$GLOBALS['options'] = array();
+$since              = Sudemi_Orders::tracking_since();
+expect( 'tracking_since: set once, the first time', $since > 0 && Sudemi_Orders::tracking_since() === $since && get_option( 'sudemi_tracking_since' ) === $since, true );
+
 // Who declined (DECLINED: never charged).
 expect( 'decline: shop', Sudemi_Orders::decline_note( 'shop' ), 'Declined by your shop on sudemi; the buyer was not charged. The stock has been restored.' );
 expect( 'decline: sudemi', Sudemi_Orders::decline_note( 'Sudemi' ), 'Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored.' );

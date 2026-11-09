@@ -1652,3 +1652,15 @@ msgstr "Zamówienie sudemi %1$s zostało odrzucone w sudemi; zamówienie nr %2$s
 #, php-format
 msgid "Reason: %s."
 msgstr "Powód: %s."
+
+#, php-format
+msgid "sudemi order %1$s could not be applied here yet (%2$s); it is read from sudemi again on the next heartbeats."
+msgstr "Zamówienia sudemi %1$s nie udało się jeszcze tu zastosować (%2$s); zostanie ponownie odczytane z sudemi przy kolejnych heartbeatach."
+
+#, php-format
+msgid "sudemi order %1$s is not applied here: sudemi no longer has it for this shop (%2$s). Check the WooCommerce order by hand."
+msgstr "Zamówienie sudemi %1$s nie jest tu stosowane: sudemi nie ma go już dla tego sklepu (%2$s). Sprawdź zamówienie WooCommerce ręcznie."
+
+#, php-format
+msgid "Gave up applying sudemi order %1$s here after %2$d tries (%3$s). Check this order under WooCommerce > sudemi > Orders and update the WooCommerce order by hand."
+msgstr "Zrezygnowano z zastosowania tu zamówienia sudemi %1$s po %2$d próbach (%3$s). Sprawdź to zamówienie w WooCommerce > sudemi > Zamówienia i zaktualizuj zamówienie WooCommerce ręcznie."

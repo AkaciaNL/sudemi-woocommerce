@@ -243,6 +243,8 @@ final class Sudemi_Heartbeat {
 			}
 			$more = Sudemi_Changes::handle_beat( $response['body'] );
 		}
+		// Orders whose change could not be applied on an earlier beat: read from sudemi again.
+		Sudemi_Changes::retry_queued();
 		Sudemi_Changes::safety_net();
 	}
 

@@ -1651,3 +1651,15 @@ msgstr "הזמנת sudemi %1$s נדחתה ב-sudemi; הזמנה #%2$s בוטלה
 #, php-format
 msgid "Reason: %s."
 msgstr "סיבה: %s."
+
+#, php-format
+msgid "sudemi order %1$s could not be applied here yet (%2$s); it is read from sudemi again on the next heartbeats."
+msgstr "לא ניתן היה עדיין להחיל כאן את הזמנת sudemi %1$s (%2$s); היא תיקרא שוב מ-sudemi בפעימות הבאות."
+
+#, php-format
+msgid "sudemi order %1$s is not applied here: sudemi no longer has it for this shop (%2$s). Check the WooCommerce order by hand."
+msgstr "הזמנת sudemi %1$s לא מוחלת כאן: ל-sudemi כבר אין אותה עבור החנות הזו (%2$s). בדקו את הזמנת WooCommerce ידנית."
+
+#, php-format
+msgid "Gave up applying sudemi order %1$s here after %2$d tries (%3$s). Check this order under WooCommerce > sudemi > Orders and update the WooCommerce order by hand."
+msgstr "ויתרנו על החלת הזמנת sudemi %1$s כאן אחרי %2$d ניסיונות (%3$s). בדקו את ההזמנה תחת WooCommerce > sudemi > הזמנות ועדכנו את הזמנת WooCommerce ידנית."

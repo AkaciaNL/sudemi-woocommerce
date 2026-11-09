@@ -1651,3 +1651,15 @@ msgstr "sudemi-bestelling %1$s is op sudemi afgewezen; bestelling #%2$s is hier 
 #, php-format
 msgid "Reason: %s."
 msgstr "Reden: %s."
+
+#, php-format
+msgid "sudemi order %1$s could not be applied here yet (%2$s); it is read from sudemi again on the next heartbeats."
+msgstr "sudemi-bestelling %1$s kon hier nog niet worden verwerkt (%2$s); ze wordt bij de volgende heartbeats opnieuw bij sudemi opgehaald."
+
+#, php-format
+msgid "sudemi order %1$s is not applied here: sudemi no longer has it for this shop (%2$s). Check the WooCommerce order by hand."
+msgstr "sudemi-bestelling %1$s wordt hier niet verwerkt: sudemi heeft haar niet meer voor deze winkel (%2$s). Controleer de WooCommerce-bestelling handmatig."
+
+#, php-format
+msgid "Gave up applying sudemi order %1$s here after %2$d tries (%3$s). Check this order under WooCommerce > sudemi > Orders and update the WooCommerce order by hand."
+msgstr "Verwerken van sudemi-bestelling %1$s hier opgegeven na %2$d pogingen (%3$s). Bekijk deze bestelling onder WooCommerce > sudemi > Bestellingen en werk de WooCommerce-bestelling handmatig bij."

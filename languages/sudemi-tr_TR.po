@@ -1651,3 +1651,15 @@ msgstr "sudemi siparişi %1$s sudemi'de reddedildi; #%2$s numaralı sipariş bur
 #, php-format
 msgid "Reason: %s."
 msgstr "Neden: %s."
+
+#, php-format
+msgid "sudemi order %1$s could not be applied here yet (%2$s); it is read from sudemi again on the next heartbeats."
+msgstr "sudemi siparişi %1$s henüz burada işlenemedi (%2$s); sonraki heartbeat'lerde sudemi'den yeniden okunacak."
+
+#, php-format
+msgid "sudemi order %1$s is not applied here: sudemi no longer has it for this shop (%2$s). Check the WooCommerce order by hand."
+msgstr "sudemi siparişi %1$s burada işlenmiyor: sudemi'de bu mağaza için artık yok (%2$s). WooCommerce siparişini elle kontrol edin."
+
+#, php-format
+msgid "Gave up applying sudemi order %1$s here after %2$d tries (%3$s). Check this order under WooCommerce > sudemi > Orders and update the WooCommerce order by hand."
+msgstr "sudemi siparişi %1$s, %2$d denemeden sonra burada işlenmekten vazgeçildi (%3$s). Bu siparişi WooCommerce > sudemi > Siparişler altında kontrol edin ve WooCommerce siparişini elle güncelleyin."

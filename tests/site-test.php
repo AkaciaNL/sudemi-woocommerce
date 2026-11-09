@@ -130,6 +130,10 @@ class Sudemi_Changes {
 	public static function safety_net() {
 		++self::$net;
 	}
+	public static $retried = 0;
+	public static function retry_queued() {
+		++self::$retried;
+	}
 }
 $wpdb = new class() {
 	public $posts = 'wp_posts';
@@ -227,6 +231,7 @@ Sudemi_Changes::$more = 2;
 $reply = array( 'code' => 200, 'body' => '{"catalogue_listed":true,"changed_orders":[],"changes_cursor":"c1.n","changes_more":true}' );
 Sudemi_Heartbeat::run();
 check( 'heartbeat: changes_more asks again right away until no more are waiting', 3 === count( $sent ) - $before && 3 === count( Sudemi_Changes::$handled ) - 1 && 1 === Sudemi_Changes::$net );
+check( 'heartbeat: the retry list is worked through once per run (with the feed), not per extra beat', 1 === Sudemi_Changes::$retried );
 $before = count( $sent );
 Sudemi_Changes::$more = 50;
 Sudemi_Heartbeat::run();

@@ -1650,3 +1650,15 @@ msgstr "sudemi 订单 %1$s 已在 sudemi 上被拒绝；订单 #%2$s 已在此�
 #, php-format
 msgid "Reason: %s."
 msgstr "原因：%s。"
+
+#, php-format
+msgid "sudemi order %1$s could not be applied here yet (%2$s); it is read from sudemi again on the next heartbeats."
+msgstr "sudemi 订单 %1$s 暂时无法在此应用（%2$s）；将在接下来的心跳中重新从 sudemi 读取。"
+
+#, php-format
+msgid "sudemi order %1$s is not applied here: sudemi no longer has it for this shop (%2$s). Check the WooCommerce order by hand."
+msgstr "sudemi 订单 %1$s 不会在此应用：sudemi 上已不再有此店铺的该订单（%2$s）。请手动检查 WooCommerce 订单。"
+
+#, php-format
+msgid "Gave up applying sudemi order %1$s here after %2$d tries (%3$s). Check this order under WooCommerce > sudemi > Orders and update the WooCommerce order by hand."
+msgstr "尝试 %2$d 次后已放弃在此应用 sudemi 订单 %1$s（%3$s）。请在 WooCommerce > sudemi > 订单 中查看此订单，并手动更新 WooCommerce 订单。"

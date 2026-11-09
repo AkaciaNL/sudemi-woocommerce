@@ -26,6 +26,16 @@ final class Sudemi_Changes {
 	const OPTION_CURSOR      = 'sudemi_changes_cursor';
 	const OPTION_SAFETY_NET  = 'sudemi_changes_checked';
 
+	/** Orders whose change could not be applied yet: order id => attempts, first, last, why, cancelled_by. */
+	const OPTION_RETRY = 'sudemi_changes_retry';
+
+	/** Asked about again on later beats, at most this many per beat ... */
+	const RETRY_PER_BEAT = 10;
+
+	/** ... and given up on (loudly, in the log) after this many tries or this long (3 days). */
+	const RETRY_MAX_ATTEMPTS = 100;
+	const RETRY_MAX_AGE      = 259200;
+
 	const META_REVISION  = '_sudemi_revision';
 	const META_STATUS    = '_sudemi_status';
 	const META_CARRIER   = '_sudemi_tracking_carrier';
@@ -72,6 +82,7 @@ final class Sudemi_Changes {
 	public static function forget() {
 		delete_option( self::OPTION_CURSOR );
 		delete_option( self::OPTION_SAFETY_NET );
+		delete_option( self::OPTION_RETRY );
 	}
 
 	// ---------------------------------------------------------------- heartbeat ----
@@ -91,20 +102,26 @@ final class Sudemi_Changes {
 			Sudemi_Logger::info( __( 'sudemi started the order change list over (last 7 days); orders are checked again, nothing is applied twice.', 'sudemi' ) );
 		}
 		$applied = 0;
-		$retry   = false;
 		foreach ( $body['changed_orders'] as $entry ) {
 			if ( ! is_array( $entry ) ) {
 				continue;
 			}
+			$why = '';
 			try {
 				$result = self::apply_entry( $entry );
 				if ( 'applied' === $result ) {
 					++$applied;
 				} elseif ( 'retry' === $result ) {
-					$retry = true;
+					$why = 'unreachable';
 				}
-			} catch ( Exception $e ) {
-				Sudemi_Logger::error( 'Could not apply a sudemi order change: ' . $e->getMessage() );
+			} catch ( Throwable $e ) {
+				$why = $e->getMessage();
+				$why = '' === $why ? get_class( $e ) : $why;
+			}
+			if ( '' !== $why && isset( $entry['order_id'] ) && is_string( $entry['order_id'] ) ) {
+				// Not applied (sudemi busy, or this shop could not record it): kept per order and
+				// read from sudemi again on later beats, so neither the feed nor the order is lost.
+				self::queue_retry( strtolower( $entry['order_id'] ), $why, isset( $entry['cancelled_by'] ) ? $entry['cancelled_by'] : null );
 			}
 		}
 		if ( $applied > 0 ) {
@@ -116,13 +133,8 @@ final class Sudemi_Changes {
 				)
 			);
 		}
-		if ( $retry ) {
-			// sudemi could not be asked about an order (busy, unreachable): the same page is read
-			// again on the next beat, and what was applied already is skipped by its revision.
-			Sudemi_Logger::warn( __( 'An order change from sudemi could not be applied yet; it is read again on the next heartbeat.', 'sudemi' ) );
-			return false;
-		}
-		// Kept only after the entries were applied: a run that dies halfway reads them again.
+		// Kept only after the entries were applied (a run that dies halfway reads them again), and
+		// never held back for one order that failed: that one is on the retry list instead.
 		if ( isset( $body['changes_cursor'] ) ) {
 			self::remember_cursor( $body['changes_cursor'] );
 		}
@@ -155,7 +167,7 @@ final class Sudemi_Changes {
 				if ( is_array( $row ) && array_key_exists( 'revision', $row ) ) {
 					try {
 						self::apply_entry( $row );
-					} catch ( Exception $e ) {
+					} catch ( Throwable $e ) {
 						Sudemi_Logger::error( 'Could not apply a sudemi order: ' . $e->getMessage() );
 					}
 				}
@@ -165,6 +177,129 @@ final class Sudemi_Changes {
 			}
 			$filters['offset'] = (int) $read['body']['next_offset'];
 		}
+	}
+
+	// -------------------------------------------------------------------- retry ----
+
+	/** The orders waiting to be applied again (see OPTION_RETRY). */
+	public static function retry_list() {
+		$list = get_option( self::OPTION_RETRY, array() );
+		return is_array( $list ) ? $list : array();
+	}
+
+	/**
+	 * Pure: the retry list with one more failed try for an order (added when new).
+	 *
+	 * @param array       $list The retry list.
+	 * @param string      $id   sudemi order id.
+	 * @param int         $now  Time.
+	 * @param string      $why  What went wrong.
+	 * @param string|null $by   cancelled_by from the feed entry, kept for the note (sudemi's order page has none).
+	 * @return array
+	 */
+	public static function retry_add( array $list, $id, $now, $why, $by = null ) {
+		$item = isset( $list[ $id ] ) && is_array( $list[ $id ] ) ? $list[ $id ] : array(
+			'attempts' => 0,
+			'first'    => (int) $now,
+		);
+		$item['attempts'] = (int) $item['attempts'] + 1;
+		$item['last']     = (int) $now;
+		$item['why']      = substr( (string) $why, 0, 200 );
+		if ( null !== $by && '' !== Sudemi_Orders::cancelled_by( $by ) ) {
+			$item['cancelled_by'] = Sudemi_Orders::cancelled_by( $by );
+		}
+		$list[ $id ] = $item;
+		return $list;
+	}
+
+	/** Pure: whether an order on the retry list has been tried long or often enough to give up. */
+	public static function retry_expired( array $item, $now ) {
+		return (int) ( isset( $item['attempts'] ) ? $item['attempts'] : 0 ) >= self::RETRY_MAX_ATTEMPTS
+			|| (int) $now - (int) ( isset( $item['first'] ) ? $item['first'] : $now ) >= self::RETRY_MAX_AGE;
+	}
+
+	private static function queue_retry( $id, $why, $by = null ) {
+		if ( ! Sudemi_Manage::is_order_id( $id ) ) {
+			Sudemi_Logger::error( 'Could not apply a sudemi order change: ' . $why );
+			return;
+		}
+		$list = self::retry_add( self::retry_list(), $id, time(), $why, $by );
+		update_option( self::OPTION_RETRY, $list, false );
+		Sudemi_Logger::warn(
+			sprintf(
+				/* translators: 1: sudemi order id, 2: what went wrong. */
+				__( 'sudemi order %1$s could not be applied here yet (%2$s); it is read from sudemi again on the next heartbeats.', 'sudemi' ),
+				$id,
+				$list[ $id ]['why']
+			)
+		);
+	}
+
+	/**
+	 * Applies the orders on the retry list as sudemi has them now (GET /orders/{id}), a few per
+	 * beat. Applied, or nothing to apply: off the list. Still failing: tried again later, and given
+	 * up after RETRY_MAX_ATTEMPTS tries or RETRY_MAX_AGE, with an error in the log (never silently).
+	 */
+	public static function retry_queued() {
+		$list = self::retry_list();
+		if ( empty( $list ) ) {
+			return;
+		}
+		$now  = time();
+		$done = 0;
+		foreach ( $list as $id => $item ) {
+			if ( $done++ >= self::RETRY_PER_BEAT ) {
+				break;
+			}
+			$id   = (string) $id;
+			$item = is_array( $item ) ? $item : array();
+			$why  = '';
+			try {
+				$read = Sudemi_Manage::order( $id );
+				if ( $read['ok'] && is_array( $read['body'] ) ) {
+					$entry = Sudemi_Manage::entry_from_detail( $read['body'] );
+					if ( empty( $entry['cancelled_by'] ) && ! empty( $item['cancelled_by'] ) ) {
+						$entry['cancelled_by'] = $item['cancelled_by'];
+					}
+					if ( 'retry' === self::apply_entry( $entry ) ) {
+						$why = 'unreachable';
+					}
+				} elseif ( ! in_array( $read['error'], array( 'no_such_order', 'previous_connection' ), true ) ) {
+					$why = '' === (string) $read['error'] ? 'HTTP ' . (int) $read['status'] : (string) $read['error'];
+				} else {
+					unset( $list[ $id ] );
+					Sudemi_Logger::error(
+						sprintf(
+							/* translators: 1: sudemi order id, 2: sudemi's answer. */
+							__( 'sudemi order %1$s is not applied here: sudemi no longer has it for this shop (%2$s). Check the WooCommerce order by hand.', 'sudemi' ),
+							$id,
+							(string) $read['error']
+						)
+					);
+					continue;
+				}
+			} catch ( Throwable $e ) {
+				$why = '' === $e->getMessage() ? get_class( $e ) : $e->getMessage();
+			}
+			if ( '' === $why ) {
+				unset( $list[ $id ] );
+				continue;
+			}
+			$list = self::retry_add( $list, $id, $now, $why );
+			if ( self::retry_expired( $list[ $id ], $now ) ) {
+				Sudemi_Logger::error(
+					sprintf(
+						/* translators: 1: sudemi order id, 2: number of tries, 3: what went wrong. */
+						__( 'Gave up applying sudemi order %1$s here after %2$d tries (%3$s). Check this order under WooCommerce > sudemi > Orders and update the WooCommerce order by hand.', 'sudemi' ),
+						$id,
+						(int) $list[ $id ]['attempts'],
+						$list[ $id ]['why']
+					)
+				);
+				unset( $list[ $id ] );
+			}
+		}
+		update_option( self::OPTION_RETRY, $list, false );
 	}
 
 	// -------------------------------------------------------------------- apply ----
@@ -359,6 +494,47 @@ final class Sudemi_Changes {
 	private static function apply_refund( $order, $sudemi_refunded ) {
 		if ( $sudemi_refunded <= 0 || $order->has_status( array( 'cancelled', 'failed', 'trash' ) ) ) {
 			return;
+		}
+		// One at a time per order: the heartbeat and an action on the sudemi page (reflect()) can
+		// apply the same refund at once. The amount already recorded is read again inside the lock.
+		self::locked(
+			'refund_' . $order->get_id(),
+			function () use ( $order, $sudemi_refunded ) {
+				self::record_refund( $order, $sudemi_refunded );
+			}
+		);
+	}
+
+	/**
+	 * Runs $fn under a MySQL named lock (GET_LOCK), waiting up to $wait seconds for another
+	 * request holding it. Not run at all when the lock cannot be had. Without $wpdb (the tests),
+	 * $fn just runs.
+	 *
+	 * @return mixed What $fn returned, or null when the lock was not had.
+	 */
+	public static function locked( $name, callable $fn, $wait = 10 ) {
+		global $wpdb;
+		if ( ! is_object( $wpdb ) ) {
+			return $fn();
+		}
+		$key = substr( 'sudemi_' . $wpdb->prefix . $name, 0, 64 );
+		if ( 1 !== (int) $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK(%s, %d)', $key, (int) $wait ) ) ) {
+			Sudemi_Logger::warn( 'Busy: ' . $name . ' is being applied by another request; left to it.' );
+			return null;
+		}
+		try {
+			return $fn();
+		} finally {
+			$wpdb->query( $wpdb->prepare( 'SELECT RELEASE_LOCK(%s)', $key ) );
+		}
+	}
+
+	private static function record_refund( $order, $sudemi_refunded ) {
+		$fresh = wc_get_order( $order->get_id() );
+		$order = $fresh ? $fresh : $order;
+		if ( class_exists( 'WC_Cache_Helper' ) ) {
+			// Another request may have recorded a refund since this one read the order.
+			wp_cache_delete( WC_Cache_Helper::get_cache_prefix( 'orders' ) . 'total_refunded' . $order->get_id(), 'orders' );
 		}
 		$currency = (string) $order->get_meta( Sudemi_Currency::META_ORDER_CURRENCY );
 		$currency = '' === $currency ? (string) $order->get_currency() : $currency;

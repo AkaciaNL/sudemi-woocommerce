@@ -1223,6 +1223,7 @@ class Sudemi_Orders {
 		add_action( 'woocommerce_process_shop_order_meta', array( __CLASS__, 'on_order_saved' ), 100, 1 );
 		add_action( 'added_post_meta', array( __CLASS__, 'on_post_meta' ), 10, 3 );
 		add_action( 'updated_post_meta', array( __CLASS__, 'on_post_meta' ), 10, 3 );
+		self::tracking_since();
 	}
 
 	/**
@@ -1574,6 +1575,34 @@ class Sudemi_Orders {
 	/** The tracking last sent to sudemi from this shop (carrier, code), on the order. */
 	const META_TRACKING_SENT = '_sudemi_tracking_sent';
 
+	/** When this plugin started recording the tracking it sends (1.3.0 first ran here). */
+	const OPTION_TRACKING_SINCE = 'sudemi_tracking_since';
+
+	/** The time tracking records started here; set the first time 1.3.0 runs. */
+	public static function tracking_since() {
+		$since = (int) get_option( self::OPTION_TRACKING_SINCE, 0 );
+		if ( $since <= 0 ) {
+			$since = time();
+			update_option( self::OPTION_TRACKING_SINCE, $since );
+		}
+		return $since;
+	}
+
+	/**
+	 * Pure: whether a completed order's tracking is only to be taken as the starting point, not
+	 * sent: nothing recorded as sent, and completed before this plugin recorded what it sends (an
+	 * order shipped under 1.2). Sending it would e-mail its buyer an old code again after the
+	 * upgrade. An order shipped since (on sudemi without tracking) is not one of them.
+	 *
+	 * @param mixed $reported  _sudemi_tracking_sent.
+	 * @param int   $completed When the order was completed (0: not known).
+	 * @param int   $since     tracking_since().
+	 * @return bool
+	 */
+	public static function needs_tracking_baseline( $reported, $completed, $since ) {
+		return ! is_array( $reported ) && ( (int) $completed <= 0 || (int) $completed < (int) $since );
+	}
+
 	/**
 	 * Pure: the carrier or code of the last parcel in a _wc_shipment_tracking_items list.
 	 *
@@ -1722,6 +1751,11 @@ class Sudemi_Orders {
 		}
 		$local    = self::local_tracking( $order );
 		$reported = $order->get_meta( self::META_TRACKING_SENT );
+		$done     = $order->get_date_completed();
+		if ( self::needs_tracking_baseline( $reported, $done ? $done->getTimestamp() : 0, self::tracking_since() ) ) {
+			self::remember_tracking( $order, $local ); // shipped under 1.2: from now on only a change is sent
+			return null;
+		}
 		$sudemi   = array(
 			'carrier' => (string) $order->get_meta( Sudemi_Changes::META_CARRIER ),
 			'code'    => (string) $order->get_meta( Sudemi_Changes::META_CODE ),

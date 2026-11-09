@@ -32,3 +32,5 @@ jobs:
         run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/manage-test.php"
       - name: Tracking after shipping, who cancelled
         run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/tracking-test.php"
+      - name: Change feed retries (cursor never held back, per-order retry list), refund lock
+        run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/changes-test.php"

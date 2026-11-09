@@ -59,6 +59,7 @@ Ask your host to enable it; it ships with PHP 7.2 and later.
 * The order page has "Change tracking" for a shipped order (prefilled with the current tracking), and "Mark shipped" with a tracking code also works for an order shipped elsewhere a moment ago (bulk too).
 * A cancelled order's note says who cancelled it: the buyer, your shop, or sudemi (before, every cancellation read "Cancelled by the buyer").
 * A declined order's note says who declined it too: your shop (portal, seller API, this plugin), sudemi on its own (for example because the order was not answered in time), or the buyer before the order was confirmed. The buyer was never charged; the stock is restored.
+* The change feed never stalls on one order: an order whose change cannot be applied (sudemi busy, or the order could not be booked) is read from sudemi again on later heartbeats, and given up on after 3 days with an error in the log, while the rest of the feed goes on. A refund made on sudemi is recorded once, also when the heartbeat and the sudemi page apply it at the same moment. Orders shipped before 1.3.0 do not send their tracking to sudemi again after the update.
 * All new screens in the 12 languages. PROTOCOL.md: current copy (section 4d).
 
 = 1.2.13 =

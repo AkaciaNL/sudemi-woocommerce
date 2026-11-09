@@ -1652,3 +1652,15 @@ msgstr "Заказ sudemi %1$s отклонён на sudemi; заказ №%2$s 
 #, php-format
 msgid "Reason: %s."
 msgstr "Причина: %s."
+
+#, php-format
+msgid "sudemi order %1$s could not be applied here yet (%2$s); it is read from sudemi again on the next heartbeats."
+msgstr "Заказ sudemi %1$s пока не удалось применить здесь (%2$s); он будет снова прочитан из sudemi при следующих heartbeat."
+
+#, php-format
+msgid "sudemi order %1$s is not applied here: sudemi no longer has it for this shop (%2$s). Check the WooCommerce order by hand."
+msgstr "Заказ sudemi %1$s здесь не применяется: у sudemi его больше нет для этого магазина (%2$s). Проверьте заказ WooCommerce вручную."
+
+#, php-format
+msgid "Gave up applying sudemi order %1$s here after %2$d tries (%3$s). Check this order under WooCommerce > sudemi > Orders and update the WooCommerce order by hand."
+msgstr "Применение заказа sudemi %1$s здесь прекращено после %2$d попыток (%3$s). Проверьте этот заказ в разделе WooCommerce > sudemi > Заказы и обновите заказ WooCommerce вручную."
