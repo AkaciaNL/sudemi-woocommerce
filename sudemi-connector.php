@@ -3,7 +3,7 @@
  * Plugin Name:       sudemi Connector
  * Plugin URI:        https://sudemi.com/integrations/woocommerce
  * Description:       Lists this shop's products on sudemi, so an AI assistant can find them and send buyers to you. You stay the merchant of record.
- * Version:           1.2.13
+ * Version:           1.3.0
  * Requires at least: 6.2
  * Requires PHP:      8.0
  * Author:            Akacia
@@ -19,7 +19,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SUDEMI_VERSION', '1.2.13' );
+define( 'SUDEMI_VERSION', '1.3.0' );
 define( 'SUDEMI_PLUGIN_FILE', __FILE__ );
 define( 'SUDEMI_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
@@ -35,12 +35,15 @@ require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-withdrawal.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-sync.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-orders.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-order-calls.php';
+require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-manage.php';
+require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-changes.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-heartbeat.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-support.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-requests.php';
 
 if ( is_admin() ) {
 	require_once SUDEMI_PLUGIN_DIR . 'admin/class-sudemi-admin.php';
+	require_once SUDEMI_PLUGIN_DIR . 'admin/class-sudemi-admin-manage.php';
 }
 
 // The admin screens ship in twelve languages; the files live in languages/.
@@ -94,6 +97,7 @@ add_action(
 		Sudemi_Sync::boot();
 		Sudemi_Heartbeat::boot();
 		Sudemi_Orders::boot();
+		Sudemi_Manage::boot();
 		if ( is_admin() ) {
 			Sudemi_Admin::boot();
 			Sudemi_Withdrawal::boot();

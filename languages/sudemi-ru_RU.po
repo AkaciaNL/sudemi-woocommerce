@@ -980,3 +980,576 @@ msgstr "У sudemi для вашего магазина всё ещё указа�
 
 msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
 msgstr "Покупатели платят в вашей валюте. sudemi выплачивает вам деньги в евро: комиссия платёжного провайдера за конвертацию валюты (около 2%) удерживается из вашей выплаты, как сказано в условиях."
+
+msgid "Waiting for you"
+msgstr "Ждёт вашего ответа"
+
+msgid "Accepted, waiting for payment"
+msgstr "Принят, ожидает оплаты"
+
+msgid "Paid, ready to ship"
+msgstr "Оплачен, готов к отправке"
+
+msgid "Declined"
+msgstr "Отклонён"
+
+msgid "Cancelled"
+msgstr "Отменён"
+
+msgid "Refunded"
+msgstr "Деньги возвращены"
+
+msgid "Nothing charged"
+msgstr "Ничего не списано"
+
+msgid "Due once shipped"
+msgstr "К выплате после отправки"
+
+msgid "Scheduled"
+msgstr "Запланирована"
+
+msgid "On its way to you"
+msgstr "Переводится вам"
+
+msgid "Held (chargeback)"
+msgstr "Удержана (чарджбэк)"
+
+msgid "Partly paid out"
+msgstr "Выплачена частично"
+
+msgid "Paid out"
+msgstr "Выплачена"
+
+msgid "Nothing due (refunded)"
+msgstr "Нечего выплачивать (деньги возвращены)"
+
+msgid "Placed by the buyer"
+msgstr "Оформлен покупателем"
+
+msgid "Accepted"
+msgstr "Принят"
+
+msgid "Paid"
+msgstr "Оплачен"
+
+msgid "Refund"
+msgstr "Возврат"
+
+msgid "Buyer asked to return or cancel"
+msgstr "Покупатель запросил возврат или отмену"
+
+msgid "Request answered"
+msgstr "На запрос дан ответ"
+
+msgid "Not set up yet"
+msgstr "Ещё не настроен"
+
+msgid "Details missing"
+msgstr "Не хватает данных"
+
+msgid "Under review"
+msgstr "На проверке"
+
+msgid "Active"
+msgstr "Активен"
+
+msgid "Action required"
+msgstr "Требуются действия"
+
+msgid "This is available once this shop is connected to sudemi."
+msgstr "Это станет доступно, как только этот магазин будет подключён к sudemi."
+
+msgid "All"
+msgstr "Все"
+
+msgid "No orders match."
+msgstr "Подходящих заказов нет."
+
+msgid "Select"
+msgstr "Выбрать"
+
+msgid "Ship to"
+msgstr "Доставка в"
+
+msgid "Total"
+msgstr "Итого"
+
+msgid "Payout"
+msgstr "Выплата"
+
+msgid "Tracking"
+msgstr "Отслеживание"
+
+msgid "WooCommerce order"
+msgstr "Заказ WooCommerce"
+
+msgid "With the selected orders"
+msgstr "С выбранными заказами"
+
+msgid "Choose an action"
+msgstr "Выберите действие"
+
+msgid "Accept"
+msgstr "Принять"
+
+msgid "Decline"
+msgstr "Отклонить"
+
+msgid "Mark shipped"
+msgstr "Отметить как отправленный"
+
+msgid "Mark delivered"
+msgstr "Отметить как доставленный"
+
+msgid "Reason for declining (shown to the buyers)"
+msgstr "Причина отказа (её увидят покупатели)"
+
+msgid "Carrier"
+msgstr "Перевозчик"
+
+msgid "Apply"
+msgstr "Применить"
+
+msgid "Refunds and cancellations are made one order at a time, on the order's own page: each moves a different amount of money."
+msgstr "Возвраты и отмены делаются по одному заказу, на странице самого заказа: в каждом случае движется своя сумма."
+
+#, php-format
+msgid "Orders %1$d to %2$d of %3$d"
+msgstr "Заказы с %1$d по %2$d из %3$d"
+
+msgid "Previous"
+msgstr "Назад"
+
+msgid "Next"
+msgstr "Далее"
+
+#, php-format
+msgid "answer by %s"
+msgstr "ответить до %s"
+
+#, php-format
+msgid "refunded %s"
+msgstr "возвращено %s"
+
+msgid "Tracking code"
+msgstr "Трек-номер"
+
+msgid "From"
+msgstr "С"
+
+msgid "To"
+msgstr "По"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Order number or product"
+msgstr "Номер заказа или товар"
+
+msgid "Sort by"
+msgstr "Сортировка"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Newest or highest first"
+msgstr "Сначала новые или большие"
+
+msgid "Oldest or lowest first"
+msgstr "Сначала старые или меньшие"
+
+msgid "Filter"
+msgstr "Фильтр"
+
+msgid "Language of the file"
+msgstr "Язык файла"
+
+msgid "Numbers"
+msgstr "Числа"
+
+msgid "1234.50, comma separated"
+msgstr "1234.50, разделитель запятая"
+
+msgid "1234,50, semicolon separated"
+msgstr "1234,50, разделитель точка с запятой"
+
+msgid "Download these orders (CSV)"
+msgstr "Скачать эти заказы (CSV)"
+
+msgid "Every order that matches the filters, up to 10,000, without buyer names or addresses."
+msgstr "Все заказы, подходящие под фильтры, но не более 10 000, без имён и адресов покупателей."
+
+msgid "Confirm orders automatically when the items are in stock"
+msgstr "Подтверждать заказы автоматически, если товары в наличии"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "On: every five minutes this shop accepts orders whose items are in stock and declines the others."
+msgstr "Вкл.: каждые пять минут магазин принимает заказы с товарами в наличии и отклоняет остальные."
+
+msgid "Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing."
+msgstr "Выкл.: заказы ждут вашего решения. Примите или отклоните каждый здесь до указанной даты; без ответа средства покупателя разблокируются и ничего не списывается."
+
+msgid "Back to the orders"
+msgstr "Назад к заказам"
+
+#, php-format
+msgid "Order %1$s: %2$s"
+msgstr "Заказ %1$s: %2$s"
+
+#, php-format
+msgid "Waiting for your answer. The buyer is not charged until you accept. Answer by %s; without an answer the buyer is released."
+msgstr "Ждёт вашего ответа. Деньги с покупателя не списываются, пока вы не примете заказ. Ответьте до %s; без ответа средства покупателя разблокируются."
+
+#, php-format
+msgid "Stock check: %s."
+msgstr "Проверка наличия: %s."
+
+msgid "sudemi order"
+msgstr "Заказ sudemi"
+
+msgid "Placed"
+msgstr "Оформлен"
+
+msgid "none yet (it is created when the order is accepted)"
+msgstr "пока нет (создаётся, когда заказ принят)"
+
+msgid "Buyer may withdraw until"
+msgstr "Покупатель может отказаться до"
+
+msgid "Reason declined"
+msgstr "Причина отказа"
+
+msgid "Items"
+msgstr "Товары"
+
+msgid "Product"
+msgstr "Товар"
+
+msgid "Quantity"
+msgstr "Количество"
+
+msgid "Price"
+msgstr "Цена"
+
+msgid "Amount"
+msgstr "Сумма"
+
+msgid "No right of withdrawal"
+msgstr "Без права на отказ от договора"
+
+msgid "Money"
+msgstr "Деньги"
+
+msgid "Goods"
+msgstr "Товары"
+
+msgid "Shipping"
+msgstr "Доставка"
+
+msgid "Buyer paid"
+msgstr "Оплачено покупателем"
+
+msgid "sudemi commission"
+msgstr "Комиссия sudemi"
+
+msgid "Refunded to the buyer"
+msgstr "Возвращено покупателю"
+
+msgid "Payout expected"
+msgstr "Ожидаемая выплата"
+
+msgid "Payout due"
+msgstr "К выплате"
+
+msgid "The buyer asked to return this order"
+msgstr "Покупатель просит вернуть этот заказ"
+
+msgid "History"
+msgstr "История"
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "Accept: the buyer is charged and you ship the order."
+msgstr "Принять: деньги с покупателя списываются, а вы отправляете заказ."
+
+msgid "Accept the order"
+msgstr "Принять заказ"
+
+msgid "Reason for declining (shown to the buyer)"
+msgstr "Причина отказа (её увидит покупатель)"
+
+msgid "Decline the order"
+msgstr "Отклонить заказ"
+
+#, php-format
+msgid "Amount to refund (%s)"
+msgstr "Сумма возврата (%s)"
+
+#, php-format
+msgid "Leave empty to refund everything not refunded yet (%s)."
+msgstr "Оставьте пустым, чтобы вернуть всё, что ещё не возвращено (%s)."
+
+msgid "Reason"
+msgstr "Причина"
+
+msgid "Refund through sudemi"
+msgstr "Вернуть деньги через sudemi"
+
+msgid "Cancel: you cannot fulfil this paid order. The buyer is refunded in full."
+msgstr "Отмена: вы не можете выполнить этот оплаченный заказ. Покупателю возвращается вся сумма."
+
+msgid "Cancel and refund in full"
+msgstr "Отменить и вернуть всю сумму"
+
+#, php-format
+msgid "The order export was cut off at 10,000 of %d orders. Narrow the dates to get the rest."
+msgstr "Выгрузка заказов остановлена на 10 000 из %d заказов. Сузьте диапазон дат, чтобы получить остальные."
+
+msgid "Orders are confirmed automatically."
+msgstr "Заказы подтверждаются автоматически."
+
+msgid "Orders now wait for you to accept or decline them."
+msgstr "Теперь заказы ждут, пока вы их примете или отклоните."
+
+msgid "What sudemi buyers pay for shipping, per country. By default the prices this plugin sends from your WooCommerce shipping zones apply. You can instead set your own price per country on sudemi, and choose the countries you deliver to. One charge per parcel, never per item."
+msgstr "Сколько покупатели sudemi платят за доставку в каждую страну. По умолчанию действуют цены, которые этот плагин передаёт из ваших зон доставки WooCommerce. Вместо этого вы можете задать на sudemi свою цену для каждой страны и выбрать страны, куда доставляете. Плата берётся один раз за посылку, а не за каждый товар."
+
+msgid "Prices filled in from your WooCommerce shipping zones. Check them and save; nothing is changed on sudemi until you do."
+msgstr "Цены заполнены из ваших зон доставки WooCommerce. Проверьте их и сохраните; пока вы этого не сделаете, на sudemi ничего не изменится."
+
+msgid "Shipping prices"
+msgstr "Стоимость доставки"
+
+msgid "Use the prices from my WooCommerce shipping zones"
+msgstr "Использовать цены из моих зон доставки WooCommerce"
+
+msgid "Set my own countries and prices on sudemi"
+msgstr "Задать свои страны и цены на sudemi"
+
+msgid "Country"
+msgstr "Страна"
+
+msgid "Deliver there"
+msgstr "Доставлять"
+
+#, php-format
+msgid "Your price on sudemi (%s)"
+msgstr "Ваша цена на sudemi (%s)"
+
+msgid "Prices from your shipping zones"
+msgstr "Цены из ваших зон доставки"
+
+msgid "Buyers pay now"
+msgstr "Покупатели платят сейчас"
+
+msgid "not offered"
+msgstr "не предлагается"
+
+msgid "your price on sudemi"
+msgstr "ваша цена на sudemi"
+
+msgid "from your shop"
+msgstr "из вашего магазина"
+
+msgid "With your own countries and prices: only the ticked countries are offered. A country with an empty price uses the price from your shipping zones."
+msgstr "Со своими странами и ценами: предлагаются только отмеченные страны. Для страны с пустой ценой используется цена из ваших зон доставки."
+
+msgid "Save shipping on sudemi"
+msgstr "Сохранить доставку на sudemi"
+
+msgid "Fill in from my WooCommerce shipping zones"
+msgstr "Заполнить из моих зон доставки WooCommerce"
+
+msgid "Shipping settings saved on sudemi."
+msgstr "Настройки доставки сохранены на sudemi."
+
+msgid "Saved on sudemi. Buyers see these shipping prices from now on."
+msgstr "Сохранено на sudemi. Теперь покупатели видят эту стоимость доставки."
+
+msgid "Payout account"
+msgstr "Счёт для выплат"
+
+msgid "State"
+msgstr "Состояние"
+
+msgid "Act before"
+msgstr "Сделать до"
+
+msgid "When you are paid"
+msgstr "Когда вы получаете деньги"
+
+#, php-format
+msgid "%d days after the buyer received the order (plus 14 days after shipping when delivery is never reported), never while a chargeback is open."
+msgstr "Через %d дн. после получения заказа покупателем (плюс 14 дней после отправки, если доставка так и не подтверждена); никогда, пока открыт чарджбэк."
+
+msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."
+msgstr "Счёт для выплат требует внимания. Он управляется на портале продавца sudemi (Выплаты), а не здесь."
+
+msgid "The payout account is managed on the sudemi seller portal (Payouts)."
+msgstr "Счёт для выплат управляется на портале продавца sudemi (Выплаты)."
+
+msgid "This shop's payouts"
+msgstr "Выплаты этого магазина"
+
+msgid "No payouts yet."
+msgstr "Выплат пока нет."
+
+msgid "Orders"
+msgstr "Заказы"
+
+msgid "Still to come"
+msgstr "Ещё поступит"
+
+msgid "Next payout"
+msgstr "Следующая выплата"
+
+msgid "Manage orders: filters, export, accept, ship, refund"
+msgstr "Управление заказами: фильтры, выгрузка, приём, отправка, возврат"
+
+msgid "sudemi started the order change list over (last 7 days); orders are checked again, nothing is applied twice."
+msgstr "sudemi начал список изменений заказов заново (за последние 7 дней); заказы проверяются снова, ничего не применяется дважды."
+
+#, php-format
+msgid "%d WooCommerce order(s) updated from sudemi."
+msgstr "Обновлено заказов WooCommerce из sudemi: %d."
+
+msgid "An order change from sudemi could not be applied yet; it is read again on the next heartbeat."
+msgstr "Изменение заказа из sudemi пока не удалось применить; оно будет прочитано снова при следующем контрольном сигнале."
+
+msgid "Paid on sudemi; the buyer has been charged. This order can be shipped."
+msgstr "Оплачено на sudemi; деньги с покупателя списаны. Этот заказ можно отправлять."
+
+msgid "Marked shipped on sudemi."
+msgstr "Отмечен на sudemi как отправленный."
+
+msgid "Declined on sudemi: the buyer was not charged. The stock has been restored."
+msgstr "Отклонён на sudemi: с покупателя ничего не списано. Остатки восстановлены."
+
+msgid "Cancelled on sudemi; the buyer has been refunded in full. Do not ship this order. The stock has been restored."
+msgstr "Отменён на sudemi; покупателю возвращена вся сумма. Не отправляйте этот заказ. Остатки восстановлены."
+
+#, php-format
+msgid "Delivered (recorded on sudemi, %s)."
+msgstr "Доставлен (зафиксировано на sudemi, %s)."
+
+#, php-format
+msgid "Tracking on sudemi: %1$s %2$s"
+msgstr "Отслеживание на sudemi: %1$s %2$s"
+
+msgid "Refund made on sudemi"
+msgstr "Возврат выполнен на sudemi"
+
+#, php-format
+msgid "A refund of %s made on sudemi is recorded here. The buyer was paid back by sudemi."
+msgstr "Здесь записан возврат на сумму %s, выполненный на sudemi. Деньги покупателю вернул sudemi."
+
+msgid "Booked from sudemi: this order was accepted on sudemi (on the portal or in a bulk action)."
+msgstr "Оформлен из sudemi: этот заказ был принят на sudemi (на портале или массовым действием)."
+
+#, php-format
+msgid "sudemi order %1$s was accepted on sudemi; booked here as order #%2$s."
+msgstr "Заказ sudemi %1$s принят на sudemi; здесь оформлен как заказ №%2$s."
+
+msgid "sudemi has no such order for this shop."
+msgstr "У sudemi нет такого заказа для этого магазина."
+
+msgid "This order belongs to an earlier sudemi connection of this shop. Leave it as it is; sudemi support can help."
+msgstr "Этот заказ относится к прежнему подключению этого магазина к sudemi. Оставьте его как есть; поддержка sudemi может помочь."
+
+msgid "This order was already answered."
+msgstr "На этот заказ уже ответили."
+
+msgid "The buyer's payment authorisation ran out, so the order can no longer be accepted."
+msgstr "Срок авторизации платежа покупателя истёк, поэтому заказ больше нельзя принять."
+
+msgid "The order is not in a state that allows this (it may have changed in the meantime). Reload the order."
+msgstr "Заказ сейчас в статусе, который этого не позволяет (возможно, он тем временем изменился). Обновите страницу заказа."
+
+msgid "The payment provider refused this. Nothing changed; try again later or contact sudemi support."
+msgstr "Платёжный провайдер отказал. Ничего не изменено; попробуйте позже или обратитесь в поддержку sudemi."
+
+msgid "The amount is not in the currency the buyer paid in."
+msgstr "Сумма указана не в той валюте, в которой платил покупатель."
+
+msgid "This shop is suspended on sudemi: it cannot accept orders. Paid orders can still be shipped and refunded. Contact sudemi support."
+msgstr "Этот магазин приостановлен на sudemi: он не может принимать заказы. Оплаченные заказы по-прежнему можно отправлять и возвращать. Обратитесь в поддержку sudemi."
+
+msgid "Dates must be in the form YYYY-MM-DD."
+msgstr "Даты должны быть в формате YYYY-MM-DD."
+
+msgid "sudemi asked this shop to slow down. Wait a minute and try again."
+msgstr "sudemi попросил магазин снизить частоту запросов. Подождите минуту и попробуйте ещё раз."
+
+msgid "Give a reason. The buyer is shown it."
+msgstr "Укажите причину. Покупатель её увидит."
+
+msgid "Select at least one order."
+msgstr "Выберите хотя бы один заказ."
+
+msgid "Select at most 100 orders at once."
+msgstr "Выберите не более 100 заказов за раз."
+
+msgid "That action is not available."
+msgstr "Это действие недоступно."
+
+msgid "Prices must be numbers of 0 or more."
+msgstr "Цены должны быть числами от 0 и больше."
+
+msgid "Enter an amount greater than 0, or leave it empty to refund the rest."
+msgstr "Введите сумму больше 0 или оставьте поле пустым, чтобы вернуть остаток."
+
+msgid "Could not reach sudemi. Nothing was changed; try again shortly."
+msgstr "Не удалось связаться с sudemi. Ничего не изменено; попробуйте чуть позже."
+
+msgid "sudemi refused this."
+msgstr "sudemi отказал."
+
+msgid "Declined on sudemi. The buyer is not charged."
+msgstr "Отклонён на sudemi. С покупателя ничего не списывается."
+
+msgid "Marked shipped on sudemi. The buyer is told."
+msgstr "Отмечен на sudemi как отправленный. Покупатель уведомлён."
+
+msgid "Marked delivered on sudemi."
+msgstr "Отмечен на sudemi как доставленный."
+
+msgid "Refunded through sudemi. The refund is recorded on the WooCommerce order."
+msgstr "Деньги возвращены через sudemi. Возврат записан в заказе WooCommerce."
+
+msgid "Cancelled on sudemi and refunded in full. The WooCommerce order is cancelled and the stock restored."
+msgstr "Отменён на sudemi, вся сумма возвращена. Заказ WooCommerce отменён, остатки восстановлены."
+
+msgid "The WooCommerce order for this sudemi order is cancelled. Decline it instead."
+msgstr "Заказ WooCommerce для этого заказа sudemi отменён. Вместо этого отклоните заказ."
+
+msgid "The order could not be recorded in WooCommerce (a product in it is no longer in this shop). Decline it instead."
+msgstr "Не удалось записать заказ в WooCommerce (одного из товаров больше нет в этом магазине). Вместо этого отклоните заказ."
+
+msgid "Accepted. The buyer has been charged; the WooCommerce order is ready to ship."
+msgstr "Принят. Деньги с покупателя списаны; заказ WooCommerce готов к отправке."
+
+msgid "Accepted. sudemi takes the money once the other shops in the buyer's payment have answered; do not ship until the order moves to Processing."
+msgstr "Принят. sudemi спишет деньги, когда ответят другие магазины из платежа покупателя; не отправляйте, пока заказ не перейдёт в статус «Обработка»."
+
+msgid "sudemi did not answer. The WooCommerce order stays on hold and the acceptance is sent again on the next heartbeat."
+msgstr "sudemi не ответил. Заказ WooCommerce остаётся на удержании, а подтверждение будет отправлено снова при следующем контрольном сигнале."
+
+#, php-format
+msgid "%1$d done, %2$d refused."
+msgstr "Выполнено: %1$d, отклонено: %2$d."
+
+msgid "Mark delivered on sudemi"
+msgstr "Отметить на sudemi как доставленный"
+
+msgid "sudemi did not record the delivery (the order may not be shipped there yet). Check the order under WooCommerce > sudemi > Orders."
+msgstr "sudemi не зафиксировал доставку (возможно, заказ там ещё не отмечен как отправленный). Проверьте заказ в разделе WooCommerce > sudemi > Заказы."
+
+msgid "Could not reach sudemi to report the delivery. It is sent again on the next heartbeat."
+msgstr "Не удалось связаться с sudemi, чтобы сообщить о доставке. Сообщение будет отправлено снова при следующем контрольном сигнале."
+
+#, php-format
+msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
+msgstr "Заказов, ожидающих вашего ответа в разделе WooCommerce > sudemi > Заказы: %d. Автоматическое подтверждение выключено, поэтому на них нужно ответить вручную до истечения срока."

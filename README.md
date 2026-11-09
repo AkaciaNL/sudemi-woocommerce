@@ -10,6 +10,15 @@ Shop metadata, the category tree, products with their descriptions and specifica
 URLs, prices and stock. Prices and stock go again as they change, from WooCommerce's own save
 hook, so the two agree within seconds rather than within an import cycle.
 
+## Managing sudemi orders (1.3.0)
+
+WooCommerce > sudemi has Orders, Shipping and Payouts tabs that show what the sudemi seller portal
+shows: the order table with filters, CSV export and bulk actions, each order's page with its
+history, money, payout and the actions sudemi allows, the shipping prices buyers pay per country,
+and the shop's payouts. sudemi is the source of truth: actions are sent to sudemi and only its
+answer changes the WooCommerce order. Changes made on the portal reach the WooCommerce orders
+through the heartbeat's change feed (protocol section 4d).
+
 ## What it cannot do
 
 The shop address, the legal name, the country of establishment, the trader status and the VAT

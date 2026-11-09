@@ -80,15 +80,7 @@ final class Sudemi_Heartbeat {
 		// sync that the queue was about to make unnecessary.
 		$drained = Sudemi_Queue::drain();
 
-		$response = Sudemi_Client::post_signed(
-			'/integration/v1/heartbeat',
-			array(
-				'catalogueRevision' => self::revision(),
-				'productCount'      => self::product_count(),
-				'intervalSeconds'   => self::DEFAULT_INTERVAL,
-				'pluginVersion'     => SUDEMI_VERSION,
-			)
-		);
+		$response = Sudemi_Client::post_signed( '/integration/v1/heartbeat', self::beat_body() );
 
 		if ( is_wp_error( $response ) ) {
 			self::remember(
@@ -206,6 +198,11 @@ final class Sudemi_Heartbeat {
 		// copy is replaced (and emptied when the beat carries none).
 		Sudemi_Requests::replace( isset( $body['open_requests'] ) ? $body['open_requests'] : null );
 
+		// Everything else that changed on sudemi (dispatch, delivery, refunds, cancellations,
+		// made on the portal or anywhere else), applied to the WooCommerce orders. With more
+		// waiting, a few more beats right away; the rest follows on the next run.
+		self::follow_changes( $body );
+
 		// sudemi and this shop disagree about what the catalogue is, so something did not arrive.
 		// A full sync is the only answer that does not involve guessing which product it was.
 		if ( ! empty( $body['full_sync_requested'] ) ) {
@@ -216,6 +213,37 @@ final class Sudemi_Heartbeat {
 			// consecutive beats do not pile up.
 			wp_schedule_single_event( time() + 30, Sudemi_Sync::CRON_FULL );
 		}
+	}
+
+	/** The heartbeat's body: the catalogue statement and the change-feed cursor (4d). */
+	private static function beat_body() {
+		return array(
+			'catalogueRevision' => self::revision(),
+			'productCount'      => self::product_count(),
+			'intervalSeconds'   => self::DEFAULT_INTERVAL,
+			'pluginVersion'     => SUDEMI_VERSION,
+			'changesCursor'     => Sudemi_Changes::cursor(),
+		);
+	}
+
+	/**
+	 * Applies the change feed of a heartbeat answer, asks for the rest while sudemi says more are
+	 * waiting (a bounded number of times), and once a day runs the order-table safety net. A core
+	 * without the feed (no changed_orders) leaves everything as in 1.2.
+	 */
+	private static function follow_changes( array $body ) {
+		$more = Sudemi_Changes::handle_beat( $body );
+		if ( null === $more ) {
+			return;
+		}
+		for ( $i = 0; $more && $i < Sudemi_Changes::MAX_EXTRA_BEATS; $i++ ) {
+			$response = Sudemi_Client::post_signed( '/integration/v1/heartbeat', self::beat_body() );
+			if ( is_wp_error( $response ) || 200 !== (int) $response['status'] ) {
+				break;
+			}
+			$more = Sudemi_Changes::handle_beat( $response['body'] );
+		}
+		Sudemi_Changes::safety_net();
 	}
 
 	/**

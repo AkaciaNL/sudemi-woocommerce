@@ -979,3 +979,576 @@ msgstr "אצל sudemi עדיין רשום %1$s לחנות שלך, אבל החנ�
 
 msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
 msgstr "קונים משלמים במטבע שלך. sudemi משלם לך באירו: עמלת המרת המטבע של ספק התשלומים (כ-2%) מנוכה מהתשלום שלך, כפי שכתוב בתנאים."
+
+msgid "Waiting for you"
+msgstr "ממתינה לך"
+
+msgid "Accepted, waiting for payment"
+msgstr "התקבלה, ממתינה לתשלום"
+
+msgid "Paid, ready to ship"
+msgstr "שולמה, מוכנה למשלוח"
+
+msgid "Declined"
+msgstr "נדחתה"
+
+msgid "Cancelled"
+msgstr "בוטלה"
+
+msgid "Refunded"
+msgstr "בוצע החזר"
+
+msgid "Nothing charged"
+msgstr "לא בוצע חיוב"
+
+msgid "Due once shipped"
+msgstr "לתשלום לאחר המשלוח"
+
+msgid "Scheduled"
+msgstr "מתוזמן"
+
+msgid "On its way to you"
+msgstr "בדרך אליך"
+
+msgid "Held (chargeback)"
+msgstr "מעוכב (הכחשת עסקה)"
+
+msgid "Partly paid out"
+msgstr "שולם לך חלקית"
+
+msgid "Paid out"
+msgstr "שולם לך"
+
+msgid "Nothing due (refunded)"
+msgstr "אין סכום לתשלום (בוצע החזר)"
+
+msgid "Placed by the buyer"
+msgstr "בוצעה על ידי הקונה"
+
+msgid "Accepted"
+msgstr "התקבלה"
+
+msgid "Paid"
+msgstr "שולמה"
+
+msgid "Refund"
+msgstr "החזר"
+
+msgid "Buyer asked to return or cancel"
+msgstr "הקונה ביקש להחזיר או לבטל"
+
+msgid "Request answered"
+msgstr "ניתנה תשובה לבקשה"
+
+msgid "Not set up yet"
+msgstr "עדיין לא הוגדר"
+
+msgid "Details missing"
+msgstr "חסרים פרטים"
+
+msgid "Under review"
+msgstr "בבדיקה"
+
+msgid "Active"
+msgstr "פעיל"
+
+msgid "Action required"
+msgstr "נדרשת פעולה"
+
+msgid "This is available once this shop is connected to sudemi."
+msgstr "זה זמין ברגע שהחנות הזו מחוברת ל-sudemi."
+
+msgid "All"
+msgstr "הכול"
+
+msgid "No orders match."
+msgstr "אין הזמנות תואמות."
+
+msgid "Select"
+msgstr "בחירה"
+
+msgid "Ship to"
+msgstr "משלוח אל"
+
+msgid "Total"
+msgstr "סה\"כ"
+
+msgid "Payout"
+msgstr "תשלום למוכר"
+
+msgid "Tracking"
+msgstr "מעקב"
+
+msgid "WooCommerce order"
+msgstr "הזמנת WooCommerce"
+
+msgid "With the selected orders"
+msgstr "עם ההזמנות שנבחרו"
+
+msgid "Choose an action"
+msgstr "בחרו פעולה"
+
+msgid "Accept"
+msgstr "אישור"
+
+msgid "Decline"
+msgstr "דחייה"
+
+msgid "Mark shipped"
+msgstr "סימון כנשלחה"
+
+msgid "Mark delivered"
+msgstr "סימון כנמסרה"
+
+msgid "Reason for declining (shown to the buyers)"
+msgstr "סיבת הדחייה (מוצגת לקונים)"
+
+msgid "Carrier"
+msgstr "חברת המשלוחים"
+
+msgid "Apply"
+msgstr "החלה"
+
+msgid "Refunds and cancellations are made one order at a time, on the order's own page: each moves a different amount of money."
+msgstr "החזרים וביטולים מתבצעים להזמנה אחת בכל פעם, בדף של ההזמנה עצמה: כל אחד מהם מעביר סכום כסף שונה."
+
+#, php-format
+msgid "Orders %1$d to %2$d of %3$d"
+msgstr "הזמנות %1$d עד %2$d מתוך %3$d"
+
+msgid "Previous"
+msgstr "הקודם"
+
+msgid "Next"
+msgstr "הבא"
+
+#, php-format
+msgid "answer by %s"
+msgstr "לענות עד %s"
+
+#, php-format
+msgid "refunded %s"
+msgstr "הוחזרו %s"
+
+msgid "Tracking code"
+msgstr "קוד מעקב"
+
+msgid "From"
+msgstr "מתאריך"
+
+msgid "To"
+msgstr "עד תאריך"
+
+msgid "Search"
+msgstr "חיפוש"
+
+msgid "Order number or product"
+msgstr "מספר הזמנה או מוצר"
+
+msgid "Sort by"
+msgstr "מיון לפי"
+
+msgid "Date"
+msgstr "תאריך"
+
+msgid "Newest or highest first"
+msgstr "החדש או הגבוה ביותר קודם"
+
+msgid "Oldest or lowest first"
+msgstr "הישן או הנמוך ביותר קודם"
+
+msgid "Filter"
+msgstr "סינון"
+
+msgid "Language of the file"
+msgstr "שפת הקובץ"
+
+msgid "Numbers"
+msgstr "מספרים"
+
+msgid "1234.50, comma separated"
+msgstr "1234.50, מופרד בפסיקים"
+
+msgid "1234,50, semicolon separated"
+msgstr "1234,50, מופרד בנקודה ופסיק"
+
+msgid "Download these orders (CSV)"
+msgstr "הורדת ההזמנות האלה (CSV)"
+
+msgid "Every order that matches the filters, up to 10,000, without buyer names or addresses."
+msgstr "כל ההזמנות שתואמות את המסננים, עד 10,000, ללא שמות או כתובות של קונים."
+
+msgid "Confirm orders automatically when the items are in stock"
+msgstr "אישור הזמנות אוטומטי כשהפריטים במלאי"
+
+msgid "Save"
+msgstr "שמירה"
+
+msgid "On: every five minutes this shop accepts orders whose items are in stock and declines the others."
+msgstr "מופעל: כל חמש דקות החנות הזו מאשרת הזמנות שהפריטים שלהן במלאי ודוחה את האחרות."
+
+msgid "Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing."
+msgstr "כבוי: ההזמנות ממתינות לכם. אשרו או דחו כל אחת מהן כאן לפני התאריך המוצג; ללא תשובה הקונה משוחרר ולא מחויב בכלום."
+
+msgid "Back to the orders"
+msgstr "חזרה להזמנות"
+
+#, php-format
+msgid "Order %1$s: %2$s"
+msgstr "הזמנה %1$s: %2$s"
+
+#, php-format
+msgid "Waiting for your answer. The buyer is not charged until you accept. Answer by %s; without an answer the buyer is released."
+msgstr "ממתינה לתשובתכם. הקונה לא מחויב עד שתאשרו. ענו עד %s; ללא תשובה הקונה משוחרר."
+
+#, php-format
+msgid "Stock check: %s."
+msgstr "בדיקת מלאי: %s."
+
+msgid "sudemi order"
+msgstr "הזמנת sudemi"
+
+msgid "Placed"
+msgstr "תאריך ההזמנה"
+
+msgid "none yet (it is created when the order is accepted)"
+msgstr "עדיין אין (היא נוצרת כשההזמנה מאושרת)"
+
+msgid "Buyer may withdraw until"
+msgstr "הקונה רשאי לבטל עד"
+
+msgid "Reason declined"
+msgstr "סיבת הדחייה"
+
+msgid "Items"
+msgstr "פריטים"
+
+msgid "Product"
+msgstr "מוצר"
+
+msgid "Quantity"
+msgstr "כמות"
+
+msgid "Price"
+msgstr "מחיר"
+
+msgid "Amount"
+msgstr "סכום"
+
+msgid "No right of withdrawal"
+msgstr "אין זכות ביטול"
+
+msgid "Money"
+msgstr "כסף"
+
+msgid "Goods"
+msgstr "סחורה"
+
+msgid "Shipping"
+msgstr "משלוח"
+
+msgid "Buyer paid"
+msgstr "הקונה שילם"
+
+msgid "sudemi commission"
+msgstr "עמלת sudemi"
+
+msgid "Refunded to the buyer"
+msgstr "הוחזר לקונה"
+
+msgid "Payout expected"
+msgstr "תשלום צפוי למוכר"
+
+msgid "Payout due"
+msgstr "תשלום למוכר שמגיע לך"
+
+msgid "The buyer asked to return this order"
+msgstr "הקונה ביקש להחזיר את ההזמנה הזו"
+
+msgid "History"
+msgstr "היסטוריה"
+
+msgid "Actions"
+msgstr "פעולות"
+
+msgid "Accept: the buyer is charged and you ship the order."
+msgstr "אישור: הקונה מחויב ואתם שולחים את ההזמנה."
+
+msgid "Accept the order"
+msgstr "אישור ההזמנה"
+
+msgid "Reason for declining (shown to the buyer)"
+msgstr "סיבת הדחייה (מוצגת לקונה)"
+
+msgid "Decline the order"
+msgstr "דחיית ההזמנה"
+
+#, php-format
+msgid "Amount to refund (%s)"
+msgstr "סכום להחזר (%s)"
+
+#, php-format
+msgid "Leave empty to refund everything not refunded yet (%s)."
+msgstr "השאירו ריק כדי להחזיר את כל מה שעדיין לא הוחזר (%s)."
+
+msgid "Reason"
+msgstr "סיבה"
+
+msgid "Refund through sudemi"
+msgstr "החזר דרך sudemi"
+
+msgid "Cancel: you cannot fulfil this paid order. The buyer is refunded in full."
+msgstr "ביטול: אין באפשרותכם לספק את ההזמנה הזו ששולמה. הקונה מקבל החזר מלא."
+
+msgid "Cancel and refund in full"
+msgstr "ביטול והחזר מלא"
+
+#, php-format
+msgid "The order export was cut off at 10,000 of %d orders. Narrow the dates to get the rest."
+msgstr "ייצוא ההזמנות נעצר ב-10,000 מתוך %d הזמנות. צמצמו את טווח התאריכים כדי לקבל את השאר."
+
+msgid "Orders are confirmed automatically."
+msgstr "ההזמנות מאושרות אוטומטית."
+
+msgid "Orders now wait for you to accept or decline them."
+msgstr "ההזמנות ממתינות עכשיו שתאשרו או תדחו אותן."
+
+msgid "What sudemi buyers pay for shipping, per country. By default the prices this plugin sends from your WooCommerce shipping zones apply. You can instead set your own price per country on sudemi, and choose the countries you deliver to. One charge per parcel, never per item."
+msgstr "כמה קונים של sudemi משלמים על משלוח, לכל מדינה. כברירת מחדל חלים המחירים שהתוסף הזה שולח מאזורי המשלוח של WooCommerce. במקום זאת אפשר לקבוע ב-sudemi מחיר משלכם לכל מדינה, ולבחור לאילו מדינות אתם שולחים. חיוב אחד לכל חבילה, אף פעם לא לכל פריט."
+
+msgid "Prices filled in from your WooCommerce shipping zones. Check them and save; nothing is changed on sudemi until you do."
+msgstr "המחירים מולאו מאזורי המשלוח של WooCommerce. בדקו אותם ושמרו; שום דבר לא משתנה ב-sudemi עד שתעשו זאת."
+
+msgid "Shipping prices"
+msgstr "מחירי משלוח"
+
+msgid "Use the prices from my WooCommerce shipping zones"
+msgstr "שימוש במחירים מאזורי המשלוח שלי ב-WooCommerce"
+
+msgid "Set my own countries and prices on sudemi"
+msgstr "הגדרת מדינות ומחירים משלי ב-sudemi"
+
+msgid "Country"
+msgstr "מדינה"
+
+msgid "Deliver there"
+msgstr "משלוח לשם"
+
+#, php-format
+msgid "Your price on sudemi (%s)"
+msgstr "המחיר שלכם ב-sudemi (%s)"
+
+msgid "Prices from your shipping zones"
+msgstr "מחירים מאזורי המשלוח שלכם"
+
+msgid "Buyers pay now"
+msgstr "הקונים משלמים עכשיו"
+
+msgid "not offered"
+msgstr "לא מוצע"
+
+msgid "your price on sudemi"
+msgstr "המחיר שלכם ב-sudemi"
+
+msgid "from your shop"
+msgstr "מהחנות שלכם"
+
+msgid "With your own countries and prices: only the ticked countries are offered. A country with an empty price uses the price from your shipping zones."
+msgstr "עם מדינות ומחירים משלכם: רק המדינות המסומנות מוצעות. מדינה עם מחיר ריק משתמשת במחיר מאזורי המשלוח שלכם."
+
+msgid "Save shipping on sudemi"
+msgstr "שמירת המשלוח ב-sudemi"
+
+msgid "Fill in from my WooCommerce shipping zones"
+msgstr "מילוי מאזורי המשלוח שלי ב-WooCommerce"
+
+msgid "Shipping settings saved on sudemi."
+msgstr "הגדרות המשלוח נשמרו ב-sudemi."
+
+msgid "Saved on sudemi. Buyers see these shipping prices from now on."
+msgstr "נשמר ב-sudemi. מעכשיו הקונים רואים את מחירי המשלוח האלה."
+
+msgid "Payout account"
+msgstr "חשבון לתשלומים למוכר"
+
+msgid "State"
+msgstr "מצב"
+
+msgid "Act before"
+msgstr "לפעול לפני"
+
+msgid "When you are paid"
+msgstr "מתי מקבלים תשלום"
+
+#, php-format
+msgid "%d days after the buyer received the order (plus 14 days after shipping when delivery is never reported), never while a chargeback is open."
+msgstr "%d ימים אחרי שהקונה קיבל את ההזמנה (ועוד 14 ימים אחרי המשלוח כשהמסירה אף פעם לא מדווחת), ואף פעם לא כשיש הכחשת עסקה פתוחה."
+
+msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."
+msgstr "החשבון לתשלומים למוכר דורש טיפול. הוא מנוהל בפורטל המוכרים של sudemi (תשלומים למוכר), לא כאן."
+
+msgid "The payout account is managed on the sudemi seller portal (Payouts)."
+msgstr "החשבון לתשלומים למוכר מנוהל בפורטל המוכרים של sudemi (תשלומים למוכר)."
+
+msgid "This shop's payouts"
+msgstr "התשלומים למוכר של החנות הזו"
+
+msgid "No payouts yet."
+msgstr "עדיין אין תשלומים למוכר."
+
+msgid "Orders"
+msgstr "הזמנות"
+
+msgid "Still to come"
+msgstr "עוד צפוי"
+
+msgid "Next payout"
+msgstr "התשלום הבא למוכר"
+
+msgid "Manage orders: filters, export, accept, ship, refund"
+msgstr "ניהול הזמנות: סינון, ייצוא, אישור, משלוח, החזר"
+
+msgid "sudemi started the order change list over (last 7 days); orders are checked again, nothing is applied twice."
+msgstr "sudemi התחיל מחדש את רשימת שינויי ההזמנות (7 הימים האחרונים); ההזמנות נבדקות שוב, ושום דבר לא מוחל פעמיים."
+
+#, php-format
+msgid "%d WooCommerce order(s) updated from sudemi."
+msgstr "%d הזמנות WooCommerce עודכנו מ-sudemi."
+
+msgid "An order change from sudemi could not be applied yet; it is read again on the next heartbeat."
+msgstr "שינוי בהזמנה מ-sudemi עדיין לא הוחל; הוא ייקרא שוב בפעימה הבאה."
+
+msgid "Paid on sudemi; the buyer has been charged. This order can be shipped."
+msgstr "שולמה ב-sudemi; הקונה חויב. אפשר לשלוח את ההזמנה הזו."
+
+msgid "Marked shipped on sudemi."
+msgstr "סומנה כנשלחה ב-sudemi."
+
+msgid "Declined on sudemi: the buyer was not charged. The stock has been restored."
+msgstr "נדחתה ב-sudemi: הקונה לא חויב. המלאי שוחזר."
+
+msgid "Cancelled on sudemi; the buyer has been refunded in full. Do not ship this order. The stock has been restored."
+msgstr "בוטלה ב-sudemi; הקונה קיבל החזר מלא. אל תשלחו הזמנה זו. המלאי שוחזר."
+
+#, php-format
+msgid "Delivered (recorded on sudemi, %s)."
+msgstr "נמסרה (נרשם ב-sudemi, %s)."
+
+#, php-format
+msgid "Tracking on sudemi: %1$s %2$s"
+msgstr "מעקב ב-sudemi: %1$s %2$s"
+
+msgid "Refund made on sudemi"
+msgstr "החזר שבוצע ב-sudemi"
+
+#, php-format
+msgid "A refund of %s made on sudemi is recorded here. The buyer was paid back by sudemi."
+msgstr "החזר של %s שבוצע ב-sudemi נרשם כאן. sudemi החזיר לקונה את הכסף."
+
+msgid "Booked from sudemi: this order was accepted on sudemi (on the portal or in a bulk action)."
+msgstr "נרשמה מ-sudemi: ההזמנה הזו אושרה ב-sudemi (בפורטל או בפעולה קבוצתית)."
+
+#, php-format
+msgid "sudemi order %1$s was accepted on sudemi; booked here as order #%2$s."
+msgstr "הזמנת sudemi %1$s אושרה ב-sudemi; נרשמה כאן כהזמנה #%2$s."
+
+msgid "sudemi has no such order for this shop."
+msgstr "ל-sudemi אין הזמנה כזו עבור החנות הזו."
+
+msgid "This order belongs to an earlier sudemi connection of this shop. Leave it as it is; sudemi support can help."
+msgstr "ההזמנה הזו שייכת לחיבור קודם של החנות הזו ל-sudemi. השאירו אותה כמו שהיא; התמיכה של sudemi יכולה לעזור."
+
+msgid "This order was already answered."
+msgstr "כבר ניתנה תשובה להזמנה הזו."
+
+msgid "The buyer's payment authorisation ran out, so the order can no longer be accepted."
+msgstr "תוקף אישור התשלום של הקונה פג, ולכן אי אפשר עוד לאשר את ההזמנה."
+
+msgid "The order is not in a state that allows this (it may have changed in the meantime). Reload the order."
+msgstr "מצב ההזמנה לא מאפשר זאת (ייתכן שהוא השתנה בינתיים). טענו מחדש את ההזמנה."
+
+msgid "The payment provider refused this. Nothing changed; try again later or contact sudemi support."
+msgstr "ספק התשלומים סירב לכך. שום דבר לא השתנה; נסו שוב מאוחר יותר או פנו לתמיכה של sudemi."
+
+msgid "The amount is not in the currency the buyer paid in."
+msgstr "הסכום אינו במטבע שבו הקונה שילם."
+
+msgid "This shop is suspended on sudemi: it cannot accept orders. Paid orders can still be shipped and refunded. Contact sudemi support."
+msgstr "החנות הזו מושעית ב-sudemi: היא לא יכולה לאשר הזמנות. עדיין אפשר לשלוח הזמנות ששולמו ולבצע עבורן החזר. פנו לתמיכה של sudemi."
+
+msgid "Dates must be in the form YYYY-MM-DD."
+msgstr "התאריכים חייבים להיות בפורמט YYYY-MM-DD."
+
+msgid "sudemi asked this shop to slow down. Wait a minute and try again."
+msgstr "sudemi ביקש מהחנות הזו להאט. המתינו דקה ונסו שוב."
+
+msgid "Give a reason. The buyer is shown it."
+msgstr "ציינו סיבה. הקונה יראה אותה."
+
+msgid "Select at least one order."
+msgstr "בחרו לפחות הזמנה אחת."
+
+msgid "Select at most 100 orders at once."
+msgstr "בחרו עד 100 הזמנות בכל פעם."
+
+msgid "That action is not available."
+msgstr "הפעולה הזו אינה זמינה."
+
+msgid "Prices must be numbers of 0 or more."
+msgstr "המחירים חייבים להיות מספרים של 0 ומעלה."
+
+msgid "Enter an amount greater than 0, or leave it empty to refund the rest."
+msgstr "הזינו סכום גדול מ-0, או השאירו ריק כדי להחזיר את היתרה."
+
+msgid "Could not reach sudemi. Nothing was changed; try again shortly."
+msgstr "לא ניתן היה להגיע ל-sudemi. שום דבר לא השתנה; נסו שוב בעוד רגע."
+
+msgid "sudemi refused this."
+msgstr "sudemi סירב לכך."
+
+msgid "Declined on sudemi. The buyer is not charged."
+msgstr "נדחתה ב-sudemi. הקונה לא מחויב."
+
+msgid "Marked shipped on sudemi. The buyer is told."
+msgstr "סומנה כנשלחה ב-sudemi. הקונה מקבל הודעה."
+
+msgid "Marked delivered on sudemi."
+msgstr "סומנה כנמסרה ב-sudemi."
+
+msgid "Refunded through sudemi. The refund is recorded on the WooCommerce order."
+msgstr "בוצע החזר דרך sudemi. ההחזר נרשם בהזמנת WooCommerce."
+
+msgid "Cancelled on sudemi and refunded in full. The WooCommerce order is cancelled and the stock restored."
+msgstr "בוטלה ב-sudemi והקונה קיבל החזר מלא. הזמנת WooCommerce בוטלה והמלאי שוחזר."
+
+msgid "The WooCommerce order for this sudemi order is cancelled. Decline it instead."
+msgstr "הזמנת WooCommerce של הזמנת sudemi זו בוטלה. דחו אותה במקום זאת."
+
+msgid "The order could not be recorded in WooCommerce (a product in it is no longer in this shop). Decline it instead."
+msgstr "לא ניתן היה לרשום את ההזמנה ב-WooCommerce (אחד המוצרים שבה כבר לא נמצא בחנות הזו). דחו אותה במקום זאת."
+
+msgid "Accepted. The buyer has been charged; the WooCommerce order is ready to ship."
+msgstr "התקבלה. הקונה חויב; הזמנת WooCommerce מוכנה למשלוח."
+
+msgid "Accepted. sudemi takes the money once the other shops in the buyer's payment have answered; do not ship until the order moves to Processing."
+msgstr "התקבלה. sudemi גובה את הכסף לאחר שהחנויות האחרות בתשלום של הקונה ענו; אל תשלחו עד שההזמנה תעבור לסטטוס \"בטיפול\"."
+
+msgid "sudemi did not answer. The WooCommerce order stays on hold and the acceptance is sent again on the next heartbeat."
+msgstr "sudemi לא ענה. הזמנת WooCommerce נשארת \"בהמתנה\" והאישור יישלח שוב בפעימה הבאה."
+
+#, php-format
+msgid "%1$d done, %2$d refused."
+msgstr "%1$d בוצעו, %2$d נדחו."
+
+msgid "Mark delivered on sudemi"
+msgstr "סימון כנמסרה ב-sudemi"
+
+msgid "sudemi did not record the delivery (the order may not be shipped there yet). Check the order under WooCommerce > sudemi > Orders."
+msgstr "sudemi לא רשם את המסירה (ייתכן שההזמנה עוד לא סומנה שם כנשלחה). בדקו את ההזמנה תחת WooCommerce > sudemi > הזמנות."
+
+msgid "Could not reach sudemi to report the delivery. It is sent again on the next heartbeat."
+msgstr "לא ניתן היה להגיע ל-sudemi כדי לדווח על המסירה. הדיווח יישלח שוב בפעימה הבאה."
+
+#, php-format
+msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
+msgstr "%d הזמנות ממתינות לתשובתכם תחת WooCommerce > sudemi > הזמנות. האישור האוטומטי כבוי, ולכן יש לענות עליהן ידנית לפני שחלון הזמן שלהן נסגר."

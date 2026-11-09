@@ -979,3 +979,576 @@ msgstr "sudemi'de mağazanız için hâlâ %1$s kayıtlı, ama mağazanız %2$s 
 
 msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
 msgstr "Alıcılar sizin para biriminizle öder. sudemi size euro olarak ödeme yapar: ödeme sağlayıcısının döviz çevirme ücreti (yaklaşık %2) koşullarda yazdığı gibi ödemenizden düşülür."
+
+msgid "Waiting for you"
+msgstr "Sizi bekliyor"
+
+msgid "Accepted, waiting for payment"
+msgstr "Kabul edildi, ödeme bekleniyor"
+
+msgid "Paid, ready to ship"
+msgstr "Ödendi, kargoya hazır"
+
+msgid "Declined"
+msgstr "Reddedildi"
+
+msgid "Cancelled"
+msgstr "İptal edildi"
+
+msgid "Refunded"
+msgstr "İade edildi"
+
+msgid "Nothing charged"
+msgstr "Ücret alınmadı"
+
+msgid "Due once shipped"
+msgstr "Kargolandıktan sonra ödenecek"
+
+msgid "Scheduled"
+msgstr "Planlandı"
+
+msgid "On its way to you"
+msgstr "Size gönderiliyor"
+
+msgid "Held (chargeback)"
+msgstr "Bekletiliyor (ters ibraz)"
+
+msgid "Partly paid out"
+msgstr "Kısmen ödendi"
+
+msgid "Paid out"
+msgstr "Size ödendi"
+
+msgid "Nothing due (refunded)"
+msgstr "Ödenecek tutar yok (iade edildi)"
+
+msgid "Placed by the buyer"
+msgstr "Alıcı tarafından verildi"
+
+msgid "Accepted"
+msgstr "Kabul edildi"
+
+msgid "Paid"
+msgstr "Ödendi"
+
+msgid "Refund"
+msgstr "İade"
+
+msgid "Buyer asked to return or cancel"
+msgstr "Alıcı iade veya iptal istedi"
+
+msgid "Request answered"
+msgstr "Talep yanıtlandı"
+
+msgid "Not set up yet"
+msgstr "Henüz kurulmadı"
+
+msgid "Details missing"
+msgstr "Bilgiler eksik"
+
+msgid "Under review"
+msgstr "İnceleniyor"
+
+msgid "Active"
+msgstr "Etkin"
+
+msgid "Action required"
+msgstr "İşlem gerekli"
+
+msgid "This is available once this shop is connected to sudemi."
+msgstr "Bu, mağaza sudemi'ye bağlandığında kullanılabilir."
+
+msgid "All"
+msgstr "Tümü"
+
+msgid "No orders match."
+msgstr "Eşleşen sipariş yok."
+
+msgid "Select"
+msgstr "Seç"
+
+msgid "Ship to"
+msgstr "Teslimat yeri"
+
+msgid "Total"
+msgstr "Toplam"
+
+msgid "Payout"
+msgstr "Satıcı ödemesi"
+
+msgid "Tracking"
+msgstr "Kargo takibi"
+
+msgid "WooCommerce order"
+msgstr "WooCommerce siparişi"
+
+msgid "With the selected orders"
+msgstr "Seçili siparişlerle"
+
+msgid "Choose an action"
+msgstr "Bir işlem seçin"
+
+msgid "Accept"
+msgstr "Kabul et"
+
+msgid "Decline"
+msgstr "Reddet"
+
+msgid "Mark shipped"
+msgstr "Kargolandı olarak işaretle"
+
+msgid "Mark delivered"
+msgstr "Teslim edildi olarak işaretle"
+
+msgid "Reason for declining (shown to the buyers)"
+msgstr "Ret nedeni (alıcılara gösterilir)"
+
+msgid "Carrier"
+msgstr "Kargo firması"
+
+msgid "Apply"
+msgstr "Uygula"
+
+msgid "Refunds and cancellations are made one order at a time, on the order's own page: each moves a different amount of money."
+msgstr "İadeler ve iptaller, siparişin kendi sayfasında tek tek yapılır: her biri farklı bir tutarı etkiler."
+
+#, php-format
+msgid "Orders %1$d to %2$d of %3$d"
+msgstr "%3$d siparişten %1$d - %2$d arası"
+
+msgid "Previous"
+msgstr "Önceki"
+
+msgid "Next"
+msgstr "Sonraki"
+
+#, php-format
+msgid "answer by %s"
+msgstr "son yanıt: %s"
+
+#, php-format
+msgid "refunded %s"
+msgstr "iade edilen: %s"
+
+msgid "Tracking code"
+msgstr "Takip kodu"
+
+msgid "From"
+msgstr "Başlangıç"
+
+msgid "To"
+msgstr "Bitiş"
+
+msgid "Search"
+msgstr "Ara"
+
+msgid "Order number or product"
+msgstr "Sipariş numarası veya ürün"
+
+msgid "Sort by"
+msgstr "Sırala"
+
+msgid "Date"
+msgstr "Tarih"
+
+msgid "Newest or highest first"
+msgstr "Önce en yeni veya en yüksek"
+
+msgid "Oldest or lowest first"
+msgstr "Önce en eski veya en düşük"
+
+msgid "Filter"
+msgstr "Filtrele"
+
+msgid "Language of the file"
+msgstr "Dosyanın dili"
+
+msgid "Numbers"
+msgstr "Sayılar"
+
+msgid "1234.50, comma separated"
+msgstr "1234.50, virgülle ayrılmış"
+
+msgid "1234,50, semicolon separated"
+msgstr "1234,50, noktalı virgülle ayrılmış"
+
+msgid "Download these orders (CSV)"
+msgstr "Bu siparişleri indir (CSV)"
+
+msgid "Every order that matches the filters, up to 10,000, without buyer names or addresses."
+msgstr "Filtrelere uyan tüm siparişler, en fazla 10.000 adet, alıcı adları ve adresleri olmadan."
+
+msgid "Confirm orders automatically when the items are in stock"
+msgstr "Ürünler stoktayken siparişleri otomatik onayla"
+
+msgid "Save"
+msgstr "Kaydet"
+
+msgid "On: every five minutes this shop accepts orders whose items are in stock and declines the others."
+msgstr "Açık: bu mağaza her beş dakikada bir, ürünleri stokta olan siparişleri kabul eder, diğerlerini reddeder."
+
+msgid "Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing."
+msgstr "Kapalı: siparişler sizi bekler. Her birini gösterilen tarihten önce burada kabul edin veya reddedin; yanıt verilmezse alıcının ödemesi serbest bırakılır ve hiçbir ücret alınmaz."
+
+msgid "Back to the orders"
+msgstr "Siparişlere dön"
+
+#, php-format
+msgid "Order %1$s: %2$s"
+msgstr "Sipariş %1$s: %2$s"
+
+#, php-format
+msgid "Waiting for your answer. The buyer is not charged until you accept. Answer by %s; without an answer the buyer is released."
+msgstr "Yanıtınız bekleniyor. Siz kabul edene kadar alıcıdan ücret alınmaz. %s tarihine kadar yanıt verin; yanıt verilmezse alıcının ödemesi serbest bırakılır."
+
+#, php-format
+msgid "Stock check: %s."
+msgstr "Stok kontrolü: %s."
+
+msgid "sudemi order"
+msgstr "sudemi siparişi"
+
+msgid "Placed"
+msgstr "Verilme tarihi"
+
+msgid "none yet (it is created when the order is accepted)"
+msgstr "henüz yok (sipariş kabul edildiğinde oluşturulur)"
+
+msgid "Buyer may withdraw until"
+msgstr "Alıcının cayabileceği son tarih"
+
+msgid "Reason declined"
+msgstr "Ret nedeni"
+
+msgid "Items"
+msgstr "Ürünler"
+
+msgid "Product"
+msgstr "Ürün"
+
+msgid "Quantity"
+msgstr "Adet"
+
+msgid "Price"
+msgstr "Fiyat"
+
+msgid "Amount"
+msgstr "Tutar"
+
+msgid "No right of withdrawal"
+msgstr "Cayma hakkı yok"
+
+msgid "Money"
+msgstr "Para"
+
+msgid "Goods"
+msgstr "Ürünler"
+
+msgid "Shipping"
+msgstr "Kargo"
+
+msgid "Buyer paid"
+msgstr "Alıcının ödediği"
+
+msgid "sudemi commission"
+msgstr "sudemi komisyonu"
+
+msgid "Refunded to the buyer"
+msgstr "Alıcıya iade edilen"
+
+msgid "Payout expected"
+msgstr "Beklenen satıcı ödemesi"
+
+msgid "Payout due"
+msgstr "Satıcı ödemesi vadesi"
+
+msgid "The buyer asked to return this order"
+msgstr "Alıcı bu siparişi iade etmek istedi"
+
+msgid "History"
+msgstr "Geçmiş"
+
+msgid "Actions"
+msgstr "İşlemler"
+
+msgid "Accept: the buyer is charged and you ship the order."
+msgstr "Kabul et: alıcıdan ücret alınır ve siparişi siz kargolarsınız."
+
+msgid "Accept the order"
+msgstr "Siparişi kabul et"
+
+msgid "Reason for declining (shown to the buyer)"
+msgstr "Ret nedeni (alıcıya gösterilir)"
+
+msgid "Decline the order"
+msgstr "Siparişi reddet"
+
+#, php-format
+msgid "Amount to refund (%s)"
+msgstr "İade edilecek tutar (%s)"
+
+#, php-format
+msgid "Leave empty to refund everything not refunded yet (%s)."
+msgstr "Henüz iade edilmemiş tutarın tamamını iade etmek için boş bırakın (%s)."
+
+msgid "Reason"
+msgstr "Neden"
+
+msgid "Refund through sudemi"
+msgstr "sudemi üzerinden iade et"
+
+msgid "Cancel: you cannot fulfil this paid order. The buyer is refunded in full."
+msgstr "İptal: bu ödenmiş siparişi yerine getiremiyorsunuz. Alıcıya tutarın tamamı iade edilir."
+
+msgid "Cancel and refund in full"
+msgstr "İptal et ve tamamını iade et"
+
+#, php-format
+msgid "The order export was cut off at 10,000 of %d orders. Narrow the dates to get the rest."
+msgstr "Sipariş dışa aktarımı %d siparişin 10.000'inde kesildi. Geri kalanı için tarih aralığını daraltın."
+
+msgid "Orders are confirmed automatically."
+msgstr "Siparişler otomatik onaylanıyor."
+
+msgid "Orders now wait for you to accept or decline them."
+msgstr "Siparişler artık kabul etmenizi veya reddetmenizi bekliyor."
+
+msgid "What sudemi buyers pay for shipping, per country. By default the prices this plugin sends from your WooCommerce shipping zones apply. You can instead set your own price per country on sudemi, and choose the countries you deliver to. One charge per parcel, never per item."
+msgstr "sudemi alıcılarının ülkeye göre ödediği kargo ücreti. Varsayılan olarak bu eklentinin WooCommerce kargo bölgelerinizden gönderdiği fiyatlar geçerlidir. Bunun yerine sudemi'de her ülke için kendi fiyatınızı belirleyebilir ve teslimat yaptığınız ülkeleri seçebilirsiniz. Ücret ürün başına değil, her zaman paket başına bir kez alınır."
+
+msgid "Prices filled in from your WooCommerce shipping zones. Check them and save; nothing is changed on sudemi until you do."
+msgstr "Fiyatlar WooCommerce kargo bölgelerinizden dolduruldu. Kontrol edip kaydedin; siz kaydedene kadar sudemi'de hiçbir şey değişmez."
+
+msgid "Shipping prices"
+msgstr "Kargo ücretleri"
+
+msgid "Use the prices from my WooCommerce shipping zones"
+msgstr "WooCommerce kargo bölgelerimdeki fiyatları kullan"
+
+msgid "Set my own countries and prices on sudemi"
+msgstr "Kendi ülkelerimi ve fiyatlarımı sudemi'de belirle"
+
+msgid "Country"
+msgstr "Ülke"
+
+msgid "Deliver there"
+msgstr "Teslimat yap"
+
+#, php-format
+msgid "Your price on sudemi (%s)"
+msgstr "sudemi'deki fiyatınız (%s)"
+
+msgid "Prices from your shipping zones"
+msgstr "Kargo bölgelerinizdeki fiyatlar"
+
+msgid "Buyers pay now"
+msgstr "Alıcıların şu an ödediği"
+
+msgid "not offered"
+msgstr "sunulmuyor"
+
+msgid "your price on sudemi"
+msgstr "sudemi'deki fiyatınız"
+
+msgid "from your shop"
+msgstr "mağazanızdan"
+
+msgid "With your own countries and prices: only the ticked countries are offered. A country with an empty price uses the price from your shipping zones."
+msgstr "Kendi ülke ve fiyatlarınızla: yalnızca işaretli ülkeler sunulur. Fiyatı boş bırakılan bir ülke, kargo bölgelerinizdeki fiyatı kullanır."
+
+msgid "Save shipping on sudemi"
+msgstr "Kargo ayarlarını sudemi'de kaydet"
+
+msgid "Fill in from my WooCommerce shipping zones"
+msgstr "WooCommerce kargo bölgelerimden doldur"
+
+msgid "Shipping settings saved on sudemi."
+msgstr "Kargo ayarları sudemi'de kaydedildi."
+
+msgid "Saved on sudemi. Buyers see these shipping prices from now on."
+msgstr "sudemi'de kaydedildi. Alıcılar bundan sonra bu kargo ücretlerini görür."
+
+msgid "Payout account"
+msgstr "Satıcı ödeme hesabı"
+
+msgid "State"
+msgstr "Durum"
+
+msgid "Act before"
+msgstr "Son işlem tarihi"
+
+msgid "When you are paid"
+msgstr "Ne zaman ödeme alırsınız"
+
+#, php-format
+msgid "%d days after the buyer received the order (plus 14 days after shipping when delivery is never reported), never while a chargeback is open."
+msgstr "Alıcı siparişi teslim aldıktan %d gün sonra (teslimat hiç bildirilmezse kargolamadan sonra 14 gün daha); açık bir ters ibraz varken asla."
+
+msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."
+msgstr "Satıcı ödeme hesabınızla ilgilenmeniz gerekiyor. Bu hesap burada değil, sudemi satıcı portalında (Ödemeler) yönetilir."
+
+msgid "The payout account is managed on the sudemi seller portal (Payouts)."
+msgstr "Satıcı ödeme hesabı sudemi satıcı portalında (Ödemeler) yönetilir."
+
+msgid "This shop's payouts"
+msgstr "Bu mağazanın satıcı ödemeleri"
+
+msgid "No payouts yet."
+msgstr "Henüz satıcı ödemesi yok."
+
+msgid "Orders"
+msgstr "Siparişler"
+
+msgid "Still to come"
+msgstr "Henüz ödenecek"
+
+msgid "Next payout"
+msgstr "Sonraki satıcı ödemesi"
+
+msgid "Manage orders: filters, export, accept, ship, refund"
+msgstr "Siparişleri yönet: filtreler, dışa aktarma, kabul, kargo, iade"
+
+msgid "sudemi started the order change list over (last 7 days); orders are checked again, nothing is applied twice."
+msgstr "sudemi sipariş değişiklik listesini baştan başlattı (son 7 gün); siparişler yeniden kontrol edilir, hiçbir şey iki kez uygulanmaz."
+
+#, php-format
+msgid "%d WooCommerce order(s) updated from sudemi."
+msgstr "%d WooCommerce siparişi sudemi'den güncellendi."
+
+msgid "An order change from sudemi could not be applied yet; it is read again on the next heartbeat."
+msgstr "sudemi'den gelen bir sipariş değişikliği henüz uygulanamadı; bir sonraki durum sinyalinde yeniden okunur."
+
+msgid "Paid on sudemi; the buyer has been charged. This order can be shipped."
+msgstr "sudemi'de ödendi; alıcıdan ücret tahsil edildi. Bu sipariş kargolanabilir."
+
+msgid "Marked shipped on sudemi."
+msgstr "sudemi'de kargolandı olarak işaretlendi."
+
+msgid "Declined on sudemi: the buyer was not charged. The stock has been restored."
+msgstr "sudemi'de reddedildi: alıcıdan ücret alınmadı. Stok geri yüklendi."
+
+msgid "Cancelled on sudemi; the buyer has been refunded in full. Do not ship this order. The stock has been restored."
+msgstr "sudemi'de iptal edildi; alıcıya tutarın tamamı iade edildi. Bu siparişi kargolamayın. Stok geri yüklendi."
+
+#, php-format
+msgid "Delivered (recorded on sudemi, %s)."
+msgstr "Teslim edildi (sudemi'de kaydedildi, %s)."
+
+#, php-format
+msgid "Tracking on sudemi: %1$s %2$s"
+msgstr "sudemi'de kargo takibi: %1$s %2$s"
+
+msgid "Refund made on sudemi"
+msgstr "sudemi'de yapılan iade"
+
+#, php-format
+msgid "A refund of %s made on sudemi is recorded here. The buyer was paid back by sudemi."
+msgstr "sudemi'de yapılan %s tutarındaki iade burada kaydedildi. Alıcıya parası sudemi tarafından iade edildi."
+
+msgid "Booked from sudemi: this order was accepted on sudemi (on the portal or in a bulk action)."
+msgstr "sudemi'den kaydedildi: bu sipariş sudemi'de kabul edildi (portalda veya toplu bir işlemle)."
+
+#, php-format
+msgid "sudemi order %1$s was accepted on sudemi; booked here as order #%2$s."
+msgstr "%1$s numaralı sudemi siparişi sudemi'de kabul edildi; burada #%2$s numaralı sipariş olarak kaydedildi."
+
+msgid "sudemi has no such order for this shop."
+msgstr "sudemi'de bu mağaza için böyle bir sipariş yok."
+
+msgid "This order belongs to an earlier sudemi connection of this shop. Leave it as it is; sudemi support can help."
+msgstr "Bu sipariş, bu mağazanın önceki bir sudemi bağlantısına ait. Olduğu gibi bırakın; sudemi destek yardımcı olabilir."
+
+msgid "This order was already answered."
+msgstr "Bu sipariş zaten yanıtlandı."
+
+msgid "The buyer's payment authorisation ran out, so the order can no longer be accepted."
+msgstr "Alıcının ödeme provizyonunun süresi doldu, bu yüzden sipariş artık kabul edilemez."
+
+msgid "The order is not in a state that allows this (it may have changed in the meantime). Reload the order."
+msgstr "Sipariş bu işleme izin veren bir durumda değil (bu arada değişmiş olabilir). Siparişi yeniden yükleyin."
+
+msgid "The payment provider refused this. Nothing changed; try again later or contact sudemi support."
+msgstr "Ödeme sağlayıcısı bunu reddetti. Hiçbir şey değişmedi; daha sonra tekrar deneyin veya sudemi destek ile iletişime geçin."
+
+msgid "The amount is not in the currency the buyer paid in."
+msgstr "Tutar, alıcının ödeme yaptığı para biriminde değil."
+
+msgid "This shop is suspended on sudemi: it cannot accept orders. Paid orders can still be shipped and refunded. Contact sudemi support."
+msgstr "Bu mağaza sudemi'de askıya alındı: sipariş kabul edemez. Ödenmiş siparişler yine de kargolanabilir ve iade edilebilir. sudemi destek ile iletişime geçin."
+
+msgid "Dates must be in the form YYYY-MM-DD."
+msgstr "Tarihler YYYY-MM-DD biçiminde olmalıdır."
+
+msgid "sudemi asked this shop to slow down. Wait a minute and try again."
+msgstr "sudemi bu mağazadan yavaşlamasını istedi. Bir dakika bekleyip tekrar deneyin."
+
+msgid "Give a reason. The buyer is shown it."
+msgstr "Bir neden belirtin. Alıcı bu nedeni görür."
+
+msgid "Select at least one order."
+msgstr "En az bir sipariş seçin."
+
+msgid "Select at most 100 orders at once."
+msgstr "Tek seferde en fazla 100 sipariş seçin."
+
+msgid "That action is not available."
+msgstr "Bu işlem kullanılamıyor."
+
+msgid "Prices must be numbers of 0 or more."
+msgstr "Fiyatlar 0 veya daha büyük sayılar olmalıdır."
+
+msgid "Enter an amount greater than 0, or leave it empty to refund the rest."
+msgstr "0'dan büyük bir tutar girin veya kalanını iade etmek için boş bırakın."
+
+msgid "Could not reach sudemi. Nothing was changed; try again shortly."
+msgstr "sudemi'ye ulaşılamadı. Hiçbir şey değiştirilmedi; birazdan tekrar deneyin."
+
+msgid "sudemi refused this."
+msgstr "sudemi bunu reddetti."
+
+msgid "Declined on sudemi. The buyer is not charged."
+msgstr "sudemi'de reddedildi. Alıcıdan ücret alınmaz."
+
+msgid "Marked shipped on sudemi. The buyer is told."
+msgstr "sudemi'de kargolandı olarak işaretlendi. Alıcıya bildirildi."
+
+msgid "Marked delivered on sudemi."
+msgstr "sudemi'de teslim edildi olarak işaretlendi."
+
+msgid "Refunded through sudemi. The refund is recorded on the WooCommerce order."
+msgstr "sudemi üzerinden iade edildi. İade, WooCommerce siparişine kaydedildi."
+
+msgid "Cancelled on sudemi and refunded in full. The WooCommerce order is cancelled and the stock restored."
+msgstr "sudemi'de iptal edildi ve tutarın tamamı iade edildi. WooCommerce siparişi iptal edildi ve stok geri yüklendi."
+
+msgid "The WooCommerce order for this sudemi order is cancelled. Decline it instead."
+msgstr "Bu sudemi siparişine ait WooCommerce siparişi iptal edilmiş. Bunun yerine siparişi reddedin."
+
+msgid "The order could not be recorded in WooCommerce (a product in it is no longer in this shop). Decline it instead."
+msgstr "Sipariş WooCommerce'e kaydedilemedi (içindeki bir ürün artık bu mağazada yok). Bunun yerine siparişi reddedin."
+
+msgid "Accepted. The buyer has been charged; the WooCommerce order is ready to ship."
+msgstr "Kabul edildi. Alıcıdan ücret tahsil edildi; WooCommerce siparişi kargoya hazır."
+
+msgid "Accepted. sudemi takes the money once the other shops in the buyer's payment have answered; do not ship until the order moves to Processing."
+msgstr "Kabul edildi. sudemi, alıcının ödemesindeki diğer mağazalar yanıt verdiğinde parayı tahsil eder; sipariş \"İşleniyor\" durumuna geçene kadar kargolamayın."
+
+msgid "sudemi did not answer. The WooCommerce order stays on hold and the acceptance is sent again on the next heartbeat."
+msgstr "sudemi yanıt vermedi. WooCommerce siparişi beklemede kalır ve kabul bir sonraki durum sinyalinde yeniden gönderilir."
+
+#, php-format
+msgid "%1$d done, %2$d refused."
+msgstr "%1$d tamamlandı, %2$d reddedildi."
+
+msgid "Mark delivered on sudemi"
+msgstr "sudemi'de teslim edildi olarak işaretle"
+
+msgid "sudemi did not record the delivery (the order may not be shipped there yet). Check the order under WooCommerce > sudemi > Orders."
+msgstr "sudemi teslimatı kaydetmedi (sipariş orada henüz kargolanmamış olabilir). Siparişi WooCommerce > sudemi > Siparişler altında kontrol edin."
+
+msgid "Could not reach sudemi to report the delivery. It is sent again on the next heartbeat."
+msgstr "Teslimatı bildirmek için sudemi'ye ulaşılamadı. Bir sonraki durum sinyalinde yeniden gönderilir."
+
+#, php-format
+msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
+msgstr "%d sipariş WooCommerce > sudemi > Siparişler altında yanıtınızı bekliyor. Otomatik onay kapalı olduğundan, süreleri dolmadan elle yanıtlanmaları gerekiyor."

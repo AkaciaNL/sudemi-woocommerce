@@ -978,3 +978,576 @@ msgstr "sudemi 仍为你的店铺记录 %1$s，但你的店铺以 %2$s 销售。
 
 msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
 msgstr "买家用你的货币付款。sudemi 以欧元向你付款：支付服务商的货币兑换费（约 2%）会按条款从你的付款中扣除。"
+
+msgid "Waiting for you"
+msgstr "等待您处理"
+
+msgid "Accepted, waiting for payment"
+msgstr "已接受，等待付款"
+
+msgid "Paid, ready to ship"
+msgstr "已付款，可以发货"
+
+msgid "Declined"
+msgstr "已拒绝"
+
+msgid "Cancelled"
+msgstr "已取消"
+
+msgid "Refunded"
+msgstr "已退款"
+
+msgid "Nothing charged"
+msgstr "未扣款"
+
+msgid "Due once shipped"
+msgstr "发货后结算"
+
+msgid "Scheduled"
+msgstr "已排期"
+
+msgid "On its way to you"
+msgstr "正在打款给您"
+
+msgid "Held (chargeback)"
+msgstr "已冻结（拒付）"
+
+msgid "Partly paid out"
+msgstr "部分已打款"
+
+msgid "Paid out"
+msgstr "已打款"
+
+msgid "Nothing due (refunded)"
+msgstr "无需打款（已退款）"
+
+msgid "Placed by the buyer"
+msgstr "买家已下单"
+
+msgid "Accepted"
+msgstr "已接受"
+
+msgid "Paid"
+msgstr "已付款"
+
+msgid "Refund"
+msgstr "退款"
+
+msgid "Buyer asked to return or cancel"
+msgstr "买家申请退货或取消"
+
+msgid "Request answered"
+msgstr "申请已答复"
+
+msgid "Not set up yet"
+msgstr "尚未设置"
+
+msgid "Details missing"
+msgstr "资料不全"
+
+msgid "Under review"
+msgstr "审核中"
+
+msgid "Active"
+msgstr "已激活"
+
+msgid "Action required"
+msgstr "需要处理"
+
+msgid "This is available once this shop is connected to sudemi."
+msgstr "本店连接到 sudemi 后即可使用此功能。"
+
+msgid "All"
+msgstr "全部"
+
+msgid "No orders match."
+msgstr "没有符合条件的订单。"
+
+msgid "Select"
+msgstr "选择"
+
+msgid "Ship to"
+msgstr "收货地"
+
+msgid "Total"
+msgstr "总额"
+
+msgid "Payout"
+msgstr "结算打款"
+
+msgid "Tracking"
+msgstr "物流跟踪"
+
+msgid "WooCommerce order"
+msgstr "WooCommerce 订单"
+
+msgid "With the selected orders"
+msgstr "对所选订单"
+
+msgid "Choose an action"
+msgstr "选择操作"
+
+msgid "Accept"
+msgstr "接受"
+
+msgid "Decline"
+msgstr "拒绝"
+
+msgid "Mark shipped"
+msgstr "标记为已发货"
+
+msgid "Mark delivered"
+msgstr "标记为已送达"
+
+msgid "Reason for declining (shown to the buyers)"
+msgstr "拒绝原因（会显示给买家）"
+
+msgid "Carrier"
+msgstr "承运商"
+
+msgid "Apply"
+msgstr "应用"
+
+msgid "Refunds and cancellations are made one order at a time, on the order's own page: each moves a different amount of money."
+msgstr "退款和取消需在订单自己的页面上逐单进行：每一项涉及的金额都不同。"
+
+#, php-format
+msgid "Orders %1$d to %2$d of %3$d"
+msgstr "第 %1$d 至 %2$d 个订单，共 %3$d 个"
+
+msgid "Previous"
+msgstr "上一页"
+
+msgid "Next"
+msgstr "下一页"
+
+#, php-format
+msgid "answer by %s"
+msgstr "答复截止 %s"
+
+#, php-format
+msgid "refunded %s"
+msgstr "已退款 %s"
+
+msgid "Tracking code"
+msgstr "跟踪单号"
+
+msgid "From"
+msgstr "开始日期"
+
+msgid "To"
+msgstr "结束日期"
+
+msgid "Search"
+msgstr "搜索"
+
+msgid "Order number or product"
+msgstr "订单号或商品"
+
+msgid "Sort by"
+msgstr "排序方式"
+
+msgid "Date"
+msgstr "日期"
+
+msgid "Newest or highest first"
+msgstr "最新或最高优先"
+
+msgid "Oldest or lowest first"
+msgstr "最早或最低优先"
+
+msgid "Filter"
+msgstr "筛选"
+
+msgid "Language of the file"
+msgstr "文件语言"
+
+msgid "Numbers"
+msgstr "数字格式"
+
+msgid "1234.50, comma separated"
+msgstr "1234.50，逗号分隔"
+
+msgid "1234,50, semicolon separated"
+msgstr "1234,50，分号分隔"
+
+msgid "Download these orders (CSV)"
+msgstr "下载这些订单（CSV）"
+
+msgid "Every order that matches the filters, up to 10,000, without buyer names or addresses."
+msgstr "所有符合筛选条件的订单，最多 10,000 个，不含买家姓名和地址。"
+
+msgid "Confirm orders automatically when the items are in stock"
+msgstr "商品有库存时自动确认订单"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "On: every five minutes this shop accepts orders whose items are in stock and declines the others."
+msgstr "开启：本店每五分钟接受商品有库存的订单，并拒绝其他订单。"
+
+msgid "Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing."
+msgstr "关闭：订单等待您处理。请在显示的日期前在这里接受或拒绝每个订单；未答复时，买家将被释放且不会被扣款。"
+
+msgid "Back to the orders"
+msgstr "返回订单列表"
+
+#, php-format
+msgid "Order %1$s: %2$s"
+msgstr "订单 %1$s：%2$s"
+
+#, php-format
+msgid "Waiting for your answer. The buyer is not charged until you accept. Answer by %s; without an answer the buyer is released."
+msgstr "等待您的答复。在您接受之前，买家不会被扣款。请在 %s 前答复；未答复时，买家将被释放。"
+
+#, php-format
+msgid "Stock check: %s."
+msgstr "库存检查：%s。"
+
+msgid "sudemi order"
+msgstr "sudemi 订单"
+
+msgid "Placed"
+msgstr "下单时间"
+
+msgid "none yet (it is created when the order is accepted)"
+msgstr "暂无（订单被接受时创建）"
+
+msgid "Buyer may withdraw until"
+msgstr "买家可撤回至"
+
+msgid "Reason declined"
+msgstr "拒绝原因"
+
+msgid "Items"
+msgstr "商品"
+
+msgid "Product"
+msgstr "商品"
+
+msgid "Quantity"
+msgstr "数量"
+
+msgid "Price"
+msgstr "价格"
+
+msgid "Amount"
+msgstr "金额"
+
+msgid "No right of withdrawal"
+msgstr "无撤回权"
+
+msgid "Money"
+msgstr "款项"
+
+msgid "Goods"
+msgstr "商品"
+
+msgid "Shipping"
+msgstr "运费"
+
+msgid "Buyer paid"
+msgstr "买家已付"
+
+msgid "sudemi commission"
+msgstr "sudemi 佣金"
+
+msgid "Refunded to the buyer"
+msgstr "已退还买家"
+
+msgid "Payout expected"
+msgstr "预计打款"
+
+msgid "Payout due"
+msgstr "应付打款"
+
+msgid "The buyer asked to return this order"
+msgstr "买家申请退回此订单"
+
+msgid "History"
+msgstr "历史记录"
+
+msgid "Actions"
+msgstr "操作"
+
+msgid "Accept: the buyer is charged and you ship the order."
+msgstr "接受：买家将被扣款，由您发货。"
+
+msgid "Accept the order"
+msgstr "接受订单"
+
+msgid "Reason for declining (shown to the buyer)"
+msgstr "拒绝原因（会显示给买家）"
+
+msgid "Decline the order"
+msgstr "拒绝订单"
+
+#, php-format
+msgid "Amount to refund (%s)"
+msgstr "退款金额（%s）"
+
+#, php-format
+msgid "Leave empty to refund everything not refunded yet (%s)."
+msgstr "留空则退还所有尚未退款的金额（%s）。"
+
+msgid "Reason"
+msgstr "原因"
+
+msgid "Refund through sudemi"
+msgstr "通过 sudemi 退款"
+
+msgid "Cancel: you cannot fulfil this paid order. The buyer is refunded in full."
+msgstr "取消：您无法履行这个已付款的订单。买家将获得全额退款。"
+
+msgid "Cancel and refund in full"
+msgstr "取消并全额退款"
+
+#, php-format
+msgid "The order export was cut off at 10,000 of %d orders. Narrow the dates to get the rest."
+msgstr "订单导出在 %d 个订单中的第 10,000 个处截断。请缩小日期范围以获取其余订单。"
+
+msgid "Orders are confirmed automatically."
+msgstr "订单会自动确认。"
+
+msgid "Orders now wait for you to accept or decline them."
+msgstr "现在订单会等待您接受或拒绝。"
+
+msgid "What sudemi buyers pay for shipping, per country. By default the prices this plugin sends from your WooCommerce shipping zones apply. You can instead set your own price per country on sudemi, and choose the countries you deliver to. One charge per parcel, never per item."
+msgstr "sudemi 买家按国家/地区支付的运费。默认使用本插件根据您的 WooCommerce 配送区域发送的价格。您也可以在 sudemi 上为每个国家/地区设置自己的价格，并选择您配送的国家/地区。每个包裹只收一次运费，绝不按件收费。"
+
+msgid "Prices filled in from your WooCommerce shipping zones. Check them and save; nothing is changed on sudemi until you do."
+msgstr "已根据您的 WooCommerce 配送区域填入价格。请检查并保存；保存之前 sudemi 上不会有任何更改。"
+
+msgid "Shipping prices"
+msgstr "运费"
+
+msgid "Use the prices from my WooCommerce shipping zones"
+msgstr "使用我的 WooCommerce 配送区域中的价格"
+
+msgid "Set my own countries and prices on sudemi"
+msgstr "在 sudemi 上设置我自己的国家/地区和价格"
+
+msgid "Country"
+msgstr "国家/地区"
+
+msgid "Deliver there"
+msgstr "配送到此"
+
+#, php-format
+msgid "Your price on sudemi (%s)"
+msgstr "您在 sudemi 上的价格（%s）"
+
+msgid "Prices from your shipping zones"
+msgstr "来自您配送区域的价格"
+
+msgid "Buyers pay now"
+msgstr "买家当前支付"
+
+msgid "not offered"
+msgstr "不提供"
+
+msgid "your price on sudemi"
+msgstr "您在 sudemi 上的价格"
+
+msgid "from your shop"
+msgstr "来自您的店铺"
+
+msgid "With your own countries and prices: only the ticked countries are offered. A country with an empty price uses the price from your shipping zones."
+msgstr "使用您自己的国家/地区和价格时：只提供勾选的国家/地区。价格留空的国家/地区使用您配送区域中的价格。"
+
+msgid "Save shipping on sudemi"
+msgstr "在 sudemi 上保存运费设置"
+
+msgid "Fill in from my WooCommerce shipping zones"
+msgstr "从我的 WooCommerce 配送区域填入"
+
+msgid "Shipping settings saved on sudemi."
+msgstr "运费设置已保存到 sudemi。"
+
+msgid "Saved on sudemi. Buyers see these shipping prices from now on."
+msgstr "已保存到 sudemi。从现在起买家将看到这些运费。"
+
+msgid "Payout account"
+msgstr "收款账户"
+
+msgid "State"
+msgstr "状态"
+
+msgid "Act before"
+msgstr "处理截止"
+
+msgid "When you are paid"
+msgstr "您何时收款"
+
+#, php-format
+msgid "%d days after the buyer received the order (plus 14 days after shipping when delivery is never reported), never while a chargeback is open."
+msgstr "买家收到订单后 %d 天（如果始终未报告送达，则另加发货后 14 天）；存在未解决的拒付时绝不打款。"
+
+msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."
+msgstr "您的收款账户需要处理。它在 sudemi 卖家门户（结算打款）中管理，而不是在这里。"
+
+msgid "The payout account is managed on the sudemi seller portal (Payouts)."
+msgstr "收款账户在 sudemi 卖家门户（结算打款）中管理。"
+
+msgid "This shop's payouts"
+msgstr "本店的结算打款"
+
+msgid "No payouts yet."
+msgstr "暂无结算打款。"
+
+msgid "Orders"
+msgstr "订单"
+
+msgid "Still to come"
+msgstr "待结算"
+
+msgid "Next payout"
+msgstr "下次打款"
+
+msgid "Manage orders: filters, export, accept, ship, refund"
+msgstr "管理订单：筛选、导出、接受、发货、退款"
+
+msgid "sudemi started the order change list over (last 7 days); orders are checked again, nothing is applied twice."
+msgstr "sudemi 已重新开始订单变更列表（最近 7 天）；订单会重新检查，不会重复应用任何内容。"
+
+#, php-format
+msgid "%d WooCommerce order(s) updated from sudemi."
+msgstr "已根据 sudemi 更新 %d 个 WooCommerce 订单。"
+
+msgid "An order change from sudemi could not be applied yet; it is read again on the next heartbeat."
+msgstr "来自 sudemi 的订单变更暂时无法应用；将在下一次心跳时重新读取。"
+
+msgid "Paid on sudemi; the buyer has been charged. This order can be shipped."
+msgstr "已在 sudemi 上付款；买家已被扣款。此订单可以发货。"
+
+msgid "Marked shipped on sudemi."
+msgstr "已在 sudemi 上标记为已发货。"
+
+msgid "Declined on sudemi: the buyer was not charged. The stock has been restored."
+msgstr "已在 sudemi 上拒绝：买家未被扣款。库存已恢复。"
+
+msgid "Cancelled on sudemi; the buyer has been refunded in full. Do not ship this order. The stock has been restored."
+msgstr "已在 sudemi 上取消；已向买家全额退款。请勿发出此订单。库存已恢复。"
+
+#, php-format
+msgid "Delivered (recorded on sudemi, %s)."
+msgstr "已送达（sudemi 上记录于 %s）。"
+
+#, php-format
+msgid "Tracking on sudemi: %1$s %2$s"
+msgstr "sudemi 上的物流跟踪：%1$s %2$s"
+
+msgid "Refund made on sudemi"
+msgstr "已在 sudemi 上退款"
+
+#, php-format
+msgid "A refund of %s made on sudemi is recorded here. The buyer was paid back by sudemi."
+msgstr "在 sudemi 上进行的 %s 退款已记录在此。款项已由 sudemi 退还给买家。"
+
+msgid "Booked from sudemi: this order was accepted on sudemi (on the portal or in a bulk action)."
+msgstr "从 sudemi 记入：此订单已在 sudemi 上被接受（在门户上或通过批量操作）。"
+
+#, php-format
+msgid "sudemi order %1$s was accepted on sudemi; booked here as order #%2$s."
+msgstr "sudemi 订单 %1$s 已在 sudemi 上被接受；在此记为订单 #%2$s。"
+
+msgid "sudemi has no such order for this shop."
+msgstr "sudemi 上没有本店的此订单。"
+
+msgid "This order belongs to an earlier sudemi connection of this shop. Leave it as it is; sudemi support can help."
+msgstr "此订单属于本店之前的一个 sudemi 连接。请保持原样；sudemi 客服可以提供帮助。"
+
+msgid "This order was already answered."
+msgstr "此订单已答复过。"
+
+msgid "The buyer's payment authorisation ran out, so the order can no longer be accepted."
+msgstr "买家的付款授权已过期，因此无法再接受此订单。"
+
+msgid "The order is not in a state that allows this (it may have changed in the meantime). Reload the order."
+msgstr "订单当前状态不允许此操作（可能已在此期间发生变化）。请重新加载订单。"
+
+msgid "The payment provider refused this. Nothing changed; try again later or contact sudemi support."
+msgstr "支付服务商拒绝了此操作。未做任何更改；请稍后重试或联系 sudemi 客服。"
+
+msgid "The amount is not in the currency the buyer paid in."
+msgstr "金额不是买家付款时使用的货币。"
+
+msgid "This shop is suspended on sudemi: it cannot accept orders. Paid orders can still be shipped and refunded. Contact sudemi support."
+msgstr "本店已在 sudemi 上被暂停：无法接受订单。已付款的订单仍可发货和退款。请联系 sudemi 客服。"
+
+msgid "Dates must be in the form YYYY-MM-DD."
+msgstr "日期格式必须为 YYYY-MM-DD。"
+
+msgid "sudemi asked this shop to slow down. Wait a minute and try again."
+msgstr "sudemi 要求本店放慢速度。请等待一分钟后重试。"
+
+msgid "Give a reason. The buyer is shown it."
+msgstr "请说明原因。买家会看到该原因。"
+
+msgid "Select at least one order."
+msgstr "请至少选择一个订单。"
+
+msgid "Select at most 100 orders at once."
+msgstr "一次最多选择 100 个订单。"
+
+msgid "That action is not available."
+msgstr "该操作不可用。"
+
+msgid "Prices must be numbers of 0 or more."
+msgstr "价格必须是 0 或更大的数字。"
+
+msgid "Enter an amount greater than 0, or leave it empty to refund the rest."
+msgstr "请输入大于 0 的金额，或留空以退还剩余金额。"
+
+msgid "Could not reach sudemi. Nothing was changed; try again shortly."
+msgstr "无法连接 sudemi。未做任何更改；请稍后重试。"
+
+msgid "sudemi refused this."
+msgstr "sudemi 拒绝了此操作。"
+
+msgid "Declined on sudemi. The buyer is not charged."
+msgstr "已在 sudemi 上拒绝。买家不会被扣款。"
+
+msgid "Marked shipped on sudemi. The buyer is told."
+msgstr "已在 sudemi 上标记为已发货。买家已收到通知。"
+
+msgid "Marked delivered on sudemi."
+msgstr "已在 sudemi 上标记为已送达。"
+
+msgid "Refunded through sudemi. The refund is recorded on the WooCommerce order."
+msgstr "已通过 sudemi 退款。退款已记录在 WooCommerce 订单上。"
+
+msgid "Cancelled on sudemi and refunded in full. The WooCommerce order is cancelled and the stock restored."
+msgstr "已在 sudemi 上取消并全额退款。WooCommerce 订单已取消，库存已恢复。"
+
+msgid "The WooCommerce order for this sudemi order is cancelled. Decline it instead."
+msgstr "此 sudemi 订单对应的 WooCommerce 订单已取消。请改为拒绝该订单。"
+
+msgid "The order could not be recorded in WooCommerce (a product in it is no longer in this shop). Decline it instead."
+msgstr "无法在 WooCommerce 中记录该订单（其中某件商品已不在本店）。请改为拒绝该订单。"
+
+msgid "Accepted. The buyer has been charged; the WooCommerce order is ready to ship."
+msgstr "已接受。买家已被扣款；WooCommerce 订单可以发货。"
+
+msgid "Accepted. sudemi takes the money once the other shops in the buyer's payment have answered; do not ship until the order moves to Processing."
+msgstr "已接受。买家本次付款中的其他店铺答复后，sudemi 才会扣款；在订单变为“处理中”之前请勿发货。"
+
+msgid "sudemi did not answer. The WooCommerce order stays on hold and the acceptance is sent again on the next heartbeat."
+msgstr "sudemi 未响应。WooCommerce 订单保持暂挂，接受操作将在下一次心跳时重新发送。"
+
+#, php-format
+msgid "%1$d done, %2$d refused."
+msgstr "%1$d 个已完成，%2$d 个被拒绝。"
+
+msgid "Mark delivered on sudemi"
+msgstr "在 sudemi 上标记为已送达"
+
+msgid "sudemi did not record the delivery (the order may not be shipped there yet). Check the order under WooCommerce > sudemi > Orders."
+msgstr "sudemi 未记录送达（该订单在那里可能尚未发货）。请在 WooCommerce > sudemi > 订单 中检查该订单。"
+
+msgid "Could not reach sudemi to report the delivery. It is sent again on the next heartbeat."
+msgstr "无法连接 sudemi 报告送达。将在下一次心跳时重新发送。"
+
+#, php-format
+msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
+msgstr "%d 个订单正在 WooCommerce > sudemi > 订单 中等待您的答复。自动确认已关闭，因此必须在期限结束前手动处理。"

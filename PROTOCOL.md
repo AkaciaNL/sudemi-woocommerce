@@ -1,4 +1,4 @@
-<!-- Copy of docs/seller-integration-protocol.md in the sudemi core repository (updated 2026-11-08). The core copy is the source of truth. -->
+<!-- Copy of docs/seller-integration-protocol.md in the sudemi core repository (updated 2026-11-09). The core copy is the source of truth. -->
 
 # Seller Integration Protocol v1
 
@@ -255,28 +255,105 @@ as a failing one.
 All of it is upsert-by-`external_id`, where `external_id` is the id the shop itself uses. The
 plugin never invents sudemi ids.
 
-**Every call is a POST**, including the ones earlier drafts of this document described as `PUT`
+### One company, many shops (owner decision 2026-11-08, migration V57)
+
+A sudemi seller is one legal company: one payout account, one monthly commission invoice and
+credit notes, one legal identity, bans and disputes per company. A company can connect several
+shops (plugin installs and Shopify stores); each install is one shop, and:
+
+- **Products are keyed per shop.** `external_id` is unique within the install that sent it
+  (`products_install_external_id`), not within the company, so two shops of one company can both
+  have a product `52` and neither overwrites the other. Feed and seller API products have no
+  install and stay keyed per company.
+- **Orders belong to exactly one shop.** A cart with items from two shops of one company becomes
+  two orders (one per shop, each with its own shipping) in one payment. `orders.integration_install_id`
+  is set from the checkout, and the database refuses a checkout line of another shop
+  (`checkout_lines_same_shop` trigger).
+- **An install sees and acts on its own shop's orders only.** The heartbeat's `pending_orders`,
+  `settled_orders` and `open_requests`, `GET /orders` and every `/orders/{id}/...` call are
+  scoped by install, never by seller. Another shop's order (same company or not) answers exactly
+  like an unknown order: 404 `no_such_order` (`not_found` for the return-request answers). The
+  plugin's support tickets are its own shop's too.
+- **`POST /shop` describes this shop, not the company.** Name, description, support e-mail and
+  returns window are stored on the install. Buyers see the shop's own name (search, product
+  details, cart, the payment page line item, mails); the company's legal name stays on legal
+  information (trader details, invoices). A shop's push never renames the company; it only fills
+  company fields that are still empty.
+- **The shop's name is the merchant's (2026-11-09).** The name on the claim screen is the shop's
+  name, prefilled from the plugin's proposal; the claim stores it on the pairing
+  (`integration_pairing.confirmed_shop_name`, V58) and the install takes it when it is created (the
+  plugin's collect, or at once for Shopify). `POST /shop` `displayName` and the Shopify store name
+  only fill an EMPTY shop name; they never overwrite a name the merchant confirmed or set. A
+  shop is renamed only through support (owner 2026-11-09, "Rename only via ticket"): the seller
+  asks in a support ticket, an admin renames it in the admin console, Sellers tab
+  (`POST /internal/v1/admin/shops/{installId}/name`, admin only, 1 to 200 characters after
+  trimming, audited as `integration.shop_renamed`; a disconnected or unknown install is 404). A
+  company created by a claim is named by its legal name; a claim never renames an existing
+  company. A rename reindexes the company's products for search (`integration_install_name_reindex`).
+  The buyer's order list and order page, MCP `list_orders` and `get_order_status` (`shop`) and the
+  order e-mails name each order's own shop.
+- **Shipping settings are per shop (2026-11-09).** The settings on sudemi (`seller_shipping`,
+  V33) are keyed by the shop's install since V61; rows without an install are the company's
+  settings for its products without a shop (feed, seller API). Each product reads its own shop's
+  settings (`EffectiveShipping`) in search, product details, cart and checkout. The portal
+  (`/internal/v1/seller/shipping?shop=`) and the seller API (`/v1/shipping?shop_id=`) take the
+  shop's install id or `none`; left out with several shops: 409 `shop_required`. V61 copied each
+  company's settings to each of its live shops, so nothing changed for buyers. The same shop
+  reconnecting keeps its settings; a new shop starts with its plugin's prices.
+- **A disconnected shop stays disconnected.** Its products go offline with its install and its
+  open orders are never handed to the company's other shops. A shop connecting again takes over
+  its earlier install only when that is provably the same shop (review 2026-11-09): the install
+  that held the same verified shop URL last belongs to the same company AND runs the same platform
+  (`IntegrationRepository.adoptEarlierInstallOfSameShop`). The shop URL is scheme and host only, so
+  two shops on one host (a multistore, a WordPress multisite) or a platform swap would otherwise
+  look alike. Then:
+  - its products move, keeping their ids, but stay offline until the shop sends them again in its
+    own sync;
+  - only closed orders move (`DECLINED`, `CANCELLED`, `REFUNDED`, with no open return request).
+    Orders the shop still has to act on (`AWAITING_SELLER`, `ACCEPTED`, `PAID`, `SHIPPED`,
+    `DELIVERED`) and open checkouts stay with the revoked install: no plugin is asked about them,
+    an unanswered order is released by the sweep at its `respond_by` (the buyer is not charged),
+    a paid one is handled through the seller API (`/v1/orders/{id}/...`);
+  - its support tickets follow, except a ticket about an order that stayed behind.
+  Otherwise nothing moves: the earlier shop's products stay offline with its revoked install.
+- **The same product from the API or a feed and a shop (review 2026-11-09).** When a plugin sends
+  an `externalId` the company already has as an API or feed product (no install), the shop takes
+  that row over (same product id, so its orders stay valid) if no other connected shop of the
+  company has a product with that id; otherwise the company row is taken off sale (never moved),
+  so the item is not listed twice. A feed import does not list a product whose `external_id` a
+  connected shop of the company already sends, and never unlists a shop's products.
+- **Shipping** prices and delivery days come from the product's own shop. The company-wide
+  shipping settings on the portal (Seller → Shipping), when set, apply to all of its shops.
+
+**Every write is a POST**, including the ones earlier drafts of this document described as `PUT`
 and `PATCH`. Three reasons, and the first is the one that matters: the canonical string a plugin
 signs includes the HTTP method, so a single method means one shape of that string in four
 languages instead of four - and a method mismatch is a signing bug neither side can see. Shared
-hosts also still filter `PATCH`, and PHP's stream wrappers handle `POST` most predictably.
+hosts also still filter `PATCH`, and PHP's stream wrappers handle `POST` most predictably. Reads
+are `GET` (signed with their query string, see "Signing a GET"). The one `PUT`,
+`/integration/v1/shipping`, also answers `POST`; plugins should send `POST`.
 
 | Endpoint | Carries |
 | --- | --- |
-| `POST /integration/v1/heartbeat` | Liveness and the catalogue revision; see §3a |
+| `POST /integration/v1/heartbeat` | Liveness and the catalogue revision; see §3a. With `changesCursor` also the orders changed on the sudemi side (§4d) |
 | `GET  /integration/v1/shop` | What this install is, its `locked_fields`, and whether its catalogue is currently listed |
-| `POST /integration/v1/shop` | Shop metadata: display name, description, currency, shipping destinations, returns window, support e-mail |
-| `POST /integration/v1/categories` | The shop's own category tree: `externalId`, `parentExternalId`, name, description |
+| `POST /integration/v1/shop` | Shop metadata: display name (fills an empty shop name only), description, currency (the shop's currency, see 4c), returns window, support e-mail. `shipsTo` and `languages` are accepted and ignored: where a shop ships and for what comes from each product's `shipping` and from `/integration/v1/shipping` (§4d) |
+| `POST /integration/v1/categories` | The shop's own category tree: `externalId`, `parentExternalId`, name, description. With each product's `categoryExternalIds` it is the product's declared category for the blocked category list (owner 2026-11-09): goods our payment provider does not allow (for example weapons or adult products) and goods that need an age check or a licence (alcohol, tobacco, medicines) are not listed. Whole words in English plus the shop's language, category names only (never titles); list and sources in `ai-store-core/src/main/resources/category-filter/blocked-categories.yml` |
 | `POST /integration/v1/products` | Products in batches of ≤ 500: identity, title, description, category, brand, GTIN/MPN, **specs** as typed attributes, images as URLs, price, stock, shipping |
 | `POST /integration/v1/products/prices` | Price and stock deltas only - the hot path, called from the shop's own save hook |
 | `POST /integration/v1/sync` | Opens a full sync and returns its id |
 | `POST /integration/v1/sync/{id}/commit` | Ends a full sync and tells the platform which products were *not* in it |
 | `POST /integration/v1/orders/{id}/accept` | The shop can fulfil this order. **This captures the buyer's money**; see §4a |
 | `POST /integration/v1/orders/{id}/reject` | The shop cannot fulfil it. Releases the buyer's authorisation; optional `{"reason": "..."}` |
-| `GET  /integration/v1/orders` | The shop's own order history: approved, declined, shipped, delivered. Optional `?status=` filter and cursor paging |
+| `GET  /integration/v1/orders` | The shop's own order history: approved, declined, shipped, delivered. Optional `?status=` filter and cursor paging; the portal's filters and sorting since core 2026-11-09 (§4d) |
+| `GET  /integration/v1/orders/{id}` | One order as the portal's order page shows it (§4d) |
+| `GET  /integration/v1/orders/export.csv` | The portal's CSV export of this shop's orders (§4d) |
+| `POST /integration/v1/orders/bulk` | Accept, reject, ship or deliver up to 100 orders at once (§4d) |
 | `GET  /integration/v1/orders/{id}/fulfilment` | Where to ship it. Only after the order is accepted; see §4a |
 | `POST /integration/v1/orders/{id}/shipped` | Dispatched. Optional `{"carrier": "...", "trackingCode": "..."}` |
 | `POST /integration/v1/orders/{id}/delivered` | Arrived. **Starts the withdrawal period running** |
+| `GET/POST /integration/v1/shipping` | This shop's shipping settings on sudemi and what buyers pay per country (§4d) |
+| `GET  /integration/v1/payouts` | Read only: the payout account's state and this shop's payouts per currency (§4d) |
 
 A batch is accepted **item by item**. One product with no price is refused by name in a
 `rejected` array while the other 499 land - a plugin handed a blanket rejection retries the same
@@ -292,16 +369,23 @@ The seller REST API (`/v1/products`, see `ai-store-web/public/docs/<lang>/seller
 create, replace and delete products too, for shops without a plugin or feed. Each product row has
 one `source` (`PLUGIN`, `FEED` or `API`, migration V43), and the two channels never fight:
 
-- **The plugin (or feed) wins.** A product this plugin sends takes over a row with the same
-  `externalId` that the API created or archived: `source` becomes `PLUGIN`, the row is linked to
-  this install, and the next full sync governs it like any other product.
+- **Each channel keeps its own rows (V57).** Products are keyed per shop. A plugin that sends the
+  `externalId` of an API or feed product takes it over only when it is the company's only shop
+  with that id; with two shops the API/feed row is taken off sale instead (see above). Rows that a
+  plugin took over before V57 stay with that plugin.
+- **The seller API never guesses a shop.** When two of the company's shops (or a shop and the
+  API) have a product with the same `external_id`, create/replace by `external_id` answers 409
+  `ambiguous_external_id` and a bulk item names the problem; address the product by its sudemi
+  id instead.
 - **The API does not overwrite a plugin.** While the install that sent a product is not revoked,
   API create (same `external_id`), replace and delete answer 409 `managed_by_plugin`; only the
   on/off switch, price and stock (`PATCH /v1/products/{id}`, `POST /v1/products/bulk`) are
   accepted, and the plugin's next push overwrites price and stock as before. Products of a
   revoked install can be taken over by the API.
 - **A sync commit never delists API products**: they carry no install id, so `unlistMissing`
-  cannot reach them, and a feed import that leaves them out does not unlist them either.
+  cannot reach them, and a feed import that leaves them out does not unlist them either. A feed
+  import never unlists a shop's (plugin or Shopify) products: it unlists only the company's own
+  feed products (no install) it no longer contains.
 
 ### Images
 
@@ -344,6 +428,41 @@ Two things differ from a POST, and both bite silently:
 
 Nothing changes for the POST endpoints: they carry no query string, so the path they already sign
 is unchanged.
+
+## 4c. Currency (currency step 2, 2026-11-09)
+
+Owner decisions: the buyer's card is charged in the **shop's currency**; buyers additionally see an
+approximate amount in their own currency at the ECB reference rate; a cart with items in several
+currencies is one payment per currency; commission invoices and credit notes are always in EUR.
+
+- **One shop, one currency.** `POST /integration/v1/shop` with `currency` (ISO 4217, e.g. `PLN`) sets the
+  shop's currency; the answer echoes it as `currency`. Supported shop currencies (owner 2026-11-09,
+  "multicurrency for everyone, we will invoice in EUR"): EUR and every currency with an ECB reference rate
+  (the EUR commission invoice needs it), except ISK (Stripe wants ISK with two decimals it does not have).
+  Anything else is refused (`rejected`, the message names the supported list). A shop that never declares
+  one takes the currency of the first product it sends.
+- **Every price in the shop's currency.** `POST /products` and `POST /products/prices`: an item whose
+  `currency` differs from the shop's currency is rejected item by item ("price currency EUR differs from this
+  shop's currency PLN ..."); the rest of the batch goes through. Shipping prices (`shipping[].costMinor`) are in
+  the same currency. To change a shop's currency: declare the new one on `POST /shop`, then send a full sync.
+- **Minor units are the currency's own.** `priceMinor` is in the currency's minor units as ISO 4217 defines them
+  (EUR/PLN/HUF/TRY 2 decimals). Do not multiply by 100 blindly for a currency with other decimals (ISK, JPY are
+  not shop currencies today for that reason).
+- **Orders** (`pending_orders[]`, `GET /orders`, fulfilment) carry `currency_code` = the shop's currency; book the
+  local order in that currency. A plugin should refuse (decline) an order whose `currency_code` is not its
+  shop's currency rather than book it in another one.
+- **Refunds** (`POST /orders/{id}/refund` `amountMinor`) are in the order's currency. Plugins 1.2.12+ also send `currency`; when given it must be the order's currency, otherwise
+  409 `currency_mismatch` (with `orderCurrency`) and nothing is refunded.
+- **Payouts.** sudemi's Stripe balance is EUR: a charge in another currency is converted by Stripe, and the
+  shop's payout transfer is in EUR, the shop's share of what the charge actually settled for (Stripe's balance
+  transaction), tied to the buyer's charge. A refund is made in the order's currency; the shop's transfer is
+  reversed in EUR in proportion.
+
+Plugins 1.2.12 (step 3): WooCommerce, PrestaShop and OpenCart send the shop's default currency on `POST /shop` and
+on every product, use each currency's own minor units (0 for JPY/ISK, 3 for KWD/BHD, else 2), book an order in its
+`currency_code` and decline one in a currency the shop does not sell in, send `currency` with refunds, and show
+the currency sudemi sees (with a warning when it is not supported) on their settings page. A shop with several
+currencies switched on reports only its default one; orders are only in that one.
 
 ## 4a. Confirming orders, and why nothing is charged without the shop
 
@@ -437,7 +556,7 @@ a capture attempted after it lapses simply fails. A plugin that answers late get
 | --- | --- | --- |
 | 200 | `{"status": "ok"}` | Applied. On accept, the money has been captured. |
 | 200 | `{"status": "already_resolved", "order_status": "..."}` | Answered before, or the window closed. Not an error; stop retrying. `order_status` says how it ended: `PAID` (or `ACCEPTED`, `SHIPPED`, ...) means your earlier accept landed, so keep the local order; `DECLINED` means it was released, so cancel the local order and restock. Never cancel on `already_resolved` alone. |
-| 404 | `{"error": "no_such_order"}` | No such order awaiting an answer *from this shop*. Identical whether it does not exist or belongs to another seller, so an install cannot probe for other shops' order ids. |
+| 404 | `{"error": "no_such_order"}` | No such order awaiting an answer *from this shop*. Identical whether it does not exist, belongs to another seller, or belongs to another shop of the same company, so an install cannot probe for other shops' order ids. |
 | 409 | `{"error": "authorisation_lapsed"}` | The buyer's authorisation could no longer be charged. The order will be released. |
 
 ### After the money is captured
@@ -478,26 +597,33 @@ stock.
 An order placed before the platform recorded delivery addresses answers `{"deliverable": false}`
 with a message, rather than a label with holes in it.
 
-## 4b. Contract reference (checked against core 2026-11-07, `e2e/integration_contract.py`)
+## 4b. Contract reference (checked against core 2026-11-09, `e2e/integration_contract.py`)
 
 Requests are camelCase JSON; responses are snake_case (one exception: the items of a `rejected`
 array are `{"externalId", "reason"}`). Unknown request fields are ignored.
 
 | Endpoint | Body | Answer |
 | --- | --- | --- |
-| `POST /heartbeat` | `catalogueRevision`, `productCount`, `intervalSeconds` (clamped to 60-900), `pluginVersion`; body optional | `status`, `heartbeat_seconds`, `trusted_until`, `catalogue_listed`, `not_listed_reason`, `full_sync_requested`, `domain_challenge{token,path,why}`, `pending_orders[{order_id,respond_by,total_minor,shipping_minor,currency_code,destination_country,lines[{product_id,external_id,title,quantity,unit_price_minor}]}]` + `pending_orders_note`, `settled_orders[{order_id,status,declined_reason}]`, `open_requests[{request_id,order_id,kind,reason,requested_at,respond_by}]` + `open_requests_note` (each list only when not empty) |
+| `POST /heartbeat` | `catalogueRevision`, `productCount`, `intervalSeconds` (clamped to 60-900), `pluginVersion`, `changesCursor` (optional: `""` to start, then the last `changes_cursor`); body optional | `status`, `heartbeat_seconds`, `trusted_until`, `catalogue_listed`, `not_listed_reason`, `full_sync_requested`, `domain_challenge{token,path,why}`, `pending_orders[{order_id,respond_by,total_minor,shipping_minor,currency_code,destination_country,lines[{product_id,external_id,title,quantity,unit_price_minor}]}]` + `pending_orders_note`, `settled_orders[{order_id,status,declined_reason}]`, `open_requests[{request_id,order_id,kind,reason,requested_at,respond_by}]` + `open_requests_note` (each list only when not empty). With `changesCursor` in the body (core 2026-11-09, §4d): `changed_orders[{order_id,status,revision,changed_at,refunded_minor,tracking{carrier,code}\|null,shipped_at,delivered_at,request{kind,status}\|null}]` (always present then, may be empty), `changes_cursor`, `changes_more`, `changes_cursor_reset` (only when the cursor sent could not be read) |
 | `GET /shop` | - | `install_id`, `seller_id`, `shop_origin`, `locked_fields`, `heartbeat_seconds`, `catalogue_listed`, `not_listed_reason`, `full_sync_requested`, `trusted_until` |
-| `POST /shop` | `displayName`, `description`, `supportEmail`, `returnsWindowDays` (locked fields: 423) | `status`, `locked_fields` |
-| `POST /categories` | `categories[{externalId,parentExternalId,name,description}]`, at least one | `status`, `accepted`, `removed` |
-| `POST /products` | `syncId` (optional), `catalogueRevision` (optional, change pushes only: the shop's revision after this push), `products[]` (1-500): `externalId`, `title`, `priceMinor` (1 to 10,000,000), `currency`, `quantity` or `inStock`, `description`, `url`, `brand`, `gtin`, `mpn`, `sku`, `weightGrams`, `maxHandlingTimeDays`, `maxTransitTimeDays`, `categoryExternalIds`, `images` (on the shop origin), `specs[{name,values}]`, `shipping[{country,costMinor}]`, `safety{...}`, `withdrawalExclusion` (hygiene, custom, perishable, media, press, mixed, alcohol; unknown = none) | `status`, `accepted`, `rejected[]` (item by item), `catalogue_revision_agreed` |
+| `POST /shop` | `displayName` (fills an empty shop name only), `description`, `supportEmail`, `returnsWindowDays`, `currency` (the shop's currency, §4c; unsupported: 400); `shipsTo` and `languages` accepted and ignored (shipping: §4d); locked fields: 423 | `status`, `currency` (the shop's currency now, or null), `locked_fields` |
+| `POST /categories` | `categories[{externalId,parentExternalId,name,description}]`, at least one (the declared category of the products that name them, for the blocked category list) | `status`, `accepted`, `removed` |
+| `POST /products` | `syncId` (optional), `catalogueRevision` (optional, change pushes only: the shop's revision after this push), `products[]` (1-500): `externalId`, `title`, `priceMinor` (1 to 10,000,000), `currency`, `quantity` or `inStock`, `description`, `url`, `brand`, `gtin`, `mpn`, `sku`, `weightGrams`, `maxHandlingTimeDays`, `maxTransitTimeDays`, `categoryExternalIds`, `images` (on the shop origin), `specs[{name,values}]`, `shipping[{country,costMinor}]`, `safety{...}`, `withdrawalExclusion` (hygiene, custom, perishable, media, press, mixed, alcohol; unknown = none), `googleProductCategory` (optional, Google product category id or path), `productType` (optional free text, read like a shop category) | `status`, `accepted`, `rejected[]` (item by item), `not_listed[]` (accepted but not listed: the declared category is on the blocked list, with the reason), `catalogue_revision_agreed` |
 | `POST /products/prices` | `updates[]` (1-500): `externalId`, `priceMinor` (1 to 10,000,000), `currency`, `quantity` or `inStock`; `catalogueRevision` (optional: the shop's revision after these changes) | `status`, `applied`, `rejected[]`, `full_sync_requested` (true when an id was unknown), `catalogue_revision_agreed` |
 | `POST /sync` | - | `sync_id`, `expires_at`, `max_products_per_request` |
 | `POST /sync/{id}/commit` | `catalogueRevision` (optional: the shop's revision when this sync started) | `status: committed` (`products_seen`, `delisted`) or `status: held` (`would_delist`, `live_products`, `message`) |
 | `POST /orders/{id}/accept` / `reject` | reject: `reason` optional | see §4a; accept adds `payment: captured` or `waiting_for_other_shops` |
-| `GET /orders?status=&limit=&after=` | - | `counts`, `orders[{order_id,status,placed_at,total_minor,currency_code,your_net_minor,lines[{title,quantity}],respond_by?,declined_reason?,customer_request?,customer_name?}]`, `next_cursor` (only when there is a next page) |
+| `GET /orders?status=&limit=&after=` | - | `counts`, `orders[{order_id,status,placed_at,total_minor,currency_code,your_net_minor,lines[{title,quantity}],respond_by?,declined_reason?,customer_request?,customer_name?}]`, `next_cursor` (only when there is a next page). Since core 2026-11-09 each row also has `destination_country`, `shipping_minor`, `tracking{carrier,code}\|null`, `shipped_at`, `delivered_at`, `revision`, `refunded_minor`, `payout{state,expected_minor,paid_out_minor,currency_code,due_at}` |
+| `GET /orders?from=&to=&q=&sort=&dir=&offset=&status=&limit=` | any of `from`, `to` (date `YYYY-MM-DD`, `to` inclusive, or ISO instant, exclusive), `q` (order reference or product title words), `sort` (`placed`, `total`, `status`), `dir` (`asc`/`desc`), `offset` switches to the portal's table; `limit` 1-100; `after` ignored | `counts`, `orders[...]` (rows as above), `total`, `offset`, `limit`, `next_offset` (null on the last page); 400 `invalid_date` |
+| `GET /orders/{id}` | - | the portal's order page in snake_case: `order_id`, `id`, `status`, `placed_at`, `quantity`, `destination_country`, `lines[{product_id,external_id,title,quantity,unit_price_minor,goods_minor,withdrawal_exclusion}]`, `shop{install_id,name,origin,platform}`, `money{currency_code,goods_minor,shipping_minor,total_minor,commission_minor,your_net_minor,refunded_minor}`, `customer_request?{id,kind,reason,requested_at,respond_by}`, `respond_by?`, `note?`, `captured_at?`, `declined_reason?`, `shipped_at?`, `delivered_at?`, `withdrawal_deadline?`, `tracking?{carrier,code}`, `customer_name?` (after capture, never the address), `allowed_actions[]`, `timeline[{type,at,...}]`, `payout{settled,converted,currency_code,expected_minor,paid_out_minor,state,due_at}`, `revision`; 404 `no_such_order` (also another shop's, same company included); 409 `previous_connection` |
+| `GET /orders/export.csv?status=&from=&to=&q=&sort=&dir=&lang=&decimal=` | `lang`: en nl tr de fr es it pl ru zh ar he (else en); `decimal=comma`: decimal comma and `;` | `text/csv; charset=UTF-8` with BOM, the portal's columns, at most 10,000 rows; headers `X-Total-Count`, `X-Export-Truncated`; no buyer name or address |
+| `POST /orders/bulk` | `action` (`accept`, `reject`, `shipped`, `delivered`), `reason` (reject: required, max 500), `items[{orderId,carrier,trackingCode}]` (1-100) | `action`, `done`, `refused`, `results[{order_id,result: done\|refused,error?,message?,payment?}]` (errors per order: `no_such_order`, `previous_connection`, `already_resolved`, `authorisation_lapsed`, `wrong_state`, `provider_refused`, `failed`); 400 `invalid_request`; 403 `seller_suspended` (accept only) |
+| `GET /shipping` | - | `shop_id`, `shop_name`, `mode` (`shop`/`custom`), `currency`, `max_price_minor`, `countries[{country,enabled,price_minor,offered,shop_price_min_minor,shop_price_max_minor,shop_price_products}]` (as the seller API), `effective[{country,offered,source: shop_price\|sudemi_price\|null,min_minor,max_minor}]` |
+| `PUT` or `POST /shipping` | `mode`, `currency` (optional, must be the shop's), `countries[{country,enabled,priceMinor}]` (custom mode: every country offered) | as GET; 400 `invalid_request` (unknown country, a country twice, price below 0 or over `max_price_minor`, wrong currency, bad mode) |
+| `GET /payouts` | - | `account{connected,charges_enabled,details_submitted,payouts_active,state,action_deadline,disabled_reason}`, `payout_delay_days`, `currencies[{currency_code,orders,paid_out_minor,outstanding_minor,waiting_for_shipment_minor,scheduled_minor,processing_minor,held_minor,next_due_at}]`, `note` |
 | `GET /orders/{id}/fulfilment` | - | `deliverable`, `ship_to{recipient_name,line1,line2,postal_code,city,region,country,phone}`, `lines[{product_id,external_id,title,quantity}]`; 409 `not_confirmed_yet`, `payment_pending`, `not_payable` |
 | `POST /orders/{id}/shipped` / `delivered` | shipped: `carrier`, `trackingCode` (optional, max 100 chars each) | `status: ok` / `already_resolved`; 409 `not_paid` |
-| `POST /orders/{id}/refund` | `amountMinor` (omit for the rest; in the order's currency and its own ISO 4217 minor units), `currency` (the order's `currency_code`; this plugin sends it from 1.2.12 and does not send a refund in another currency), `reason` | `orderId`, `refundedMinor`, `totalRefundedMinor`, `fullyRefunded`, `providerRefundId`; 409 `refused`; 502 `provider_refused`. Send `Idempotency-Key` (any unique string, max 255): a retry with the same key and body returns the first answer and moves no money (24 h); without it a repeated partial refund refunds again |
+| `POST /orders/{id}/refund` | `amountMinor` (omit for the rest), `reason`, optional `currency` (must be the order's, else 409 `currency_mismatch`) | `orderId`, `refundedMinor`, `totalRefundedMinor`, `fullyRefunded`, `providerRefundId`; 409 `refused`; 502 `provider_refused`. Send `Idempotency-Key` (any unique string, max 255): a retry with the same key and body returns the first answer and moves no money (24 h); without it a repeated partial refund refunds again |
 | `POST /orders/{id}/cancel` | `reason` (and `Idempotency-Key` as for refund) | as refund, plus `status: CANCELLED`; only a PAID order that has not shipped |
 | `POST /orders/{id}/request/accept` / `request/reject` | reject needs `reason` (shown to the buyer) | `status: ok` / `already_resolved`; 400 `invalid_request` (no reason); 404 `not_found` (no open request) |
 | `POST /credentials/rotate` | `publicKey` (new Ed25519, base64 X.509) | `status: rotated`, `previous_key_valid_until` (old key valid 10 more minutes) |
@@ -511,7 +637,7 @@ answer return requests, but not accept orders or send catalogue data), 404 `no_s
 `not_found`, 405 `method_not_allowed`, 409 `site_mismatch`, `previous_connection` and the order-state codes above, 413
 `payload_too_large` (over 8 MB), 422 `rejected` (a whole batch refused: empty, more than 500, an
 unknown or closed sync), 423 `locked_fields`, 429 `too_many_requests` with `Retry-After` (catalogue
-writes 60 a minute, everything else 120 a minute, per install), 502 `provider_refused`. Treat 5xx,
+writes, the CSV export and bulk order actions 60 a minute together, everything else 120 a minute, per install), 502 `provider_refused`. Treat 5xx,
 429 and timeouts as "not answered": retry later, never as a refusal.
 
 **Catalogue revision** (changed 2026-11-07). A disagreement sets `full_sync_requested`.
@@ -533,6 +659,159 @@ Held catalogue updates in the seller portal lists what would be removed, with "R
 and "Keep my products" (the latter asks the plugin for a fresh full sync).
 
 **Rotation and revocation** are built (the status note in §7 predates them).
+
+## 4d. Managing orders, shipping and payouts from the plugin (core 2026-11-09)
+
+Owner, 2026-11-09: "plugins should be able to manage orders and shippings. the source of truth is
+sudemi portal but all these items should go to shops' plugins as well". The sudemi portal stays the
+source of truth; a plugin shows and changes the same things through the calls below. Each answer is
+built by the portal's own code and renamed to snake_case, so a plugin and the portal never disagree.
+
+**Scope.** Every call is narrowed to the install that signed it. Another company's order and an
+order of another shop of the same company both answer exactly like an unknown order (404
+`no_such_order`; in a bulk action, `no_such_order` for that item). A `shop` query parameter is
+ignored. No answer here carries the buyer's address; `GET /orders/{id}/fulfilment` (after
+acceptance) stays the one place a shop gets it. Signed like every call; a GET signs its query
+string. Audited like the portal: `orders.bulk` and `shipping.updated` (actor PLUGIN, the install).
+
+**Minimum versions.** Core 2026-11-09 for everything in this section. Plugins up to 1.2.x keep
+working unchanged: they send no `changesCursor` (no change feed) and no table parameters (the order
+list keeps its old shape; the new row fields are additions). The plugin releases that use this
+section are planned as 1.3.0 (WooCommerce, PrestaShop, OpenCart); they should check for the fields
+rather than for a core version, and fall back to the 1.2 behaviour when `changed_orders` is missing.
+
+### The change feed (heartbeat `changed_orders`)
+
+Send `"changesCursor": ""` on a heartbeat to start, then always the `changes_cursor` of the last
+answer. The answer lists this shop's orders changed since then, oldest change first, at most 200; on
+`changes_more: true` send the next heartbeat soon (it may be right away). A change is anything a
+plugin would show: status (accepted, paid, declined, shipped, delivered, cancelled, refunded), the
+refunded amount, tracking, a payout made or reversed, a buyer's cancellation or return request
+opened or answered. Changes made anywhere count (portal, seller API, the plugin itself, sudemi
+support, Stripe events, the deadlines that run out).
+
+```json
+{"catalogueRevision": "r42", "productCount": 120, "intervalSeconds": 300, "pluginVersion": "1.3.0",
+ "changesCursor": "c1.MTc2MjY4NjAwMDAwMDAwMDowMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDA"}
+```
+
+```json
+{"status": "ok", "...": "...",
+ "changed_orders": [
+   {"order_id": "0f6c1c3e-...", "status": "SHIPPED", "revision": 4, "changed_at": "2026-11-09T10:15:02.123456Z",
+    "refunded_minor": 0, "tracking": {"carrier": "DHL", "code": "JJD0001"}, "shipped_at": "2026-11-09T10:15:02Z",
+    "delivered_at": null, "request": null},
+   {"order_id": "7a1d...", "status": "DELIVERED", "revision": 7, "changed_at": "...", "refunded_minor": 300,
+    "tracking": null, "shipped_at": "...", "delivered_at": "...", "request": {"kind": "RETURN", "status": "REQUESTED"}}],
+ "changes_cursor": "c1....", "changes_more": false}
+```
+
+- Apply an entry only when its `revision` is higher than the one the plugin holds for that order
+  (equal: a repeat, ignore it). An entry is a summary; `GET /orders/{id}` has the rest.
+- The feed reads 30 seconds behind real time, so a change shows up on the first heartbeat at least
+  30 seconds after it was made. A cursor that cannot be read starts over from the last 7 days and
+  says `changes_cursor_reset: true`; so does `""`.
+- The cursor is opaque. Keep it per install; after a re-pairing start again with `""`.
+- Orders waiting for an answer still come as `pending_orders`, return requests to answer as
+  `open_requests`; the feed is for keeping the plugin's copy of everything else current. A daily
+  `GET /orders?from=<yesterday>` is a cheap safety net.
+
+### Order list and detail
+
+`GET /integration/v1/orders` without table parameters is the 1.2 call. With any of `from`, `to`,
+`q`, `sort`, `dir`, `offset` it is the portal's order table:
+
+```
+GET /integration/v1/orders?status=PAID&from=2026-11-01&to=2026-11-09&q=kettle&sort=total&dir=desc&limit=50&offset=0
+```
+
+```json
+{"counts": {"PAID": 3, "SHIPPED": 9}, "total": 3, "offset": 0, "limit": 50, "next_offset": null,
+ "orders": [{"order_id": "...", "status": "PAID", "placed_at": "...", "total_minor": 3195, "currency_code": "EUR",
+   "your_net_minor": 2800, "lines": [{"title": "Kettle", "quantity": 1}], "customer_name": "Ana Lopez",
+   "destination_country": "DE", "shipping_minor": 695, "tracking": null, "shipped_at": null, "delivered_at": null,
+   "revision": 2, "refunded_minor": 0,
+   "payout": {"state": "waiting_for_shipment", "expected_minor": 2745, "paid_out_minor": 0,
+              "currency_code": "EUR", "due_at": null}}]}
+```
+
+Payout states: `not_charged` (no money taken, or never), `waiting_for_shipment` (paid, due once
+shipped), `scheduled` (due at `due_at`), `processing` (due, the transfer is on its way), `held` (a
+chargeback), `partly_paid_out`, `paid_out`, `nothing_due` (refunded in full). `expected_minor` is
+in the payout currency, which differs from the order's for a converted payment (§4c).
+
+`GET /integration/v1/orders/{id}` is the portal's order page: lines with the shop's own
+`external_id`, money with `refunded_minor`, tracking, the `timeline` (`PLACED`, `ACCEPTED`, `PAID`,
+`DECLINED`, `SHIPPED`, `DELIVERED`, `REFUND`, `CANCELLED`, `REQUEST`, `REQUEST_DECIDED`), the open
+`customer_request`, the `payout`, the `revision` and `allowed_actions`: what the shop can do now,
+from `accept`, `reject`, `shipped`, `delivered`, `refund`, `cancel`, `request_accept`,
+`request_reject`, each the existing `/orders/{id}/...` call. The call itself still decides: an
+action listed can be refused when the order changed in between.
+
+### Export and bulk actions
+
+`GET /integration/v1/orders/export.csv?lang=de&decimal=comma&from=2026-10-01` is the portal's
+export of this shop's orders (the same filters, every page, at most 10,000 rows; `X-Export-Truncated:
+true` when there were more). Headings and statuses in any of the 12 portal languages.
+
+`POST /integration/v1/orders/bulk` is the portal's "several orders at once":
+
+```json
+{"action": "shipped", "items": [
+  {"orderId": "0f6c1c3e-...", "carrier": "DHL", "trackingCode": "JJD0001"},
+  {"orderId": "7a1d...", "carrier": "PostNL", "trackingCode": "3SABC"}]}
+```
+
+```json
+{"action": "shipped", "done": 1, "refused": 1, "results": [
+  {"order_id": "0f6c1c3e-...", "result": "done"},
+  {"order_id": "7a1d...", "result": "refused", "error": "wrong_state",
+   "message": "The order is not in a state that allows this."}]}
+```
+
+Each order goes through the same service as its own endpoint, in its own transaction; one refusal
+never stops the others. `accept` captures each payment like `POST /orders/{id}/accept` (and is
+refused as a whole with 403 `seller_suspended` for a suspended shop); `reject` needs one `reason`
+for all, shown to the buyers. Refunds and cancellations are not offered in bulk, on purpose: each
+moves a different amount of money. Send at most 100 orders per call.
+
+### Shipping
+
+`GET /integration/v1/shipping` returns this shop's settings, as the portal's Shipping page and the
+seller API's `GET /v1/shipping?shop_id=` do, plus `effective`: per country what buyers pay.
+
+```json
+{"shop_id": "...", "shop_name": "Kettle Shop", "mode": "custom", "currency": "EUR", "max_price_minor": 1000000,
+ "countries": [{"country": "DE", "enabled": true, "price_minor": 495, "offered": true,
+                "shop_price_min_minor": 695, "shop_price_max_minor": 895, "shop_price_products": 12}, "..."],
+ "effective": [{"country": "DE", "offered": true, "source": "sudemi_price", "min_minor": 495, "max_minor": 495},
+               {"country": "FR", "offered": true, "source": "shop_price", "min_minor": 795, "max_minor": 995},
+               {"country": "AT", "offered": false, "source": null, "min_minor": null, "max_minor": null}]}
+```
+
+`source: shop_price` means the price the plugin sends per product (from `min_minor` to `max_minor`
+over its products); `sudemi_price` a flat price set on sudemi for every product. One charge per
+parcel, never per unit.
+
+`POST` (or `PUT`) `/integration/v1/shipping` replaces the settings, with the portal's checks:
+
+```json
+{"mode": "custom", "currency": "EUR", "countries": [
+  {"country": "DE", "priceMinor": 495}, {"country": "FR"}, {"country": "AT", "enabled": false}]}
+```
+
+`{"mode": "shop"}` clears them (the plugin's own prices apply again). In custom mode only the
+listed, enabled countries are offered. Prices are in the shop's currency, 0 to `max_price_minor`.
+Other shops of the company keep their own settings.
+
+### Payouts (read only)
+
+`GET /integration/v1/payouts`: the company's payout account (`account.state`: `NOT_STARTED`,
+`INCOMPLETE`, `UNDER_REVIEW`, `ACTIVE`, `ACTION_REQUIRED`; managed on the portal only) and this
+shop's payouts per currency: `paid_out_minor`, and `outstanding_minor` split into
+`waiting_for_shipment_minor`, `scheduled_minor` (with `next_due_at`), `processing_minor` and
+`held_minor`. A shop is paid `payout_delay_days` after delivery (that plus 14 days after shipping
+when delivery is never reported), never while a chargeback is open.
 
 ## 5. What a plugin may **not** change
 

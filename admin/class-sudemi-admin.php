@@ -28,6 +28,7 @@ final class Sudemi_Admin {
 		add_action( 'admin_post_sudemi_request_answer', array( __CLASS__, 'handle_request_answer' ) );
 		// On the WooCommerce order screen, above the order form (forms cannot be nested in it).
 		add_action( 'admin_notices', array( __CLASS__, 'render_order_screen_request' ) );
+		Sudemi_Admin_Manage::boot();
 	}
 
 	public static function add_page() {
@@ -55,10 +56,26 @@ final class Sudemi_Admin {
 		echo '<div class="wrap"><h1>' . esc_html__( 'sudemi', 'sudemi' ) . '</h1>';
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation only, nothing changes.
-		$tab = isset( $_GET['tab'] ) && 'support' === sanitize_key( wp_unslash( $_GET['tab'] ) ) ? 'support' : 'overview';
+		$tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'overview';
+		$tab = in_array( $tab, array( 'orders', 'shipping', 'payouts', 'support' ), true ) ? $tab : 'overview';
 		self::render_tabs( $tab );
 		if ( 'support' === $tab ) {
 			self::render_support( $connected );
+			echo '</div>';
+			return;
+		}
+		if ( 'orders' === $tab ) {
+			Sudemi_Admin_Manage::render_orders();
+			echo '</div>';
+			return;
+		}
+		if ( 'shipping' === $tab ) {
+			Sudemi_Admin_Manage::render_shipping();
+			echo '</div>';
+			return;
+		}
+		if ( 'payouts' === $tab ) {
+			Sudemi_Admin_Manage::render_payouts();
 			echo '</div>';
 			return;
 		}
@@ -318,6 +335,8 @@ final class Sudemi_Admin {
 		}
 
 		echo '<h2>' . esc_html__( 'Orders through sudemi', 'sudemi' ) . '</h2>';
+		echo '<p><a class="button" href="' . esc_url( admin_url( 'admin.php?page=' . self::SLUG . '&tab=orders' ) ) . '">'
+			. esc_html__( 'Manage orders: filters, export, accept, ship, refund', 'sudemi' ) . '</a></p>';
 
 		$history = Sudemi_Orders::history( '', 20 );
 		if ( null === $history ) {
@@ -414,6 +433,10 @@ final class Sudemi_Admin {
 				return __( 'Shipped', 'sudemi' );
 			case 'DELIVERED':
 				return __( 'Delivered', 'sudemi' );
+			case 'CANCELLED':
+				return __( 'Cancelled', 'sudemi' );
+			case 'REFUNDED':
+				return __( 'Refunded', 'sudemi' );
 			default:
 				return $status;
 		}
@@ -473,7 +496,7 @@ final class Sudemi_Admin {
 	}
 
 	/** Accept, and reject with a required reason: two forms, so the reason is required only for one. */
-	private static function render_request_forms( array $request ) {
+	public static function render_request_forms( array $request ) {
 		$order_id = $request['order_id'];
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="margin-bottom:.5em">';
 		wp_nonce_field( 'sudemi_request_answer' );
@@ -576,6 +599,9 @@ final class Sudemi_Admin {
 	private static function render_tabs( $current ) {
 		$tabs = array(
 			'overview' => __( 'Overview', 'sudemi' ),
+			'orders'   => __( 'Orders', 'sudemi' ),
+			'shipping' => __( 'Shipping', 'sudemi' ),
+			'payouts'  => __( 'Payouts', 'sudemi' ),
 			'support'  => __( 'Support', 'sudemi' ),
 		);
 		echo '<nav class="nav-tab-wrapper" style="margin-bottom:1em">';
@@ -851,6 +877,7 @@ final class Sudemi_Admin {
 		Sudemi_Order_Calls::forget();
 		Sudemi_Challenge::forget();
 		Sudemi_Requests::forget();
+		Sudemi_Changes::forget();
 		delete_option( Sudemi_Client::OPTION_INSTALL_ID );
 		// The key goes with the connection. Keeping it would leave a usable credential on a
 		// shop that believes it has disconnected.

@@ -111,6 +111,26 @@ class Sudemi_Orders {
 class Sudemi_Order_Calls {
 	public static function drain() {}
 }
+// The change feed (4d): the beat carries the cursor; with more waiting, more beats follow.
+class Sudemi_Changes {
+	const MAX_EXTRA_BEATS = 5;
+	public static $handled = array();
+	public static $more    = 0;
+	public static $net     = 0;
+	public static function cursor() {
+		return 'c1.abc';
+	}
+	public static function handle_beat( array $body ) {
+		self::$handled[] = $body;
+		if ( ! isset( $body['changed_orders'] ) ) {
+			return null;
+		}
+		return self::$more-- > 0;
+	}
+	public static function safety_net() {
+		++self::$net;
+	}
+}
 $wpdb = new class() {
 	public $posts = 'wp_posts';
 	public function get_row( $sql ) {
@@ -193,6 +213,24 @@ check( 'heartbeat: a good beat without open_requests empties the stored list', a
 $reply = array( 'code' => 200, 'body' => '{"catalogue_listed":true,"open_requests":[{"order_id":"x"}]}' );
 Sudemi_Heartbeat::run();
 check( 'heartbeat: open_requests are handed on as they came', array( array( 'order_id' => 'x' ) ) === end( Sudemi_Requests::$replaced ) );
+
+// ---- the change feed ----
+$before = count( $sent );
+Sudemi_Changes::$handled = array();
+$reply = array( 'code' => 200, 'body' => '{"catalogue_listed":true}' );
+Sudemi_Heartbeat::run();
+$beat = json_decode( $sent[ count( $sent ) - 1 ]['args']['body'], true );
+check( 'heartbeat: the beat carries the change cursor', 'c1.abc' === $beat['changesCursor'] && 'test' === $beat['pluginVersion'] );
+check( 'heartbeat: an answer without changed_orders (older core): one beat, no safety net', 1 === count( $sent ) - $before && 1 === count( Sudemi_Changes::$handled ) && 0 === Sudemi_Changes::$net );
+$before = count( $sent );
+Sudemi_Changes::$more = 2;
+$reply = array( 'code' => 200, 'body' => '{"catalogue_listed":true,"changed_orders":[],"changes_cursor":"c1.n","changes_more":true}' );
+Sudemi_Heartbeat::run();
+check( 'heartbeat: changes_more asks again right away until no more are waiting', 3 === count( $sent ) - $before && 3 === count( Sudemi_Changes::$handled ) - 1 && 1 === Sudemi_Changes::$net );
+$before = count( $sent );
+Sudemi_Changes::$more = 50;
+Sudemi_Heartbeat::run();
+check( 'heartbeat: at most 5 extra beats in one run', 6 === count( $sent ) - $before );
 
 echo $failures ? "\n$failures check(s) failed\n" : "\nall checks passed\n";
 exit( $failures ? 1 : 0 );

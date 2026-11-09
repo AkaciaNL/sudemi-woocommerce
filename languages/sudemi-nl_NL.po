@@ -979,3 +979,576 @@ msgstr "sudemi heeft nog %1$s voor je winkel, maar je winkel verkoopt in %2$s. B
 
 msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
 msgstr "Kopers betalen in jouw valuta. sudemi betaalt jou uit in euro's: de kosten van de betaalprovider voor het omrekenen (ongeveer 2%) gaan van je uitbetaling af, zoals in de voorwaarden staat."
+
+msgid "Waiting for you"
+msgstr "Wacht op jou"
+
+msgid "Accepted, waiting for payment"
+msgstr "Geaccepteerd, wacht op betaling"
+
+msgid "Paid, ready to ship"
+msgstr "Betaald, klaar om te verzenden"
+
+msgid "Declined"
+msgstr "Afgewezen"
+
+msgid "Cancelled"
+msgstr "Geannuleerd"
+
+msgid "Refunded"
+msgstr "Terugbetaald"
+
+msgid "Nothing charged"
+msgstr "Niets afgeschreven"
+
+msgid "Due once shipped"
+msgstr "Uit te betalen na verzending"
+
+msgid "Scheduled"
+msgstr "Ingepland"
+
+msgid "On its way to you"
+msgstr "Onderweg naar jou"
+
+msgid "Held (chargeback)"
+msgstr "Vastgehouden (terugboeking)"
+
+msgid "Partly paid out"
+msgstr "Deels uitbetaald"
+
+msgid "Paid out"
+msgstr "Uitbetaald"
+
+msgid "Nothing due (refunded)"
+msgstr "Niets uit te betalen (terugbetaald)"
+
+msgid "Placed by the buyer"
+msgstr "Geplaatst door de koper"
+
+msgid "Accepted"
+msgstr "Geaccepteerd"
+
+msgid "Paid"
+msgstr "Betaald"
+
+msgid "Refund"
+msgstr "Terugbetaling"
+
+msgid "Buyer asked to return or cancel"
+msgstr "Koper vroeg om retour of annulering"
+
+msgid "Request answered"
+msgstr "Verzoek beantwoord"
+
+msgid "Not set up yet"
+msgstr "Nog niet ingesteld"
+
+msgid "Details missing"
+msgstr "Gegevens ontbreken"
+
+msgid "Under review"
+msgstr "Wordt beoordeeld"
+
+msgid "Active"
+msgstr "Actief"
+
+msgid "Action required"
+msgstr "Actie vereist"
+
+msgid "This is available once this shop is connected to sudemi."
+msgstr "Dit is beschikbaar zodra deze winkel aan sudemi is gekoppeld."
+
+msgid "All"
+msgstr "Alle"
+
+msgid "No orders match."
+msgstr "Geen bestellingen gevonden."
+
+msgid "Select"
+msgstr "Selecteren"
+
+msgid "Ship to"
+msgstr "Verzenden naar"
+
+msgid "Total"
+msgstr "Totaal"
+
+msgid "Payout"
+msgstr "Uitbetaling"
+
+msgid "Tracking"
+msgstr "Track & trace"
+
+msgid "WooCommerce order"
+msgstr "WooCommerce-bestelling"
+
+msgid "With the selected orders"
+msgstr "Met de geselecteerde bestellingen"
+
+msgid "Choose an action"
+msgstr "Kies een actie"
+
+msgid "Accept"
+msgstr "Accepteren"
+
+msgid "Decline"
+msgstr "Afwijzen"
+
+msgid "Mark shipped"
+msgstr "Markeren als verzonden"
+
+msgid "Mark delivered"
+msgstr "Markeren als afgeleverd"
+
+msgid "Reason for declining (shown to the buyers)"
+msgstr "Reden van afwijzing (zichtbaar voor de kopers)"
+
+msgid "Carrier"
+msgstr "Vervoerder"
+
+msgid "Apply"
+msgstr "Toepassen"
+
+msgid "Refunds and cancellations are made one order at a time, on the order's own page: each moves a different amount of money."
+msgstr "Terugbetalingen en annuleringen gaan per bestelling, op de pagina van die bestelling: bij elke gaat het om een ander bedrag."
+
+#, php-format
+msgid "Orders %1$d to %2$d of %3$d"
+msgstr "Bestellingen %1$d tot %2$d van %3$d"
+
+msgid "Previous"
+msgstr "Vorige"
+
+msgid "Next"
+msgstr "Volgende"
+
+#, php-format
+msgid "answer by %s"
+msgstr "antwoorden vóór %s"
+
+#, php-format
+msgid "refunded %s"
+msgstr "%s terugbetaald"
+
+msgid "Tracking code"
+msgstr "Trackingcode"
+
+msgid "From"
+msgstr "Van"
+
+msgid "To"
+msgstr "Tot"
+
+msgid "Search"
+msgstr "Zoeken"
+
+msgid "Order number or product"
+msgstr "Bestelnummer of product"
+
+msgid "Sort by"
+msgstr "Sorteren op"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Newest or highest first"
+msgstr "Nieuwste of hoogste eerst"
+
+msgid "Oldest or lowest first"
+msgstr "Oudste of laagste eerst"
+
+msgid "Filter"
+msgstr "Filteren"
+
+msgid "Language of the file"
+msgstr "Taal van het bestand"
+
+msgid "Numbers"
+msgstr "Getallen"
+
+msgid "1234.50, comma separated"
+msgstr "1234.50, gescheiden door komma's"
+
+msgid "1234,50, semicolon separated"
+msgstr "1234,50, gescheiden door puntkomma's"
+
+msgid "Download these orders (CSV)"
+msgstr "Deze bestellingen downloaden (CSV)"
+
+msgid "Every order that matches the filters, up to 10,000, without buyer names or addresses."
+msgstr "Elke bestelling die aan de filters voldoet, tot 10.000, zonder namen of adressen van kopers."
+
+msgid "Confirm orders automatically when the items are in stock"
+msgstr "Bestellingen automatisch bevestigen als de artikelen op voorraad zijn"
+
+msgid "Save"
+msgstr "Opslaan"
+
+msgid "On: every five minutes this shop accepts orders whose items are in stock and declines the others."
+msgstr "Aan: elke vijf minuten accepteert deze winkel bestellingen waarvan de artikelen op voorraad zijn en wijst de andere af."
+
+msgid "Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing."
+msgstr "Uit: bestellingen wachten op jou. Accepteer of wijs elke bestelling hier af vóór de getoonde datum; zonder antwoord wordt de koper vrijgegeven en wordt er niets afgeschreven."
+
+msgid "Back to the orders"
+msgstr "Terug naar de bestellingen"
+
+#, php-format
+msgid "Order %1$s: %2$s"
+msgstr "Bestelling %1$s: %2$s"
+
+#, php-format
+msgid "Waiting for your answer. The buyer is not charged until you accept. Answer by %s; without an answer the buyer is released."
+msgstr "Wacht op je antwoord. Er wordt pas iets bij de koper afgeschreven als je accepteert. Antwoord vóór %s; zonder antwoord wordt de koper vrijgegeven."
+
+#, php-format
+msgid "Stock check: %s."
+msgstr "Voorraadcontrole: %s."
+
+msgid "sudemi order"
+msgstr "sudemi-bestelling"
+
+msgid "Placed"
+msgstr "Geplaatst"
+
+msgid "none yet (it is created when the order is accepted)"
+msgstr "nog geen (die wordt aangemaakt als de bestelling wordt geaccepteerd)"
+
+msgid "Buyer may withdraw until"
+msgstr "Koper kan herroepen tot"
+
+msgid "Reason declined"
+msgstr "Reden van afwijzing"
+
+msgid "Items"
+msgstr "Artikelen"
+
+msgid "Product"
+msgstr "Product"
+
+msgid "Quantity"
+msgstr "Aantal"
+
+msgid "Price"
+msgstr "Prijs"
+
+msgid "Amount"
+msgstr "Bedrag"
+
+msgid "No right of withdrawal"
+msgstr "Geen herroepingsrecht"
+
+msgid "Money"
+msgstr "Geld"
+
+msgid "Goods"
+msgstr "Goederen"
+
+msgid "Shipping"
+msgstr "Verzending"
+
+msgid "Buyer paid"
+msgstr "Betaald door koper"
+
+msgid "sudemi commission"
+msgstr "sudemi-commissie"
+
+msgid "Refunded to the buyer"
+msgstr "Terugbetaald aan de koper"
+
+msgid "Payout expected"
+msgstr "Verwachte uitbetaling"
+
+msgid "Payout due"
+msgstr "Verschuldigde uitbetaling"
+
+msgid "The buyer asked to return this order"
+msgstr "De koper heeft gevraagd deze bestelling te retourneren"
+
+msgid "History"
+msgstr "Geschiedenis"
+
+msgid "Actions"
+msgstr "Acties"
+
+msgid "Accept: the buyer is charged and you ship the order."
+msgstr "Accepteren: het bedrag wordt bij de koper afgeschreven en jij verzendt de bestelling."
+
+msgid "Accept the order"
+msgstr "Bestelling accepteren"
+
+msgid "Reason for declining (shown to the buyer)"
+msgstr "Reden van afwijzing (zichtbaar voor de koper)"
+
+msgid "Decline the order"
+msgstr "Bestelling afwijzen"
+
+#, php-format
+msgid "Amount to refund (%s)"
+msgstr "Terug te betalen bedrag (%s)"
+
+#, php-format
+msgid "Leave empty to refund everything not refunded yet (%s)."
+msgstr "Laat leeg om alles terug te betalen wat nog niet is terugbetaald (%s)."
+
+msgid "Reason"
+msgstr "Reden"
+
+msgid "Refund through sudemi"
+msgstr "Terugbetalen via sudemi"
+
+msgid "Cancel: you cannot fulfil this paid order. The buyer is refunded in full."
+msgstr "Annuleren: je kunt deze betaalde bestelling niet leveren. De koper wordt volledig terugbetaald."
+
+msgid "Cancel and refund in full"
+msgstr "Annuleren en volledig terugbetalen"
+
+#, php-format
+msgid "The order export was cut off at 10,000 of %d orders. Narrow the dates to get the rest."
+msgstr "De export is afgekapt bij 10.000 van %d bestellingen. Beperk de datums om de rest te krijgen."
+
+msgid "Orders are confirmed automatically."
+msgstr "Bestellingen worden automatisch bevestigd."
+
+msgid "Orders now wait for you to accept or decline them."
+msgstr "Bestellingen wachten nu tot je ze accepteert of afwijst."
+
+msgid "What sudemi buyers pay for shipping, per country. By default the prices this plugin sends from your WooCommerce shipping zones apply. You can instead set your own price per country on sudemi, and choose the countries you deliver to. One charge per parcel, never per item."
+msgstr "Wat sudemi-kopers voor verzending betalen, per land. Standaard gelden de prijzen die deze plugin uit je WooCommerce-verzendzones stuurt. Je kunt in plaats daarvan op sudemi per land je eigen prijs instellen en kiezen naar welke landen je levert. Eén bedrag per pakket, nooit per artikel."
+
+msgid "Prices filled in from your WooCommerce shipping zones. Check them and save; nothing is changed on sudemi until you do."
+msgstr "Prijzen ingevuld vanuit je WooCommerce-verzendzones. Controleer ze en sla op; op sudemi verandert niets tot je dat doet."
+
+msgid "Shipping prices"
+msgstr "Verzendprijzen"
+
+msgid "Use the prices from my WooCommerce shipping zones"
+msgstr "De prijzen uit mijn WooCommerce-verzendzones gebruiken"
+
+msgid "Set my own countries and prices on sudemi"
+msgstr "Mijn eigen landen en prijzen instellen op sudemi"
+
+msgid "Country"
+msgstr "Land"
+
+msgid "Deliver there"
+msgstr "Daarheen leveren"
+
+#, php-format
+msgid "Your price on sudemi (%s)"
+msgstr "Jouw prijs op sudemi (%s)"
+
+msgid "Prices from your shipping zones"
+msgstr "Prijzen uit je verzendzones"
+
+msgid "Buyers pay now"
+msgstr "Kopers betalen nu"
+
+msgid "not offered"
+msgstr "niet aangeboden"
+
+msgid "your price on sudemi"
+msgstr "jouw prijs op sudemi"
+
+msgid "from your shop"
+msgstr "uit je winkel"
+
+msgid "With your own countries and prices: only the ticked countries are offered. A country with an empty price uses the price from your shipping zones."
+msgstr "Met je eigen landen en prijzen: alleen de aangevinkte landen worden aangeboden. Een land zonder prijs gebruikt de prijs uit je verzendzones."
+
+msgid "Save shipping on sudemi"
+msgstr "Verzending opslaan op sudemi"
+
+msgid "Fill in from my WooCommerce shipping zones"
+msgstr "Invullen vanuit mijn WooCommerce-verzendzones"
+
+msgid "Shipping settings saved on sudemi."
+msgstr "Verzendinstellingen opgeslagen op sudemi."
+
+msgid "Saved on sudemi. Buyers see these shipping prices from now on."
+msgstr "Opgeslagen op sudemi. Kopers zien vanaf nu deze verzendprijzen."
+
+msgid "Payout account"
+msgstr "Uitbetalingsrekening"
+
+msgid "State"
+msgstr "Status"
+
+msgid "Act before"
+msgstr "Actie nodig vóór"
+
+msgid "When you are paid"
+msgstr "Wanneer je betaald wordt"
+
+#, php-format
+msgid "%d days after the buyer received the order (plus 14 days after shipping when delivery is never reported), never while a chargeback is open."
+msgstr "%d dagen nadat de koper de bestelling heeft ontvangen (plus 14 dagen na verzending als de levering nooit wordt gemeld), nooit zolang er een terugboeking openstaat."
+
+msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."
+msgstr "Je uitbetalingsrekening vraagt aandacht. Die wordt beheerd in het sudemi-verkopersportaal (Uitbetalingen), niet hier."
+
+msgid "The payout account is managed on the sudemi seller portal (Payouts)."
+msgstr "De uitbetalingsrekening wordt beheerd in het sudemi-verkopersportaal (Uitbetalingen)."
+
+msgid "This shop's payouts"
+msgstr "Uitbetalingen van deze winkel"
+
+msgid "No payouts yet."
+msgstr "Nog geen uitbetalingen."
+
+msgid "Orders"
+msgstr "Bestellingen"
+
+msgid "Still to come"
+msgstr "Nog te ontvangen"
+
+msgid "Next payout"
+msgstr "Volgende uitbetaling"
+
+msgid "Manage orders: filters, export, accept, ship, refund"
+msgstr "Bestellingen beheren: filters, export, accepteren, verzenden, terugbetalen"
+
+msgid "sudemi started the order change list over (last 7 days); orders are checked again, nothing is applied twice."
+msgstr "sudemi is opnieuw begonnen met de lijst van bestelwijzigingen (laatste 7 dagen); bestellingen worden opnieuw gecontroleerd, niets wordt twee keer verwerkt."
+
+#, php-format
+msgid "%d WooCommerce order(s) updated from sudemi."
+msgstr "%d WooCommerce-bestelling(en) bijgewerkt vanuit sudemi."
+
+msgid "An order change from sudemi could not be applied yet; it is read again on the next heartbeat."
+msgstr "Een wijziging in een bestelling op sudemi kon nog niet worden verwerkt; die wordt bij de volgende heartbeat opnieuw gelezen."
+
+msgid "Paid on sudemi; the buyer has been charged. This order can be shipped."
+msgstr "Betaald op sudemi; het bedrag is bij de koper afgeschreven. Deze bestelling kan worden verzonden."
+
+msgid "Marked shipped on sudemi."
+msgstr "Op sudemi gemarkeerd als verzonden."
+
+msgid "Declined on sudemi: the buyer was not charged. The stock has been restored."
+msgstr "Afgewezen op sudemi: er is niets bij de koper afgeschreven. De voorraad is hersteld."
+
+msgid "Cancelled on sudemi; the buyer has been refunded in full. Do not ship this order. The stock has been restored."
+msgstr "Geannuleerd op sudemi; de koper is volledig terugbetaald. Verstuur deze bestelling niet. De voorraad is hersteld."
+
+#, php-format
+msgid "Delivered (recorded on sudemi, %s)."
+msgstr "Afgeleverd (vastgelegd op sudemi, %s)."
+
+#, php-format
+msgid "Tracking on sudemi: %1$s %2$s"
+msgstr "Track & trace op sudemi: %1$s %2$s"
+
+msgid "Refund made on sudemi"
+msgstr "Terugbetaling gedaan op sudemi"
+
+#, php-format
+msgid "A refund of %s made on sudemi is recorded here. The buyer was paid back by sudemi."
+msgstr "Een terugbetaling van %s die op sudemi is gedaan, is hier vastgelegd. De koper is door sudemi terugbetaald."
+
+msgid "Booked from sudemi: this order was accepted on sudemi (on the portal or in a bulk action)."
+msgstr "Geboekt vanuit sudemi: deze bestelling is op sudemi geaccepteerd (in het portaal of met een bulkactie)."
+
+#, php-format
+msgid "sudemi order %1$s was accepted on sudemi; booked here as order #%2$s."
+msgstr "sudemi-bestelling %1$s is op sudemi geaccepteerd; hier geboekt als bestelling #%2$s."
+
+msgid "sudemi has no such order for this shop."
+msgstr "sudemi heeft zo'n bestelling niet voor deze winkel."
+
+msgid "This order belongs to an earlier sudemi connection of this shop. Leave it as it is; sudemi support can help."
+msgstr "Deze bestelling hoort bij een eerdere sudemi-koppeling van deze winkel. Laat haar zoals ze is; sudemi-support kan helpen."
+
+msgid "This order was already answered."
+msgstr "Deze bestelling is al beantwoord."
+
+msgid "The buyer's payment authorisation ran out, so the order can no longer be accepted."
+msgstr "De betalingsautorisatie van de koper is verlopen, dus de bestelling kan niet meer worden geaccepteerd."
+
+msgid "The order is not in a state that allows this (it may have changed in the meantime). Reload the order."
+msgstr "De bestelling staat niet in een status die dit toestaat (misschien is ze intussen gewijzigd). Laad de bestelling opnieuw."
+
+msgid "The payment provider refused this. Nothing changed; try again later or contact sudemi support."
+msgstr "De betaalprovider heeft dit geweigerd. Er is niets veranderd; probeer het later opnieuw of neem contact op met sudemi-support."
+
+msgid "The amount is not in the currency the buyer paid in."
+msgstr "Het bedrag is niet in de valuta waarin de koper heeft betaald."
+
+msgid "This shop is suspended on sudemi: it cannot accept orders. Paid orders can still be shipped and refunded. Contact sudemi support."
+msgstr "Deze winkel is geschorst op sudemi: hij kan geen bestellingen accepteren. Betaalde bestellingen kunnen nog worden verzonden en terugbetaald. Neem contact op met sudemi-support."
+
+msgid "Dates must be in the form YYYY-MM-DD."
+msgstr "Datums moeten de vorm YYYY-MM-DD hebben."
+
+msgid "sudemi asked this shop to slow down. Wait a minute and try again."
+msgstr "sudemi vroeg deze winkel om het rustiger aan te doen. Wacht een minuut en probeer het opnieuw."
+
+msgid "Give a reason. The buyer is shown it."
+msgstr "Geef een reden op. De koper krijgt die te zien."
+
+msgid "Select at least one order."
+msgstr "Selecteer minstens één bestelling."
+
+msgid "Select at most 100 orders at once."
+msgstr "Selecteer maximaal 100 bestellingen tegelijk."
+
+msgid "That action is not available."
+msgstr "Die actie is niet beschikbaar."
+
+msgid "Prices must be numbers of 0 or more."
+msgstr "Prijzen moeten getallen van 0 of meer zijn."
+
+msgid "Enter an amount greater than 0, or leave it empty to refund the rest."
+msgstr "Vul een bedrag groter dan 0 in, of laat het leeg om de rest terug te betalen."
+
+msgid "Could not reach sudemi. Nothing was changed; try again shortly."
+msgstr "Kon sudemi niet bereiken. Er is niets veranderd; probeer het zo opnieuw."
+
+msgid "sudemi refused this."
+msgstr "sudemi heeft dit geweigerd."
+
+msgid "Declined on sudemi. The buyer is not charged."
+msgstr "Afgewezen op sudemi. Er wordt niets bij de koper afgeschreven."
+
+msgid "Marked shipped on sudemi. The buyer is told."
+msgstr "Op sudemi gemarkeerd als verzonden. De koper krijgt bericht."
+
+msgid "Marked delivered on sudemi."
+msgstr "Op sudemi gemarkeerd als afgeleverd."
+
+msgid "Refunded through sudemi. The refund is recorded on the WooCommerce order."
+msgstr "Terugbetaald via sudemi. De terugbetaling is vastgelegd op de WooCommerce-bestelling."
+
+msgid "Cancelled on sudemi and refunded in full. The WooCommerce order is cancelled and the stock restored."
+msgstr "Geannuleerd op sudemi en volledig terugbetaald. De WooCommerce-bestelling is geannuleerd en de voorraad hersteld."
+
+msgid "The WooCommerce order for this sudemi order is cancelled. Decline it instead."
+msgstr "De WooCommerce-bestelling bij deze sudemi-bestelling is geannuleerd. Wijs haar in plaats daarvan af."
+
+msgid "The order could not be recorded in WooCommerce (a product in it is no longer in this shop). Decline it instead."
+msgstr "De bestelling kon niet in WooCommerce worden vastgelegd (een product erin is niet meer in deze winkel). Wijs haar in plaats daarvan af."
+
+msgid "Accepted. The buyer has been charged; the WooCommerce order is ready to ship."
+msgstr "Geaccepteerd. Het bedrag is bij de koper afgeschreven; de WooCommerce-bestelling is klaar om te verzenden."
+
+msgid "Accepted. sudemi takes the money once the other shops in the buyer's payment have answered; do not ship until the order moves to Processing."
+msgstr "Geaccepteerd. sudemi schrijft het geld af zodra de andere winkels in de betaling van de koper hebben geantwoord; verzend niet voordat de bestelling naar In behandeling gaat."
+
+msgid "sudemi did not answer. The WooCommerce order stays on hold and the acceptance is sent again on the next heartbeat."
+msgstr "sudemi heeft niet geantwoord. De WooCommerce-bestelling blijft in de wacht en de acceptatie wordt bij de volgende heartbeat opnieuw verstuurd."
+
+#, php-format
+msgid "%1$d done, %2$d refused."
+msgstr "%1$d gelukt, %2$d geweigerd."
+
+msgid "Mark delivered on sudemi"
+msgstr "Markeren als afgeleverd op sudemi"
+
+msgid "sudemi did not record the delivery (the order may not be shipped there yet). Check the order under WooCommerce > sudemi > Orders."
+msgstr "sudemi heeft de levering niet vastgelegd (misschien is de bestelling daar nog niet verzonden). Controleer de bestelling onder WooCommerce > sudemi > Bestellingen."
+
+msgid "Could not reach sudemi to report the delivery. It is sent again on the next heartbeat."
+msgstr "Kon sudemi niet bereiken om de levering te melden. Die wordt bij de volgende heartbeat opnieuw verstuurd."
+
+#, php-format
+msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
+msgstr "%d bestelling(en) wachten op je antwoord onder WooCommerce > sudemi > Bestellingen. Automatisch bevestigen staat uit, dus ze moeten handmatig worden beantwoord voordat hun termijn verloopt."

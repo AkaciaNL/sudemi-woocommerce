@@ -28,3 +28,5 @@ jobs:
         run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/orders-test.php"
       - name: Currencies (minor units, order and refund currency)
         run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/currency-test.php"
+      - name: Managing orders, shipping and payouts (filters, bulk, change feed rules)
+        run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/manage-test.php"

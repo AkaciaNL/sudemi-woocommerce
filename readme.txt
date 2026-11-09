@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.2.13
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,8 +35,9 @@ host and sends sudemi only the public half.
 
 = Does this send my customers' data anywhere? =
 
-No. It sends your catalogue - products, prices, stock, images - and nothing about your orders or
-your customers.
+No. It sends your catalogue - products, prices, stock, images - and what you do with sudemi orders
+(accepted, shipped with tracking, delivered, refunded). It never sends anything about your other
+orders or your customers, and the plugin never sends e-mail.
 
 = What if my host does not have the sodium extension? =
 
@@ -44,6 +45,17 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.3.0 =
+* Manage sudemi orders inside WooCommerce: WooCommerce > sudemi > Orders shows the sudemi portal's order table (status, date, search and sort filters, paging), a CSV download of the filtered orders (in any of the 12 languages, decimal point or comma), and bulk actions: accept, decline with a reason, mark shipped with a carrier and a tracking code per order, mark delivered.
+* Each order has its own page, as on the portal: items, money (with commission, what you receive and what was refunded), tracking, the history, the payout (state, expected, paid out, due date), an open return request with accept and decline, and the actions sudemi allows right now: accept, decline, ship with carrier and tracking, delivered, partial or full refund, cancel. Each links to its WooCommerce order.
+* sudemi stays the source of truth: every action goes to sudemi, and only sudemi's answer changes the WooCommerce order.
+* Automatic confirmation can be switched off on the Orders page; waiting orders are then accepted or declined there by hand (before, they were only logged). An accepted order is booked in WooCommerce first, as with automatic confirmation.
+* Changes made on the sudemi portal (or by sudemi support, or by a deadline) reach the WooCommerce orders through the heartbeat's change feed: shipped with tracking, delivered, refunds (recorded as WooCommerce refunds, never sent back), cancellations (stock restored), and orders accepted on the portal (booked in WooCommerce). A change is applied only when it is newer than what the order holds; a daily check of the last day's orders is the safety net.
+* Shipping tab: the prices buyers pay per country, as on the portal; keep your WooCommerce zone prices, or set your own countries and prices on sudemi (prefilled from your zones).
+* Payouts tab: your payout account state and this shop's payouts per currency (paid out, scheduled, waiting for shipment, on its way, held).
+* "Mark delivered on sudemi" in the WooCommerce order actions, so no delivery-status plugin is needed.
+* All new screens in the 12 languages. PROTOCOL.md: current copy (section 4d).
 
 = 1.2.13 =
 * VAT on shipping follows the shop's own shipping tax class setting: with WooCommerce's default "based on cart items", an order with only reduced-rate goods books (and syncs) the reduced rate on shipping, and a cart with no taxable goods gets untaxed shipping, as in WooCommerce's own checkout.

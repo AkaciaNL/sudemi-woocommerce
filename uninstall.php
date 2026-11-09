@@ -42,6 +42,8 @@ delete_option( 'sudemi_sync_state' );
 delete_option( 'sudemi_removals_synced' );
 delete_option( 'sudemi_pending_order_calls' );
 delete_option( 'sudemi_last_ok' );
+delete_option( 'sudemi_changes_cursor' );
+delete_option( 'sudemi_changes_checked' );
 
 wp_clear_scheduled_hook( 'sudemi_full_sync' );
 wp_clear_scheduled_hook( 'sudemi_full_sync', array( 'continue' ) );

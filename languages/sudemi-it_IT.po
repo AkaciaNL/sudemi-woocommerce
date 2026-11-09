@@ -979,3 +979,576 @@ msgstr "sudemi ha ancora %1$s per il tuo negozio, ma il tuo negozio vende in %2$
 
 msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
 msgstr "Gli acquirenti pagano nella tua valuta. sudemi ti paga in euro: la commissione di conversione del fornitore di pagamento (circa il 2%) viene trattenuta dal tuo pagamento, come previsto dalle condizioni."
+
+msgid "Waiting for you"
+msgstr "In attesa di tua risposta"
+
+msgid "Accepted, waiting for payment"
+msgstr "Accettato, in attesa di pagamento"
+
+msgid "Paid, ready to ship"
+msgstr "Pagato, pronto per la spedizione"
+
+msgid "Declined"
+msgstr "Rifiutato"
+
+msgid "Cancelled"
+msgstr "Annullato"
+
+msgid "Refunded"
+msgstr "Rimborsato"
+
+msgid "Nothing charged"
+msgstr "Nessun addebito"
+
+msgid "Due once shipped"
+msgstr "Dovuto dopo la spedizione"
+
+msgid "Scheduled"
+msgstr "Programmato"
+
+msgid "On its way to you"
+msgstr "In arrivo"
+
+msgid "Held (chargeback)"
+msgstr "Trattenuto (chargeback)"
+
+msgid "Partly paid out"
+msgstr "Versato in parte"
+
+msgid "Paid out"
+msgstr "Versato"
+
+msgid "Nothing due (refunded)"
+msgstr "Nulla da versare (rimborsato)"
+
+msgid "Placed by the buyer"
+msgstr "Effettuato dall'acquirente"
+
+msgid "Accepted"
+msgstr "Accettato"
+
+msgid "Paid"
+msgstr "Pagato"
+
+msgid "Refund"
+msgstr "Rimborso"
+
+msgid "Buyer asked to return or cancel"
+msgstr "L'acquirente ha chiesto di restituire o annullare"
+
+msgid "Request answered"
+msgstr "Richiesta gestita"
+
+msgid "Not set up yet"
+msgstr "Non ancora configurato"
+
+msgid "Details missing"
+msgstr "Dati mancanti"
+
+msgid "Under review"
+msgstr "In verifica"
+
+msgid "Active"
+msgstr "Attivo"
+
+msgid "Action required"
+msgstr "Intervento richiesto"
+
+msgid "This is available once this shop is connected to sudemi."
+msgstr "Disponibile quando questo negozio è collegato a sudemi."
+
+msgid "All"
+msgstr "Tutti"
+
+msgid "No orders match."
+msgstr "Nessun ordine corrispondente."
+
+msgid "Select"
+msgstr "Seleziona"
+
+msgid "Ship to"
+msgstr "Spedire a"
+
+msgid "Total"
+msgstr "Totale"
+
+msgid "Payout"
+msgstr "Pagamento"
+
+msgid "Tracking"
+msgstr "Tracciamento"
+
+msgid "WooCommerce order"
+msgstr "Ordine WooCommerce"
+
+msgid "With the selected orders"
+msgstr "Con gli ordini selezionati"
+
+msgid "Choose an action"
+msgstr "Scegli un'azione"
+
+msgid "Accept"
+msgstr "Accetta"
+
+msgid "Decline"
+msgstr "Rifiuta"
+
+msgid "Mark shipped"
+msgstr "Segna come spedito"
+
+msgid "Mark delivered"
+msgstr "Segna come consegnato"
+
+msgid "Reason for declining (shown to the buyers)"
+msgstr "Motivo del rifiuto (mostrato agli acquirenti)"
+
+msgid "Carrier"
+msgstr "Corriere"
+
+msgid "Apply"
+msgstr "Applica"
+
+msgid "Refunds and cancellations are made one order at a time, on the order's own page: each moves a different amount of money."
+msgstr "Rimborsi e annullamenti si fanno un ordine alla volta, nella pagina dell'ordine: ognuno sposta un importo diverso."
+
+#, php-format
+msgid "Orders %1$d to %2$d of %3$d"
+msgstr "Ordini da %1$d a %2$d di %3$d"
+
+msgid "Previous"
+msgstr "Precedente"
+
+msgid "Next"
+msgstr "Successivo"
+
+#, php-format
+msgid "answer by %s"
+msgstr "rispondi entro il %s"
+
+#, php-format
+msgid "refunded %s"
+msgstr "rimborsato %s"
+
+msgid "Tracking code"
+msgstr "Codice di tracciamento"
+
+msgid "From"
+msgstr "Dal"
+
+msgid "To"
+msgstr "Al"
+
+msgid "Search"
+msgstr "Cerca"
+
+msgid "Order number or product"
+msgstr "Numero d'ordine o prodotto"
+
+msgid "Sort by"
+msgstr "Ordina per"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Newest or highest first"
+msgstr "Prima i più recenti o i più alti"
+
+msgid "Oldest or lowest first"
+msgstr "Prima i meno recenti o i più bassi"
+
+msgid "Filter"
+msgstr "Filtra"
+
+msgid "Language of the file"
+msgstr "Lingua del file"
+
+msgid "Numbers"
+msgstr "Numeri"
+
+msgid "1234.50, comma separated"
+msgstr "1234.50, separati da virgola"
+
+msgid "1234,50, semicolon separated"
+msgstr "1234,50, separati da punto e virgola"
+
+msgid "Download these orders (CSV)"
+msgstr "Scarica questi ordini (CSV)"
+
+msgid "Every order that matches the filters, up to 10,000, without buyer names or addresses."
+msgstr "Tutti gli ordini che corrispondono ai filtri, fino a 10.000, senza nomi o indirizzi degli acquirenti."
+
+msgid "Confirm orders automatically when the items are in stock"
+msgstr "Conferma automaticamente gli ordini quando gli articoli sono disponibili"
+
+msgid "Save"
+msgstr "Salva"
+
+msgid "On: every five minutes this shop accepts orders whose items are in stock and declines the others."
+msgstr "Attivo: ogni cinque minuti questo negozio accetta gli ordini con articoli disponibili e rifiuta gli altri."
+
+msgid "Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing."
+msgstr "Disattivo: gli ordini attendono la tua risposta. Accetta o rifiuta ciascuno qui entro la data indicata; senza risposta l'acquirente viene svincolato e non gli viene addebitato nulla."
+
+msgid "Back to the orders"
+msgstr "Torna agli ordini"
+
+#, php-format
+msgid "Order %1$s: %2$s"
+msgstr "Ordine %1$s: %2$s"
+
+#, php-format
+msgid "Waiting for your answer. The buyer is not charged until you accept. Answer by %s; without an answer the buyer is released."
+msgstr "In attesa della tua risposta. All'acquirente non viene addebitato nulla finché non accetti. Rispondi entro il %s; senza risposta l'acquirente viene svincolato."
+
+#, php-format
+msgid "Stock check: %s."
+msgstr "Controllo giacenze: %s."
+
+msgid "sudemi order"
+msgstr "Ordine sudemi"
+
+msgid "Placed"
+msgstr "Effettuato"
+
+msgid "none yet (it is created when the order is accepted)"
+msgstr "non ancora (viene creato quando l'ordine è accettato)"
+
+msgid "Buyer may withdraw until"
+msgstr "L'acquirente può recedere fino al"
+
+msgid "Reason declined"
+msgstr "Motivo del rifiuto"
+
+msgid "Items"
+msgstr "Articoli"
+
+msgid "Product"
+msgstr "Prodotto"
+
+msgid "Quantity"
+msgstr "Quantità"
+
+msgid "Price"
+msgstr "Prezzo"
+
+msgid "Amount"
+msgstr "Importo"
+
+msgid "No right of withdrawal"
+msgstr "Nessun diritto di recesso"
+
+msgid "Money"
+msgstr "Denaro"
+
+msgid "Goods"
+msgstr "Merce"
+
+msgid "Shipping"
+msgstr "Spedizione"
+
+msgid "Buyer paid"
+msgstr "Pagato dall'acquirente"
+
+msgid "sudemi commission"
+msgstr "Commissione sudemi"
+
+msgid "Refunded to the buyer"
+msgstr "Rimborsato all'acquirente"
+
+msgid "Payout expected"
+msgstr "Pagamento previsto"
+
+msgid "Payout due"
+msgstr "Pagamento dovuto"
+
+msgid "The buyer asked to return this order"
+msgstr "L'acquirente ha chiesto di restituire questo ordine"
+
+msgid "History"
+msgstr "Cronologia"
+
+msgid "Actions"
+msgstr "Azioni"
+
+msgid "Accept: the buyer is charged and you ship the order."
+msgstr "Accetta: l'importo viene addebitato all'acquirente e tu spedisci l'ordine."
+
+msgid "Accept the order"
+msgstr "Accetta l'ordine"
+
+msgid "Reason for declining (shown to the buyer)"
+msgstr "Motivo del rifiuto (mostrato all'acquirente)"
+
+msgid "Decline the order"
+msgstr "Rifiuta l'ordine"
+
+#, php-format
+msgid "Amount to refund (%s)"
+msgstr "Importo da rimborsare (%s)"
+
+#, php-format
+msgid "Leave empty to refund everything not refunded yet (%s)."
+msgstr "Lascia vuoto per rimborsare tutto ciò che non è ancora stato rimborsato (%s)."
+
+msgid "Reason"
+msgstr "Motivo"
+
+msgid "Refund through sudemi"
+msgstr "Rimborsa tramite sudemi"
+
+msgid "Cancel: you cannot fulfil this paid order. The buyer is refunded in full."
+msgstr "Annulla: non puoi evadere questo ordine pagato. L'acquirente viene rimborsato per intero."
+
+msgid "Cancel and refund in full"
+msgstr "Annulla e rimborsa per intero"
+
+#, php-format
+msgid "The order export was cut off at 10,000 of %d orders. Narrow the dates to get the rest."
+msgstr "L'esportazione degli ordini si è fermata a 10.000 su %d ordini. Restringi le date per ottenere il resto."
+
+msgid "Orders are confirmed automatically."
+msgstr "Gli ordini vengono confermati automaticamente."
+
+msgid "Orders now wait for you to accept or decline them."
+msgstr "Ora gli ordini attendono che tu li accetti o li rifiuti."
+
+msgid "What sudemi buyers pay for shipping, per country. By default the prices this plugin sends from your WooCommerce shipping zones apply. You can instead set your own price per country on sudemi, and choose the countries you deliver to. One charge per parcel, never per item."
+msgstr "Quanto pagano gli acquirenti sudemi per la spedizione, per paese. Per impostazione predefinita valgono i prezzi che questo plugin invia dalle tue zone di spedizione WooCommerce. In alternativa puoi impostare un tuo prezzo per paese su sudemi e scegliere i paesi in cui consegni. Un addebito per pacco, mai per articolo."
+
+msgid "Prices filled in from your WooCommerce shipping zones. Check them and save; nothing is changed on sudemi until you do."
+msgstr "Prezzi compilati dalle tue zone di spedizione WooCommerce. Controllali e salva; su sudemi non cambia nulla finché non salvi."
+
+msgid "Shipping prices"
+msgstr "Costi di spedizione"
+
+msgid "Use the prices from my WooCommerce shipping zones"
+msgstr "Usa i prezzi delle mie zone di spedizione WooCommerce"
+
+msgid "Set my own countries and prices on sudemi"
+msgstr "Imposta paesi e prezzi miei su sudemi"
+
+msgid "Country"
+msgstr "Paese"
+
+msgid "Deliver there"
+msgstr "Consegna lì"
+
+#, php-format
+msgid "Your price on sudemi (%s)"
+msgstr "Il tuo prezzo su sudemi (%s)"
+
+msgid "Prices from your shipping zones"
+msgstr "Prezzi dalle tue zone di spedizione"
+
+msgid "Buyers pay now"
+msgstr "Gli acquirenti pagano ora"
+
+msgid "not offered"
+msgstr "non offerto"
+
+msgid "your price on sudemi"
+msgstr "il tuo prezzo su sudemi"
+
+msgid "from your shop"
+msgstr "dal tuo negozio"
+
+msgid "With your own countries and prices: only the ticked countries are offered. A country with an empty price uses the price from your shipping zones."
+msgstr "Con paesi e prezzi tuoi: vengono offerti solo i paesi spuntati. Un paese senza prezzo usa il prezzo delle tue zone di spedizione."
+
+msgid "Save shipping on sudemi"
+msgstr "Salva la spedizione su sudemi"
+
+msgid "Fill in from my WooCommerce shipping zones"
+msgstr "Compila dalle mie zone di spedizione WooCommerce"
+
+msgid "Shipping settings saved on sudemi."
+msgstr "Impostazioni di spedizione salvate su sudemi."
+
+msgid "Saved on sudemi. Buyers see these shipping prices from now on."
+msgstr "Salvato su sudemi. Da ora gli acquirenti vedono questi costi di spedizione."
+
+msgid "Payout account"
+msgstr "Conto per i pagamenti"
+
+msgid "State"
+msgstr "Stato"
+
+msgid "Act before"
+msgstr "Intervieni entro"
+
+msgid "When you are paid"
+msgstr "Quando vieni pagato"
+
+#, php-format
+msgid "%d days after the buyer received the order (plus 14 days after shipping when delivery is never reported), never while a chargeback is open."
+msgstr "%d giorni dopo che l'acquirente ha ricevuto l'ordine (più 14 giorni dopo la spedizione se la consegna non viene mai segnalata), mai mentre è aperto un chargeback."
+
+msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."
+msgstr "Il tuo conto per i pagamenti richiede attenzione. Si gestisce sul portale venditori di sudemi (Pagamenti al venditore), non qui."
+
+msgid "The payout account is managed on the sudemi seller portal (Payouts)."
+msgstr "Il conto per i pagamenti si gestisce sul portale venditori di sudemi (Pagamenti al venditore)."
+
+msgid "This shop's payouts"
+msgstr "Pagamenti a questo negozio"
+
+msgid "No payouts yet."
+msgstr "Ancora nessun pagamento."
+
+msgid "Orders"
+msgstr "Ordini"
+
+msgid "Still to come"
+msgstr "Ancora da ricevere"
+
+msgid "Next payout"
+msgstr "Prossimo pagamento"
+
+msgid "Manage orders: filters, export, accept, ship, refund"
+msgstr "Gestisci gli ordini: filtri, esportazione, accettazione, spedizione, rimborso"
+
+msgid "sudemi started the order change list over (last 7 days); orders are checked again, nothing is applied twice."
+msgstr "sudemi ha ricominciato da capo l'elenco delle modifiche agli ordini (ultimi 7 giorni); gli ordini vengono ricontrollati, nulla viene applicato due volte."
+
+#, php-format
+msgid "%d WooCommerce order(s) updated from sudemi."
+msgstr "%d ordine/i WooCommerce aggiornato/i da sudemi."
+
+msgid "An order change from sudemi could not be applied yet; it is read again on the next heartbeat."
+msgstr "Una modifica a un ordine da sudemi non è ancora stata applicata; viene riletta al prossimo heartbeat."
+
+msgid "Paid on sudemi; the buyer has been charged. This order can be shipped."
+msgstr "Pagato su sudemi; l'importo è stato addebitato all'acquirente. Questo ordine può essere spedito."
+
+msgid "Marked shipped on sudemi."
+msgstr "Segnato come spedito su sudemi."
+
+msgid "Declined on sudemi: the buyer was not charged. The stock has been restored."
+msgstr "Rifiutato su sudemi: all'acquirente non è stato addebitato nulla. Le giacenze sono state ripristinate."
+
+msgid "Cancelled on sudemi; the buyer has been refunded in full. Do not ship this order. The stock has been restored."
+msgstr "Annullato su sudemi; l'acquirente è stato rimborsato per intero. Non spedire questo ordine. Le giacenze sono state ripristinate."
+
+#, php-format
+msgid "Delivered (recorded on sudemi, %s)."
+msgstr "Consegnato (registrato su sudemi, %s)."
+
+#, php-format
+msgid "Tracking on sudemi: %1$s %2$s"
+msgstr "Tracciamento su sudemi: %1$s %2$s"
+
+msgid "Refund made on sudemi"
+msgstr "Rimborso effettuato su sudemi"
+
+#, php-format
+msgid "A refund of %s made on sudemi is recorded here. The buyer was paid back by sudemi."
+msgstr "Qui è registrato un rimborso di %s effettuato su sudemi. L'acquirente è stato rimborsato da sudemi."
+
+msgid "Booked from sudemi: this order was accepted on sudemi (on the portal or in a bulk action)."
+msgstr "Registrato da sudemi: questo ordine è stato accettato su sudemi (sul portale o con un'azione di gruppo)."
+
+#, php-format
+msgid "sudemi order %1$s was accepted on sudemi; booked here as order #%2$s."
+msgstr "L'ordine sudemi %1$s è stato accettato su sudemi; registrato qui come ordine #%2$s."
+
+msgid "sudemi has no such order for this shop."
+msgstr "sudemi non ha questo ordine per questo negozio."
+
+msgid "This order belongs to an earlier sudemi connection of this shop. Leave it as it is; sudemi support can help."
+msgstr "Questo ordine appartiene a un collegamento sudemi precedente di questo negozio. Lascialo com'è; l'assistenza sudemi può aiutarti."
+
+msgid "This order was already answered."
+msgstr "A questo ordine è già stata data risposta."
+
+msgid "The buyer's payment authorisation ran out, so the order can no longer be accepted."
+msgstr "L'autorizzazione di pagamento dell'acquirente è scaduta, quindi l'ordine non può più essere accettato."
+
+msgid "The order is not in a state that allows this (it may have changed in the meantime). Reload the order."
+msgstr "L'ordine non è in uno stato che lo consente (potrebbe essere cambiato nel frattempo). Ricarica l'ordine."
+
+msgid "The payment provider refused this. Nothing changed; try again later or contact sudemi support."
+msgstr "Il fornitore di pagamento ha rifiutato l'operazione. Non è cambiato nulla; riprova più tardi o contatta l'assistenza sudemi."
+
+msgid "The amount is not in the currency the buyer paid in."
+msgstr "L'importo non è nella valuta in cui ha pagato l'acquirente."
+
+msgid "This shop is suspended on sudemi: it cannot accept orders. Paid orders can still be shipped and refunded. Contact sudemi support."
+msgstr "Questo negozio è sospeso su sudemi: non può accettare ordini. Gli ordini pagati possono ancora essere spediti e rimborsati. Contatta l'assistenza sudemi."
+
+msgid "Dates must be in the form YYYY-MM-DD."
+msgstr "Le date devono essere nel formato YYYY-MM-DD."
+
+msgid "sudemi asked this shop to slow down. Wait a minute and try again."
+msgstr "sudemi ha chiesto a questo negozio di rallentare. Attendi un minuto e riprova."
+
+msgid "Give a reason. The buyer is shown it."
+msgstr "Indica un motivo. L'acquirente lo vedrà."
+
+msgid "Select at least one order."
+msgstr "Seleziona almeno un ordine."
+
+msgid "Select at most 100 orders at once."
+msgstr "Seleziona al massimo 100 ordini alla volta."
+
+msgid "That action is not available."
+msgstr "Questa azione non è disponibile."
+
+msgid "Prices must be numbers of 0 or more."
+msgstr "I prezzi devono essere numeri uguali o maggiori di 0."
+
+msgid "Enter an amount greater than 0, or leave it empty to refund the rest."
+msgstr "Inserisci un importo maggiore di 0, oppure lascia vuoto per rimborsare il resto."
+
+msgid "Could not reach sudemi. Nothing was changed; try again shortly."
+msgstr "Impossibile raggiungere sudemi. Non è cambiato nulla; riprova tra poco."
+
+msgid "sudemi refused this."
+msgstr "sudemi ha rifiutato l'operazione."
+
+msgid "Declined on sudemi. The buyer is not charged."
+msgstr "Rifiutato su sudemi. All'acquirente non viene addebitato nulla."
+
+msgid "Marked shipped on sudemi. The buyer is told."
+msgstr "Segnato come spedito su sudemi. L'acquirente viene avvisato."
+
+msgid "Marked delivered on sudemi."
+msgstr "Segnato come consegnato su sudemi."
+
+msgid "Refunded through sudemi. The refund is recorded on the WooCommerce order."
+msgstr "Rimborsato tramite sudemi. Il rimborso è registrato sull'ordine WooCommerce."
+
+msgid "Cancelled on sudemi and refunded in full. The WooCommerce order is cancelled and the stock restored."
+msgstr "Annullato su sudemi e rimborsato per intero. L'ordine WooCommerce è annullato e le giacenze ripristinate."
+
+msgid "The WooCommerce order for this sudemi order is cancelled. Decline it instead."
+msgstr "L'ordine WooCommerce di questo ordine sudemi è annullato. Rifiutalo invece."
+
+msgid "The order could not be recorded in WooCommerce (a product in it is no longer in this shop). Decline it instead."
+msgstr "Non è stato possibile registrare l'ordine in WooCommerce (un prodotto non è più in questo negozio). Rifiutalo invece."
+
+msgid "Accepted. The buyer has been charged; the WooCommerce order is ready to ship."
+msgstr "Accettato. L'importo è stato addebitato all'acquirente; l'ordine WooCommerce è pronto per la spedizione."
+
+msgid "Accepted. sudemi takes the money once the other shops in the buyer's payment have answered; do not ship until the order moves to Processing."
+msgstr "Accettato. sudemi incassa l'importo quando gli altri negozi compresi nel pagamento dell'acquirente hanno risposto; non spedire finché l'ordine non passa a In lavorazione."
+
+msgid "sudemi did not answer. The WooCommerce order stays on hold and the acceptance is sent again on the next heartbeat."
+msgstr "sudemi non ha risposto. L'ordine WooCommerce resta in sospeso e l'accettazione viene inviata di nuovo al prossimo heartbeat."
+
+#, php-format
+msgid "%1$d done, %2$d refused."
+msgstr "%1$d completati, %2$d rifiutati."
+
+msgid "Mark delivered on sudemi"
+msgstr "Segna come consegnato su sudemi"
+
+msgid "sudemi did not record the delivery (the order may not be shipped there yet). Check the order under WooCommerce > sudemi > Orders."
+msgstr "sudemi non ha registrato la consegna (forse lì l'ordine non risulta ancora spedito). Controlla l'ordine in WooCommerce > sudemi > Ordini."
+
+msgid "Could not reach sudemi to report the delivery. It is sent again on the next heartbeat."
+msgstr "Impossibile raggiungere sudemi per segnalare la consegna. Verrà inviata di nuovo al prossimo heartbeat."
+
+#, php-format
+msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
+msgstr "%d ordine/i in attesa della tua risposta in WooCommerce > sudemi > Ordini. La conferma automatica è disattivata, quindi bisogna rispondere manualmente prima della scadenza."

@@ -117,8 +117,18 @@ final class Sudemi_Client {
 	 * Signed exactly like every other call (a GET signs an empty body, the query string is part
 	 * of the signed path).
 	 */
-	public static function send_signed( $method, $path, array $body = array() ) {
-		return self::request( $path, $body, true, 'GET' === $method ? 'GET' : 'POST' );
+	public static function send_signed( $method, $path, array $body = array(), array $extra_headers = array() ) {
+		return self::request( $path, $body, true, 'GET' === $method ? 'GET' : 'POST', $extra_headers );
+	}
+
+	/**
+	 * A signed GET whose answer is not JSON (the order export, a CSV file), made once.
+	 *
+	 * @return array{status:int,raw:string,headers:array,body:array}|WP_Error The body as sent,
+	 *         its headers, and the decoded JSON when it was an error answer.
+	 */
+	public static function get_signed_raw( $path ) {
+		return self::request( $path, array(), true, 'GET', array(), true );
 	}
 
 	private static function request_with_backoff( $path, array $body, $signed, $method = 'POST' ) {
@@ -152,7 +162,7 @@ final class Sudemi_Client {
 		}
 	}
 
-	private static function request( $path, array $body, $signed, $method = 'POST' ) {
+	private static function request( $path, array $body, $signed, $method = 'POST', array $extra_headers = array(), $raw = false ) {
 		// A GET carries no body, and the signature covers the hash of the body actually sent --
 		// so it has to be the hash of nothing, not the hash of "{}".
 		if ( 'GET' === $method ) {
@@ -165,6 +175,13 @@ final class Sudemi_Client {
 		}
 
 		$headers = array( 'Content-Type' => 'application/json' );
+		// Only the ones sudemi reads besides the signature (Idempotency-Key): nothing here may
+		// replace a signing header.
+		foreach ( $extra_headers as $name => $value ) {
+			if ( 'Idempotency-Key' === $name && is_string( $value ) && preg_match( '/^[A-Za-z0-9._:-]{1,255}$/', $value ) ) {
+				$headers[ $name ] = $value;
+			}
+		}
 
 		if ( $signed ) {
 			$install_id = self::install_id();
@@ -215,6 +232,20 @@ final class Sudemi_Client {
 		$status = (int) wp_remote_retrieve_response_code( $response );
 		$parsed = json_decode( wp_remote_retrieve_body( $response ), true );
 		$retry_after = (int) wp_remote_retrieve_header( $response, 'retry-after' );
+
+		if ( $raw ) {
+			$headers_out = array();
+			foreach ( array( 'content-type', 'content-disposition', 'x-total-count', 'x-export-truncated' ) as $name ) {
+				$headers_out[ $name ] = (string) wp_remote_retrieve_header( $response, $name );
+			}
+			return array(
+				'status'      => $status,
+				'raw'         => (string) wp_remote_retrieve_body( $response ),
+				'headers'     => $headers_out,
+				'body'        => is_array( $parsed ) ? $parsed : array(),
+				'retry_after' => $retry_after,
+			);
+		}
 
 		// Fail closed: a response that does not parse is not treated as success whatever its
 		// status code said.

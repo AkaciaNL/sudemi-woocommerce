@@ -43,7 +43,7 @@ class Sudemi_Orders {
 			Sudemi_Logger::info(
 				sprintf(
 					/* translators: %d: number of orders waiting. */
-					__( '%d order(s) are waiting for confirmation. Automatic confirmation is off, so they must be answered by hand before their window closes.', 'sudemi' ),
+					__( '%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes.', 'sudemi' ),
 					count( $pending )
 				)
 			);
@@ -155,16 +155,21 @@ class Sudemi_Orders {
 	 * @param string   $sudemi_id The sudemi order id.
 	 * @param WC_Order $order     The local order already created for it.
 	 */
-	private static function accept( $sudemi_id, $order ) {
+	public static function accept( $sudemi_id, $order ) {
 		$response = Sudemi_Client::post_signed(
 			'/integration/v1/orders/' . rawurlencode( $sudemi_id ) . '/accept',
 			array()
 		);
-		self::apply_outcome( $sudemi_id, $order, self::accept_outcome( $response ), $response );
+		$outcome = self::accept_outcome( $response );
+		self::apply_outcome( $sudemi_id, $order, $outcome, $response );
+		return array(
+			'outcome'  => $outcome,
+			'response' => $response,
+		);
 	}
 
 	/** Local statuses of an order that is over here: never accepted, shipped or restocked again. */
-	private static function closed_statuses() {
+	public static function closed_statuses() {
 		return array( 'cancelled', 'refunded', 'failed', 'trash' );
 	}
 
@@ -251,7 +256,7 @@ class Sudemi_Orders {
 	 * @param string              $outcome   From accept_outcome() or reject_outcome().
 	 * @param array|WP_Error|null $response  The raw response, for the log.
 	 */
-	private static function apply_outcome( $sudemi_id, $order, $outcome, $response ) {
+	public static function apply_outcome( $sudemi_id, $order, $outcome, $response ) {
 		$body = is_array( $response ) && isset( $response['body'] ) && is_array( $response['body'] ) ? $response['body'] : array();
 
 		if ( 'retry' === $outcome ) {
@@ -347,13 +352,14 @@ class Sudemi_Orders {
 	 * Cancels a local order on this plugin's own initiative (sudemi released it), restoring stock
 	 * once. Marked as the plugin's own change, so the status hook does not send it back.
 	 */
-	private static function cancel_locally( $order, $note ) {
+	public static function cancel_locally( $order, $note ) {
+		$before                       = self::$applying_sudemi_cancel;
 		self::$applying_sudemi_cancel = true;
 		try {
 			wc_maybe_increase_stock_levels( $order->get_id() ); // guarded: once per order, whatever copy is in memory
 			$order->update_status( 'cancelled', $note );
 		} finally {
-			self::$applying_sudemi_cancel = false;
+			self::$applying_sudemi_cancel = $before;
 		}
 	}
 
@@ -454,7 +460,7 @@ class Sudemi_Orders {
 	 * @param string   $sudemi_id The sudemi order id.
 	 * @param WC_Order $order     The local order.
 	 */
-	private static function hold_for_payment( $sudemi_id, $order ) {
+	public static function hold_for_payment( $sudemi_id, $order ) {
 		if ( ! $order->has_status( 'on-hold' ) ) {
 			$order->update_status( 'on-hold' );
 		}
@@ -581,8 +587,33 @@ class Sudemi_Orders {
 		);
 	}
 
-	/** Set while this plugin cancels an order sudemi already cancelled, so it is not sent back. */
+	/**
+	 * Set while this plugin applies a change that came from sudemi (a cancellation, a refund, a
+	 * dispatch or delivery made on the portal), so the shop's own hooks do not send it back.
+	 */
 	private static $applying_sudemi_cancel = false;
+
+	/**
+	 * Runs $fn with the shop's own order hooks (status changes, refunds, shipped and delivered)
+	 * quiet: what it changes came from sudemi and must not be sent there again.
+	 *
+	 * @param callable $fn What to run.
+	 * @return mixed What $fn returned.
+	 */
+	public static function quietly( callable $fn ) {
+		$before                       = self::$applying_sudemi_cancel;
+		self::$applying_sudemi_cancel = true;
+		try {
+			return $fn();
+		} finally {
+			self::$applying_sudemi_cancel = $before;
+		}
+	}
+
+	/** Whether a change from sudemi is being applied right now (see quietly()). */
+	public static function applying_sudemi() {
+		return self::$applying_sudemi_cancel;
+	}
 
 	/**
 	 * Cancels the local order for a sudemi order that was cancelled there (by the buyer before
@@ -605,6 +636,7 @@ class Sudemi_Orders {
 			return;
 		}
 		$order = $orders[0];
+		$before                       = self::$applying_sudemi_cancel;
 		self::$applying_sudemi_cancel = true;
 		try {
 			// WooCommerce puts the stock back when an order is cancelled; this guard makes sure
@@ -615,7 +647,7 @@ class Sudemi_Orders {
 				__( 'Cancelled by the buyer on sudemi before shipping; the buyer has been refunded in full. Do not ship this order.', 'sudemi' )
 			);
 		} finally {
-			self::$applying_sudemi_cancel = false;
+			self::$applying_sudemi_cancel = $before;
 		}
 		Sudemi_Logger::warn(
 			sprintf(
@@ -641,7 +673,7 @@ class Sudemi_Orders {
 	 * @param WC_Order $order
 	 * @param string   $sudemi_id
 	 */
-	private static function fill_customer( $order, $sudemi_id ) {
+	public static function fill_customer( $order, $sudemi_id ) {
 		$response = Sudemi_Client::get_signed(
 			'/integration/v1/orders/' . rawurlencode( $sudemi_id ) . '/fulfilment'
 		);
@@ -696,7 +728,7 @@ class Sudemi_Orders {
 	 * @param array $pending One entry of the pending_orders block.
 	 * @return string|null A reason to decline, or null to go ahead.
 	 */
-	private static function first_shortfall( array $pending ) {
+	public static function first_shortfall( array $pending ) {
 		$lines = isset( $pending['lines'] ) && is_array( $pending['lines'] ) ? $pending['lines'] : array();
 		if ( empty( $lines ) ) {
 			return __( 'the order had no recognisable items', 'sudemi' );
@@ -741,7 +773,7 @@ class Sudemi_Orders {
 	 * @param string $sudemi_id The sudemi order id.
 	 * @return WC_Order|null
 	 */
-	private static function create_local_order( array $pending, $sudemi_id ) {
+	public static function create_local_order( array $pending, $sudemi_id ) {
 		$order = wc_create_order();
 		if ( is_wp_error( $order ) ) {
 			return null;
@@ -1006,7 +1038,7 @@ class Sudemi_Orders {
 	 * @param string $sudemi_id The sudemi order id.
 	 * @return WC_Order|null
 	 */
-	private static function find_any_local_order( $sudemi_id ) {
+	public static function find_any_local_order( $sudemi_id ) {
 		$orders = wc_get_orders(
 			array(
 				'limit'      => 1,
@@ -1073,6 +1105,11 @@ class Sudemi_Orders {
 	 * @param array $args      Its arguments (order_id, amount, reason...).
 	 */
 	public static function on_refund_created( $refund_id, $args ) {
+		if ( self::$applying_sudemi_cancel ) {
+			// A refund made on sudemi (portal or this plugin's sudemi page), recorded here: the
+			// money already went back to the buyer, so it is not sent a second time.
+			return;
+		}
 		$refund = wc_get_order( $refund_id );
 		if ( ! $refund ) {
 			return;
@@ -1255,6 +1292,10 @@ class Sudemi_Orders {
 	 * @param string $event    'shipped' or 'delivered'.
 	 */
 	private static function report( $order_id, $event ) {
+		if ( self::$applying_sudemi_cancel ) {
+			// Shipped or delivered on sudemi already (portal, or this plugin's sudemi page).
+			return;
+		}
 		$order = wc_get_order( $order_id );
 		if ( ! $order ) {
 			return;
