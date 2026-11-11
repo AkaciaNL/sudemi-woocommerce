@@ -317,9 +317,12 @@ class Sudemi_Orders {
 			return;
 		}
 
+		// Who ended it, when sudemi says (core 2026-11-11 adds cancelled_by to already_resolved).
+		$by = self::cancelled_by( isset( $body['cancelled_by'] ) ? $body['cancelled_by'] : null );
+
 		if ( 'cancelled' === $outcome ) {
-			// Paid and refunded on sudemi already (the buyer cancelled): do not ship it.
-			self::cancel_from_sudemi( $sudemi_id );
+			// Paid and refunded on sudemi already: do not ship it. The note says who cancelled.
+			self::cancel_from_sudemi( $sudemi_id, $by );
 			return;
 		}
 
@@ -330,6 +333,19 @@ class Sudemi_Orders {
 			return;
 		}
 		$reason = isset( $body['message'] ) ? (string) $body['message'] : __( 'reason not given', 'sudemi' );
+		if ( '' !== $by ) {
+			// sudemi said who declined it: the same note as when the change feed reports it.
+			self::cancel_locally( $order, self::decline_note( $by ) );
+			Sudemi_Logger::warn(
+				sprintf(
+					/* translators: 1: sudemi order id, 2: reason. */
+					__( 'sudemi refused the confirmation of order %1$s: %2$s. The local order was cancelled and stock restored.', 'sudemi' ),
+					$sudemi_id,
+					$reason
+				)
+			);
+			return;
+		}
 		self::cancel_locally(
 			$order,
 			sprintf(

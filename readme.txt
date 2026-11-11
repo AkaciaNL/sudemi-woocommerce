@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,9 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.3.1 =
+* When the answer to a confirmation is lost and the order turns out to be declined or cancelled on sudemi, the order note now says at once who ended it (the buyer, your shop or sudemi), as it already did when the change arrived later.
 
 = 1.3.0 =
 * Manage sudemi orders inside WooCommerce: WooCommerce > sudemi > Orders shows the sudemi portal's order table (status, date, search and sort filters, paging), a CSV download of the filtered orders (in any of the 12 languages, decimal point or comma), and bulk actions: accept, decline with a reason, mark shipped with a carrier and a tracking code per order, mark delivered.
