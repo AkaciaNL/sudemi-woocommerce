@@ -953,7 +953,14 @@ class Sudemi_Orders {
 			Sudemi_Claims::link( $sudemi_id, $existing->get_id() );
 			return array( 'state' => 'existing', 'order' => $existing );
 		}
-		$order = self::create_local_order( $pending, $sudemi_id );
+		try {
+			$order = self::create_local_order( $pending, $sudemi_id );
+		} catch ( Throwable $e ) {
+			// Failed here and now (not a process that died): the claim goes at once, so the next
+			// heartbeat can try again instead of waiting out the stale time.
+			Sudemi_Claims::release( $sudemi_id );
+			throw $e;
+		}
 		if ( ! $order ) {
 			Sudemi_Claims::release( $sudemi_id );
 			return array( 'state' => 'failed', 'order' => null );
