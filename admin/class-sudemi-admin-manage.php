@@ -972,13 +972,16 @@ final class Sudemi_Admin_Manage {
 		if ( '' !== self::str( $account, 'action_deadline' ) ) {
 			self::detail_row( __( 'Act before', 'sudemi' ), esc_html( self::date( self::str( $account, 'action_deadline' ) ) ) );
 		}
+		// Core pays this many days after delivery, or 14 days more after shipping when delivery is never reported.
+		$delay = isset( $p['payout_delay_days'] ) ? (int) $p['payout_delay_days'] : 14;
 		self::detail_row(
 			__( 'When you are paid', 'sudemi' ),
 			esc_html(
 				sprintf(
-					/* translators: %d: number of days. */
-					__( '%d days after the buyer received the order (plus 14 days after shipping when delivery is never reported), never while a chargeback is open.', 'sudemi' ),
-					isset( $p['payout_delay_days'] ) ? (int) $p['payout_delay_days'] : 14
+					/* translators: 1: days after delivery, 2: days after shipping when delivery is never reported. */
+					__( '%1$d days after the buyer received the order, or %2$d days after shipping if delivery is never reported; never while a chargeback is open.', 'sudemi' ),
+					$delay,
+					$delay + 14
 				)
 			)
 		);

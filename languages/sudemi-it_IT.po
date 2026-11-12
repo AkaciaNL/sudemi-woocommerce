@@ -23,7 +23,7 @@ msgstr "sudemi Connector"
 #. Description of the plugin
 #: sudemi-connector.php
 msgid "Lists this shop's products on sudemi, so an AI assistant can find them and send buyers to you. You stay the merchant of record."
-msgstr "Pubblica i prodotti di questo negozio su sudemi, così un assistente IA può trovarli e inviarti acquirenti. Il venditore ufficiale resti sempre tu."
+msgstr "Pubblica i prodotti di questo negozio su sudemi, così un assistente IA può trovarli e inviarti acquirenti. Il venditore resti sempre tu."
 
 #: sudemi-connector.php:49
 msgid "Every minute (sudemi pairing)"
@@ -52,7 +52,7 @@ msgstr "Su questo server manca l'estensione sodium. La connessione ne ha bisogno
 
 #: admin/class-sudemi-admin.php:71
 msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account - this plugin never asks for your sudemi password."
-msgstr "Collegando questo negozio, un assistente IA può trovare i tuoi prodotti e inviarti acquirenti. Confermi il collegamento su sudemi, dopo aver effettuato l'accesso al tuo account - questo plugin non ti chiede mai la password di sudemi."
+msgstr "Collegando questo negozio, un assistente IA può trovare i tuoi prodotti e inviarti acquirenti. Confermi il collegamento su sudemi, dopo aver effettuato l'accesso al tuo account: questo plugin non ti chiede mai la password di sudemi."
 
 #: admin/class-sudemi-admin.php:75
 msgid "Connect this shop"
@@ -82,7 +82,7 @@ msgstr "Indirizzo del negozio"
 
 #: admin/class-sudemi-admin.php:98
 msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from - so changing it means connecting again from the new address."
-msgstr "Fisso. sudemi ha verificato che questo negozio rispondesse da questo indirizzo e ogni inserzione indica all'acquirente da dove proviene - per cambiarlo, quindi, devi ricollegare il negozio dal nuovo indirizzo."
+msgstr "Fisso. sudemi ha verificato che questo negozio rispondesse da questo indirizzo e ogni inserzione indica all'acquirente da dove proviene, quindi per cambiarlo devi ricollegare il negozio dal nuovo indirizzo."
 
 #: admin/class-sudemi-admin.php:99
 msgid "Install"
@@ -199,7 +199,7 @@ msgstr "Su sudemi il pagamento dell'acquirente viene autorizzato ma non addebita
 
 #: admin/class-sudemi-admin.php:190
 msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted."
-msgstr "Gli ordini attendono che qualcuno qui risponda. Se nessuno risponde entro la scadenza indicata da sudemi, l'acquirente viene svincolato e non gli viene addebitato nulla - un ordine senza risposta non viene mai considerato accettato."
+msgstr "Gli ordini attendono che qualcuno qui risponda. Se nessuno risponde entro la scadenza indicata da sudemi, l'acquirente viene svincolato e non gli viene addebitato nulla: un ordine senza risposta non viene mai considerato accettato."
 
 #: admin/class-sudemi-admin.php:213
 msgid "Orders through sudemi"
@@ -238,15 +238,15 @@ msgstr "Ricevi"
 
 #: admin/class-sudemi-admin.php:255
 msgid "Customer"
-msgstr "Cliente"
+msgstr "Acquirente"
 
 #: admin/class-sudemi-admin.php:289
 msgid "Waiting for you - buyer not charged"
-msgstr "In attesa di tua risposta - nessun addebito all'acquirente"
+msgstr "In attesa della tua risposta: nessun addebito all'acquirente"
 
 #: admin/class-sudemi-admin.php:291
 msgid "Accepted - waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
-msgstr "Accettato - in attesa degli altri negozi compresi nel pagamento dell'acquirente; nessun addebito ancora, non spedire"
+msgstr "Accettato: in attesa degli altri negozi compresi nel pagamento dell'acquirente; nessun addebito ancora, non spedire"
 
 #: admin/class-sudemi-admin.php:293
 msgid "Confirmed and charged"
@@ -256,11 +256,11 @@ msgstr "Confermato e addebitato"
 #: admin/class-sudemi-admin.php:298
 #, php-format
 msgid "Declined (%s) - nothing charged"
-msgstr "Rifiutato (%s) - nessun addebito"
+msgstr "Rifiutato (%s): nessun addebito"
 
 #: admin/class-sudemi-admin.php:301
 msgid "Declined - nothing charged"
-msgstr "Rifiutato - nessun addebito"
+msgstr "Rifiutato: nessun addebito"
 
 #: admin/class-sudemi-admin.php:303
 msgid "Shipped"
@@ -537,7 +537,7 @@ msgstr "%s rimborsato all'acquirente tramite sudemi."
 
 #, php-format
 msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com)."
-msgstr "sudemi non ha rimborsato questo: %s. L'acquirente NON è stato rimborsato; contatta l'assistenza sudemi (support@sudemi.com)."
+msgstr "sudemi non ha eseguito questo rimborso: %s. L'acquirente NON è stato rimborsato; contatta l'assistenza sudemi (support@sudemi.com)."
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Right of withdrawal"
@@ -545,7 +545,7 @@ msgstr "Diritto di recesso"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "None - normal right of withdrawal applies"
-msgstr "Nessuna - si applica il normale diritto di recesso"
+msgstr "Nessuna: si applica il normale diritto di recesso"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed."
@@ -633,7 +633,7 @@ msgstr "Plugin del negozio o collegamento"
 
 #: includes/class-sudemi-support.php
 msgid "Payouts"
-msgstr "Pagamenti al venditore"
+msgstr "Accrediti"
 
 #: includes/class-sudemi-support.php
 msgid "Other"
@@ -646,7 +646,7 @@ msgstr "Aperto"
 
 #: includes/class-sudemi-support.php
 msgid "Waiting for your reply"
-msgstr "In attesa di tua risposta"
+msgstr "In attesa della tua risposta"
 
 #: includes/class-sudemi-support.php
 msgid "Answered"
@@ -670,7 +670,7 @@ msgstr "L’assistenza è disponibile non appena questo negozio è collegato a s
 
 #: admin/class-sudemi-admin.php
 msgid "Questions about an order, a payment, payouts or this plugin? Open a ticket and sudemi support answers here. You also get an e-mail when they reply."
-msgstr "Domande su un ordine, un pagamento, i pagamenti al venditore o questo plugin? Apri un ticket: l’assistenza sudemi risponde qui. Riceverai anche un’e-mail quando arriva una risposta."
+msgstr "Domande su un ordine, un pagamento, gli accrediti o questo plugin? Apri un ticket: l’assistenza sudemi risponde qui. Riceverai anche un’e-mail quando arriva una risposta."
 
 #: admin/class-sudemi-admin.php
 msgid "Your tickets"
@@ -903,7 +903,7 @@ msgid "Shipped, delivered or cancelled orders that sudemi has not heard about ye
 msgstr "Ordini spediti, consegnati o annullati di cui sudemi non sa ancora nulla. Vengono inviati di nuovo a ogni segnalazione finché sudemi non risponde."
 
 msgid "The catalogue sync is on hold: it would remove %1$d of %2$d listed products from sudemi, so nothing was changed. If those products really were removed from this shop, contact sudemi support (support@sudemi.com)."
-msgstr "La sincronizzazione del catalogo è in attesa: rimuoverebbe da sudemi %1$d dei %2$d prodotti pubblicati, quindi non è stato cambiato nulla. Se quei prodotti sono stati davvero rimossi da questo negozio, contatta il supporto sudemi (support@sudemi.com)."
+msgstr "La sincronizzazione del catalogo è in attesa: rimuoverebbe da sudemi %1$d dei %2$d prodotti pubblicati, quindi non è stato cambiato nulla. Se quei prodotti sono stati davvero rimossi da questo negozio, contatta l'assistenza sudemi (support@sudemi.com)."
 
 msgid "WP-Cron is still visit-driven on this site. It works on busy shops, but a real cron job is more reliable."
 msgstr "Su questo sito WP-Cron dipende ancora dalle visite. Funziona per i negozi molto visitati, ma un vero cron job è più affidabile."
@@ -978,10 +978,10 @@ msgid "sudemi still has %1$s for your shop, but your shop sells in %2$s. Orders 
 msgstr "sudemi ha ancora %1$s per il tuo negozio, ma il tuo negozio vende in %2$s. Gli ordini in %1$s vengono rifiutati finché non corrispondono. Fai clic su \"Sincronizza ora il catalogo\" per inviare la nuova valuta."
 
 msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
-msgstr "Gli acquirenti pagano nella tua valuta. sudemi ti paga in euro: la commissione di conversione del fornitore di pagamento (circa il 2%) viene trattenuta dal tuo pagamento, come previsto dalle condizioni."
+msgstr "Gli acquirenti pagano nella tua valuta. Gli accrediti di sudemi sono in euro: la commissione di conversione del fornitore di pagamento (circa il 2%) viene trattenuta dal tuo accredito, come previsto dalle condizioni."
 
 msgid "Waiting for you"
-msgstr "In attesa di tua risposta"
+msgstr "In attesa della tua risposta"
 
 msgid "Accepted, waiting for payment"
 msgstr "Accettato, in attesa di pagamento"
@@ -1074,7 +1074,7 @@ msgid "Total"
 msgstr "Totale"
 
 msgid "Payout"
-msgstr "Pagamento"
+msgstr "Accredito"
 
 msgid "Tracking"
 msgstr "Tracciamento"
@@ -1188,7 +1188,7 @@ msgid "On: every five minutes this shop accepts orders whose items are in stock 
 msgstr "Attivo: ogni cinque minuti questo negozio accetta gli ordini con articoli disponibili e rifiuta gli altri."
 
 msgid "Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing."
-msgstr "Disattivo: gli ordini attendono la tua risposta. Accetta o rifiuta ciascuno qui entro la data indicata; senza risposta l'acquirente viene svincolato e non gli viene addebitato nulla."
+msgstr "Disattivato: gli ordini attendono la tua risposta. Accetta o rifiuta ciascuno qui entro la data indicata; senza risposta l'acquirente viene svincolato e non gli viene addebitato nulla."
 
 msgid "Back to the orders"
 msgstr "Torna agli ordini"
@@ -1257,10 +1257,10 @@ msgid "Refunded to the buyer"
 msgstr "Rimborsato all'acquirente"
 
 msgid "Payout expected"
-msgstr "Pagamento previsto"
+msgstr "Accredito previsto"
 
 msgid "Payout due"
-msgstr "Pagamento dovuto"
+msgstr "Accredito dovuto"
 
 msgid "The buyer asked to return this order"
 msgstr "L'acquirente ha chiesto di restituire questo ordine"
@@ -1369,7 +1369,7 @@ msgid "Saved on sudemi. Buyers see these shipping prices from now on."
 msgstr "Salvato su sudemi. Da ora gli acquirenti vedono questi costi di spedizione."
 
 msgid "Payout account"
-msgstr "Conto per i pagamenti"
+msgstr "Conto per gli accrediti"
 
 msgid "State"
 msgstr "Stato"
@@ -1378,23 +1378,23 @@ msgid "Act before"
 msgstr "Intervieni entro"
 
 msgid "When you are paid"
-msgstr "Quando vieni pagato"
+msgstr "Quando ricevi l'accredito"
 
 #, php-format
-msgid "%d days after the buyer received the order (plus 14 days after shipping when delivery is never reported), never while a chargeback is open."
-msgstr "%d giorni dopo che l'acquirente ha ricevuto l'ordine (più 14 giorni dopo la spedizione se la consegna non viene mai segnalata), mai mentre è aperto un chargeback."
+msgid "%1$d days after the buyer received the order, or %2$d days after shipping if delivery is never reported; never while a chargeback is open."
+msgstr "%1$d giorni dopo che l'acquirente ha ricevuto l'ordine, oppure %2$d giorni dopo la spedizione se la consegna non viene mai segnalata; mai mentre è aperto un chargeback."
 
 msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."
-msgstr "Il tuo conto per i pagamenti richiede attenzione. Si gestisce sul portale venditori di sudemi (Pagamenti al venditore), non qui."
+msgstr "Il tuo conto per gli accrediti richiede attenzione. Si gestisce sul portale venditori di sudemi (Accrediti), non qui."
 
 msgid "The payout account is managed on the sudemi seller portal (Payouts)."
-msgstr "Il conto per i pagamenti si gestisce sul portale venditori di sudemi (Pagamenti al venditore)."
+msgstr "Il conto per gli accrediti si gestisce sul portale venditori di sudemi (Accrediti)."
 
 msgid "This shop's payouts"
-msgstr "Pagamenti a questo negozio"
+msgstr "Accrediti a questo negozio"
 
 msgid "No payouts yet."
-msgstr "Ancora nessun pagamento."
+msgstr "Ancora nessun accredito."
 
 msgid "Orders"
 msgstr "Ordini"
@@ -1403,7 +1403,7 @@ msgid "Still to come"
 msgstr "Ancora da ricevere"
 
 msgid "Next payout"
-msgstr "Prossimo pagamento"
+msgstr "Prossimo accredito"
 
 msgid "Manage orders: filters, export, accept, ship, refund"
 msgstr "Gestisci gli ordini: filtri, esportazione, accettazione, spedizione, rimborso"
@@ -1662,4 +1662,4 @@ msgstr "L'ordine sudemi %1$s non viene applicato qui: sudemi non lo ha più per 
 
 #, php-format
 msgid "Gave up applying sudemi order %1$s here after %2$d tries (%3$s). Check this order under WooCommerce > sudemi > Orders and update the WooCommerce order by hand."
-msgstr "Rinuncia ad applicare qui l'ordine sudemi %1$s dopo %2$d tentativi (%3$s). Controlla l'ordine in WooCommerce > sudemi > Ordini e aggiorna l'ordine WooCommerce a mano."
+msgstr "Applicazione dell'ordine sudemi %1$s abbandonata dopo %2$d tentativi (%3$s). Controlla l'ordine in WooCommerce > sudemi > Ordini e aggiorna l'ordine WooCommerce a mano."

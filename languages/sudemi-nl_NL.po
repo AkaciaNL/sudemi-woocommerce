@@ -82,7 +82,7 @@ msgstr "Winkeladres"
 
 #: admin/class-sudemi-admin.php:98
 msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from - so changing it means connecting again from the new address."
-msgstr "Vast. sudemi heeft gecontroleerd dat deze winkel vanaf dit adres antwoordde, en een vermelding laat een koper zien waar die vandaan komt - wijzigen betekent dus opnieuw koppelen vanaf het nieuwe adres."
+msgstr "Vast. sudemi heeft gecontroleerd dat deze winkel vanaf dit adres antwoordde, en een vermelding laat een koper zien waar die vermelding vandaan komt - wijzigen betekent dus opnieuw koppelen vanaf het nieuwe adres."
 
 #: admin/class-sudemi-admin.php:99
 msgid "Install"
@@ -199,7 +199,7 @@ msgstr "Bij een koper op sudemi wordt het bedrag gereserveerd maar niet afgeschr
 
 #: admin/class-sudemi-admin.php:190
 msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted."
-msgstr "Bestellingen wachten tot iemand hier ze beantwoordt. Gebeurt dat niet vóór de deadline die sudemi toont, dan wordt de koper vrijgegeven en betaalt niets - een onbeantwoorde bestelling wordt nooit als geaccepteerd behandeld."
+msgstr "Bestellingen wachten tot iemand hier ze beantwoordt. Gebeurt dat niet vóór de deadline die sudemi toont, dan wordt de reservering bij de koper vrijgegeven en betaalt de koper niets - een onbeantwoorde bestelling wordt nooit als geaccepteerd behandeld."
 
 #: admin/class-sudemi-admin.php:213
 msgid "Orders through sudemi"
@@ -213,8 +213,8 @@ msgstr "De bestelgeschiedenis kon zojuist niet bij sudemi worden opgehaald. Met 
 #, php-format
 msgid "%d order is waiting to be confirmed. The buyer has not been charged for it yet."
 msgid_plural "%d orders are waiting to be confirmed. Those buyers have not been charged yet."
-msgstr[0] "%d bestelling wacht op bevestiging. De koper heeft er nog niet voor betaald."
-msgstr[1] "%d bestellingen wachten op bevestiging. Die kopers hebben nog niet betaald."
+msgstr[0] "%d bestelling wacht op bevestiging. Er is nog niets bij de koper afgeschreven."
+msgstr[1] "%d bestellingen wachten op bevestiging. Bij die kopers is nog niets afgeschreven."
 
 #: admin/class-sudemi-admin.php:245
 msgid "No orders through sudemi yet."
@@ -242,11 +242,11 @@ msgstr "Klant"
 
 #: admin/class-sudemi-admin.php:289
 msgid "Waiting for you - buyer not charged"
-msgstr "Wacht op jou - koper nog niet belast"
+msgstr "Wacht op jou - nog niets bij de koper afgeschreven"
 
 #: admin/class-sudemi-admin.php:291
 msgid "Accepted - waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
-msgstr "Geaccepteerd - wacht op de andere winkels in de betaling van de koper; koper nog niet belast, nog niet verzenden"
+msgstr "Geaccepteerd - wacht op de andere winkels in de betaling van de koper; nog niets bij de koper afgeschreven, nog niet verzenden"
 
 #: admin/class-sudemi-admin.php:293
 msgid "Confirmed and charged"
@@ -268,7 +268,7 @@ msgstr "Verzonden"
 
 #: admin/class-sudemi-admin.php:305
 msgid "Delivered"
-msgstr "Afgeleverd"
+msgstr "Bezorgd"
 
 #: admin/class-sudemi-admin.php:316
 msgid "Recent activity"
@@ -320,13 +320,13 @@ msgstr "Je hebt geen toestemming om dat te doen."
 
 #: includes/class-sudemi-client.php:99
 msgid "sudemi is still asking this shop to slow down. Stopping for now; this will continue on the next scheduled run and nothing has been lost."
-msgstr "sudemi vraagt deze winkel nog steeds om het rustiger aan te doen. Voor nu gestopt; dit gaat verder bij de volgende geplande run en er is niets verloren gegaan."
+msgstr "sudemi vraagt deze winkel nog steeds om het rustiger aan te doen. Voor nu gestopt; dit gaat verder bij de volgende geplande ronde en er is niets verloren gegaan."
 
 #. translators: %d: seconds to wait.
 #: includes/class-sudemi-client.php:110
 #, php-format
 msgid "sudemi asked this shop to slow down; waiting %d seconds before continuing."
-msgstr "sudemi vroeg deze winkel om het rustiger aan te doen; %d seconden wachten voordat het verdergaat."
+msgstr "sudemi vroeg deze winkel om het rustiger aan te doen; er wordt %d seconden gewacht voordat het verdergaat."
 
 #: includes/class-sudemi-client.php:126
 msgid "The payload could not be encoded."
@@ -386,7 +386,7 @@ msgstr "deze winkel kon de bestelling niet vastleggen"
 #: includes/class-sudemi-orders.php:142
 #, php-format
 msgid "Could not reach sudemi to confirm order %1$s (%2$s). Will try again on the next heartbeat."
-msgstr "Kon sudemi niet bereiken om bestelling %1$s te bevestigen (%2$s). Volgende statusmelding wordt het opnieuw geprobeerd."
+msgstr "Kon sudemi niet bereiken om bestelling %1$s te bevestigen (%2$s). Bij de volgende statusmelding wordt het opnieuw geprobeerd."
 
 #: includes/class-sudemi-orders.php:171
 msgid "Confirmed with sudemi; the buyer has been charged."
@@ -412,7 +412,7 @@ msgstr "sudemi heeft de bevestiging van bestelling %1$s geweigerd: %2$s. De loka
 
 #: includes/class-sudemi-orders.php:221
 msgid "Accepted on sudemi. The buyer paid several shops in one payment; sudemi takes the money once every shop has answered. Do NOT ship until this order moves to Processing."
-msgstr "Geaccepteerd op sudemi. De koper heeft meerdere winkels in één betaling betaald; sudemi schrijft het geld af zodra elke winkel heeft geantwoord. NIET verzenden voordat deze bestelling naar In behandeling gaat."
+msgstr "Geaccepteerd op sudemi. De koper heeft meerdere winkels in één betaling betaald; sudemi schrijft het geld af zodra elke winkel heeft geantwoord. NIET verzenden voordat deze bestelling de status In behandeling krijgt."
 
 #. translators: 1: sudemi order id, 2: local order number.
 #: includes/class-sudemi-orders.php:226
@@ -553,7 +553,7 @@ msgstr "Alleen voor producten die wettelijk onder een uitzondering vallen. Koper
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Sealed for health or hygiene reasons (not returnable once unsealed)"
-msgstr "Verzegeld om gezondheids- of hygiëneredenen (niet retour na verbreken van de verzegeling)"
+msgstr "Verzegeld om gezondheids- of hygiëneredenen (kan niet worden geretourneerd als de verzegeling is verbroken)"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Made to the buyer’s specifications or personalised"
@@ -565,7 +565,7 @@ msgstr "Bederfelijk of snel verlopend"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Sealed audio, video or software (not returnable once unsealed)"
-msgstr "Verzegelde audio, video of software (niet retour na verbreken van de verzegeling)"
+msgstr "Verzegelde audio, video of software (kan niet worden geretourneerd als de verzegeling is verbroken)"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Newspaper, periodical or magazine"
@@ -882,13 +882,13 @@ msgid "Cancelled on sudemi as well: the buyer was not charged for this order."
 msgstr "Ook op sudemi geannuleerd: de koper heeft voor deze bestelling niets betaald."
 
 msgid "Could not report %1$s for sudemi order %2$s yet (%3$s). It is sent again on the next heartbeat."
-msgstr "Kon %1$s voor sudemi-bestelling %2$s nog niet melden (%3$s). Het wordt bij de volgende heartbeat opnieuw verstuurd."
+msgstr "Kon %1$s voor sudemi-bestelling %2$s nog niet melden (%3$s). Het wordt bij de volgende statusmelding opnieuw verstuurd."
 
 msgid "Could not tell sudemi about this cancellation yet. It is retried on the next heartbeat; the buyer is not charged for it."
-msgstr "Kon sudemi nog niet over deze annulering informeren. Het wordt bij de volgende heartbeat opnieuw geprobeerd; de koper betaalt er niets voor."
+msgstr "Kon sudemi nog niet over deze annulering informeren. Het wordt bij de volgende statusmelding opnieuw geprobeerd; de koper betaalt er niets voor."
 
 msgid "Keep this shop reporting in (cron)"
-msgstr "Houd deze winkel bereikbaar (cron)"
+msgstr "Zorg dat deze winkel zich blijft melden (cron)"
 
 msgid "Last successful report"
 msgstr "Laatste geslaagde melding"
@@ -906,13 +906,13 @@ msgid "The catalogue sync is on hold: it would remove %1$d of %2$d listed produc
 msgstr "De catalogussynchronisatie staat in de wacht: die zou %1$d van de %2$d getoonde producten van sudemi halen, dus er is niets veranderd. Zijn die producten echt uit deze winkel verwijderd, neem dan contact op met sudemi support (support@sudemi.com)."
 
 msgid "WP-Cron is still visit-driven on this site. It works on busy shops, but a real cron job is more reliable."
-msgstr "WP-Cron draait op deze site nog op bezoeken. Dat werkt bij drukke winkels, maar een echte cronjob is betrouwbaarder."
+msgstr "WP-Cron wordt op deze site nog door bezoeken aangestuurd. Dat werkt bij drukke winkels, maar een echte cronjob is betrouwbaarder."
 
 msgid "WP-Cron is switched off on this site (DISABLE_WP_CRON), so the cron job in step 1 is required: without it this shop never reports in."
 msgstr "WP-Cron staat op deze site uit (DISABLE_WP_CRON), dus de cronjob uit stap 1 is verplicht: zonder die cronjob meldt deze winkel zich nooit."
 
 msgid "WordPress runs its scheduled tasks (WP-Cron) only when someone visits the site. In a quiet hour nobody does, this shop stops reporting in, and sudemi pauses its products and cannot ask it about new orders. Let the server call WP-Cron every 5 minutes instead."
-msgstr "WordPress voert geplande taken (WP-Cron) alleen uit als iemand de site bezoekt. In een rustig uur gebeurt dat niet, dan meldt deze winkel zich niet meer en pauzeert sudemi de producten en kan het geen nieuwe bestellingen voorleggen. Laat de server WP-Cron daarom elke 5 minuten aanroepen."
+msgstr "WordPress voert geplande taken (WP-Cron) alleen uit als iemand de site bezoekt. In een rustig uur gebeurt dat niet, dan meldt deze winkel zich niet meer en pauzeert sudemi de producten en kan sudemi de winkel niet naar nieuwe bestellingen vragen. Laat de server WP-Cron daarom elke 5 minuten aanroepen."
 
 msgid "no answer"
 msgstr "geen antwoord"
@@ -921,7 +921,7 @@ msgid "sudemi answered the last report in time."
 msgstr "sudemi heeft de laatste melding op tijd beantwoord."
 
 msgid "sudemi has not answered the confirmation yet. The order stays on hold with its stock reserved and is asked about again on the next heartbeat. Do not ship it until it moves to Processing."
-msgstr "sudemi heeft de bevestiging nog niet beantwoord. De bestelling blijft in de wacht met de voorraad gereserveerd en wordt bij de volgende heartbeat opnieuw nagevraagd. Verstuur niets tot de status In behandeling is."
+msgstr "sudemi heeft de bevestiging nog niet beantwoord. De bestelling blijft in de wacht met de voorraad gereserveerd en wordt bij de volgende statusmelding opnieuw nagevraagd. Verstuur niets tot de status In behandeling is."
 
 msgid "sudemi says this order is PAID, but it is cancelled here. Either ship it, or refund it to the buyer (set it to Processing and then Cancelled, or contact support@sudemi.com)."
 msgstr "sudemi zegt dat deze bestelling BETAALD is, maar hier is ze geannuleerd. Verstuur haar, of betaal de koper terug (zet haar op In behandeling en daarna op Geannuleerd, of mail support@sudemi.com)."
@@ -1098,7 +1098,7 @@ msgid "Mark shipped"
 msgstr "Markeren als verzonden"
 
 msgid "Mark delivered"
-msgstr "Markeren als afgeleverd"
+msgstr "Markeren als bezorgd"
 
 msgid "Reason for declining (shown to the buyers)"
 msgstr "Reden van afwijzing (zichtbaar voor de kopers)"
@@ -1110,7 +1110,7 @@ msgid "Apply"
 msgstr "Toepassen"
 
 msgid "Refunds and cancellations are made one order at a time, on the order's own page: each moves a different amount of money."
-msgstr "Terugbetalingen en annuleringen gaan per bestelling, op de pagina van die bestelling: bij elke gaat het om een ander bedrag."
+msgstr "Terugbetalingen en annuleringen gaan per bestelling, op de pagina van die bestelling: bij elke bestelling gaat het om een ander bedrag."
 
 #, php-format
 msgid "Orders %1$d to %2$d of %3$d"
@@ -1188,7 +1188,7 @@ msgid "On: every five minutes this shop accepts orders whose items are in stock 
 msgstr "Aan: elke vijf minuten accepteert deze winkel bestellingen waarvan de artikelen op voorraad zijn en wijst de andere af."
 
 msgid "Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing."
-msgstr "Uit: bestellingen wachten op jou. Accepteer of wijs elke bestelling hier af vóór de getoonde datum; zonder antwoord wordt de koper vrijgegeven en wordt er niets afgeschreven."
+msgstr "Uit: bestellingen wachten op jou. Accepteer of wijs elke bestelling hier af vóór de getoonde datum; zonder antwoord wordt de reservering bij de koper vrijgegeven en wordt er niets afgeschreven."
 
 msgid "Back to the orders"
 msgstr "Terug naar de bestellingen"
@@ -1199,7 +1199,7 @@ msgstr "Bestelling %1$s: %2$s"
 
 #, php-format
 msgid "Waiting for your answer. The buyer is not charged until you accept. Answer by %s; without an answer the buyer is released."
-msgstr "Wacht op je antwoord. Er wordt pas iets bij de koper afgeschreven als je accepteert. Antwoord vóór %s; zonder antwoord wordt de koper vrijgegeven."
+msgstr "Wacht op je antwoord. Er wordt pas iets bij de koper afgeschreven als je accepteert. Antwoord vóór %s; zonder antwoord wordt de reservering bij de koper vrijgegeven."
 
 #, php-format
 msgid "Stock check: %s."
@@ -1381,8 +1381,8 @@ msgid "When you are paid"
 msgstr "Wanneer je betaald wordt"
 
 #, php-format
-msgid "%d days after the buyer received the order (plus 14 days after shipping when delivery is never reported), never while a chargeback is open."
-msgstr "%d dagen nadat de koper de bestelling heeft ontvangen (plus 14 dagen na verzending als de levering nooit wordt gemeld), nooit zolang er een terugboeking openstaat."
+msgid "%1$d days after the buyer received the order, or %2$d days after shipping if delivery is never reported; never while a chargeback is open."
+msgstr "%1$d dagen nadat de koper de bestelling heeft ontvangen, of %2$d dagen na verzending als de levering nooit wordt gemeld; nooit zolang er een terugboeking openstaat."
 
 msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."
 msgstr "Je uitbetalingsrekening vraagt aandacht. Die wordt beheerd in het sudemi-verkopersportaal (Uitbetalingen), niet hier."
@@ -1416,7 +1416,7 @@ msgid "%d WooCommerce order(s) updated from sudemi."
 msgstr "%d WooCommerce-bestelling(en) bijgewerkt vanuit sudemi."
 
 msgid "An order change from sudemi could not be applied yet; it is read again on the next heartbeat."
-msgstr "Een wijziging in een bestelling op sudemi kon nog niet worden verwerkt; die wordt bij de volgende heartbeat opnieuw gelezen."
+msgstr "Een wijziging in een bestelling op sudemi kon nog niet worden verwerkt; die wordt bij de volgende statusmelding opnieuw gelezen."
 
 msgid "Paid on sudemi; the buyer has been charged. This order can be shipped."
 msgstr "Betaald op sudemi; het bedrag is bij de koper afgeschreven. Deze bestelling kan worden verzonden."
@@ -1432,7 +1432,7 @@ msgstr "Geannuleerd op sudemi; de koper is volledig terugbetaald. Verstuur deze 
 
 #, php-format
 msgid "Delivered (recorded on sudemi, %s)."
-msgstr "Afgeleverd (vastgelegd op sudemi, %s)."
+msgstr "Bezorgd (vastgelegd op sudemi, %s)."
 
 #, php-format
 msgid "Tracking on sudemi: %1$s %2$s"
@@ -1453,7 +1453,7 @@ msgid "sudemi order %1$s was accepted on sudemi; booked here as order #%2$s."
 msgstr "sudemi-bestelling %1$s is op sudemi geaccepteerd; hier geboekt als bestelling #%2$s."
 
 msgid "sudemi has no such order for this shop."
-msgstr "sudemi heeft zo'n bestelling niet voor deze winkel."
+msgstr "sudemi kent deze bestelling niet voor deze winkel."
 
 msgid "This order belongs to an earlier sudemi connection of this shop. Leave it as it is; sudemi support can help."
 msgstr "Deze bestelling hoort bij een eerdere sudemi-koppeling van deze winkel. Laat haar zoals ze is; sudemi-support kan helpen."
@@ -1513,7 +1513,7 @@ msgid "Marked shipped on sudemi. The buyer is told."
 msgstr "Op sudemi gemarkeerd als verzonden. De koper krijgt bericht."
 
 msgid "Marked delivered on sudemi."
-msgstr "Op sudemi gemarkeerd als afgeleverd."
+msgstr "Op sudemi gemarkeerd als bezorgd."
 
 msgid "Refunded through sudemi. The refund is recorded on the WooCommerce order."
 msgstr "Terugbetaald via sudemi. De terugbetaling is vastgelegd op de WooCommerce-bestelling."
@@ -1531,23 +1531,23 @@ msgid "Accepted. The buyer has been charged; the WooCommerce order is ready to s
 msgstr "Geaccepteerd. Het bedrag is bij de koper afgeschreven; de WooCommerce-bestelling is klaar om te verzenden."
 
 msgid "Accepted. sudemi takes the money once the other shops in the buyer's payment have answered; do not ship until the order moves to Processing."
-msgstr "Geaccepteerd. sudemi schrijft het geld af zodra de andere winkels in de betaling van de koper hebben geantwoord; verzend niet voordat de bestelling naar In behandeling gaat."
+msgstr "Geaccepteerd. sudemi schrijft het geld af zodra de andere winkels in de betaling van de koper hebben geantwoord; verzend niet voordat de bestelling de status In behandeling krijgt."
 
 msgid "sudemi did not answer. The WooCommerce order stays on hold and the acceptance is sent again on the next heartbeat."
-msgstr "sudemi heeft niet geantwoord. De WooCommerce-bestelling blijft in de wacht en de acceptatie wordt bij de volgende heartbeat opnieuw verstuurd."
+msgstr "sudemi heeft niet geantwoord. De WooCommerce-bestelling blijft in de wacht en de acceptatie wordt bij de volgende statusmelding opnieuw verstuurd."
 
 #, php-format
 msgid "%1$d done, %2$d refused."
 msgstr "%1$d gelukt, %2$d geweigerd."
 
 msgid "Mark delivered on sudemi"
-msgstr "Markeren als afgeleverd op sudemi"
+msgstr "Markeren als bezorgd op sudemi"
 
 msgid "sudemi did not record the delivery (the order may not be shipped there yet). Check the order under WooCommerce > sudemi > Orders."
 msgstr "sudemi heeft de levering niet vastgelegd (misschien is de bestelling daar nog niet verzonden). Controleer de bestelling onder WooCommerce > sudemi > Bestellingen."
 
 msgid "Could not reach sudemi to report the delivery. It is sent again on the next heartbeat."
-msgstr "Kon sudemi niet bereiken om de levering te melden. Die wordt bij de volgende heartbeat opnieuw verstuurd."
+msgstr "Kon sudemi niet bereiken om de levering te melden. Die wordt bij de volgende statusmelding opnieuw verstuurd."
 
 #, php-format
 msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
@@ -1583,11 +1583,11 @@ msgstr "Nieuwe track & trace naar sudemi gestuurd: %s. sudemi mailt de koper de 
 
 #, php-format
 msgid "Could not send the new tracking (%s) to sudemi yet. It is sent again on the next heartbeat."
-msgstr "Kon de nieuwe track & trace (%s) nog niet naar sudemi sturen. Die wordt bij de volgende heartbeat opnieuw verstuurd."
+msgstr "Kon de nieuwe track & trace (%s) nog niet naar sudemi sturen. Die wordt bij de volgende statusmelding opnieuw verstuurd."
 
 #, php-format
 msgid "The new tracking (%s) was not sent: on sudemi this order is already delivered, cancelled or refunded, so its tracking can no longer change."
-msgstr "De nieuwe track & trace (%s) is niet verstuurd: op sudemi is deze bestelling al bezorgd, geannuleerd of terugbetaald, dus de track & trace kan niet meer veranderen."
+msgstr "De nieuwe track & trace (%s) is niet verstuurd: op sudemi is deze bestelling al bezorgd, geannuleerd of terugbetaald, dus de track & trace kan niet meer worden gewijzigd."
 
 #, php-format
 msgid "sudemi did not take the new tracking (%s). Check the order under WooCommerce > sudemi > Orders."
@@ -1595,7 +1595,7 @@ msgstr "sudemi heeft de nieuwe track & trace (%s) niet aangenomen. Bekijk de bes
 
 #, php-format
 msgid "Could not send the new tracking for sudemi order %1$s yet. It is sent again on the next heartbeat."
-msgstr "Kon de nieuwe track & trace voor sudemi-bestelling %1$s nog niet versturen. Die wordt bij de volgende heartbeat opnieuw verstuurd."
+msgstr "Kon de nieuwe track & trace voor sudemi-bestelling %1$s nog niet versturen. Die wordt bij de volgende statusmelding opnieuw verstuurd."
 
 #, php-format
 msgid "Sent the new tracking for sudemi order %1$s."
@@ -1606,7 +1606,7 @@ msgid "The new tracking for sudemi order %1$s was not sent: the order is already
 msgstr "De nieuwe track & trace voor sudemi-bestelling %1$s is niet verstuurd: de bestelling is op sudemi al bezorgd, geannuleerd of terugbetaald."
 
 msgid "The tracking can no longer be changed: on sudemi this order is already delivered, cancelled or refunded."
-msgstr "De track & trace kan niet meer veranderen: op sudemi is deze bestelling al bezorgd, geannuleerd of terugbetaald."
+msgstr "De track & trace kan niet meer worden gewijzigd: op sudemi is deze bestelling al bezorgd, geannuleerd of terugbetaald."
 
 msgid "Enter a tracking code."
 msgstr "Vul een trackingcode in."
@@ -1654,7 +1654,7 @@ msgstr "Reden: %s."
 
 #, php-format
 msgid "sudemi order %1$s could not be applied here yet (%2$s); it is read from sudemi again on the next heartbeats."
-msgstr "sudemi-bestelling %1$s kon hier nog niet worden verwerkt (%2$s); ze wordt bij de volgende heartbeats opnieuw bij sudemi opgehaald."
+msgstr "sudemi-bestelling %1$s kon hier nog niet worden verwerkt (%2$s); ze wordt bij de volgende statusmeldingen opnieuw bij sudemi opgehaald."
 
 #, php-format
 msgid "sudemi order %1$s is not applied here: sudemi no longer has it for this shop (%2$s). Check the WooCommerce order by hand."

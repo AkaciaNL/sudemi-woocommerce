@@ -52,7 +52,7 @@ msgstr "إضافة sodium غير موجودة على هذا الخادم. يحت
 
 #: admin/class-sudemi-admin.php:71
 msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account - this plugin never asks for your sudemi password."
-msgstr "ربط هذا المتجر يتيح لمساعد ذكاء اصطناعي العثور على منتجاتك وإرسال المشترين إليك. تؤكد الاتصال على sudemi بعد تسجيل الدخول إلى حسابك الخاص - هذه الإضافة لا تطلب أبدًا كلمة مرور sudemi الخاصة بك."
+msgstr "ربط هذا المتجر يتيح لمساعد ذكاء اصطناعي العثور على منتجاتك وإرسال المشترين إليك. تؤكد الاتصال على sudemi بعد تسجيل الدخول إلى حسابك الخاص، ولا تطلب هذه الإضافة أبدًا كلمة مرور sudemi الخاصة بك."
 
 #: admin/class-sudemi-admin.php:75
 msgid "Connect this shop"
@@ -82,7 +82,7 @@ msgstr "عنوان المتجر"
 
 #: admin/class-sudemi-admin.php:98
 msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from - so changing it means connecting again from the new address."
-msgstr "ثابت. تحقق sudemi من أن هذا المتجر أجاب من هذا العنوان، والقائمة تُخبر المشتري بمصدرها - لذا فإن تغييره يعني الربط من جديد من العنوان الجديد."
+msgstr "ثابت. تحقق sudemi من أن هذا المتجر أجاب من هذا العنوان، وكل منتج معروض يُبيّن للمشتري مصدره، لذا فإن تغييره يعني الربط من جديد من العنوان الجديد."
 
 #: admin/class-sudemi-admin.php:99
 msgid "Install"
@@ -159,7 +159,7 @@ msgstr "آخر تقرير"
 
 #: admin/class-sudemi-admin.php:171
 msgid "This shop tells sudemi every five minutes that it is still here and that its prices still stand. When that stops, the listings are paused rather than left at prices nobody is confirming."
-msgstr "يُبلغ هذا المتجر sudemi كل خمس دقائق بأنه ما زال موجودًا وأن أسعاره ما زالت سارية. عندما يتوقف ذلك، تُعلَّق القوائم بدل أن تبقى بأسعار لا يؤكدها أحد."
+msgstr "يُبلغ هذا المتجر sudemi كل خمس دقائق بأنه ما زال موجودًا وأن أسعاره ما زالت سارية. عندما يتوقف ذلك، تُعلَّق المنتجات المعروضة بدل أن تبقى بأسعار لا يؤكدها أحد."
 
 #: admin/class-sudemi-admin.php:173
 msgid "Prices confirmed until"
@@ -195,11 +195,11 @@ msgstr "يدويًا"
 
 #: admin/class-sudemi-admin.php:189
 msgid "A buyer on sudemi is authorised but not charged until this shop confirms it has the item. That check runs against this shop's live stock every five minutes: in stock means the order is accepted and the money taken, out of stock means it is declined and the buyer's money released. Nothing is ever charged without this shop agreeing to it."
-msgstr "يُفوَّض الدفع للمشتري على sudemi دون أن يُخصم منه شيء حتى يؤكد هذا المتجر توفّر السلعة. يجري هذا الفحص كل خمس دقائق على المخزون الفعلي لهذا المتجر: إذا كانت متوفرة يُقبل الطلب ويُحصَّل المبلغ، وإذا نفدت يُرفض الطلب ويُحرَّر مبلغ المشتري. لا يُخصم أي مبلغ أبدًا دون موافقة هذا المتجر."
+msgstr "يُحجز المبلغ على بطاقة المشتري على sudemi (تفويض الدفع) دون أن يُخصم منه شيء حتى يؤكد هذا المتجر توفّر السلعة. يجري هذا الفحص كل خمس دقائق على المخزون الفعلي لهذا المتجر: إذا كانت متوفرة يُقبل الطلب ويُحصَّل المبلغ، وإذا نفدت يُرفض الطلب ويُلغى حجز المبلغ على بطاقة المشتري. لا يُخصم أي مبلغ أبدًا دون موافقة هذا المتجر."
 
 #: admin/class-sudemi-admin.php:190
 msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted."
-msgstr "تنتظر الطلبات أن يردّ عليها أحد هنا. إذا لم يردّ أحد قبل الموعد النهائي الذي يعرضه sudemi، يُحرَّر المشتري ولا يُخصم منه شيء - الطلب الذي لم يُرد عليه لا يُعتبر مقبولًا أبدًا."
+msgstr "تنتظر الطلبات أن يردّ عليها أحد هنا. إذا لم يردّ أحد قبل الموعد النهائي الذي يعرضه sudemi، يُلغى حجز المبلغ على بطاقة المشتري ولا يُخصم منه شيء، فالطلب الذي لم يُرد عليه لا يُعتبر مقبولًا أبدًا."
 
 #: admin/class-sudemi-admin.php:213
 msgid "Orders through sudemi"
@@ -230,7 +230,7 @@ msgstr "الطلب"
 
 #: admin/class-sudemi-admin.php:252
 msgid "What sold"
-msgstr "ما بيع"
+msgstr "ما تم بيعه"
 
 #: admin/class-sudemi-admin.php:253
 msgid "Status"
@@ -242,15 +242,15 @@ msgstr "ما تستلمه"
 
 #: admin/class-sudemi-admin.php:255
 msgid "Customer"
-msgstr "العميل"
+msgstr "المشتري"
 
 #: admin/class-sudemi-admin.php:289
 msgid "Waiting for you - buyer not charged"
-msgstr "بانتظارك - لم يُخصم من المشتري"
+msgstr "بانتظارك: لم يُخصم من المشتري"
 
 #: admin/class-sudemi-admin.php:291
 msgid "Accepted - waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
-msgstr "مقبول - بانتظار المتاجر الأخرى في دفعة المشتري؛ لم يُخصم من المشتري بعد، لا تشحن"
+msgstr "مقبول: بانتظار المتاجر الأخرى في دفعة المشتري؛ لم يُخصم من المشتري بعد، لا تشحن"
 
 #: admin/class-sudemi-admin.php:293
 msgid "Confirmed and charged"
@@ -260,11 +260,11 @@ msgstr "مؤكَّد ومحصَّل"
 #: admin/class-sudemi-admin.php:298
 #, php-format
 msgid "Declined (%s) - nothing charged"
-msgstr "مرفوض (%s) - لم يُخصم شيء"
+msgstr "مرفوض (%s): لم يُخصم شيء"
 
 #: admin/class-sudemi-admin.php:301
 msgid "Declined - nothing charged"
-msgstr "مرفوض - لم يُخصم شيء"
+msgstr "مرفوض: لم يُخصم شيء"
 
 #: admin/class-sudemi-admin.php:303
 msgid "Shipped"
@@ -438,13 +438,13 @@ msgstr "لم يُذكر سبب"
 #: includes/class-sudemi-orders.php:299
 #, php-format
 msgid "sudemi released the buyer's payment: %s. Nothing was charged and the stock has been restored."
-msgstr "حرّر sudemi دفعة المشتري: %s. لم يُخصم أي مبلغ وأُعيد المخزون."
+msgstr "ألغى sudemi حجز دفعة المشتري: %s. لم يُخصم أي مبلغ وأُعيد المخزون."
 
 #. translators: 1: sudemi order id, 2: reason.
 #: includes/class-sudemi-orders.php:306
 #, php-format
 msgid "sudemi order %1$s was released after all: %2$s. The local order was cancelled and stock restored."
-msgstr "تم تحرير طلب sudemi رقم %1$s في النهاية: %2$s. أُلغي الطلب المحلي وأُعيد المخزون."
+msgstr "أُلغي حجز مبلغ طلب sudemi رقم %1$s في النهاية: %2$s. أُلغي الطلب المحلي وأُعيد المخزون."
 
 #: includes/class-sudemi-orders.php:319
 msgid "Paid on sudemi: every shop in the buyer's payment has answered and the buyer has been charged. This order can be shipped."
@@ -496,7 +496,7 @@ msgstr "\"%s\" لا يمكن شراؤه حاليًا"
 #: includes/class-sudemi-orders.php:471
 #, php-format
 msgid "Placed through sudemi (order %s). The buyer has been authorised but not yet charged."
-msgstr "طلب عبر sudemi (الطلب %s). تم تفويض الدفع للمشتري ولكن لم يُحصَّل المبلغ بعد."
+msgstr "تم تقديمه عبر sudemi (الطلب %s). تم تفويض دفعة المشتري (حجز المبلغ) ولكن لم يُحصَّل المبلغ بعد."
 
 #: includes/class-sudemi-orders.php:478
 msgid "Awaiting confirmation with sudemi."
@@ -541,7 +541,7 @@ msgstr "تم رد %s إلى المشتري عبر sudemi."
 
 #, php-format
 msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com)."
-msgstr "لم يرد sudemi هذا المبلغ: %s. لم يُرد المال إلى المشتري؛ تواصل مع دعم sudemi (support@sudemi.com)."
+msgstr "لم يُعِد sudemi هذا المبلغ: %s. لم يُعَد المال إلى المشتري؛ تواصل مع دعم sudemi (support@sudemi.com)."
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Right of withdrawal"
@@ -549,7 +549,7 @@ msgstr "حق الانسحاب"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "None - normal right of withdrawal applies"
-msgstr "لا يوجد - ينطبق حق الانسحاب العادي"
+msgstr "لا يوجد: ينطبق حق الانسحاب العادي"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed."
@@ -613,7 +613,7 @@ msgstr "لدى هذا المتجر عدد كبير جدًا من التذاكر 
 
 #: includes/class-sudemi-support.php
 msgid "sudemi refused this shop. Check the connection on the overview tab."
-msgstr "رفضت sudemi هذا المتجر. تحقّق من الاتصال في علامة التبويب «نظرة عامة»."
+msgstr "رفض sudemi هذا المتجر. تحقّق من الاتصال في علامة التبويب «نظرة عامة»."
 
 #: includes/class-sudemi-support.php
 msgid "Could not reach sudemi just now. Please try again shortly."
@@ -637,7 +637,7 @@ msgstr "إضافة المتجر أو الاتصال"
 
 #: includes/class-sudemi-support.php
 msgid "Payouts"
-msgstr "المدفوعات للبائع"
+msgstr "تحويل المستحقات"
 
 #: includes/class-sudemi-support.php
 msgid "Other"
@@ -674,7 +674,7 @@ msgstr "يتوفر الدعم بمجرد ربط هذا المتجر بـ sudemi.
 
 #: admin/class-sudemi-admin.php
 msgid "Questions about an order, a payment, payouts or this plugin? Open a ticket and sudemi support answers here. You also get an e-mail when they reply."
-msgstr "لديك سؤال عن طلب أو دفعة أو المدفوعات أو هذه الإضافة؟ افتح تذكرة وسيرد دعم sudemi هنا. وستصلك أيضًا رسالة بريد إلكتروني عند الرد."
+msgstr "لديك سؤال عن طلب أو دفعة أو تحويل المستحقات أو هذه الإضافة؟ افتح تذكرة وسيرد دعم sudemi هنا. وستصلك أيضًا رسالة بريد إلكتروني عند الرد."
 
 #: admin/class-sudemi-admin.php
 msgid "Your tickets"
@@ -788,7 +788,7 @@ msgstr "هذا ليس طلبًا من sudemi."
 
 #: includes/class-sudemi-requests.php
 msgid "Return request accepted on sudemi. Refund the buyer here (WooCommerce refund) once the item is back; the refund goes through sudemi and closes the request."
-msgstr "تم قبول طلب الإرجاع على sudemi. أعد المبلغ إلى المشتري هنا (استرداد WooCommerce) بعد عودة المنتج؛ يمر الاسترداد عبر sudemi ويغلق الطلب."
+msgstr "تم قبول طلب الإرجاع على sudemi. أعد المبلغ إلى المشتري هنا (استرداد WooCommerce) بعد عودة المنتج؛ يمر الاسترداد عبر sudemi ويُغلق طلب الإرجاع."
 
 #. translators: %s: the reason the shop gave, shown to the buyer.
 #: includes/class-sudemi-requests.php
@@ -842,7 +842,7 @@ msgstr "لا توجد طلبات إرجاع بانتظار الرد."
 
 #: admin/class-sudemi-admin.php
 msgid "Buyers asked to return these delivered orders. Answer each by the date shown: accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on the order."
-msgstr "طلب مشترون إرجاع هذه الطلبات التي تم تسليمها. أجب عن كل منها قبل التاريخ المعروض: اقبل، أو ارفض مع ذكر السبب (سيراه المشتري). من دون رد، تقرر sudemi. بعد القبول، أعد المبلغ إلى المشتري بعد عودة المنتج، باسترداد WooCommerce على الطلب."
+msgstr "طلب المشترون إرجاع هذه الطلبات التي تم تسليمها. أجب عن كل منها قبل التاريخ المعروض: اقبل، أو ارفض مع ذكر السبب (سيراه المشتري). من دون رد، يقرر sudemi. بعد القبول، أعد المبلغ إلى المشتري بعد عودة المنتج، باسترداد WooCommerce على الطلب."
 
 #: admin/class-sudemi-admin.php
 msgid "Buyer's reason"
@@ -874,7 +874,7 @@ msgstr "sudemi: يطلب المشتري إرجاع هذا الطلب"
 
 #: admin/class-sudemi-admin.php
 msgid "Accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on this order."
-msgstr "اقبل، أو ارفض مع ذكر السبب (سيراه المشتري). من دون رد، تقرر sudemi. بعد القبول، أعد المبلغ إلى المشتري بعد عودة المنتج، باسترداد WooCommerce على هذا الطلب."
+msgstr "اقبل، أو ارفض مع ذكر السبب (سيراه المشتري). من دون رد، يقرر sudemi. بعد القبول، أعد المبلغ إلى المشتري بعد عودة المنتج، باسترداد WooCommerce على هذا الطلب."
 
 msgid "1. Add this line to the server's crontab (crontab -e), or as a cron job in your hosting panel:"
 msgstr "1. أضف هذا السطر إلى crontab الخادم (crontab -e)، أو كمهمة cron في لوحة الاستضافة:"
@@ -925,10 +925,10 @@ msgid "sudemi answered the last report in time."
 msgstr "رد sudemi على آخر إبلاغ في الوقت المحدد."
 
 msgid "sudemi has not answered the confirmation yet. The order stays on hold with its stock reserved and is asked about again on the next heartbeat. Do not ship it until it moves to Processing."
-msgstr "لم يرد sudemi على التأكيد بعد. يبقى الطلب معلّقًا مع حجز المخزون، وسيُسأل عنه مجددًا مع نبضة القلب التالية. لا تشحنه حتى تصبح حالته قيد المعالجة."
+msgstr "لم يرد sudemi على التأكيد بعد. يبقى الطلب معلّقًا مع حجز المخزون، وسيُسأل عنه مجددًا مع نبضة القلب التالية. لا تشحنه حتى تصبح حالته «قيد التنفيذ»."
 
 msgid "sudemi says this order is PAID, but it is cancelled here. Either ship it, or refund it to the buyer (set it to Processing and then Cancelled, or contact support@sudemi.com)."
-msgstr "يقول sudemi إن هذا الطلب مدفوع، لكنه ملغى هنا. إما أن تشحنه أو تردّ المبلغ للمشتري (اجعله قيد المعالجة ثم ملغى، أو راسل support@sudemi.com)."
+msgstr "يقول sudemi إن هذا الطلب مدفوع، لكنه ملغى هنا. إما أن تشحنه أو تردّ المبلغ للمشتري (اجعله «قيد التنفيذ» ثم «ملغي»، أو راسل support@sudemi.com)."
 
 msgid "the order was cancelled in this shop"
 msgstr "أُلغي الطلب في هذا المتجر"
@@ -982,7 +982,7 @@ msgid "sudemi still has %1$s for your shop, but your shop sells in %2$s. Orders 
 msgstr "ما زال sudemi يسجّل %1$s لمتجرك، لكن متجرك يبيع بعملة %2$s. تُرفض الطلبات بعملة %1$s حتى تتطابق العملتان. انقر \"مزامنة الكتالوج الآن\" لإرسال العملة الجديدة."
 
 msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
-msgstr "يدفع المشترون بعملتك. يدفع لك sudemi باليورو: تُخصم رسوم تحويل العملة لدى مزوّد الدفع (نحو 2%) من دفعتك، كما تنص الشروط."
+msgstr "يدفع المشترون بعملتك. يحوّل لك sudemi مستحقاتك باليورو: تُخصم رسوم تحويل العملة لدى مزوّد الدفع (نحو 2%) من تحويلك، كما تنص الشروط."
 
 msgid "Waiting for you"
 msgstr "بانتظارك"
@@ -1015,13 +1015,13 @@ msgid "On its way to you"
 msgstr "في الطريق إليك"
 
 msgid "Held (chargeback)"
-msgstr "محتجز (اعتراض على الدفع)"
+msgstr "محجوز (استرداد بقرار البنك)"
 
 msgid "Partly paid out"
-msgstr "دُفع جزء منه لك"
+msgstr "حُوِّل جزء منه إليك"
 
 msgid "Paid out"
-msgstr "دُفع لك"
+msgstr "حُوِّل إليك"
 
 msgid "Nothing due (refunded)"
 msgstr "لا شيء مستحق (مُسترد)"
@@ -1078,7 +1078,7 @@ msgid "Total"
 msgstr "الإجمالي"
 
 msgid "Payout"
-msgstr "الدفعة للبائع"
+msgstr "التحويل"
 
 msgid "Tracking"
 msgstr "التتبع"
@@ -1192,7 +1192,7 @@ msgid "On: every five minutes this shop accepts orders whose items are in stock 
 msgstr "تشغيل: كل خمس دقائق يقبل هذا المتجر الطلبات التي تتوفر سلعها في المخزون ويرفض الطلبات الأخرى."
 
 msgid "Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing."
-msgstr "إيقاف: تنتظرك الطلبات. اقبل كل طلب أو ارفضه هنا قبل التاريخ المعروض؛ وإن لم ترد يُحرَّر المشتري ولا يُخصم منه شيء."
+msgstr "إيقاف: تنتظرك الطلبات. اقبل كل طلب أو ارفضه هنا قبل التاريخ المعروض؛ وإن لم ترد يُلغى حجز المبلغ على بطاقة المشتري ولا يُخصم منه شيء."
 
 msgid "Back to the orders"
 msgstr "العودة إلى الطلبات"
@@ -1203,7 +1203,7 @@ msgstr "الطلب %1$s: %2$s"
 
 #, php-format
 msgid "Waiting for your answer. The buyer is not charged until you accept. Answer by %s; without an answer the buyer is released."
-msgstr "بانتظار ردك. لا يُخصم من المشتري شيء حتى تقبل. رد قبل %s؛ وإن لم ترد يُحرَّر المشتري."
+msgstr "بانتظار ردك. لا يُخصم من المشتري شيء حتى تقبل. رد قبل %s؛ وإن لم ترد يُلغى حجز المبلغ على بطاقة المشتري."
 
 #, php-format
 msgid "Stock check: %s."
@@ -1243,7 +1243,7 @@ msgid "No right of withdrawal"
 msgstr "لا يوجد حق انسحاب"
 
 msgid "Money"
-msgstr "المال"
+msgstr "المبالغ"
 
 msgid "Goods"
 msgstr "البضائع"
@@ -1261,10 +1261,10 @@ msgid "Refunded to the buyer"
 msgstr "المسترد للمشتري"
 
 msgid "Payout expected"
-msgstr "الدفعة المتوقعة لك"
+msgstr "التحويل المتوقع إليك"
 
 msgid "Payout due"
-msgstr "الدفعة المستحقة لك"
+msgstr "موعد التحويل إليك"
 
 msgid "The buyer asked to return this order"
 msgstr "طلب المشتري إرجاع هذا الطلب"
@@ -1373,7 +1373,7 @@ msgid "Saved on sudemi. Buyers see these shipping prices from now on."
 msgstr "تم الحفظ على sudemi. يرى المشترون أسعار الشحن هذه من الآن."
 
 msgid "Payout account"
-msgstr "حساب استلام المدفوعات"
+msgstr "حساب تحويل المستحقات"
 
 msgid "State"
 msgstr "الحالة"
@@ -1382,23 +1382,23 @@ msgid "Act before"
 msgstr "تصرّف قبل"
 
 msgid "When you are paid"
-msgstr "متى تحصل على أموالك"
+msgstr "متى يُحوَّل إليك مستحقك"
 
 #, php-format
-msgid "%d days after the buyer received the order (plus 14 days after shipping when delivery is never reported), never while a chargeback is open."
-msgstr "بعد %d يومًا من استلام المشتري للطلب (مع إضافة 14 يومًا بعد الشحن إذا لم يُبلَّغ عن التسليم أبدًا)، ولا يتم الدفع أبدًا ما دام هناك اعتراض مفتوح على الدفع."
+msgid "%1$d days after the buyer received the order, or %2$d days after shipping if delivery is never reported; never while a chargeback is open."
+msgstr "بعد %1$d يومًا من استلام المشتري للطلب، أو بعد %2$d يومًا من الشحن إذا لم يُبلَّغ عن التسليم أبدًا؛ ولا يتم التحويل أبدًا ما دام هناك استرداد للمبلغ بقرار البنك مفتوحًا."
 
 msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."
-msgstr "حساب استلام المدفوعات يحتاج إلى انتباهك. تتم إدارته على بوابة البائعين في sudemi (المدفوعات للبائع)، وليس هنا."
+msgstr "حساب تحويل المستحقات يحتاج إلى انتباهك. تتم إدارته على بوابة البائعين في sudemi (تحويل المستحقات)، وليس هنا."
 
 msgid "The payout account is managed on the sudemi seller portal (Payouts)."
-msgstr "تتم إدارة حساب استلام المدفوعات على بوابة البائعين في sudemi (المدفوعات للبائع)."
+msgstr "تتم إدارة حساب تحويل المستحقات على بوابة البائعين في sudemi (تحويل المستحقات)."
 
 msgid "This shop's payouts"
-msgstr "المدفوعات لهذا المتجر"
+msgstr "التحويلات إلى هذا المتجر"
 
 msgid "No payouts yet."
-msgstr "لا توجد مدفوعات بعد."
+msgstr "لا توجد تحويلات بعد."
 
 msgid "Orders"
 msgstr "الطلبات"
@@ -1407,7 +1407,7 @@ msgid "Still to come"
 msgstr "المبالغ القادمة"
 
 msgid "Next payout"
-msgstr "الدفعة التالية"
+msgstr "التحويل التالي"
 
 msgid "Manage orders: filters, export, accept, ship, refund"
 msgstr "إدارة الطلبات: التصفية، التصدير، القبول، الشحن، الاسترداد"

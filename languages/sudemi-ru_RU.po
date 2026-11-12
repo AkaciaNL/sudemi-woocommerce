@@ -52,7 +52,7 @@ msgstr "На этом сервере отсутствует расширение
 
 #: admin/class-sudemi-admin.php:71
 msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account - this plugin never asks for your sudemi password."
-msgstr "Подключение магазина позволяет ИИ-ассистенту находить ваши товары и направлять к вам покупателей. Подключение вы подтверждаете на sudemi, войдя в свою учётную запись, - этот плагин никогда не запрашивает ваш пароль от sudemi."
+msgstr "Подключение магазина позволяет ИИ-ассистенту находить ваши товары и направлять к вам покупателей. Подключение вы подтверждаете на sudemi, войдя в свой аккаунт. Этот плагин никогда не запрашивает ваш пароль от sudemi."
 
 #: admin/class-sudemi-admin.php:75
 msgid "Connect this shop"
@@ -82,7 +82,7 @@ msgstr "Адрес магазина"
 
 #: admin/class-sudemi-admin.php:98
 msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from - so changing it means connecting again from the new address."
-msgstr "Не меняется. sudemi проверил, что магазин отвечает с этого адреса, а в каждом предложении покупатель видит, откуда оно, - поэтому для смены адреса нужно заново подключиться с нового адреса."
+msgstr "Не меняется. sudemi проверил, что магазин отвечает с этого адреса, а в каждом предложении покупатель видит, откуда оно. Поэтому для смены адреса нужно заново подключиться с нового адреса."
 
 #: admin/class-sudemi-admin.php:99
 msgid "Install"
@@ -110,7 +110,7 @@ msgstr "Задаётся на sudemi, а не здесь"
 
 #: admin/class-sudemi-admin.php:108
 msgid "Your legal name, country, trader status and VAT number decide what a buyer is owed, so they are confirmed once on sudemi and changed there. This plugin cannot edit them."
-msgstr "Ваше юридическое наименование, страна, статус предпринимателя и номер плательщика НДС определяют, какие права есть у покупателя, поэтому они один раз подтверждаются на sudemi и меняются там же. Этот плагин не может их изменить."
+msgstr "Ваше юридическое наименование, страна, статус профессионального продавца и номер плательщика НДС определяют, какие права есть у покупателя, поэтому они один раз подтверждаются на sudemi и меняются там же. Этот плагин не может их изменить."
 
 #: admin/class-sudemi-admin.php:113
 msgid "Sync the catalogue now"
@@ -195,11 +195,11 @@ msgstr "вручную"
 
 #: admin/class-sudemi-admin.php:189
 msgid "A buyer on sudemi is authorised but not charged until this shop confirms it has the item. That check runs against this shop's live stock every five minutes: in stock means the order is accepted and the money taken, out of stock means it is declined and the buyer's money released. Nothing is ever charged without this shop agreeing to it."
-msgstr "Оплата покупателя на sudemi авторизуется, но не списывается, пока магазин не подтвердит наличие товара. Каждые пять минут выполняется проверка по актуальным остаткам магазина: если товар в наличии, заказ принимается и деньги списываются; если нет - заказ отклоняется и средства покупателя разблокируются. Без согласия магазина деньги никогда не списываются."
+msgstr "Оплата покупателя на sudemi авторизуется, но не списывается, пока магазин не подтвердит наличие товара. Каждые пять минут выполняется проверка по актуальным остаткам магазина: если товар в наличии, заказ принимается и деньги списываются; если нет, заказ отклоняется и средства покупателя разблокируются. Без согласия магазина деньги никогда не списываются."
 
 #: admin/class-sudemi-admin.php:190
 msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted."
-msgstr "Заказы ждут, пока кто-то здесь на них ответит. Если до срока, указанного на sudemi, ответа не будет, средства покупателя разблокируются и ничего не списывается - заказ без ответа никогда не считается принятым."
+msgstr "Заказы ждут, пока кто-то здесь на них ответит. Если до срока, указанного на sudemi, ответа не будет, средства покупателя разблокируются и ничего не списывается. Заказ без ответа никогда не считается принятым."
 
 #: admin/class-sudemi-admin.php:213
 msgid "Orders through sudemi"
@@ -243,11 +243,11 @@ msgstr "Покупатель"
 
 #: admin/class-sudemi-admin.php:289
 msgid "Waiting for you - buyer not charged"
-msgstr "Ждёт вашего ответа - деньги не списаны"
+msgstr "Ждёт вашего ответа, деньги не списаны"
 
 #: admin/class-sudemi-admin.php:291
 msgid "Accepted - waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
-msgstr "Принят - ожидаются ответы других магазинов из платежа покупателя; деньги ещё не списаны, не отправляйте"
+msgstr "Принят: ожидаются ответы других магазинов из платежа покупателя; деньги ещё не списаны, не отправляйте"
 
 #: admin/class-sudemi-admin.php:293
 msgid "Confirmed and charged"
@@ -257,11 +257,11 @@ msgstr "Подтверждён, оплата списана"
 #: admin/class-sudemi-admin.php:298
 #, php-format
 msgid "Declined (%s) - nothing charged"
-msgstr "Отклонён (%s) - ничего не списано"
+msgstr "Отклонён (%s), ничего не списано"
 
 #: admin/class-sudemi-admin.php:301
 msgid "Declined - nothing charged"
-msgstr "Отклонён - ничего не списано"
+msgstr "Отклонён, ничего не списано"
 
 #: admin/class-sudemi-admin.php:303
 msgid "Shipped"
@@ -289,7 +289,7 @@ msgstr "Не удалось получить стоимость доставки
 
 #: admin/class-sudemi-admin.php:371
 msgid "Shipping prices sent to sudemi (from your shipping zones; one item, your first product):"
-msgstr "Стоимость доставки, переданная на sudemi (по вашим зонам доставки; один товар, ваш первый продукт):"
+msgstr "Стоимость доставки, переданная на sudemi (по вашим зонам доставки; один товар, ваш первый товар):"
 
 #: admin/class-sudemi-admin.php:372
 msgid "Countries without a fixed price (cost formulas, free shipping with a minimum, postcode-only zones) are left out rather than guessed."
@@ -387,7 +387,7 @@ msgstr "магазину не удалось зарегистрировать з
 #: includes/class-sudemi-orders.php:142
 #, php-format
 msgid "Could not reach sudemi to confirm order %1$s (%2$s). Will try again on the next heartbeat."
-msgstr "Не удалось связаться с sudemi для подтверждения заказа %1$s (%2$s). Повторная попытка - при следующем контрольном сигнале."
+msgstr "Не удалось связаться с sudemi для подтверждения заказа %1$s (%2$s). Повторная попытка будет при следующем контрольном сигнале."
 
 #: includes/class-sudemi-orders.php:171
 msgid "Confirmed with sudemi; the buyer has been charged."
@@ -471,7 +471,7 @@ msgstr "в заказе нет распознаваемых товаров"
 #: includes/class-sudemi-orders.php:411
 #, php-format
 msgid "\"%s\" is no longer sold here"
-msgstr "\"%s\" здесь больше не продаётся"
+msgstr "«%s» здесь больше не продаётся"
 
 #: includes/class-sudemi-orders.php:412
 msgid "an item"
@@ -481,13 +481,13 @@ msgstr "товар"
 #: includes/class-sudemi-orders.php:419
 #, php-format
 msgid "\"%s\" is out of stock"
-msgstr "\"%s\" нет в наличии"
+msgstr "«%s» нет в наличии"
 
 #. translators: %s: the product name.
 #: includes/class-sudemi-orders.php:426
 #, php-format
 msgid "\"%s\" cannot currently be bought"
-msgstr "\"%s\" сейчас нельзя купить"
+msgstr "«%s» сейчас нельзя купить"
 
 #. translators: %s: the sudemi order id.
 #: includes/class-sudemi-orders.php:471
@@ -546,7 +546,7 @@ msgstr "Право на отказ от договора"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "None - normal right of withdrawal applies"
-msgstr "Нет - действует обычное право на отказ от договора"
+msgstr "Нет: действует обычное право на отказ от договора"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed."
@@ -671,7 +671,7 @@ msgstr "Поддержка станет доступна, как только э
 
 #: admin/class-sudemi-admin.php
 msgid "Questions about an order, a payment, payouts or this plugin? Open a ticket and sudemi support answers here. You also get an e-mail when they reply."
-msgstr "Есть вопрос о заказе, оплате, выплатах или этом плагине? Создайте обращение - поддержка sudemi ответит здесь. Об ответе вы также получите письмо."
+msgstr "Есть вопрос о заказе, оплате, выплатах или этом плагине? Создайте обращение, и поддержка sudemi ответит здесь. Об ответе вы также получите письмо."
 
 #: admin/class-sudemi-admin.php
 msgid "Your tickets"
@@ -883,16 +883,16 @@ msgid "Cancelled on sudemi as well: the buyer was not charged for this order."
 msgstr "Отменён и в sudemi: с покупателя ничего не списано за этот заказ."
 
 msgid "Could not report %1$s for sudemi order %2$s yet (%3$s). It is sent again on the next heartbeat."
-msgstr "Пока не удалось сообщить %1$s по заказу sudemi %2$s (%3$s). Повторная отправка при следующем heartbeat."
+msgstr "Пока не удалось сообщить %1$s по заказу sudemi %2$s (%3$s). Повторная отправка при следующем контрольном сигнале."
 
 msgid "Could not tell sudemi about this cancellation yet. It is retried on the next heartbeat; the buyer is not charged for it."
-msgstr "Пока не удалось сообщить sudemi об этой отмене. Повтор при следующем heartbeat; с покупателя ничего не списывается."
+msgstr "Пока не удалось сообщить sudemi об этой отмене. Повтор при следующем контрольном сигнале; с покупателя ничего не списывается."
 
 msgid "Keep this shop reporting in (cron)"
 msgstr "Поддерживать связь магазина с sudemi (cron)"
 
 msgid "Last successful report"
-msgstr "Последний успешный отчёт"
+msgstr "Последний успешный сигнал"
 
 msgid "More than 15 minutes ago: sudemi pauses this shop's products until it reports in again. Set up the cron job below."
 msgstr "Более 15 минут назад: sudemi приостанавливает товары этого магазина, пока он снова не выйдет на связь. Настройте задание cron ниже."
@@ -901,7 +901,7 @@ msgid "Order updates waiting"
 msgstr "Ожидающие обновления заказов"
 
 msgid "Shipped, delivered or cancelled orders that sudemi has not heard about yet. They are sent again on every report until sudemi answers."
-msgstr "Отправленные, доставленные или отменённые заказы, о которых sudemi ещё не знает. Они отправляются повторно при каждом отчёте, пока sudemi не ответит."
+msgstr "Отправленные, доставленные или отменённые заказы, о которых sudemi ещё не знает. Они отправляются повторно при каждом сигнале, пока sudemi не ответит."
 
 msgid "The catalogue sync is on hold: it would remove %1$d of %2$d listed products from sudemi, so nothing was changed. If those products really were removed from this shop, contact sudemi support (support@sudemi.com)."
 msgstr "Синхронизация каталога приостановлена: она убрала бы с sudemi %1$d из %2$d размещённых товаров, поэтому ничего не изменено. Если эти товары действительно удалены из магазина, обратитесь в поддержку sudemi (support@sudemi.com)."
@@ -919,10 +919,10 @@ msgid "no answer"
 msgstr "нет ответа"
 
 msgid "sudemi answered the last report in time."
-msgstr "sudemi вовремя ответил на последний отчёт."
+msgstr "sudemi вовремя ответил на последний сигнал."
 
 msgid "sudemi has not answered the confirmation yet. The order stays on hold with its stock reserved and is asked about again on the next heartbeat. Do not ship it until it moves to Processing."
-msgstr "sudemi ещё не ответил на подтверждение. Заказ остаётся на удержании с зарезервированным остатком и будет проверен снова при следующем heartbeat. Не отправляйте его, пока статус не станет «Обработка»."
+msgstr "sudemi ещё не ответил на подтверждение. Заказ остаётся на удержании с зарезервированным остатком и будет проверен снова при следующем контрольном сигнале. Не отправляйте его, пока статус не станет «Обработка»."
 
 msgid "sudemi says this order is PAID, but it is cancelled here. Either ship it, or refund it to the buyer (set it to Processing and then Cancelled, or contact support@sudemi.com)."
 msgstr "sudemi сообщает, что этот заказ ОПЛАЧЕН, но здесь он отменён. Отправьте его или верните деньги покупателю (переведите в «Обработка», затем в «Отменён», или напишите на support@sudemi.com)."
@@ -976,7 +976,7 @@ msgstr "sudemi пока не может продавать в %1$s, поэтом
 
 #, php-format
 msgid "sudemi still has %1$s for your shop, but your shop sells in %2$s. Orders in %1$s are declined until this matches. Click \"Sync the catalogue now\" to send the new currency."
-msgstr "У sudemi для вашего магазина всё ещё указана валюта %1$s, а ваш магазин продаёт в %2$s. Заказы в %1$s отклоняются, пока они не совпадут. Нажмите \"Синхронизировать каталог сейчас\", чтобы отправить новую валюту."
+msgstr "У sudemi для вашего магазина всё ещё указана валюта %1$s, а ваш магазин продаёт в %2$s. Заказы в %1$s отклоняются, пока они не совпадут. Нажмите «Синхронизировать каталог сейчас», чтобы отправить новую валюту."
 
 msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
 msgstr "Покупатели платят в вашей валюте. sudemi выплачивает вам деньги в евро: комиссия платёжного провайдера за конвертацию валюты (около 2%) удерживается из вашей выплаты, как сказано в условиях."
@@ -1168,10 +1168,10 @@ msgid "Numbers"
 msgstr "Числа"
 
 msgid "1234.50, comma separated"
-msgstr "1234.50, разделитель запятая"
+msgstr "1234.50, разделитель: запятая"
 
 msgid "1234,50, semicolon separated"
-msgstr "1234,50, разделитель точка с запятой"
+msgstr "1234,50, разделитель: точка с запятой"
 
 msgid "Download these orders (CSV)"
 msgstr "Скачать эти заказы (CSV)"
@@ -1370,7 +1370,7 @@ msgid "Saved on sudemi. Buyers see these shipping prices from now on."
 msgstr "Сохранено на sudemi. Теперь покупатели видят эту стоимость доставки."
 
 msgid "Payout account"
-msgstr "Счёт для выплат"
+msgstr "Аккаунт для выплат"
 
 msgid "State"
 msgstr "Состояние"
@@ -1382,14 +1382,14 @@ msgid "When you are paid"
 msgstr "Когда вы получаете деньги"
 
 #, php-format
-msgid "%d days after the buyer received the order (plus 14 days after shipping when delivery is never reported), never while a chargeback is open."
-msgstr "Через %d дн. после получения заказа покупателем (плюс 14 дней после отправки, если доставка так и не подтверждена); никогда, пока открыт чарджбэк."
+msgid "%1$d days after the buyer received the order, or %2$d days after shipping if delivery is never reported; never while a chargeback is open."
+msgstr "Через %1$d дн. после получения заказа покупателем или через %2$d дн. после отправки, если доставка так и не подтверждена; никогда, пока открыт чарджбэк."
 
 msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."
-msgstr "Счёт для выплат требует внимания. Он управляется на портале продавца sudemi (Выплаты), а не здесь."
+msgstr "Аккаунт для выплат требует внимания. Он управляется на портале продавца sudemi (Выплаты), а не здесь."
 
 msgid "The payout account is managed on the sudemi seller portal (Payouts)."
-msgstr "Счёт для выплат управляется на портале продавца sudemi (Выплаты)."
+msgstr "Аккаунт для выплат управляется на портале продавца sudemi (Выплаты)."
 
 msgid "This shop's payouts"
 msgstr "Выплаты этого магазина"
@@ -1588,7 +1588,7 @@ msgstr "Пока не удалось отправить новый трек-но
 
 #, php-format
 msgid "The new tracking (%s) was not sent: on sudemi this order is already delivered, cancelled or refunded, so its tracking can no longer change."
-msgstr "Новый трек-номер (%s) не отправлен: на sudemi этот заказ уже доставлен, отменён или возвращён, поэтому трек-номер больше нельзя изменить."
+msgstr "Новый трек-номер (%s) не отправлен: на sudemi этот заказ уже доставлен, отменён или по нему возвращены деньги, поэтому трек-номер больше нельзя изменить."
 
 #, php-format
 msgid "sudemi did not take the new tracking (%s). Check the order under WooCommerce > sudemi > Orders."
@@ -1604,10 +1604,10 @@ msgstr "Новый трек-номер для заказа sudemi %1$s отпр�
 
 #, php-format
 msgid "The new tracking for sudemi order %1$s was not sent: the order is already delivered, cancelled or refunded on sudemi."
-msgstr "Новый трек-номер для заказа sudemi %1$s не отправлен: на sudemi заказ уже доставлен, отменён или возвращён."
+msgstr "Новый трек-номер для заказа sudemi %1$s не отправлен: на sudemi заказ уже доставлен, отменён или по нему возвращены деньги."
 
 msgid "The tracking can no longer be changed: on sudemi this order is already delivered, cancelled or refunded."
-msgstr "Трек-номер больше нельзя изменить: на sudemi этот заказ уже доставлен, отменён или возвращён."
+msgstr "Трек-номер больше нельзя изменить: на sudemi этот заказ уже доставлен, отменён или по нему возвращены деньги."
 
 msgid "Enter a tracking code."
 msgstr "Введите трек-номер."
@@ -1655,7 +1655,7 @@ msgstr "Причина: %s."
 
 #, php-format
 msgid "sudemi order %1$s could not be applied here yet (%2$s); it is read from sudemi again on the next heartbeats."
-msgstr "Заказ sudemi %1$s пока не удалось применить здесь (%2$s); он будет снова прочитан из sudemi при следующих heartbeat."
+msgstr "Заказ sudemi %1$s пока не удалось применить здесь (%2$s); он будет снова прочитан из sudemi при следующих контрольных сигналах."
 
 #, php-format
 msgid "sudemi order %1$s is not applied here: sudemi no longer has it for this shop (%2$s). Check the WooCommerce order by hand."

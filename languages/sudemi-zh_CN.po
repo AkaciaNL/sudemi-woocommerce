@@ -23,7 +23,7 @@ msgstr "sudemi 连接器"
 #. Description of the plugin
 #: sudemi-connector.php
 msgid "Lists this shop's products on sudemi, so an AI assistant can find them and send buyers to you. You stay the merchant of record."
-msgstr "将本店商品发布到 sudemi，让 AI 助手能找到它们并为您带来买家。您仍是交易的销售方。"
+msgstr "将本店商品发布到 sudemi，让 AI 助手能找到它们并为你带来买家。你仍是交易中的卖家。"
 
 #: sudemi-connector.php:49
 msgid "Every minute (sudemi pairing)"
@@ -44,15 +44,15 @@ msgstr "sudemi"
 
 #: admin/class-sudemi-admin.php:43
 msgid "You do not have permission to manage this shop."
-msgstr "您无权管理此店铺。"
+msgstr "你无权管理此店铺。"
 
 #: admin/class-sudemi-admin.php:54
 msgid "This server is missing the sodium extension. The connection needs it to sign requests, and will not work without it. Ask your host to enable it."
-msgstr "此服务器缺少 sodium 扩展。连接需要它来签名请求，没有它将无法工作。请联系您的主机服务商启用它。"
+msgstr "此服务器缺少 sodium 扩展。连接需要它来签名请求，没有它将无法工作。请联系你的主机服务商启用它。"
 
 #: admin/class-sudemi-admin.php:71
 msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account - this plugin never asks for your sudemi password."
-msgstr "连接此店铺后，AI 助手即可找到您的商品并为您带来买家。您需要登录自己的账户，在 sudemi 上确认连接，本插件绝不会索要您的 sudemi 密码。"
+msgstr "连接此店铺后，AI 助手即可找到你的商品并为你带来买家。你需要登录自己的账户，在 sudemi 上确认连接，本插件绝不会索要你的 sudemi 密码。"
 
 #: admin/class-sudemi-admin.php:75
 msgid "Connect this shop"
@@ -60,7 +60,7 @@ msgstr "连接此店铺"
 
 #: admin/class-sudemi-admin.php:81
 msgid "Almost there. Open the link below, sign in to sudemi and confirm that this shop is yours. This page will pick it up by itself."
-msgstr "快完成了。打开下方链接，登录 sudemi 并确认此店铺归您所有。本页面会自动检测到。"
+msgstr "快完成了。打开下方链接，登录 sudemi 并确认此店铺归你所有。本页面会自动检测到。"
 
 #: admin/class-sudemi-admin.php:84
 msgid "Confirm this shop on sudemi"
@@ -110,7 +110,7 @@ msgstr "在 sudemi 上设置，而非此处"
 
 #: admin/class-sudemi-admin.php:108
 msgid "Your legal name, country, trader status and VAT number decide what a buyer is owed, so they are confirmed once on sudemi and changed there. This plugin cannot edit them."
-msgstr "您的法定名称、国家/地区、经营者身份和增值税号决定了买家享有哪些权益，因此它们只在 sudemi 上确认一次，并在那里修改。本插件无法编辑这些信息。"
+msgstr "你的法定名称、国家/地区、经营者身份和增值税号决定了买家享有哪些权益，因此它们只在 sudemi 上确认一次，并在那里修改。本插件无法编辑这些信息。"
 
 #: admin/class-sudemi-admin.php:113
 msgid "Sync the catalogue now"
@@ -199,7 +199,7 @@ msgstr "sudemi 上的买家付款已获授权，但在此店铺确认有货之�
 
 #: admin/class-sudemi-admin.php:190
 msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted."
-msgstr "订单需要等待这里有人处理。如果在 sudemi 显示的截止时间前无人处理，买家将被释放且不会被扣款，未答复的订单绝不会被视为已接受。"
+msgstr "订单需要等待这里有人处理。如果在 sudemi 显示的截止时间前无人处理，买家的款项将被释放，不会扣款，未答复的订单绝不会被视为已接受。"
 
 #: admin/class-sudemi-admin.php:213
 msgid "Orders through sudemi"
@@ -213,7 +213,7 @@ msgstr "目前无法连接 sudemi 加载订单历史。订单本身没有问题�
 #, php-format
 msgid "%d order is waiting to be confirmed. The buyer has not been charged for it yet."
 msgid_plural "%d orders are waiting to be confirmed. Those buyers have not been charged yet."
-msgstr[0] "%d 个订单正在等待确认。这些买家尚未被扣款。"
+msgstr[0] "%d 个订单正在等待确认。买家尚未被扣款。"
 
 #: admin/class-sudemi-admin.php:245
 msgid "No orders through sudemi yet."
@@ -233,15 +233,15 @@ msgstr "状态"
 
 #: admin/class-sudemi-admin.php:254
 msgid "You receive"
-msgstr "您的收入"
+msgstr "你的收入"
 
 #: admin/class-sudemi-admin.php:255
 msgid "Customer"
-msgstr "客户"
+msgstr "买家"
 
 #: admin/class-sudemi-admin.php:289
 msgid "Waiting for you - buyer not charged"
-msgstr "等待您处理，买家未扣款"
+msgstr "等待你处理，买家未扣款"
 
 #: admin/class-sudemi-admin.php:291
 msgid "Accepted - waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
@@ -283,11 +283,11 @@ msgstr "向 sudemi 买家配送"
 
 #: admin/class-sudemi-admin.php:365
 msgid "No shipping price could be read from your WooCommerce shipping zones, so sudemi buyers cannot order. Add a zone with a flat rate (a fixed amount) or unconditional free shipping for the countries you ship to."
-msgstr "无法从您的 WooCommerce 配送区域读取运费，因此 sudemi 买家无法下单。请为您配送的国家/地区添加一个使用统一费率（固定金额）或无条件免运费的区域。"
+msgstr "无法从你的 WooCommerce 配送区域读取运费，因此 sudemi 买家无法下单。请为你配送的国家/地区添加一个使用统一费率（固定金额）或无条件免运费的区域。"
 
 #: admin/class-sudemi-admin.php:371
 msgid "Shipping prices sent to sudemi (from your shipping zones; one item, your first product):"
-msgstr "发送给 sudemi 的运费（来自您的配送区域；按一件商品、以您的第一个商品计算）："
+msgstr "发送给 sudemi 的运费（来自你的配送区域；按一件商品、以你的第一个商品计算）："
 
 #: admin/class-sudemi-admin.php:372
 msgid "Countries without a fixed price (cost formulas, free shipping with a minimum, postcode-only zones) are left out rather than guessed."
@@ -295,7 +295,7 @@ msgstr "没有固定价格的国家/地区（费用公式、有最低消费的�
 
 #: admin/class-sudemi-admin.php:377
 msgid "Days until you dispatch an order (at most)"
-msgstr "您发出订单所需天数（最多）"
+msgstr "你发出订单所需天数（最多）"
 
 #: admin/class-sudemi-admin.php:378
 msgid "Days the carrier takes (at most)"
@@ -303,7 +303,7 @@ msgstr "承运商运送所需天数（最多）"
 
 #: admin/class-sudemi-admin.php:379
 msgid "Buyers see the sum as the latest delivery estimate. Set your real times; the defaults are deliberately cautious."
-msgstr "买家看到的两者之和即为最晚预计送达时间。请设置您的真实时间；默认值特意设得较为保守。"
+msgstr "买家看到的两者之和即为最晚预计送达时间。请设置你的真实时间；默认值特意设得较为保守。"
 
 #: admin/class-sudemi-admin.php:380
 msgid "Save delivery times"
@@ -315,7 +315,7 @@ msgstr "商品目录同步已加入队列。"
 
 #: admin/class-sudemi-admin.php:408
 msgid "You do not have permission to do that."
-msgstr "您无权执行此操作。"
+msgstr "你无权执行此操作。"
 
 #: includes/class-sudemi-client.php:99
 msgid "sudemi is still asking this shop to slow down. Stopping for now; this will continue on the next scheduled run and nothing has been lost."
@@ -453,7 +453,7 @@ msgstr "sudemi 订单 %1$s 已付款；订单 #%2$s 已转为“处理中”。"
 
 #: includes/class-sudemi-orders.php:354
 msgid "Could not fetch the delivery address from sudemi yet. The order is paid; open it again shortly or contact support before shipping."
-msgstr "暂时无法从 sudemi 获取收货地址。订单已付款；请稍后重新打开，或在发货前联系支持团队。"
+msgstr "暂时无法从 sudemi 获取收货地址。订单已付款；请稍后重新打开，或在发货前联系 sudemi 客服。"
 
 #. translators: %s: the explanation sudemi gave.
 #: includes/class-sudemi-orders.php:364
@@ -469,7 +469,7 @@ msgstr "订单中没有可识别的商品"
 #: includes/class-sudemi-orders.php:411
 #, php-format
 msgid "\"%s\" is no longer sold here"
-msgstr "\"%s\" 已不在本店销售"
+msgstr "“%s”已不在本店销售"
 
 #: includes/class-sudemi-orders.php:412
 msgid "an item"
@@ -479,13 +479,13 @@ msgstr "某件商品"
 #: includes/class-sudemi-orders.php:419
 #, php-format
 msgid "\"%s\" is out of stock"
-msgstr "\"%s\" 缺货"
+msgstr "“%s”缺货"
 
 #. translators: %s: the product name.
 #: includes/class-sudemi-orders.php:426
 #, php-format
 msgid "\"%s\" cannot currently be bought"
-msgstr "\"%s\" 目前无法购买"
+msgstr "“%s”目前无法购买"
 
 #. translators: %s: the sudemi order id.
 #: includes/class-sudemi-orders.php:471
@@ -511,7 +511,7 @@ msgstr "已为 sudemi 订单 %2$s 报告 %1$s。"
 
 #: includes/class-sudemi-pairing.php:36
 msgid "This server is missing the sodium extension, which the connection needs in order to sign requests. Ask your host to enable it."
-msgstr "此服务器缺少 sodium 扩展，连接需要它来签名请求。请联系您的主机服务商启用它。"
+msgstr "此服务器缺少 sodium 扩展，连接需要它来签名请求。请联系你的主机服务商启用它。"
 
 #: includes/class-sudemi-pairing.php:40
 msgid "A signing key could not be created on this server."
@@ -536,7 +536,7 @@ msgstr "已通过 sudemi 向买家退款 %s。"
 
 #, php-format
 msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com)."
-msgstr "sudemi 未退款：%s。买家尚未收到退款；请联系 sudemi 支持 (support@sudemi.com)。"
+msgstr "sudemi 未退款：%s。买家尚未收到退款；请联系 sudemi 客服（support@sudemi.com）。"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Right of withdrawal"
@@ -544,7 +544,7 @@ msgstr "撤回权"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "None - normal right of withdrawal applies"
-msgstr "无 - 适用正常的撤回权"
+msgstr "无，适用常规撤回权"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed."
@@ -632,7 +632,7 @@ msgstr "店铺插件或连接"
 
 #: includes/class-sudemi-support.php
 msgid "Payouts"
-msgstr "结算打款"
+msgstr "打款"
 
 #: includes/class-sudemi-support.php
 msgid "Other"
@@ -645,7 +645,7 @@ msgstr "处理中"
 
 #: includes/class-sudemi-support.php
 msgid "Waiting for your reply"
-msgstr "等待您的回复"
+msgstr "等待你的回复"
 
 #: includes/class-sudemi-support.php
 msgid "Answered"
@@ -669,11 +669,11 @@ msgstr "本店连接到 sudemi 后即可使用客服支持。"
 
 #: admin/class-sudemi-admin.php
 msgid "Questions about an order, a payment, payouts or this plugin? Open a ticket and sudemi support answers here. You also get an e-mail when they reply."
-msgstr "对订单、付款、结算打款或本插件有疑问？请提交工单，sudemi 客服会在这里回复。收到回复时，您也会收到一封电子邮件。"
+msgstr "对订单、付款、打款或本插件有疑问？请提交工单，sudemi 客服会在这里回复。收到回复时，你也会收到一封电子邮件。"
 
 #: admin/class-sudemi-admin.php
 msgid "Your tickets"
-msgstr "您的工单"
+msgstr "你的工单"
 
 #: admin/class-sudemi-admin.php
 msgid "No tickets yet."
@@ -709,7 +709,7 @@ msgstr "sudemi 订单 ID（可选）"
 
 #: admin/class-sudemi-admin.php
 msgid "The full order ID as sudemi shows it, if your question is about one order."
-msgstr "如果您的问题涉及某个订单，请填写 sudemi 显示的完整订单 ID。"
+msgstr "如果你的问题涉及某个订单，请填写 sudemi 显示的完整订单 ID。"
 
 #: admin/class-sudemi-admin.php
 msgid "Send ticket"
@@ -731,7 +731,7 @@ msgstr "sudemi 客服"
 
 #: admin/class-sudemi-admin.php
 msgid "You"
-msgstr "您"
+msgstr "你"
 
 #: admin/class-sudemi-admin.php
 msgid "Reply"
@@ -747,11 +747,11 @@ msgstr "发送回复"
 
 #: admin/class-sudemi-admin.php
 msgid "Your ticket was sent. sudemi support answers here, and by e-mail."
-msgstr "您的工单已提交。sudemi 客服将在这里并通过电子邮件回复您。"
+msgstr "你的工单已提交。sudemi 客服将在这里并通过电子邮件回复你。"
 
 #: admin/class-sudemi-admin.php
 msgid "Your reply was sent."
-msgstr "您的回复已发送。"
+msgstr "你的回复已发送。"
 
 #. translators: %s: the address the shop is connected to sudemi under, e.g. https://shop.example.com
 #: includes/class-sudemi-heartbeat.php
@@ -797,7 +797,7 @@ msgstr "已接受退货。商品退回后，请在订单上通过 WooCommerce �
 
 #: includes/class-sudemi-requests.php
 msgid "Return rejected. The buyer is shown your reason."
-msgstr "已拒绝退货。买家会看到您的原因。"
+msgstr "已拒绝退货。买家会看到你的原因。"
 
 #: includes/class-sudemi-requests.php
 msgid "This request was already answered."
@@ -849,7 +849,7 @@ msgstr "答复截止"
 
 #: admin/class-sudemi-admin.php
 msgid "Your answer"
-msgstr "您的答复"
+msgstr "你的答复"
 
 #: admin/class-sudemi-admin.php
 msgid "Accept the return"
@@ -902,10 +902,10 @@ msgid "Shipped, delivered or cancelled orders that sudemi has not heard about ye
 msgstr "sudemi 尚未获知的已发货、已送达或已取消的订单。每次报到都会重新发送，直到 sudemi 回复。"
 
 msgid "The catalogue sync is on hold: it would remove %1$d of %2$d listed products from sudemi, so nothing was changed. If those products really were removed from this shop, contact sudemi support (support@sudemi.com)."
-msgstr "目录同步已暂停：它会从 sudemi 下架 %2$d 个在售商品中的 %1$d 个，因此未做任何更改。如果这些商品确实已从本店移除，请联系 sudemi 支持（support@sudemi.com）。"
+msgstr "目录同步已暂停：它会从 sudemi 下架 %2$d 个在售商品中的 %1$d 个，因此未做任何更改。如果这些商品确实已从本店移除，请联系 sudemi 客服（support@sudemi.com）。"
 
 msgid "WP-Cron is still visit-driven on this site. It works on busy shops, but a real cron job is more reliable."
-msgstr "本站的 WP-Cron 仍依赖访问触发。访问量大的商店可以这样运行，但真正的定时任务更可靠。"
+msgstr "本站的 WP-Cron 仍依赖访问触发。访问量大的店铺可以这样运行，但真正的定时任务更可靠。"
 
 msgid "WP-Cron is switched off on this site (DISABLE_WP_CRON), so the cron job in step 1 is required: without it this shop never reports in."
 msgstr "本站已关闭 WP-Cron（DISABLE_WP_CRON），因此必须设置第 1 步中的定时任务：否则本店永远不会报到。"
@@ -977,10 +977,10 @@ msgid "sudemi still has %1$s for your shop, but your shop sells in %2$s. Orders 
 msgstr "sudemi 仍为你的店铺记录 %1$s，但你的店铺以 %2$s 销售。在两者一致之前，%1$s 的订单会被拒绝。点击“立即同步商品目录”发送新的货币。"
 
 msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
-msgstr "买家用你的货币付款。sudemi 以欧元向你付款：支付服务商的货币兑换费（约 2%）会按条款从你的付款中扣除。"
+msgstr "买家用你的货币付款。sudemi 以欧元向你打款：按照条款，支付服务商的货币兑换费（约 2%）会从你的打款中扣除。"
 
 msgid "Waiting for you"
-msgstr "等待您处理"
+msgstr "等待你处理"
 
 msgid "Accepted, waiting for payment"
 msgstr "已接受，等待付款"
@@ -1001,13 +1001,13 @@ msgid "Nothing charged"
 msgstr "未扣款"
 
 msgid "Due once shipped"
-msgstr "发货后结算"
+msgstr "发货后应打款"
 
 msgid "Scheduled"
 msgstr "已排期"
 
 msgid "On its way to you"
-msgstr "正在打款给您"
+msgstr "正在打款给你"
 
 msgid "Held (chargeback)"
 msgstr "已冻结（拒付）"
@@ -1073,7 +1073,7 @@ msgid "Total"
 msgstr "总额"
 
 msgid "Payout"
-msgstr "结算打款"
+msgstr "打款"
 
 msgid "Tracking"
 msgstr "物流跟踪"
@@ -1130,7 +1130,7 @@ msgid "refunded %s"
 msgstr "已退款 %s"
 
 msgid "Tracking code"
-msgstr "跟踪单号"
+msgstr "物流单号"
 
 msgid "From"
 msgstr "开始日期"
@@ -1187,7 +1187,7 @@ msgid "On: every five minutes this shop accepts orders whose items are in stock 
 msgstr "开启：本店每五分钟接受商品有库存的订单，并拒绝其他订单。"
 
 msgid "Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing."
-msgstr "关闭：订单等待您处理。请在显示的日期前在这里接受或拒绝每个订单；未答复时，买家将被释放且不会被扣款。"
+msgstr "关闭：订单等待你处理。请在显示的日期前在这里接受或拒绝每个订单；未答复时，买家的款项将被释放，不会扣款。"
 
 msgid "Back to the orders"
 msgstr "返回订单列表"
@@ -1198,7 +1198,7 @@ msgstr "订单 %1$s：%2$s"
 
 #, php-format
 msgid "Waiting for your answer. The buyer is not charged until you accept. Answer by %s; without an answer the buyer is released."
-msgstr "等待您的答复。在您接受之前，买家不会被扣款。请在 %s 前答复；未答复时，买家将被释放。"
+msgstr "等待你的答复。在你接受之前，买家不会被扣款。请在 %s 前答复；未答复时，买家的款项将被释放。"
 
 #, php-format
 msgid "Stock check: %s."
@@ -1271,7 +1271,7 @@ msgid "Actions"
 msgstr "操作"
 
 msgid "Accept: the buyer is charged and you ship the order."
-msgstr "接受：买家将被扣款，由您发货。"
+msgstr "接受：买家将被扣款，由你发货。"
 
 msgid "Accept the order"
 msgstr "接受订单"
@@ -1297,7 +1297,7 @@ msgid "Refund through sudemi"
 msgstr "通过 sudemi 退款"
 
 msgid "Cancel: you cannot fulfil this paid order. The buyer is refunded in full."
-msgstr "取消：您无法履行这个已付款的订单。买家将获得全额退款。"
+msgstr "取消：你无法履行这个已付款的订单。买家将获得全额退款。"
 
 msgid "Cancel and refund in full"
 msgstr "取消并全额退款"
@@ -1310,13 +1310,13 @@ msgid "Orders are confirmed automatically."
 msgstr "订单会自动确认。"
 
 msgid "Orders now wait for you to accept or decline them."
-msgstr "现在订单会等待您接受或拒绝。"
+msgstr "现在订单会等待你接受或拒绝。"
 
 msgid "What sudemi buyers pay for shipping, per country. By default the prices this plugin sends from your WooCommerce shipping zones apply. You can instead set your own price per country on sudemi, and choose the countries you deliver to. One charge per parcel, never per item."
-msgstr "sudemi 买家按国家/地区支付的运费。默认使用本插件根据您的 WooCommerce 配送区域发送的价格。您也可以在 sudemi 上为每个国家/地区设置自己的价格，并选择您配送的国家/地区。每个包裹只收一次运费，绝不按件收费。"
+msgstr "sudemi 买家按国家/地区支付的运费。默认使用本插件根据你的 WooCommerce 配送区域发送的价格。你也可以在 sudemi 上为每个国家/地区设置自己的价格，并选择你配送的国家/地区。每个包裹只收一次运费，绝不按件收费。"
 
 msgid "Prices filled in from your WooCommerce shipping zones. Check them and save; nothing is changed on sudemi until you do."
-msgstr "已根据您的 WooCommerce 配送区域填入价格。请检查并保存；保存之前 sudemi 上不会有任何更改。"
+msgstr "已根据你的 WooCommerce 配送区域填入价格。请检查并保存；保存之前 sudemi 上不会有任何更改。"
 
 msgid "Shipping prices"
 msgstr "运费"
@@ -1335,10 +1335,10 @@ msgstr "配送到此"
 
 #, php-format
 msgid "Your price on sudemi (%s)"
-msgstr "您在 sudemi 上的价格（%s）"
+msgstr "你在 sudemi 上的价格（%s）"
 
 msgid "Prices from your shipping zones"
-msgstr "来自您配送区域的价格"
+msgstr "来自你配送区域的价格"
 
 msgid "Buyers pay now"
 msgstr "买家当前支付"
@@ -1347,13 +1347,13 @@ msgid "not offered"
 msgstr "不提供"
 
 msgid "your price on sudemi"
-msgstr "您在 sudemi 上的价格"
+msgstr "你在 sudemi 上的价格"
 
 msgid "from your shop"
-msgstr "来自您的店铺"
+msgstr "来自你的店铺"
 
 msgid "With your own countries and prices: only the ticked countries are offered. A country with an empty price uses the price from your shipping zones."
-msgstr "使用您自己的国家/地区和价格时：只提供勾选的国家/地区。价格留空的国家/地区使用您配送区域中的价格。"
+msgstr "使用你自己的国家/地区和价格时：只提供勾选的国家/地区。价格留空的国家/地区使用你配送区域中的价格。"
 
 msgid "Save shipping on sudemi"
 msgstr "在 sudemi 上保存运费设置"
@@ -1377,29 +1377,29 @@ msgid "Act before"
 msgstr "处理截止"
 
 msgid "When you are paid"
-msgstr "您何时收款"
+msgstr "你何时收款"
 
 #, php-format
-msgid "%d days after the buyer received the order (plus 14 days after shipping when delivery is never reported), never while a chargeback is open."
-msgstr "买家收到订单后 %d 天（如果始终未报告送达，则另加发货后 14 天）；存在未解决的拒付时绝不打款。"
+msgid "%1$d days after the buyer received the order, or %2$d days after shipping if delivery is never reported; never while a chargeback is open."
+msgstr "买家收到订单后 %1$d 天；如果始终未报告送达，则在发货后 %2$d 天；存在未解决的拒付时绝不打款。"
 
 msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."
-msgstr "您的收款账户需要处理。它在 sudemi 卖家门户（结算打款）中管理，而不是在这里。"
+msgstr "你的收款账户需要处理。它在 sudemi 卖家门户（打款）中管理，而不是在这里。"
 
 msgid "The payout account is managed on the sudemi seller portal (Payouts)."
-msgstr "收款账户在 sudemi 卖家门户（结算打款）中管理。"
+msgstr "收款账户在 sudemi 卖家门户（打款）中管理。"
 
 msgid "This shop's payouts"
-msgstr "本店的结算打款"
+msgstr "本店的打款"
 
 msgid "No payouts yet."
-msgstr "暂无结算打款。"
+msgstr "暂无打款。"
 
 msgid "Orders"
 msgstr "订单"
 
 msgid "Still to come"
-msgstr "待结算"
+msgstr "待打款"
 
 msgid "Next payout"
 msgstr "下次打款"
@@ -1550,10 +1550,10 @@ msgstr "无法连接 sudemi 报告送达。将在下一次心跳时重新发送�
 
 #, php-format
 msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
-msgstr "%d 个订单正在 WooCommerce > sudemi > 订单 中等待您的答复。自动确认已关闭，因此必须在期限结束前手动处理。"
+msgstr "%d 个订单正在 WooCommerce > sudemi > 订单 中等待你的答复。自动确认已关闭，因此必须在期限结束前手动处理。"
 
 msgid "Cancelled by your shop on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
-msgstr "已由您的店铺在发货前于 sudemi 上取消；已向买家全额退款。请勿发出此订单。"
+msgstr "已由你的店铺在发货前于 sudemi 上取消；已向买家全额退款。请勿发出此订单。"
 
 msgid "Cancelled by sudemi before shipping (for example because the order was not answered in time); the buyer has been refunded in full. Do not ship this order."
 msgstr "已由 sudemi 在发货前取消（例如订单未在规定时间内答复）；已向买家全额退款。请勿发出此订单。"
@@ -1563,7 +1563,7 @@ msgstr "已在发货前于 sudemi 上取消；已向买家全额退款。请勿�
 
 #, php-format
 msgid "sudemi order %1$s was cancelled by your shop on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi 订单 %1$s 已由您的店铺在发货前于 sudemi 上取消；订单 #%2$s 已在此取消，库存已恢复。"
+msgstr "sudemi 订单 %1$s 已由你的店铺在发货前于 sudemi 上取消；订单 #%2$s 已在此取消，库存已恢复。"
 
 #, php-format
 msgid "sudemi order %1$s was cancelled by sudemi before shipping; order #%2$s was cancelled here and the stock restored."
@@ -1623,7 +1623,7 @@ msgid "Change tracking"
 msgstr "更改物流单号"
 
 msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
-msgstr "已由您的店铺在 sudemi 上拒绝；买家未被扣款。库存已恢复。"
+msgstr "已由你的店铺在 sudemi 上拒绝；买家未被扣款。库存已恢复。"
 
 msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
 msgstr "已由 sudemi 自动拒绝（例如因为订单未在规定时间内得到答复）；买家未被扣款。库存已恢复。"
@@ -1633,7 +1633,7 @@ msgstr "买家在订单确认前已于 sudemi 上取消；买家未被扣款。�
 
 #, php-format
 msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi 订单 %1$s 已由您的店铺在 sudemi 上拒绝；订单 #%2$s 已在此取消，库存已恢复。"
+msgstr "sudemi 订单 %1$s 已由你的店铺在 sudemi 上拒绝；订单 #%2$s 已在此取消，库存已恢复。"
 
 #, php-format
 msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."

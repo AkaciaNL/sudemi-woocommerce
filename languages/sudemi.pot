@@ -1380,7 +1380,7 @@ msgid "When you are paid"
 msgstr ""
 
 #, php-format
-msgid "%d days after the buyer received the order (plus 14 days after shipping when delivery is never reported), never while a chargeback is open."
+msgid "%1$d days after the buyer received the order, or %2$d days after shipping if delivery is never reported; never while a chargeback is open."
 msgstr ""
 
 msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."

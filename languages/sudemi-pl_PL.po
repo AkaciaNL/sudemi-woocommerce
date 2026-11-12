@@ -118,7 +118,7 @@ msgstr "Synchronizuj katalog teraz"
 
 #: admin/class-sudemi-admin.php:119
 msgid "Disconnect"
-msgstr "Rozłącz"
+msgstr "Odłącz"
 
 #: admin/class-sudemi-admin.php:137
 msgid "Listing status"
@@ -277,7 +277,7 @@ msgstr "Ostatnia aktywność"
 
 #: admin/class-sudemi-admin.php:350
 msgid "Disconnected from sudemi."
-msgstr "Rozłączono z sudemi."
+msgstr "Odłączono od sudemi."
 
 #: admin/class-sudemi-admin.php:361
 msgid "Delivery to sudemi buyers"
@@ -455,7 +455,7 @@ msgstr "Zamówienie sudemi %1$s jest opłacone; zamówienie #%2$s przeszło do s
 
 #: includes/class-sudemi-orders.php:354
 msgid "Could not fetch the delivery address from sudemi yet. The order is paid; open it again shortly or contact support before shipping."
-msgstr "Nie udało się jeszcze pobrać adresu dostawy z sudemi. Zamówienie jest opłacone; otwórz je ponownie za chwilę lub skontaktuj się z pomocą techniczną przed wysyłką."
+msgstr "Nie udało się jeszcze pobrać adresu dostawy z sudemi. Zamówienie jest opłacone; otwórz je ponownie za chwilę lub skontaktuj się ze wsparciem sudemi przed wysyłką."
 
 #. translators: %s: the explanation sudemi gave.
 #: includes/class-sudemi-orders.php:364
@@ -538,7 +538,7 @@ msgstr "Zwrócono kupującemu %s przez sudemi."
 
 #, php-format
 msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com)."
-msgstr "sudemi nie zwróciło tej kwoty: %s. Kupujący NIE otrzymał zwrotu; skontaktuj się z pomocą sudemi (support@sudemi.com)."
+msgstr "sudemi nie zwróciło tej kwoty: %s. Kupujący NIE otrzymał zwrotu; skontaktuj się ze wsparciem sudemi (support@sudemi.com)."
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Right of withdrawal"
@@ -663,15 +663,15 @@ msgstr "Przegląd"
 
 #: admin/class-sudemi-admin.php
 msgid "Support"
-msgstr "Pomoc"
+msgstr "Wsparcie"
 
 #: admin/class-sudemi-admin.php
 msgid "Support is available once this shop is connected to sudemi."
-msgstr "Pomoc jest dostępna, gdy tylko ten sklep zostanie połączony z sudemi."
+msgstr "Wsparcie jest dostępne, gdy tylko ten sklep zostanie połączony z sudemi."
 
 #: admin/class-sudemi-admin.php
 msgid "Questions about an order, a payment, payouts or this plugin? Open a ticket and sudemi support answers here. You also get an e-mail when they reply."
-msgstr "Masz pytanie o zamówienie, płatność, wypłaty lub tę wtyczkę? Otwórz zgłoszenie, a pomoc sudemi odpowie tutaj. Gdy pojawi się odpowiedź, dostaniesz też e-mail."
+msgstr "Masz pytanie o zamówienie, płatność, wypłaty lub tę wtyczkę? Otwórz zgłoszenie, a wsparcie sudemi odpowie tutaj. Gdy pojawi się odpowiedź, dostaniesz też e-mail."
 
 #: admin/class-sudemi-admin.php
 msgid "Your tickets"
@@ -729,7 +729,7 @@ msgstr "Zgłoszenie %1$s: %2$s"
 
 #: admin/class-sudemi-admin.php
 msgid "sudemi support"
-msgstr "Pomoc sudemi"
+msgstr "Wsparcie sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "You"
@@ -749,7 +749,7 @@ msgstr "Wyślij odpowiedź"
 
 #: admin/class-sudemi-admin.php
 msgid "Your ticket was sent. sudemi support answers here, and by e-mail."
-msgstr "Zgłoszenie zostało wysłane. Pomoc sudemi odpowie tutaj i e-mailem."
+msgstr "Zgłoszenie zostało wysłane. Wsparcie sudemi odpowie tutaj i e-mailem."
 
 #: admin/class-sudemi-admin.php
 msgid "Your reply was sent."
@@ -759,11 +759,11 @@ msgstr "Odpowiedź została wysłana."
 #: includes/class-sudemi-heartbeat.php
 #, php-format
 msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address (%s). If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
-msgstr "sudemi odrzuciło żądania z tej witryny: ten sklep jest połączony z sudemi pod innym adresem (%s). Jeśli ta witryna jest kopią testową (staging) lub przywróconą kopią zapasową, rozłącz tutaj sudemi. Jeśli sklep przeniósł się pod ten adres, połącz go ponownie."
+msgstr "sudemi odrzuciło żądania z tej witryny: ten sklep jest połączony z sudemi pod innym adresem (%s). Jeśli ta witryna jest kopią testową (staging) lub przywróconą kopią zapasową, odłącz tutaj sudemi. Jeśli sklep przeniósł się pod ten adres, połącz go ponownie."
 
 #: includes/class-sudemi-heartbeat.php
 msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address. If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
-msgstr "sudemi odrzuciło żądania z tej witryny: ten sklep jest połączony z sudemi pod innym adresem. Jeśli ta witryna jest kopią testową (staging) lub przywróconą kopią zapasową, rozłącz tutaj sudemi. Jeśli sklep przeniósł się pod ten adres, połącz go ponownie."
+msgstr "sudemi odrzuciło żądania z tej witryny: ten sklep jest połączony z sudemi pod innym adresem. Jeśli ta witryna jest kopią testową (staging) lub przywróconą kopią zapasową, odłącz tutaj sudemi. Jeśli sklep przeniósł się pod ten adres, połącz go ponownie."
 
 #. translators: 1: the buyer's reason, 2: the date the shop has to answer by.
 #: includes/class-sudemi-requests.php
@@ -904,7 +904,7 @@ msgid "Shipped, delivered or cancelled orders that sudemi has not heard about ye
 msgstr "Wysłane, doręczone lub anulowane zamówienia, o których sudemi jeszcze nie wie. Są wysyłane ponownie przy każdym zgłoszeniu, aż sudemi odpowie."
 
 msgid "The catalogue sync is on hold: it would remove %1$d of %2$d listed products from sudemi, so nothing was changed. If those products really were removed from this shop, contact sudemi support (support@sudemi.com)."
-msgstr "Synchronizacja katalogu jest wstrzymana: usunęłaby z sudemi %1$d z %2$d wystawionych produktów, więc niczego nie zmieniono. Jeśli te produkty naprawdę usunięto z tego sklepu, skontaktuj się z pomocą sudemi (support@sudemi.com)."
+msgstr "Synchronizacja katalogu jest wstrzymana: usunęłaby z sudemi %1$d z %2$d wystawionych produktów, więc niczego nie zmieniono. Jeśli te produkty naprawdę usunięto z tego sklepu, skontaktuj się ze wsparciem sudemi (support@sudemi.com)."
 
 msgid "WP-Cron is still visit-driven on this site. It works on busy shops, but a real cron job is more reliable."
 msgstr "WP-Cron na tej stronie nadal zależy od odwiedzin. Działa to w ruchliwych sklepach, ale prawdziwe zadanie cron jest bardziej niezawodne."
@@ -1382,8 +1382,8 @@ msgid "When you are paid"
 msgstr "Kiedy otrzymujesz pieniądze"
 
 #, php-format
-msgid "%d days after the buyer received the order (plus 14 days after shipping when delivery is never reported), never while a chargeback is open."
-msgstr "%d dni po otrzymaniu zamówienia przez kupującego (plus 14 dni od wysyłki, gdy doręczenie nigdy nie zostanie zgłoszone), nigdy w trakcie otwartego chargebacku."
+msgid "%1$d days after the buyer received the order, or %2$d days after shipping if delivery is never reported; never while a chargeback is open."
+msgstr "%1$d dni po otrzymaniu zamówienia przez kupującego lub %2$d dni od wysyłki, gdy doręczenie nigdy nie zostanie zgłoszone; nigdy w trakcie otwartego chargebacku."
 
 msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."
 msgstr "Twoje konto do wypłat wymaga uwagi. Zarządza się nim w portalu sprzedawcy sudemi (Wypłaty), nie tutaj."
@@ -1457,7 +1457,7 @@ msgid "sudemi has no such order for this shop."
 msgstr "sudemi nie ma takiego zamówienia dla tego sklepu."
 
 msgid "This order belongs to an earlier sudemi connection of this shop. Leave it as it is; sudemi support can help."
-msgstr "To zamówienie należy do wcześniejszego połączenia tego sklepu z sudemi. Zostaw je bez zmian; pomoc sudemi może pomóc."
+msgstr "To zamówienie należy do wcześniejszego połączenia tego sklepu z sudemi. Zostaw je bez zmian; wsparcie sudemi może pomóc."
 
 msgid "This order was already answered."
 msgstr "Na to zamówienie już odpowiedziano."
@@ -1469,13 +1469,13 @@ msgid "The order is not in a state that allows this (it may have changed in the 
 msgstr "Zamówienie nie jest w stanie, który na to pozwala (mogło się w międzyczasie zmienić). Wczytaj zamówienie ponownie."
 
 msgid "The payment provider refused this. Nothing changed; try again later or contact sudemi support."
-msgstr "Operator płatności odmówił. Nic się nie zmieniło; spróbuj ponownie później lub skontaktuj się z pomocą sudemi."
+msgstr "Operator płatności odmówił. Nic się nie zmieniło; spróbuj ponownie później lub skontaktuj się ze wsparciem sudemi."
 
 msgid "The amount is not in the currency the buyer paid in."
 msgstr "Kwota nie jest w walucie, w której zapłacił kupujący."
 
 msgid "This shop is suspended on sudemi: it cannot accept orders. Paid orders can still be shipped and refunded. Contact sudemi support."
-msgstr "Ten sklep jest zawieszony w sudemi: nie może przyjmować zamówień. Opłacone zamówienia nadal można wysłać i zwrócić za nie pieniądze. Skontaktuj się z pomocą sudemi."
+msgstr "Ten sklep jest zawieszony w sudemi: nie może przyjmować zamówień. Opłacone zamówienia nadal można wysłać i zwrócić za nie pieniądze. Skontaktuj się ze wsparciem sudemi."
 
 msgid "Dates must be in the form YYYY-MM-DD."
 msgstr "Daty muszą mieć format YYYY-MM-DD."

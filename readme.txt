@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,10 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.3.4 =
+* Every translation reviewed against the English (11 languages): money words, one form of address per language, plain wording.
+* "When you are paid" now says it exactly: 14 days after delivery, or 28 days after shipping when delivery is never reported.
 
 = 1.3.3 =
 * When building the WooCommerce order for a sudemi order fails with an error, the claim on that order is given up at once, so the next heartbeat tries again (before, it waited ten minutes).
