@@ -46,6 +46,11 @@ delete_option( 'sudemi_changes_cursor' );
 delete_option( 'sudemi_changes_checked' );
 delete_option( 'sudemi_changes_retry' );
 delete_option( 'sudemi_tracking_since' );
+delete_option( 'sudemi_db_version' );
+
+// Which sudemi order belongs to which WooCommerce order is also on the orders themselves.
+global $wpdb;
+$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'sudemi_order_claim' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.DirectDatabaseQuery.SchemaChange -- the plugin's own table.
 
 wp_clear_scheduled_hook( 'sudemi_full_sync' );
 wp_clear_scheduled_hook( 'sudemi_full_sync', array( 'continue' ) );

@@ -591,7 +591,14 @@ final class Sudemi_Changes {
 			Sudemi_Logger::error( 'sudemi order ' . $id . ' could not be booked here: ' . $problem );
 			return null;
 		}
-		$order = Sudemi_Orders::create_local_order( $pending, $id );
+		$got = Sudemi_Orders::obtain_local_order( $pending, $id );
+		if ( 'busy' === $got['state'] ) {
+			return 'retry'; // Being built right now by another run; read again next time.
+		}
+		if ( 'existing' === $got['state'] ) {
+			return $got['order'];
+		}
+		$order = $got['order'];
 		if ( ! $order ) {
 			Sudemi_Logger::error( 'sudemi order ' . $id . ' was accepted on sudemi but could not be booked here (a product in it is no longer in this shop).' );
 			return null;

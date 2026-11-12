@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,9 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.3.2 =
+* A sudemi order can no longer become two WooCommerce orders. Before, two accepts at the same moment (a double click on Accept, a bulk accept, or an accept by hand while automatic confirmation was answering) could each build the order and take the stock twice. Now the sudemi order is claimed in the database before the WooCommerce order is built, and only the one that claims it builds it.
 
 = 1.3.1 =
 * When the answer to a confirmation is lost and the order turns out to be declined or cancelled on sudemi, the order note now says at once who ended it (the buyer, your shop or sudemi), as it already did when the change arrived later.

@@ -601,9 +601,16 @@ final class Sudemi_Manage {
 			if ( null !== $problem ) {
 				return self::outcome( false, $problem );
 			}
-			$local = Sudemi_Orders::create_local_order( $pending, $id );
+			$got = Sudemi_Orders::obtain_local_order( $pending, $id );
+			if ( 'busy' === $got['state'] ) {
+				return self::outcome( false, self::busy_message() );
+			}
+			$local = $got['order'];
 			if ( ! $local ) {
 				return self::outcome( false, __( 'The order could not be recorded in WooCommerce (a product in it is no longer in this shop). Decline it instead.', 'sudemi' ) );
+			}
+			if ( $local->has_status( Sudemi_Orders::closed_statuses() ) ) {
+				return self::outcome( false, __( 'The WooCommerce order for this sudemi order is cancelled. Decline it instead.', 'sudemi' ) );
 			}
 		}
 		$result = Sudemi_Orders::accept( $id, $local );
@@ -752,6 +759,7 @@ final class Sudemi_Manage {
 			if ( $local && $local->has_status( array( 'on-hold', 'pending' ) ) ) {
 				wc_maybe_increase_stock_levels( $local->get_id() );
 				$local->delete( true );
+				Sudemi_Claims::release( $id ); // Removed again: a later accept may build it afresh.
 			}
 		}
 	}
@@ -776,11 +784,28 @@ final class Sudemi_Manage {
 		if ( null !== $problem ) {
 			return array( 'ok' => false, 'message' => $problem );
 		}
-		$local = Sudemi_Orders::create_local_order( $pending, $id );
-		if ( ! $local ) {
+		$got = Sudemi_Orders::obtain_local_order( $pending, $id );
+		if ( 'busy' === $got['state'] ) {
+			return array( 'ok' => false, 'message' => self::busy_message() );
+		}
+		if ( ! $got['order'] ) {
 			return array( 'ok' => false, 'message' => __( 'The order could not be recorded in WooCommerce (a product in it is no longer in this shop). Decline it instead.', 'sudemi' ) );
 		}
+		if ( 'existing' === $got['state'] ) {
+			return $got['order']->has_status( Sudemi_Orders::closed_statuses() )
+				? array( 'ok' => false, 'message' => __( 'The WooCommerce order for this sudemi order is cancelled. Decline it instead.', 'sudemi' ) )
+				: array( 'ok' => true );
+		}
 		return array( 'ok' => true, 'created' => true );
+	}
+
+	/**
+	 * Review 2026-11-12: the order is being built by another run at this very moment (a second
+	 * click, or the automatic confirmation). The existing "changed in the meantime, reload" text,
+	 * already in every language.
+	 */
+	private static function busy_message() {
+		return self::error_message( 'wrong_state' );
 	}
 
 	/** Applies one answer of a bulk call to the WooCommerce order. */

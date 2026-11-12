@@ -131,12 +131,22 @@ class Sudemi_Orders {
 			return;
 		}
 
-		$order = self::create_local_order( $pending, $sudemi_id );
+		$got = self::obtain_local_order( $pending, $sudemi_id );
+		if ( 'busy' === $got['state'] ) {
+			// Another run (an Accept on the order page, a bulk accept) is building it right now and
+			// sends the answer itself. Nothing is built twice; the next heartbeat looks again.
+			return;
+		}
+		$order = $got['order'];
 		if ( ! $order ) {
 			Sudemi_Client::post_signed(
 				'/integration/v1/orders/' . rawurlencode( $sudemi_id ) . '/reject',
 				array( 'reason' => __( 'this shop could not record the order', 'sudemi' ) )
 			);
+			return;
+		}
+		if ( 'existing' === $got['state'] && $order->has_status( self::closed_statuses() ) ) {
+			self::reject_closed( $sudemi_id, $order );
 			return;
 		}
 		self::accept( $sudemi_id, $order );
@@ -909,12 +919,54 @@ class Sudemi_Orders {
 	 * @param string $sudemi_id The sudemi order id.
 	 * @return WC_Order|null
 	 */
-	public static function create_local_order( array $pending, $sudemi_id ) {
+	private static function create_local_order( array $pending, $sudemi_id ) {
 		$order = wc_create_order();
 		if ( is_wp_error( $order ) ) {
 			return null;
 		}
+		return self::build_local_order( $order, $pending, $sudemi_id );
+	}
 
+	/**
+	 * The WooCommerce order for a sudemi order: the one already built, or a new one built by
+	 * exactly one caller (review 2026-11-12, {@see Sudemi_Claims}). Every accept goes through here:
+	 * the heartbeat's automatic answer, Accept on the order page and bulk accept.
+	 *
+	 * @param array  $pending   One entry of the pending_orders block (or the same built from the order page).
+	 * @param string $sudemi_id The sudemi order id.
+	 * @return array{state:string,order:WC_Order|null} state: created, existing, busy (another
+	 *               caller is building it right now) or failed (it could not be built).
+	 */
+	public static function obtain_local_order( array $pending, $sudemi_id ) {
+		$claim = Sudemi_Claims::claim( $sudemi_id );
+		if ( Sudemi_Claims::BUSY === $claim ) {
+			return array( 'state' => 'busy', 'order' => null );
+		}
+		if ( is_int( $claim ) ) {
+			$order = wc_get_order( $claim );
+			return $order ? array( 'state' => 'existing', 'order' => $order ) : array( 'state' => 'busy', 'order' => null );
+		}
+		// Won. An order built before claims existed, or by a caller that died after building it,
+		// carries the sudemi id: it is linked, not built again.
+		$existing = self::find_any_local_order( $sudemi_id );
+		if ( $existing ) {
+			Sudemi_Claims::link( $sudemi_id, $existing->get_id() );
+			return array( 'state' => 'existing', 'order' => $existing );
+		}
+		$order = self::create_local_order( $pending, $sudemi_id );
+		if ( ! $order ) {
+			Sudemi_Claims::release( $sudemi_id );
+			return array( 'state' => 'failed', 'order' => null );
+		}
+		Sudemi_Claims::link( $sudemi_id, $order->get_id() );
+		return array( 'state' => 'created', 'order' => $order );
+	}
+
+	/**
+	 * Fills a freshly created WooCommerce order. Only {@see self::obtain_local_order()} may call
+	 * this path (through create_local_order), after winning the claim.
+	 */
+	private static function build_local_order( $order, array $pending, $sudemi_id ) {
 		// What the buyer paid, from sudemi. Null from a core that does not send it yet, and then
 		// the order is priced from the catalogue as before.
 		$paid    = self::paid_amounts( $pending );

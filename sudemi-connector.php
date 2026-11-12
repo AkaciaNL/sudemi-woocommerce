@@ -3,7 +3,7 @@
  * Plugin Name:       sudemi Connector
  * Plugin URI:        https://sudemi.com/integrations/woocommerce
  * Description:       Lists this shop's products on sudemi, so an AI assistant can find them and send buyers to you. You stay the merchant of record.
- * Version:           1.3.1
+ * Version:           1.3.2
  * Requires at least: 6.2
  * Requires PHP:      8.0
  * Author:            Akacia
@@ -19,7 +19,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SUDEMI_VERSION', '1.3.1' );
+define( 'SUDEMI_VERSION', '1.3.2' );
 define( 'SUDEMI_PLUGIN_FILE', __FILE__ );
 define( 'SUDEMI_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
@@ -33,6 +33,7 @@ require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-queue.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-shipping.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-withdrawal.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-sync.php';
+require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-claims.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-orders.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-order-calls.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-manage.php';
@@ -92,6 +93,9 @@ add_action(
 			return;
 		}
 
+		// Review 2026-11-12: the claim table exists before any order can be accepted (updates do
+		// not run the activation hook).
+		Sudemi_Claims::maybe_install();
 		Sudemi_Challenge::boot();
 		Sudemi_Pairing::boot();
 		Sudemi_Sync::boot();
@@ -108,6 +112,7 @@ add_action(
 register_activation_hook(
 	__FILE__,
 	function () {
+		Sudemi_Claims::install();
 		Sudemi_Sync::schedule();
 		Sudemi_Heartbeat::schedule();
 	}

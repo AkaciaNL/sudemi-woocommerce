@@ -41,6 +41,18 @@ function get_woocommerce_currency() {
 function wc_get_orders( $args ) {
 	return array();
 }
+/** The claim (review 2026-11-12) is tested in claims-test.php; here every caller wins it. */
+class Sudemi_Claims {
+	const WON  = 'won';
+	const BUSY = 'busy';
+	public static function claim( $id ) {
+		return self::WON;
+	}
+	public static function link( $id, $local ) {
+	}
+	public static function release( $id ) {
+	}
+}
 function wc_get_order_statuses() {
 	return array( 'wc-on-hold' => 'On hold' );
 }
