@@ -36,6 +36,20 @@ final class Sudemi_Insights {
 
 	const DESCRIPTION_MAX = 2000;
 
+	/** The company's checkout mode (docs/seller-modes.md), as GET /integration/v1/shop says it. */
+	const CHECKOUT_MODES   = array( 'SUDEMI', 'SHOP', 'SUSPENDED' );
+	const CHECKOUT_REASONS = array( 'stripe_not_connected', 'stripe_requirements_due', 'stripe_restricted' );
+
+	/**
+	 * The mode banner is on every sudemi page: its answer is kept for a minute, so moving between
+	 * pages costs at most one call a minute out of the shop's 120.
+	 */
+	const CHECKOUT_CACHE = 'sudemi_checkout_mode';
+	const CHECKOUT_TTL   = 60;
+
+	/** GET /integration/v1/shop of this request: the header and the Shop profile page share it. */
+	private static $shop_read = null;
+
 	// ------------------------------------------------------------------ pure ----
 
 	/** A period from the query string, one of PERIODS. */
@@ -151,6 +165,31 @@ final class Sudemi_Insights {
 
 	public static function str( array $a, $key ) {
 		return isset( $a[ $key ] ) && ( is_string( $a[ $key ] ) || is_numeric( $a[ $key ] ) ) ? (string) $a[ $key ] : '';
+	}
+
+	/**
+	 * The checkout mode banner from a GET /integration/v1/shop body: mode, reason ('' when none or
+	 * unknown) and the Stripe connect address ('' unless http or https). Null when sudemi did not
+	 * say a known mode (an older sudemi, or no answer): then no banner is shown.
+	 *
+	 * @param mixed $shop The decoded body.
+	 * @return array{mode:string,reason:string,url:string}|null
+	 */
+	public static function checkout_banner( $shop ) {
+		if ( ! is_array( $shop ) ) {
+			return null;
+		}
+		$mode = strtoupper( trim( self::str( $shop, 'checkout_mode' ) ) );
+		if ( ! in_array( $mode, self::CHECKOUT_MODES, true ) ) {
+			return null;
+		}
+		$reason = self::str( $shop, 'checkout_mode_reason' );
+		$url    = trim( self::str( $shop, 'stripe_connect_url' ) );
+		return array(
+			'mode'   => $mode,
+			'reason' => in_array( $reason, self::CHECKOUT_REASONS, true ) ? $reason : '',
+			'url'    => strlen( $url ) <= 2000 && preg_match( '~^https?://[^/\s?#@]+(?:[/?#]\S*)?$~i', $url ) ? $url : '',
+		);
 	}
 
 	/**
@@ -398,8 +437,39 @@ final class Sudemi_Insights {
 		return self::call( 'POST', self::enabled_path( $external_id ), array( 'enabled' => (bool) $enabled ) );
 	}
 
+	/** GET /integration/v1/shop, once per request; the mode in it is kept for the banner. */
 	public static function shop() {
-		return self::call( 'GET', '/integration/v1/shop' );
+		if ( null === self::$shop_read ) {
+			self::$shop_read = self::call( 'GET', '/integration/v1/shop' );
+			if ( 'not_connected' !== self::$shop_read['error'] ) {
+				$banner = self::$shop_read['ok'] ? self::checkout_banner( self::$shop_read['body'] ) : null;
+				// A failed or older answer is kept too ("no banner"), so a page view never retries it.
+				set_transient( self::CHECKOUT_CACHE, null === $banner ? array( 'mode' => '' ) : $banner, self::CHECKOUT_TTL );
+			}
+		}
+		return self::$shop_read;
+	}
+
+	/**
+	 * The checkout mode for the banner on every sudemi page, from the last minute's answer when
+	 * there is one. Null: show nothing (not connected, sudemi unreachable or too old).
+	 *
+	 * @return array{mode:string,reason:string,url:string}|null
+	 */
+	public static function checkout_mode() {
+		if ( ! Sudemi_Client::is_connected() ) {
+			return null;
+		}
+		$cached = get_transient( self::CHECKOUT_CACHE );
+		if ( ! is_array( $cached ) ) {
+			self::shop();
+			$cached = get_transient( self::CHECKOUT_CACHE );
+		}
+		return is_array( $cached ) ? self::checkout_banner( array(
+			'checkout_mode'        => isset( $cached['mode'] ) ? $cached['mode'] : '',
+			'checkout_mode_reason' => isset( $cached['reason'] ) ? $cached['reason'] : '',
+			'stripe_connect_url'   => isset( $cached['url'] ) ? $cached['url'] : '',
+		) ) : null;
 	}
 
 	/**
@@ -432,6 +502,7 @@ final class Sudemi_Insights {
 				'returnsWindowDays' => $in['returns_days'],
 			)
 		);
+		self::$shop_read = null;
 		if ( ! $read['ok'] ) {
 			return array( 'ok' => false, 'error' => $read['error'], 'message' => $read['message'] );
 		}
@@ -442,6 +513,8 @@ final class Sudemi_Insights {
 	}
 
 	public static function forget() {
+		self::$shop_read = null;
+		delete_transient( self::CHECKOUT_CACHE );
 		delete_option( self::OPTION_DESCRIPTION );
 		delete_option( self::OPTION_SUPPORT_EMAIL );
 		delete_option( self::OPTION_RETURNS_DAYS );

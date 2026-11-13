@@ -2198,3 +2198,39 @@ msgstr "Не отправляет сигналы в sudemi"
 #: admin/class-sudemi-admin.php
 msgid "This shop has not reported in to sudemi for more than 15 minutes, so its products are paused. Set up the cron job below."
 msgstr "Этот магазин больше 15 минут не отправлял сигналы в sudemi, поэтому его товары приостановлены. Настройте задание cron ниже."
+
+#: admin/class-sudemi-admin.php
+msgid "Stripe is not connected. Your products are listed on sudemi, Connect Stripe"
+msgstr "Stripe не подключён. Ваши товары размещены в sudemi, подключите Stripe"
+
+#: admin/class-sudemi-admin.php
+msgid "Until then buyers pay on your own website: free listing, no commission."
+msgstr "До тех пор покупатели платят на вашем сайте: бесплатное размещение, без комиссии."
+
+#: admin/class-sudemi-admin.php
+msgid "Stripe needs more information from you."
+msgstr "Stripe нужны дополнительные сведения."
+
+#: admin/class-sudemi-admin.php
+msgid "Connect Stripe"
+msgstr "Подключить Stripe"
+
+#: admin/class-sudemi-admin.php
+msgid "Connect Stripe is done"
+msgstr "Stripe подключён"
+
+#: admin/class-sudemi-admin.php
+msgid "Buyers pay through sudemi, and you get your orders and payouts here."
+msgstr "Покупатели платят через sudemi, а ваши заказы и выплаты находятся здесь."
+
+#: admin/class-sudemi-admin.php
+msgid "Your shop is paused on sudemi while we review a payment provider restriction"
+msgstr "Ваш магазин приостановлен в sudemi, пока мы проверяем ограничение платёжного сервиса"
+
+#: admin/class-sudemi-admin.php
+msgid "Your products are not shown for now. We e-mail you what is needed."
+msgstr "Ваши товары пока не показываются. Мы напишем вам, что нужно."
+
+#: admin/class-sudemi-admin.php
+msgid "Contact support"
+msgstr "Связаться с поддержкой"

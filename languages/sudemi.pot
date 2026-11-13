@@ -2190,3 +2190,39 @@ msgstr ""
 #: admin/class-sudemi-admin.php
 msgid "This shop has not reported in to sudemi for more than 15 minutes, so its products are paused. Set up the cron job below."
 msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Stripe is not connected. Your products are listed on sudemi, Connect Stripe"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Until then buyers pay on your own website: free listing, no commission."
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Stripe needs more information from you."
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Connect Stripe"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Connect Stripe is done"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Buyers pay through sudemi, and you get your orders and payouts here."
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Your shop is paused on sudemi while we review a payment provider restriction"
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Your products are not shown for now. We e-mail you what is needed."
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "Contact support"
+msgstr ""

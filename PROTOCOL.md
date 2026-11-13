@@ -753,14 +753,17 @@ in the payout currency, which differs from the order's for a converted payment (
 (the shop pays Stripe's whole currency conversion fee and the currency difference of a refund) and
 was added to the company's owed balance, net of what this order's own payout had paid off (a payout that paid off older debt and was then reversed in full gives that debt back to the balance; it is not counted here as this order's cost); `owed_paid_off_minor`: the part of this order's payout that
 paid that balance off instead of being transferred (it counts as paid out for `state`).
-`card_fee_shop_minor` (core 2026-11-09, V70): the shop's half of Stripe's card processing fee for
-this order, in the payout currency, already taken off `expected_minor` (owner 2026-11-09: sudemi and
-the shop share the fee equally; the shop's half is rounded down, sudemi pays the odd cent). Stripe
-does not return the fee on a refund, so it stays on a refunded order. 0 for orders from before
-9 November 2026 and until the fee is read. In `GET /orders/{id}` the payout also has
-`card_fee_minor`: the order's whole part of the payment's fee (null when none applies), split over
-the orders of a shared payment in proportion to their totals. Example: 100.00 EUR order, Stripe fee
-1.75 EUR: `card_fee_minor` 175, `card_fee_shop_minor` 87, `expected_minor` 9813.
+`card_fee_shop_minor` (core 2026-11-09, V70; V87 2026-11-13): the shop's part of Stripe's card
+processing fee for this order, in the payout currency, already taken off `expected_minor`. Owner
+2026-11-13: the shop pays Stripe's processing fee plus the 1% commission, so for orders created
+since 13 November 2026 this is the WHOLE fee (sudemi keeps exactly the commission). Orders from
+9 to 13 November 2026 keep the rule they were sold under: half, rounded down. Stripe does not
+return the fee on a refund, so it stays on a refunded order. 0 for orders from before 9 November
+2026 and until the fee is read. In `GET /orders/{id}` the payout also has `card_fee_minor`: the
+order's whole part of the payment's fee (null when none applies), split over the orders of a
+shared payment in proportion to their totals. Example: 50.00 EUR order paid with an EEA card,
+Stripe fee 1.00 EUR (1.5% + 0.25): `card_fee_minor` 100, `card_fee_shop_minor` 100, commission 50,
+`expected_minor` 4850.
 
 `GET /integration/v1/orders/{id}` is the portal's order page: lines with the shop's own
 `external_id`, money with `refunded_minor`, tracking, the `timeline` (`PLACED`, `ACCEPTED`, `PAID`,
@@ -857,11 +860,11 @@ Other shops of the company keep their own settings.
 `INCOMPLETE`, `UNDER_REVIEW`, `ACTIVE`, `ACTION_REQUIRED`; managed on the portal only) and this
 shop's payouts per currency: `paid_out_minor`, and `outstanding_minor` split into
 `waiting_for_shipment_minor`, `scheduled_minor` (with `next_due_at`), `processing_minor` and
-`held_minor`; `card_fee_shop_minor` is the shop's half of the card fees on those orders, already
-taken off. A shop is paid `payout_delay_days` after delivery (that plus 14 days after shipping
+`held_minor`; `card_fee_shop_minor` is the shop's part of the card fees on those orders (the whole
+fee since 13 November 2026), already taken off. A shop is paid `payout_delay_days` after delivery (that plus 14 days after shipping
 when delivery is never reported), never while a chargeback is open. `owed_to_sudemi` (core
-2026-11-09): what the company owes sudemi per currency (currency conversion costs, or its half of
-a card fee, that a refund left nothing to take from), for the whole company, not only this shop; it is taken from the company's
+2026-11-09): what the company owes sudemi per currency (currency conversion costs, or a card fee,
+that a refund left nothing to take from), for the whole company, not only this shop; it is taken from the company's
 next payouts in that currency, never more than one payout, the rest carried. Empty when nothing is
 owed.
 
@@ -907,6 +910,9 @@ otherwise `400 {"error":"bad_period"}`.
 ```
 
 - `daily` has every day of the period, zeros included (draw it as is).
+- `shop_clicks` (two seller modes): buyers sent to the shop's own website through a sudemi link
+  (mode B), counted once per link when first followed; in `totals`, `daily` and `top_products`.
+  `problem_reports`: buyer reports of a `wrong_price` / `out_of_stock` in the period.
 - `orders`: orders of this shop the buyer paid (authorised) in the period, whatever happened later.
   `sales_minor`: what buyers paid for them (goods + shipping, VAT included). `refunded_minor`,
   `commission_minor`: of those orders. `net_minor` = sales - refunded - commission (a guide; the
@@ -930,9 +936,11 @@ title, SKU or external id.
 `not_listed_reasons` (zero or more, show them in the shop's language): `disabled_by_shop` (the
 switch below), `not_in_shop` (the last full sync no longer contained it: deleted, switched off or
 hidden in the shop), `out_of_stock`, `no_shipping` (no shipping price for any country),
-`suspended` (taken down by sudemi), `payouts_not_ready` (the company's payout account is not
-active), `shop_not_reporting` (this shop's heartbeat stopped or it was disconnected). Unknown
-values may be added later: show them as "not listed".
+`suspended` (taken down by sudemi), `no_product_link` (mode B, see below: the product has no page in
+the shop to send the buyer to), `shop_not_reporting` (this shop's heartbeat stopped or it was
+disconnected). Unknown values may be added later: show them as "not listed". (`payouts_not_ready`
+is gone since the two seller modes: a shop without Stripe is listed with its own checkout.) Each
+item also has `checkout_type` (`sudemi` | `shop`) and `shop_clicks_30d`.
 
 ### `POST /integration/v1/listings/{externalId}/enabled` `{"enabled": false}`
 
@@ -942,7 +950,14 @@ on. Answer: `{"external_id": "27", "enabled": false, "listed": false}`; unknown 
 ### Shop profile
 
 `GET /integration/v1/shop` also returns `shop_name`, `shop_description`, `support_email`,
-`returns_window_days`, `currency` and `rename_via_support: true`. `POST /integration/v1/shop`
+`returns_window_days`, `currency` and `rename_via_support: true`, and the company's checkout mode
+(docs/seller-modes.md): `checkout_mode` (`SUDEMI` = paid through sudemi, `SHOP` = listed, the buyer pays
+on the shop's own website, `SUSPENDED`), `checkout_mode_reason` (`stripe_not_connected`,
+`stripe_requirements_due`, `stripe_restricted`; null in SUDEMI) and `stripe_connect_url` (where the
+owner connects Stripe). Every plugin shows the mode on every sudemi page: SHOP a red banner "Stripe is
+not connected. Your products are listed on sudemi, Connect Stripe" with a "Connect Stripe" button to
+`stripe_connect_url`; SUDEMI a green "Connect Stripe is done"; SUSPENDED a red "paused while we review a
+payment provider restriction" with a support link. `POST /integration/v1/shop`
 (existing) changes the description, support e-mail and returns window. The name buyers see is not
 changed by a plugin (owner 2026-11-09: rename only via a support ticket): show it read-only with a
 button that opens a support ticket.

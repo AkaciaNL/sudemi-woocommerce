@@ -2184,3 +2184,39 @@ msgstr "未向 sudemi 报告"
 #: admin/class-sudemi-admin.php
 msgid "This shop has not reported in to sudemi for more than 15 minutes, so its products are paused. Set up the cron job below."
 msgstr "本店已超过 15 分钟未向 sudemi 报告，因此其商品已暂停展示。请设置下面的 cron 任务。"
+
+#: admin/class-sudemi-admin.php
+msgid "Stripe is not connected. Your products are listed on sudemi, Connect Stripe"
+msgstr "Stripe 未连接。你的商品已在 sudemi 上架，请连接 Stripe"
+
+#: admin/class-sudemi-admin.php
+msgid "Until then buyers pay on your own website: free listing, no commission."
+msgstr "在此之前，买家在你自己的网站付款：免费上架，无佣金。"
+
+#: admin/class-sudemi-admin.php
+msgid "Stripe needs more information from you."
+msgstr "Stripe 需要你提供更多信息。"
+
+#: admin/class-sudemi-admin.php
+msgid "Connect Stripe"
+msgstr "连接 Stripe"
+
+#: admin/class-sudemi-admin.php
+msgid "Connect Stripe is done"
+msgstr "Stripe 已连接"
+
+#: admin/class-sudemi-admin.php
+msgid "Buyers pay through sudemi, and you get your orders and payouts here."
+msgstr "买家通过 sudemi 付款，你的订单和打款都在这里。"
+
+#: admin/class-sudemi-admin.php
+msgid "Your shop is paused on sudemi while we review a payment provider restriction"
+msgstr "我们正在审核支付服务商的限制，你的店铺在 sudemi 上已暂停"
+
+#: admin/class-sudemi-admin.php
+msgid "Your products are not shown for now. We e-mail you what is needed."
+msgstr "你的商品暂时不展示。我们会通过电子邮件告诉你需要什么。"
+
+#: admin/class-sudemi-admin.php
+msgid "Contact support"
+msgstr "联系客服"

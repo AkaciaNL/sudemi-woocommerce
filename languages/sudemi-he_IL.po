@@ -2191,3 +2191,39 @@ msgstr "לא מדווחת ל-sudemi"
 #: admin/class-sudemi-admin.php
 msgid "This shop has not reported in to sudemi for more than 15 minutes, so its products are paused. Set up the cron job below."
 msgstr "החנות הזו לא דיווחה ל-sudemi יותר מ-15 דקות, ולכן המוצרים שלה מושהים. הגדירו את משימת ה-cron למטה."
+
+#: admin/class-sudemi-admin.php
+msgid "Stripe is not connected. Your products are listed on sudemi, Connect Stripe"
+msgstr "Stripe לא מחוברת. המוצרים שלכם מוצגים ב‑sudemi, חברו את Stripe"
+
+#: admin/class-sudemi-admin.php
+msgid "Until then buyers pay on your own website: free listing, no commission."
+msgstr "עד אז הקונים משלמים באתר שלכם: הצגה בחינם, בלי עמלה."
+
+#: admin/class-sudemi-admin.php
+msgid "Stripe needs more information from you."
+msgstr "Stripe צריכה מכם מידע נוסף."
+
+#: admin/class-sudemi-admin.php
+msgid "Connect Stripe"
+msgstr "חיבור Stripe"
+
+#: admin/class-sudemi-admin.php
+msgid "Connect Stripe is done"
+msgstr "Stripe מחוברת"
+
+#: admin/class-sudemi-admin.php
+msgid "Buyers pay through sudemi, and you get your orders and payouts here."
+msgstr "הקונים משלמים דרך sudemi, וההזמנות וההעברות שלכם נמצאות כאן."
+
+#: admin/class-sudemi-admin.php
+msgid "Your shop is paused on sudemi while we review a payment provider restriction"
+msgstr "החנות שלכם מושהית ב‑sudemi בזמן שאנחנו בודקים הגבלה של ספק התשלומים"
+
+#: admin/class-sudemi-admin.php
+msgid "Your products are not shown for now. We e-mail you what is needed."
+msgstr "המוצרים שלכם לא מוצגים בינתיים. נכתוב לכם במייל מה נדרש."
+
+#: admin/class-sudemi-admin.php
+msgid "Contact support"
+msgstr "פנייה לתמיכה"

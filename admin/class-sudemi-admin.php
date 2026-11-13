@@ -204,6 +204,61 @@ final class Sudemi_Admin {
 				. ( $current === $page ? ' aria-current="page"' : '' ) . '>' . esc_html( self::page_label( $page ) ) . '</a>';
 		}
 		echo '</nav>';
+		self::render_checkout_mode();
+	}
+
+	/**
+	 * How buyers pay this shop (docs/seller-modes.md), on every sudemi page: through sudemi
+	 * (green), on the shop's own website until Stripe is connected (red, with the button to
+	 * connect it), or paused over a payment provider restriction (red, with support). Nothing
+	 * when sudemi did not say: the page never depends on it.
+	 */
+	private static function render_checkout_mode() {
+		try {
+			$mode = Sudemi_Insights::checkout_mode();
+		} catch ( Throwable $e ) {
+			$mode = null;
+		}
+		if ( null === $mode ) {
+			return;
+		}
+		$lines  = array();
+		$action = '';
+		switch ( $mode['mode'] ) {
+			case 'SHOP':
+				$tone    = 'error';
+				$icon    = '!';
+				$title   = __( 'Stripe is not connected. Your products are listed on sudemi, Connect Stripe', 'sudemi' );
+				$lines[] = __( 'Until then buyers pay on your own website: free listing, no commission.', 'sudemi' );
+				if ( 'stripe_requirements_due' === $mode['reason'] ) {
+					$lines[] = __( 'Stripe needs more information from you.', 'sudemi' );
+				}
+				if ( '' !== $mode['url'] ) {
+					$action = '<a class="button button-primary" href="' . esc_url( $mode['url'] ) . '" target="_blank" rel="noopener noreferrer">'
+						. esc_html__( 'Connect Stripe', 'sudemi' ) . ' <span aria-hidden="true">&#8599;</span></a>';
+				}
+				break;
+			case 'SUSPENDED':
+				$tone    = 'error';
+				$icon    = '!';
+				$title   = __( 'Your shop is paused on sudemi while we review a payment provider restriction', 'sudemi' );
+				$lines[] = __( 'Your products are not shown for now. We e-mail you what is needed.', 'sudemi' );
+				$action  = '<a class="button" href="' . esc_url( self::page_url( 'support' ) ) . '">' . esc_html__( 'Contact support', 'sudemi' ) . '</a>';
+				break;
+			default:
+				$tone    = 'success';
+				$icon    = '&#10003;';
+				$title   = __( 'Connect Stripe is done', 'sudemi' );
+				$lines[] = __( 'Buyers pay through sudemi, and you get your orders and payouts here.', 'sudemi' );
+		}
+		echo '<div class="sudemi-alert sudemi-alert-' . esc_attr( $tone ) . ' sudemi-mode" data-sudemi-checkout="' . esc_attr( $mode['mode'] ) . '"'
+			. ' role="' . ( 'success' === $tone ? 'status' : 'alert' ) . '">'
+			. '<div class="sudemi-mode-body"><span class="sudemi-mode-icon" aria-hidden="true">' . $icon . '</span>' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- a fixed entity.
+			. '<div class="sudemi-mode-text"><strong>' . esc_html( $title ) . '</strong>';
+		foreach ( $lines as $line ) {
+			echo '<span>' . esc_html( $line ) . '</span>';
+		}
+		echo '</div></div>' . $action . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built escaped above.
 	}
 
 	/** The page title row, with optional actions on the right. */
@@ -1026,6 +1081,7 @@ final class Sudemi_Admin {
 		Sudemi_Challenge::forget();
 		Sudemi_Requests::forget();
 		Sudemi_Changes::forget();
+		delete_transient( Sudemi_Insights::CHECKOUT_CACHE );
 		delete_option( Sudemi_Client::OPTION_INSTALL_ID );
 		// The key goes with the connection. Keeping it would leave a usable credential on a
 		// shop that believes it has disconnected.

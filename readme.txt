@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,11 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.4.1 =
+* Every sudemi page says how buyers pay your shop. Red while Stripe is not connected: your products are listed on sudemi and buyers pay on your own website, with a Connect Stripe button (and a line when Stripe needs more information). Green when Connect Stripe is done and buyers pay through sudemi. Red with a link to support when your shop is paused over a payment provider restriction.
+* The answer is kept for one minute, so moving between pages adds at most one call a minute. With an older sudemi, or when sudemi cannot be reached, no banner is shown and the page works as before.
+* The new texts in all twelve languages.
 
 = 1.4.0 =
 * A sudemi menu of its own, with a redesigned admin: Dashboard, Products on sudemi, Orders, Shipping, Payouts, Shop profile, Support and Settings, with the connection state always in view.

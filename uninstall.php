@@ -43,6 +43,7 @@ delete_option( 'sudemi_profile_description' );
 delete_option( 'sudemi_profile_support_email' );
 delete_option( 'sudemi_profile_returns_days' );
 delete_option( 'sudemi_sync_state' );
+delete_transient( 'sudemi_checkout_mode' );
 delete_option( 'sudemi_removals_synced' );
 delete_option( 'sudemi_pending_order_calls' );
 delete_option( 'sudemi_last_ok' );

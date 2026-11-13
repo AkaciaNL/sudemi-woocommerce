@@ -130,6 +130,22 @@ expect( 'a bar per day with sales, none for 0', substr_count( $bars, '<rect' ), 
 expect( 'an empty period draws an empty chart', substr_count( Sudemi_Insights::chart_svg( array(), array( 'impressions' => array() ), 'x' ), '<polyline' ), 0 );
 expect( 'rows that are not arrays are skipped', substr_count( Sudemi_Insights::bars_svg( array( 'x', array( 'day' => '2026-11-13', 'sales_minor' => 5 ) ), 'sales_minor', 'S' ), '<rect' ), 1 );
 
+// 1.4.1: the checkout mode banner (docs/seller-modes.md) from GET /integration/v1/shop.
+$b = Sudemi_Insights::checkout_banner( array( 'checkout_mode' => 'SHOP', 'checkout_mode_reason' => 'stripe_requirements_due', 'stripe_connect_url' => 'https://sudemi.com/seller/payouts' ) );
+expect( 'mode B with reason and connect address', $b, array( 'mode' => 'SHOP', 'reason' => 'stripe_requirements_due', 'url' => 'https://sudemi.com/seller/payouts' ) );
+expect( 'mode A, no reason', Sudemi_Insights::checkout_banner( array( 'checkout_mode' => 'SUDEMI', 'checkout_mode_reason' => null, 'stripe_connect_url' => 'https://sudemi.com/seller/payouts' ) )['reason'], '' );
+expect( 'suspended', Sudemi_Insights::checkout_banner( array( 'checkout_mode' => 'SUSPENDED', 'checkout_mode_reason' => 'stripe_restricted' ) )['mode'], 'SUSPENDED' );
+expect( 'an older sudemi without the fields: no banner', Sudemi_Insights::checkout_banner( array( 'shop_name' => 'x' ) ), null );
+expect( 'an unknown mode: no banner', Sudemi_Insights::checkout_banner( array( 'checkout_mode' => 'MAYBE' ) ), null );
+expect( 'not an answer: no banner', Sudemi_Insights::checkout_banner( 'oops' ), null );
+expect( 'a mode that is not a string: no banner', Sudemi_Insights::checkout_banner( array( 'checkout_mode' => array( 'SHOP' ) ) ), null );
+expect( 'an unknown reason is dropped', Sudemi_Insights::checkout_banner( array( 'checkout_mode' => 'SHOP', 'checkout_mode_reason' => '<b>' ) )['reason'], '' );
+expect( 'a javascript: address gives no button', Sudemi_Insights::checkout_banner( array( 'checkout_mode' => 'SHOP', 'stripe_connect_url' => 'javascript:alert(1)' ) )['url'], '' );
+expect( 'a relative address gives no button', Sudemi_Insights::checkout_banner( array( 'checkout_mode' => 'SHOP', 'stripe_connect_url' => '//evil.example/x' ) )['url'], '' );
+expect( 'an address with a user part gives no button', Sudemi_Insights::checkout_banner( array( 'checkout_mode' => 'SHOP', 'stripe_connect_url' => 'https://sudemi.com@evil.example/' ) )['url'], '' );
+expect( 'an address with spaces gives no button', Sudemi_Insights::checkout_banner( array( 'checkout_mode' => 'SHOP', 'stripe_connect_url' => "https://sudemi.com/a b" ) )['url'], '' );
+expect( 'http on a dev host is kept', Sudemi_Insights::checkout_banner( array( 'checkout_mode' => 'SHOP', 'stripe_connect_url' => 'http://localhost:18083/seller/payouts' ) )['url'], 'http://localhost:18083/seller/payouts' );
+
 if ( $failures ) {
 	echo "\n$failures failure(s)\n";
 	exit( 1 );

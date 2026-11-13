@@ -214,7 +214,34 @@
 .sudemi-alert-warning { background: var(--sudemi-warning-soft); border-color: #f0d590; }
 .sudemi-alert-info { background: var(--sudemi-info-soft); border-color: #c5d9ed; }
 .sudemi-alert-error { background: var(--sudemi-error-soft); border-color: #f1c0c0; }
+.sudemi-alert-success { background: var(--sudemi-success-soft); border-color: #b8dcc8; }
 .sudemi-alert .button { flex: none; }
+
+/* ---- checkout mode, under the navigation on every page --------------------------- */
+.sudemi-mode { margin: 12px 0 0; padding: 14px 18px; border-inline-start-width: 4px; }
+.sudemi-mode.sudemi-alert-error { border-inline-start-color: var(--sudemi-error); }
+.sudemi-mode.sudemi-alert-success { padding-block: 10px; border-inline-start-color: var(--sudemi-success); }
+.sudemi-mode-body { display: flex; align-items: flex-start; gap: 12px; min-width: 0; }
+.sudemi-mode-icon {
+	display: inline-grid;
+	place-items: center;
+	flex: none;
+	width: 22px;
+	height: 22px;
+	margin-top: 1px;
+	border-radius: 50%;
+	color: #fff;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1;
+}
+.sudemi-alert-error .sudemi-mode-icon { background: var(--sudemi-error); }
+.sudemi-alert-success .sudemi-mode-icon { background: var(--sudemi-success); }
+.sudemi-mode-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; line-height: 1.45; }
+.sudemi-mode-text strong { font-size: 14px; font-weight: 600; }
+.sudemi-alert-error .sudemi-mode-text strong { color: var(--sudemi-error); }
+.sudemi-alert-success .sudemi-mode-text strong { color: var(--sudemi-success); }
+.sudemi-mode .button { white-space: nowrap; }
 
 /* ---- tables ---------------------------------------------------------------------- */
 .sudemi-table-scroll { overflow-x: auto; }
