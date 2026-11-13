@@ -1667,3 +1667,555 @@ msgstr "لا يُطبَّق طلب sudemi رقم %1$s هنا: لم يعد لدى
 #, php-format
 msgid "Gave up applying sudemi order %1$s here after %2$d tries (%3$s). Check this order under WooCommerce > sudemi > Orders and update the WooCommerce order by hand."
 msgstr "تُوُقِّف عن تطبيق طلب sudemi رقم %1$s هنا بعد %2$d محاولات (%3$s). راجع هذا الطلب في WooCommerce > sudemi > الطلبات وحدّث طلب WooCommerce يدويًا."
+
+#: includes/class-sudemi-insights.php
+msgid "Switched off by you"
+msgstr "أوقفته أنت"
+
+#: includes/class-sudemi-insights.php
+msgid "No longer in your shop (deleted, hidden or not published)"
+msgstr "لم يعد في متجرك (محذوف أو مخفي أو غير منشور)"
+
+#: includes/class-sudemi-insights.php
+msgid "Out of stock"
+msgstr "نفد من المخزون"
+
+#: includes/class-sudemi-insights.php
+msgid "No shipping price for any country"
+msgstr "لا يوجد سعر شحن لأي دولة"
+
+#: includes/class-sudemi-insights.php
+msgid "Taken down by sudemi (see your e-mail or contact support)"
+msgstr "أزالته sudemi (راجع بريدك الإلكتروني أو تواصل مع الدعم)"
+
+#: includes/class-sudemi-insights.php
+msgid "Your payout account is not active yet"
+msgstr "حساب تحويل مستحقاتك غير مفعّل بعد"
+
+#: includes/class-sudemi-insights.php
+msgid "This shop stopped reporting in to sudemi"
+msgstr "توقف هذا المتجر عن إرسال إشاراته إلى sudemi"
+
+#: includes/class-sudemi-insights.php
+msgid "Not listed"
+msgstr "غير معروض"
+
+#: includes/class-sudemi-insights.php
+msgid "The description can be at most %d characters."
+msgstr "يمكن أن يتكون الوصف من %d حرفًا على الأكثر."
+
+#: includes/class-sudemi-insights.php
+msgid "Enter a valid e-mail address for buyers' questions."
+msgstr "أدخل عنوان بريد إلكتروني صالحًا لأسئلة المشترين."
+
+#: includes/class-sudemi-insights.php
+msgid "The return period must be a whole number of days from %1$d to %2$d."
+msgstr "يجب أن تكون مدة الإرجاع عددًا صحيحًا من الأيام بين %1$d و%2$d."
+
+#: includes/class-sudemi-insights.php
+msgid "That period cannot be shown."
+msgstr "لا يمكن عرض هذه الفترة."
+
+#: includes/class-sudemi-insights.php
+msgid "sudemi does not have this product for this shop (yet). It arrives with the next sync."
+msgstr "لا يوجد هذا المنتج لهذا المتجر على sudemi (بعد). سيصل مع المزامنة التالية."
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Not connected yet"
+msgstr "غير مربوط بعد"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Orders appear here as soon as a buyer orders one of your products through their AI assistant."
+msgstr "تظهر الطلبات هنا فور طلب مشترٍ أحد منتجاتك عبر مساعده الذكي."
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Open payouts on the seller portal"
+msgstr "فتح التحويلات في بوابة البائعين"
+
+#: admin/class-sudemi-admin.php
+msgid "Dashboard"
+msgstr "لوحة المعلومات"
+
+#: admin/class-sudemi-admin.php
+msgid "Products on sudemi"
+msgstr "المنتجات على sudemi"
+
+#: admin/class-sudemi-admin.php
+msgid "Shop profile"
+msgstr "ملف المتجر"
+
+#: admin/class-sudemi-admin.php
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: admin/class-sudemi-admin.php
+msgid "Waiting for your confirmation"
+msgstr "بانتظار تأكيدك"
+
+#: admin/class-sudemi-admin.php
+msgid "Not connected"
+msgstr "غير مربوط"
+
+#: admin/class-sudemi-admin.php
+msgid "Connected, first report pending"
+msgstr "مربوط، بانتظار أول إشارة"
+
+#: admin/class-sudemi-admin.php
+msgid "Cannot reach sudemi"
+msgstr "تعذّر الوصول إلى sudemi"
+
+#: admin/class-sudemi-admin.php
+msgid "Refused by sudemi"
+msgstr "رفضته sudemi"
+
+#: admin/class-sudemi-admin.php
+msgid "Connected, products not shown"
+msgstr "مربوط، والمنتجات غير معروضة"
+
+#: admin/class-sudemi-admin.php
+msgid "Live on sudemi"
+msgstr "يعمل على sudemi"
+
+#: admin/class-sudemi-admin.php
+msgid "Seller portal"
+msgstr "بوابة البائعين"
+
+#: admin/class-sudemi-admin.php
+msgid "Orders buyers placed through their AI assistant. Accept, ship, refund and export them here."
+msgstr "الطلبات التي قدمها المشترون عبر مساعدهم الذكي. اقبلها واشحنها واسترد مبالغها وصدّرها من هنا."
+
+#: admin/class-sudemi-admin.php
+msgid "What sudemi buyers pay for delivery, per country."
+msgstr "ما يدفعه المشترون على sudemi مقابل التوصيل، حسب الدولة."
+
+#: admin/class-sudemi-admin.php
+msgid "What sudemi has paid you and what is still to come."
+msgstr "ما حوّلته لك sudemi وما زال قادمًا."
+
+#: admin/class-sudemi-admin.php
+msgid "Questions about an order, a payment, payouts or this plugin? sudemi support answers here."
+msgstr "هل لديك سؤال عن طلب أو دفعة أو التحويلات أو هذه الإضافة؟ يجيب دعم sudemi هنا."
+
+#: admin/class-sudemi-admin.php
+msgid "The connection with sudemi, delivery times, currency and the shop's reporting."
+msgstr "الربط مع sudemi وأوقات التوصيل والعملة وإشارات المتجر."
+
+#: admin/class-sudemi-admin.php
+msgid "Sell through AI assistants"
+msgstr "بِع عبر المساعدات الذكية"
+
+#: admin/class-sudemi-admin.php
+msgid "Let ChatGPT, Claude and other AI assistants sell your products"
+msgstr "دع ChatGPT وClaude وغيرهما من المساعدات الذكية تبيع منتجاتك"
+
+#: admin/class-sudemi-admin.php
+msgid "Buyers ask their AI assistant for a product. sudemi shows them your products with the price and delivery to their country, and the order arrives here as a normal WooCommerce order. You stay the seller; sudemi takes a commission only on what sells."
+msgstr "يطلب المشترون منتجًا من مساعدهم الذكي. تعرض لهم sudemi منتجاتك مع السعر والتوصيل إلى دولتهم، ويصل الطلب هنا كطلب WooCommerce عادي. تبقى أنت البائع، ولا تأخذ sudemi عمولة إلا على ما يُباع."
+
+#: admin/class-sudemi-admin.php
+msgid "Connect"
+msgstr "اربط"
+
+#: admin/class-sudemi-admin.php
+msgid "Click the button and confirm on sudemi that this shop is yours."
+msgstr "انقر على الزر وأكّد على sudemi أن هذا المتجر ملكك."
+
+#: admin/class-sudemi-admin.php
+msgid "Your products go live"
+msgstr "تُعرض منتجاتك"
+
+#: admin/class-sudemi-admin.php
+msgid "Your catalogue, prices, stock and shipping are sent and kept up to date by themselves."
+msgstr "يُرسَل الكتالوج والأسعار والمخزون والشحن ويُحدَّث تلقائيًا."
+
+#: admin/class-sudemi-admin.php
+msgid "Orders come in"
+msgstr "تصل الطلبات"
+
+#: admin/class-sudemi-admin.php
+msgid "You confirm, ship, and are paid out by sudemi."
+msgstr "تؤكد أنت وتشحن، وتحوّل لك sudemi مستحقاتك."
+
+#: admin/class-sudemi-admin.php
+msgid "You confirm the connection on sudemi, signed in to your own account. This plugin never asks for your sudemi password."
+msgstr "تؤكد الربط على sudemi وأنت مسجّل الدخول بحسابك. لا تطلب هذه الإضافة كلمة مرور sudemi أبدًا."
+
+#: admin/class-sudemi-admin.php
+msgid "Connection"
+msgstr "الربط"
+
+#: admin/class-sudemi-admin.php
+msgid "Disconnect this shop from sudemi? Its products stop being shown to buyers right away."
+msgstr "هل تريد فصل هذا المتجر عن sudemi؟ ستتوقف منتجاته عن الظهور للمشترين فورًا."
+
+#: admin/class-sudemi-admin.php
+msgid "sudemi support answers here, and by e-mail."
+msgstr "يجيب دعم sudemi هنا وعبر البريد الإلكتروني."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Period"
+msgstr "الفترة"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "%d days"
+msgstr "%d يومًا"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "How your products did on sudemi in the last %d days."
+msgstr "أداء منتجاتك على sudemi خلال آخر %d يومًا."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Sales"
+msgstr "المبيعات"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What buyers paid, shipping and VAT included"
+msgstr "ما دفعه المشترون، شاملًا الشحن وضريبة القيمة المضافة"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "After %1$s refunds and %2$s commission"
+msgstr "بعد خصم %1$s مستردات و%2$s عمولة"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Average order"
+msgstr "متوسط الطلب"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Per order, shipping included"
+msgstr "لكل طلب، شاملًا الشحن"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Shown in search results"
+msgstr "الظهور في نتائج البحث"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Times an AI assistant got one of your products back from a search"
+msgstr "عدد المرات التي حصل فيها مساعد ذكي على أحد منتجاتك في بحث"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Product views"
+msgstr "مشاهدات المنتجات"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Times an assistant opened a product's details for a buyer"
+msgstr "عدد المرات التي فتح فيها مساعد تفاصيل منتج لمشترٍ"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Added to a cart"
+msgstr "أُضيف إلى سلة"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Times a buyer put one of your products in a cart"
+msgstr "عدد المرات التي وضع فيها مشترٍ أحد منتجاتك في سلة"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Conversion"
+msgstr "معدل التحويل"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Orders per product view"
+msgstr "الطلبات لكل مشاهدة منتج"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Seen by buyers"
+msgstr "ما رآه المشترون"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Searches and product views per day"
+msgstr "الظهور في البحث ومشاهدات المنتجات يوميًا"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Sales per day"
+msgstr "المبيعات اليومية"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "The buyer is not charged until you accept. Without an answer by the deadline the order lapses."
+msgstr "لا يُخصم أي مبلغ من المشتري حتى تقبل. إذا لم ترد قبل الموعد النهائي يسقط الطلب."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Answer now"
+msgstr "الرد الآن"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Buyers cannot see your products right now. The Settings page shows why and what to do."
+msgstr "لا يرى المشترون منتجاتك حاليًا. توضح صفحة الإعدادات السبب وما يجب فعله."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Open settings"
+msgstr "فتح الإعدادات"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Top products"
+msgstr "أفضل المنتجات"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "All products on sudemi"
+msgstr "كل المنتجات على sudemi"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "No activity in this period yet. Buyers find your products by asking their AI assistant; the numbers show up here day by day."
+msgstr "لا يوجد نشاط في هذه الفترة بعد. يجد المشترون منتجاتك بسؤال مساعدهم الذكي، وتظهر الأرقام هنا يومًا بعد يوم."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Shown"
+msgstr "مرات الظهور"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Views"
+msgstr "المشاهدات"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "In cart"
+msgstr "في السلة"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Your products on sudemi"
+msgstr "منتجاتك على sudemi"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "shown to buyers"
+msgstr "معروضة للمشترين"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Orders by status"
+msgstr "الطلبات حسب الحالة"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "No orders in this period."
+msgstr "لا توجد طلبات في هذه الفترة."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Where buyers are"
+msgstr "أين المشترون"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Your products as sudemi has them: whether buyers can see each one, why not, and how often it was found in the last 30 days."
+msgstr "منتجاتك كما هي لدى sudemi: هل يراها المشترون، ولماذا لا، وكم مرة وُجدت خلال آخر 30 يومًا."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Shown to buyers"
+msgstr "معروضة للمشترين"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Not shown"
+msgstr "غير معروض"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Search products"
+msgstr "البحث في المنتجات"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Name, SKU or ID"
+msgstr "الاسم أو رمز SKU أو المعرّف"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "No products match."
+msgstr "لا توجد منتجات مطابقة."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Products reach sudemi with the catalogue sync, a few minutes after you publish them."
+msgstr "تصل المنتجات إلى sudemi مع مزامنة الكتالوج، بعد دقائق من نشرها."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Stock"
+msgstr "المخزون"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Buyers see it"
+msgstr "يراه المشترون"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Shown (30 days)"
+msgstr "الظهور (30 يومًا)"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Views (30 days)"
+msgstr "المشاهدات (30 يومًا)"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Orders (30 days)"
+msgstr "الطلبات (30 يومًا)"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Show on sudemi"
+msgstr "العرض على sudemi"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "SKU %s"
+msgstr "رمز SKU‏ %s"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "ID %s"
+msgstr "المعرّف %s"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "in stock"
+msgstr "متوفر"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Show %s on sudemi"
+msgstr "عرض %s على sudemi"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "On"
+msgstr "مفعّل"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Off"
+msgstr "متوقف"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Products %1$d to %2$d of %3$d"
+msgstr "المنتجات من %1$d إلى %2$d من أصل %3$d"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Prices, stock, photos and texts come from your WooCommerce products and are sent by themselves when you change them. The switch only decides whether sudemi shows a product; it does not change anything in your shop."
+msgstr "الأسعار والمخزون والصور والنصوص تأتي من منتجات WooCommerce لديك وتُرسَل تلقائيًا عند تغييرها. يحدد المفتاح فقط ما إذا كانت sudemi تعرض المنتج، ولا يغيّر أي شيء في متجرك."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Product %s switched on for sudemi."
+msgstr "فُعّل المنتج %s على sudemi."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Product %s switched off for sudemi."
+msgstr "أُوقف المنتج %s على sudemi."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Switched on. sudemi shows this product again (when it is in stock and can be shipped)."
+msgstr "تم التفعيل. تعرض sudemi هذا المنتج مجددًا (عندما يكون متوفرًا ويمكن شحنه)."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Switched off. sudemi no longer shows this product to buyers. Your shop is not changed."
+msgstr "تم الإيقاف. لم تعد sudemi تعرض هذا المنتج للمشترين. لا يتغير شيء في متجرك."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What buyers and their AI assistant are told about your shop."
+msgstr "ما يُقال للمشترين ومساعدهم الذكي عن متجرك."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Shop name buyers see"
+msgstr "اسم المتجر الذي يراه المشترون"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "The name is checked by sudemi, so it is changed through support."
+msgstr "تراجع sudemi الاسم، لذلك يُغيَّر عبر الدعم."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Please change my shop name"
+msgstr "يرجى تغيير اسم متجري"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Ask for a new name"
+msgstr "اطلب اسمًا جديدًا"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "About your shop"
+msgstr "نبذة عن متجرك"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "A few sentences: what you sell and what makes your shop worth buying from. AI assistants may quote it to buyers."
+msgstr "بضع جمل: ماذا تبيع ولماذا يستحق الشراء من متجرك. قد تقتبسها المساعدات الذكية للمشترين."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "E-mail for buyers' questions"
+msgstr "البريد الإلكتروني لأسئلة المشترين"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Shown to buyers after they ordered, for questions about delivery and returns."
+msgstr "يُعرض للمشترين بعد الطلب، للأسئلة عن التوصيل والإرجاع."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Return period (days)"
+msgstr "مدة الإرجاع (أيام)"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "How long after delivery a buyer may change their mind. The law gives at least 14 days; you may give more."
+msgstr "المدة التي يمكن للمشتري خلالها العدول بعد التسليم. يمنح القانون 14 يومًا على الأقل، ويمكنك منح مدة أطول."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Save on sudemi"
+msgstr "الحفظ على sudemi"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Fixed details"
+msgstr "بيانات ثابتة"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Company details on the seller portal"
+msgstr "بيانات الشركة في بوابة البائعين"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Shop profile saved on sudemi."
+msgstr "حُفظ ملف المتجر على sudemi."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Saved on sudemi. Buyers see the new details from now on."
+msgstr "تم الحفظ على sudemi. يرى المشترون البيانات الجديدة من الآن."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "%s item sold"
+msgid_plural "%s items sold"
+msgstr[0] "بيعت %s قطعة"
+msgstr[1] "بيعت قطعة واحدة (%s)"
+msgstr[2] "بيعت قطعتان (%s)"
+msgstr[3] "بيعت %s قطع"
+msgstr[4] "بيعت %s قطعة"
+msgstr[5] "بيعت %s قطعة"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "%d order is waiting for your answer"
+msgid_plural "%d orders are waiting for your answer"
+msgstr[0] "%d طلب بانتظار ردك"
+msgstr[1] "طلب واحد بانتظار ردك"
+msgstr[2] "طلبان بانتظار ردك"
+msgstr[3] "%d طلبات بانتظار ردك"
+msgstr[4] "%d طلبًا بانتظار ردك"
+msgstr[5] "%d طلب بانتظار ردك"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "%d return request is waiting for your answer"
+msgid_plural "%d return requests are waiting for your answer"
+msgstr[0] "%d طلب إرجاع بانتظار ردك"
+msgstr[1] "طلب إرجاع واحد بانتظار ردك"
+msgstr[2] "طلبا إرجاع بانتظار ردك"
+msgstr[3] "%d طلبات إرجاع بانتظار ردك"
+msgstr[4] "%d طلب إرجاع بانتظار ردك"
+msgstr[5] "%d طلب إرجاع بانتظار ردك"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "%d product is not shown: see why"
+msgid_plural "%d products are not shown: see why"
+msgstr[0] "%d منتج غير معروض: اعرف السبب"
+msgstr[1] "منتج واحد غير معروض: اعرف السبب"
+msgstr[2] "منتجان غير معروضين: اعرف السبب"
+msgstr[3] "%d منتجات غير معروضة: اعرف السبب"
+msgstr[4] "%d منتجًا غير معروض: اعرف السبب"
+msgstr[5] "%d منتج غير معروض: اعرف السبب"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "%d photo"
+msgid_plural "%d photos"
+msgstr[0] "%d صورة"
+msgstr[1] "صورة واحدة"
+msgstr[2] "صورتان"
+msgstr[3] "%d صور"
+msgstr[4] "%d صورة"
+msgstr[5] "%d صورة"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "ships to %d country"
+msgid_plural "ships to %d countries"
+msgstr[0] "الشحن إلى %d دولة"
+msgstr[1] "الشحن إلى دولة واحدة"
+msgstr[2] "الشحن إلى دولتين"
+msgstr[3] "الشحن إلى %d دول"
+msgstr[4] "الشحن إلى %d دولة"
+msgstr[5] "الشحن إلى %d دولة"
+
+#: admin/class-sudemi-admin.php
+msgid "Not reporting in to sudemi"
+msgstr "لا يرسل إشارات إلى sudemi"
+
+#: admin/class-sudemi-admin.php
+msgid "This shop has not reported in to sudemi for more than 15 minutes, so its products are paused. Set up the cron job below."
+msgstr "لم يرسل هذا المتجر أي إشارة إلى sudemi منذ أكثر من 15 دقيقة، لذلك أُوقفت منتجاته مؤقتًا. اضبط مهمة cron أدناه."

@@ -38,6 +38,10 @@ delete_option( 'sudemi_change_counter' );
 delete_option( 'sudemi_pending_prices' );
 delete_option( 'sudemi_categories_sent' );
 delete_option( 'sudemi_removals' );
+// The shop profile values chosen on the sudemi Shop profile page.
+delete_option( 'sudemi_profile_description' );
+delete_option( 'sudemi_profile_support_email' );
+delete_option( 'sudemi_profile_returns_days' );
 delete_option( 'sudemi_sync_state' );
 delete_option( 'sudemi_removals_synced' );
 delete_option( 'sudemi_pending_order_calls' );

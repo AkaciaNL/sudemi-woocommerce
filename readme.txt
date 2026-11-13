@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 8.0
-Stable tag: 1.3.4
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,14 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.4.0 =
+* A sudemi menu of its own, with a redesigned admin: Dashboard, Products on sudemi, Orders, Shipping, Payouts, Shop profile, Support and Settings, with the connection state always in view.
+* Dashboard: sales, orders, what you receive, average order, how often your products were shown in AI assistants' searches, opened and put in a cart, and conversion, for 7, 30 or 90 days; daily charts, top products, orders by status and where buyers are.
+* Products on sudemi: every product as sudemi has it, whether buyers see it and why not (in plain words), its numbers for 30 days, and a switch to show or hide it on sudemi without changing your shop.
+* Shop profile: the description, e-mail for buyers' questions and return period buyers see, edited here; a catalogue sync no longer overwrites them with the WordPress tagline. The shop name is changed through a support request.
+* The header says when the shop has stopped reporting in, instead of an old "live" answer.
+* Every new text in all twelve languages; a test now checks that every text of the plugin is translated in all of them.
 
 = 1.3.4 =
 * Every translation reviewed against the English (11 languages): money words, one form of address per language, plain wording.

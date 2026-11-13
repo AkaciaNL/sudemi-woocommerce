@@ -1662,3 +1662,525 @@ msgstr "sudemi 订单 %1$s 不会在此应用：sudemi 上已不再有此店铺�
 #, php-format
 msgid "Gave up applying sudemi order %1$s here after %2$d tries (%3$s). Check this order under WooCommerce > sudemi > Orders and update the WooCommerce order by hand."
 msgstr "尝试 %2$d 次后已放弃在此应用 sudemi 订单 %1$s（%3$s）。请在 WooCommerce > sudemi > 订单 中查看此订单，并手动更新 WooCommerce 订单。"
+
+#: includes/class-sudemi-insights.php
+msgid "Switched off by you"
+msgstr "已被你关闭"
+
+#: includes/class-sudemi-insights.php
+msgid "No longer in your shop (deleted, hidden or not published)"
+msgstr "已不在你的店铺中（已删除、已隐藏或未发布）"
+
+#: includes/class-sudemi-insights.php
+msgid "Out of stock"
+msgstr "缺货"
+
+#: includes/class-sudemi-insights.php
+msgid "No shipping price for any country"
+msgstr "没有任何国家的运费"
+
+#: includes/class-sudemi-insights.php
+msgid "Taken down by sudemi (see your e-mail or contact support)"
+msgstr "已被 sudemi 下架（请查看邮件或联系客服支持）"
+
+#: includes/class-sudemi-insights.php
+msgid "Your payout account is not active yet"
+msgstr "你的打款账户尚未启用"
+
+#: includes/class-sudemi-insights.php
+msgid "This shop stopped reporting in to sudemi"
+msgstr "本店已停止向 sudemi 报告"
+
+#: includes/class-sudemi-insights.php
+msgid "Not listed"
+msgstr "未展示"
+
+#: includes/class-sudemi-insights.php
+msgid "The description can be at most %d characters."
+msgstr "描述最多 %d 个字符。"
+
+#: includes/class-sudemi-insights.php
+msgid "Enter a valid e-mail address for buyers' questions."
+msgstr "请填写有效的邮箱地址，用于回答买家问题。"
+
+#: includes/class-sudemi-insights.php
+msgid "The return period must be a whole number of days from %1$d to %2$d."
+msgstr "退货期限必须是 %1$d 到 %2$d 之间的整数天。"
+
+#: includes/class-sudemi-insights.php
+msgid "That period cannot be shown."
+msgstr "无法显示该时间段。"
+
+#: includes/class-sudemi-insights.php
+msgid "sudemi does not have this product for this shop (yet). It arrives with the next sync."
+msgstr "sudemi 上（还）没有本店的这个商品。下次同步时会传过去。"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Not connected yet"
+msgstr "尚未连接"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Orders appear here as soon as a buyer orders one of your products through their AI assistant."
+msgstr "买家通过 AI 助手订购你的商品后，订单会立即显示在这里。"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Open payouts on the seller portal"
+msgstr "在卖家门户中打开打款"
+
+#: admin/class-sudemi-admin.php
+msgid "Dashboard"
+msgstr "概览"
+
+#: admin/class-sudemi-admin.php
+msgid "Products on sudemi"
+msgstr "sudemi 上的商品"
+
+#: admin/class-sudemi-admin.php
+msgid "Shop profile"
+msgstr "店铺资料"
+
+#: admin/class-sudemi-admin.php
+msgid "Settings"
+msgstr "设置"
+
+#: admin/class-sudemi-admin.php
+msgid "Waiting for your confirmation"
+msgstr "等待你确认"
+
+#: admin/class-sudemi-admin.php
+msgid "Not connected"
+msgstr "未连接"
+
+#: admin/class-sudemi-admin.php
+msgid "Connected, first report pending"
+msgstr "已连接，等待首次报告"
+
+#: admin/class-sudemi-admin.php
+msgid "Cannot reach sudemi"
+msgstr "无法连接 sudemi"
+
+#: admin/class-sudemi-admin.php
+msgid "Refused by sudemi"
+msgstr "被 sudemi 拒绝"
+
+#: admin/class-sudemi-admin.php
+msgid "Connected, products not shown"
+msgstr "已连接，商品未展示"
+
+#: admin/class-sudemi-admin.php
+msgid "Live on sudemi"
+msgstr "已在 sudemi 上线"
+
+#: admin/class-sudemi-admin.php
+msgid "Seller portal"
+msgstr "卖家门户"
+
+#: admin/class-sudemi-admin.php
+msgid "Orders buyers placed through their AI assistant. Accept, ship, refund and export them here."
+msgstr "买家通过 AI 助手下的订单。在这里接单、发货、退款和导出。"
+
+#: admin/class-sudemi-admin.php
+msgid "What sudemi buyers pay for delivery, per country."
+msgstr "sudemi 买家按国家支付的配送费用。"
+
+#: admin/class-sudemi-admin.php
+msgid "What sudemi has paid you and what is still to come."
+msgstr "sudemi 已向你打款的金额和待打款的金额。"
+
+#: admin/class-sudemi-admin.php
+msgid "Questions about an order, a payment, payouts or this plugin? sudemi support answers here."
+msgstr "对订单、付款、打款或本插件有疑问？sudemi 客服支持在这里回复。"
+
+#: admin/class-sudemi-admin.php
+msgid "The connection with sudemi, delivery times, currency and the shop's reporting."
+msgstr "与 sudemi 的连接、配送时间、货币和店铺报告。"
+
+#: admin/class-sudemi-admin.php
+msgid "Sell through AI assistants"
+msgstr "通过 AI 助手销售"
+
+#: admin/class-sudemi-admin.php
+msgid "Let ChatGPT, Claude and other AI assistants sell your products"
+msgstr "让 ChatGPT、Claude 等 AI 助手销售你的商品"
+
+#: admin/class-sudemi-admin.php
+msgid "Buyers ask their AI assistant for a product. sudemi shows them your products with the price and delivery to their country, and the order arrives here as a normal WooCommerce order. You stay the seller; sudemi takes a commission only on what sells."
+msgstr "买家向 AI 助手询问商品。sudemi 向他们展示你的商品，以及价格和送到其国家的配送，订单会作为普通的 WooCommerce 订单到达这里。你仍然是卖家；sudemi 只对售出的商品收取佣金。"
+
+#: admin/class-sudemi-admin.php
+msgid "Connect"
+msgstr "连接"
+
+#: admin/class-sudemi-admin.php
+msgid "Click the button and confirm on sudemi that this shop is yours."
+msgstr "点击按钮，并在 sudemi 上确认这是你的店铺。"
+
+#: admin/class-sudemi-admin.php
+msgid "Your products go live"
+msgstr "商品上线"
+
+#: admin/class-sudemi-admin.php
+msgid "Your catalogue, prices, stock and shipping are sent and kept up to date by themselves."
+msgstr "你的商品目录、价格、库存和运费会自动发送并保持最新。"
+
+#: admin/class-sudemi-admin.php
+msgid "Orders come in"
+msgstr "订单到来"
+
+#: admin/class-sudemi-admin.php
+msgid "You confirm, ship, and are paid out by sudemi."
+msgstr "你确认并发货，sudemi 向你打款。"
+
+#: admin/class-sudemi-admin.php
+msgid "You confirm the connection on sudemi, signed in to your own account. This plugin never asks for your sudemi password."
+msgstr "你登录自己的账户在 sudemi 上确认连接。本插件从不询问你的 sudemi 密码。"
+
+#: admin/class-sudemi-admin.php
+msgid "Connection"
+msgstr "连接"
+
+#: admin/class-sudemi-admin.php
+msgid "Disconnect this shop from sudemi? Its products stop being shown to buyers right away."
+msgstr "要断开本店与 sudemi 的连接吗？其商品会立即停止向买家展示。"
+
+#: admin/class-sudemi-admin.php
+msgid "sudemi support answers here, and by e-mail."
+msgstr "sudemi 客服支持会在这里和通过邮件回复。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Period"
+msgstr "时间段"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "%d days"
+msgstr "%d 天"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "How your products did on sudemi in the last %d days."
+msgstr "你的商品在过去 %d 天在 sudemi 上的表现。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Sales"
+msgstr "销售额"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What buyers paid, shipping and VAT included"
+msgstr "买家支付的金额，含运费和增值税"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "After %1$s refunds and %2$s commission"
+msgstr "扣除 %1$s 退款和 %2$s 佣金后"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Average order"
+msgstr "平均订单金额"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Per order, shipping included"
+msgstr "每单，含运费"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Shown in search results"
+msgstr "搜索结果展示次数"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Times an AI assistant got one of your products back from a search"
+msgstr "AI 助手在搜索中得到你的商品的次数"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Product views"
+msgstr "商品查看次数"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Times an assistant opened a product's details for a buyer"
+msgstr "助手为买家打开商品详情的次数"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Added to a cart"
+msgstr "加入购物车"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Times a buyer put one of your products in a cart"
+msgstr "买家把你的商品加入购物车的次数"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Conversion"
+msgstr "转化率"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Orders per product view"
+msgstr "每次商品查看带来的订单"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Seen by buyers"
+msgstr "买家看到的情况"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Searches and product views per day"
+msgstr "每天的搜索展示和商品查看"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Sales per day"
+msgstr "每日销售额"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "The buyer is not charged until you accept. Without an answer by the deadline the order lapses."
+msgstr "在你接单之前不会向买家扣款。截止时间前未答复，订单将失效。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Answer now"
+msgstr "立即答复"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Buyers cannot see your products right now. The Settings page shows why and what to do."
+msgstr "买家目前看不到你的商品。“设置”页面会说明原因和处理方法。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Open settings"
+msgstr "打开设置"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Top products"
+msgstr "热门商品"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "All products on sudemi"
+msgstr "sudemi 上的全部商品"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "No activity in this period yet. Buyers find your products by asking their AI assistant; the numbers show up here day by day."
+msgstr "该时间段内还没有动态。买家通过询问 AI 助手找到你的商品；数据会逐日显示在这里。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Shown"
+msgstr "展示"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Views"
+msgstr "查看"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "In cart"
+msgstr "加购"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Your products on sudemi"
+msgstr "你在 sudemi 上的商品"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "shown to buyers"
+msgstr "正在向买家展示"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Orders by status"
+msgstr "按状态统计订单"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "No orders in this period."
+msgstr "该时间段内没有订单。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Where buyers are"
+msgstr "买家所在地"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Your products as sudemi has them: whether buyers can see each one, why not, and how often it was found in the last 30 days."
+msgstr "sudemi 上你的商品：买家能否看到每件商品、看不到的原因，以及过去 30 天被找到的次数。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Shown to buyers"
+msgstr "向买家展示"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Not shown"
+msgstr "未展示"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Search products"
+msgstr "搜索商品"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Name, SKU or ID"
+msgstr "名称、SKU 或 ID"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "No products match."
+msgstr "没有匹配的商品。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Products reach sudemi with the catalogue sync, a few minutes after you publish them."
+msgstr "商品发布几分钟后，会随目录同步到达 sudemi。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Stock"
+msgstr "库存"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Buyers see it"
+msgstr "买家可见"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Shown (30 days)"
+msgstr "展示（30 天）"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Views (30 days)"
+msgstr "查看（30 天）"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Orders (30 days)"
+msgstr "订单（30 天）"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Show on sudemi"
+msgstr "在 sudemi 上展示"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "SKU %s"
+msgstr "SKU %s"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "ID %s"
+msgstr "ID %s"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "in stock"
+msgstr "有货"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Show %s on sudemi"
+msgstr "在 sudemi 上展示 %s"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "On"
+msgstr "开"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Off"
+msgstr "关"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Products %1$d to %2$d of %3$d"
+msgstr "第 %1$d 到 %2$d 件，共 %3$d 件"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Prices, stock, photos and texts come from your WooCommerce products and are sent by themselves when you change them. The switch only decides whether sudemi shows a product; it does not change anything in your shop."
+msgstr "价格、库存、图片和文字来自你的 WooCommerce 商品，修改后会自动发送。开关只决定 sudemi 是否展示某件商品，不会改变你店铺里的任何内容。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Product %s switched on for sudemi."
+msgstr "商品 %s 已在 sudemi 上开启。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Product %s switched off for sudemi."
+msgstr "商品 %s 已在 sudemi 上关闭。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Switched on. sudemi shows this product again (when it is in stock and can be shipped)."
+msgstr "已开启。sudemi 会再次展示此商品（在有货且可发货时）。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Switched off. sudemi no longer shows this product to buyers. Your shop is not changed."
+msgstr "已关闭。sudemi 不再向买家展示此商品。你的店铺不受影响。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What buyers and their AI assistant are told about your shop."
+msgstr "买家及其 AI 助手了解到的关于你店铺的信息。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Shop name buyers see"
+msgstr "买家看到的店铺名称"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "The name is checked by sudemi, so it is changed through support."
+msgstr "店铺名称由 sudemi 审核，因此需通过客服支持修改。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Please change my shop name"
+msgstr "请修改我的店铺名称"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Ask for a new name"
+msgstr "申请新名称"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "About your shop"
+msgstr "店铺介绍"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "A few sentences: what you sell and what makes your shop worth buying from. AI assistants may quote it to buyers."
+msgstr "用几句话说明：你卖什么，以及为什么值得在你这里购买。AI 助手可能会向买家引用。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "E-mail for buyers' questions"
+msgstr "回答买家问题的邮箱"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Shown to buyers after they ordered, for questions about delivery and returns."
+msgstr "买家下单后会看到，用于询问配送和退货。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Return period (days)"
+msgstr "退货期限（天）"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "How long after delivery a buyer may change their mind. The law gives at least 14 days; you may give more."
+msgstr "买家收货后可以反悔的期限。法律规定至少 14 天；你可以给更长时间。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Save on sudemi"
+msgstr "保存到 sudemi"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Fixed details"
+msgstr "固定信息"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Company details on the seller portal"
+msgstr "卖家门户中的公司信息"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Shop profile saved on sudemi."
+msgstr "店铺资料已保存到 sudemi。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Saved on sudemi. Buyers see the new details from now on."
+msgstr "已保存到 sudemi。买家从现在起会看到新的信息。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "%s item sold"
+msgid_plural "%s items sold"
+msgstr[0] "售出 %s 件"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "%d order is waiting for your answer"
+msgid_plural "%d orders are waiting for your answer"
+msgstr[0] "%d 个订单等待你答复"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "%d return request is waiting for your answer"
+msgid_plural "%d return requests are waiting for your answer"
+msgstr[0] "%d 个退货申请等待你答复"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "%d product is not shown: see why"
+msgid_plural "%d products are not shown: see why"
+msgstr[0] "%d 件商品未展示：查看原因"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "%d photo"
+msgid_plural "%d photos"
+msgstr[0] "%d 张图片"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "ships to %d country"
+msgid_plural "ships to %d countries"
+msgstr[0] "配送到 %d 个国家"
+
+#: admin/class-sudemi-admin.php
+msgid "Not reporting in to sudemi"
+msgstr "未向 sudemi 报告"
+
+#: admin/class-sudemi-admin.php
+msgid "This shop has not reported in to sudemi for more than 15 minutes, so its products are paused. Set up the cron job below."
+msgstr "本店已超过 15 分钟未向 sudemi 报告，因此其商品已暂停展示。请设置下面的 cron 任务。"

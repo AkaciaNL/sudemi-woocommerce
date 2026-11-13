@@ -17,8 +17,14 @@ final class Sudemi_Admin {
 	const CAPABILITY = 'manage_woocommerce';
 	const SLUG       = 'sudemi';
 
+	/** The pages of the sudemi menu, in order (the `tab` of admin.php?page=sudemi). */
+	const PAGES = array( 'dashboard', 'products', 'orders', 'shipping', 'payouts', 'profile', 'support', 'settings' );
+
 	public static function boot() {
 		add_action( 'admin_menu', array( __CLASS__, 'add_page' ) );
+		add_filter( 'submenu_file', array( __CLASS__, 'current_submenu' ), 10, 2 );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( SUDEMI_PLUGIN_FILE ), array( __CLASS__, 'plugin_links' ) );
 		add_action( 'admin_post_sudemi_connect', array( __CLASS__, 'handle_connect' ) );
 		add_action( 'admin_post_sudemi_disconnect', array( __CLASS__, 'handle_disconnect' ) );
 		add_action( 'admin_post_sudemi_sync_now', array( __CLASS__, 'handle_sync_now' ) );
@@ -29,17 +35,197 @@ final class Sudemi_Admin {
 		// On the WooCommerce order screen, above the order form (forms cannot be nested in it).
 		add_action( 'admin_notices', array( __CLASS__, 'render_order_screen_request' ) );
 		Sudemi_Admin_Manage::boot();
+		Sudemi_Admin_Insights::boot();
 	}
 
+	/** The label of each page in the menu and the page navigation. */
+	public static function page_label( $page ) {
+		switch ( $page ) {
+			case 'dashboard':
+				return __( 'Dashboard', 'sudemi' );
+			case 'products':
+				return __( 'Products on sudemi', 'sudemi' );
+			case 'orders':
+				return __( 'Orders', 'sudemi' );
+			case 'shipping':
+				return __( 'Shipping', 'sudemi' );
+			case 'payouts':
+				return __( 'Payouts', 'sudemi' );
+			case 'profile':
+				return __( 'Shop profile', 'sudemi' );
+			case 'support':
+				return __( 'Support', 'sudemi' );
+			case 'settings':
+				return __( 'Settings', 'sudemi' );
+		}
+		return '';
+	}
+
+	/** admin.php?page=sudemi&tab=<page> (the dashboard without a tab). */
+	public static function page_url( $page = 'dashboard', array $args = array() ) {
+		$base = array( 'page' => self::SLUG );
+		if ( 'dashboard' !== $page ) {
+			$base['tab'] = $page;
+		}
+		return add_query_arg( array_merge( $base, $args ), admin_url( 'admin.php' ) );
+	}
+
+	/** The page asked for; the old "overview" is the dashboard. */
+	public static function current_page() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation only, nothing changes.
+		$tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'dashboard';
+		return in_array( $tab, self::PAGES, true ) ? $tab : 'dashboard';
+	}
+
+	/**
+	 * A top-level sudemi menu with one entry per page. The entries are links to
+	 * admin.php?page=sudemi&tab=..., one screen with one capability check, so every page keeps
+	 * the same address it had under WooCommerce.
+	 */
 	public static function add_page() {
-		add_submenu_page(
-			'woocommerce',
+		add_menu_page(
 			__( 'sudemi', 'sudemi' ),
 			__( 'sudemi', 'sudemi' ),
 			self::CAPABILITY,
 			self::SLUG,
-			array( __CLASS__, 'render' )
+			array( __CLASS__, 'render' ),
+			self::menu_icon(),
+			56
 		);
+		foreach ( self::PAGES as $page ) {
+			add_submenu_page(
+				self::SLUG,
+				self::page_label( $page ),
+				self::page_label( $page ),
+				self::CAPABILITY,
+				'dashboard' === $page ? self::SLUG : 'admin.php?page=' . self::SLUG . '&tab=' . $page,
+				'dashboard' === $page ? array( __CLASS__, 'render' ) : null
+			);
+		}
+	}
+
+	/** Highlights the menu entry of the page being shown. */
+	public static function current_submenu( $submenu_file, $parent_file = '' ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation only, nothing changes.
+		if ( ! isset( $_GET['page'] ) || self::SLUG !== $_GET['page'] ) {
+			return $submenu_file;
+		}
+		$page = self::current_page();
+		return 'dashboard' === $page ? self::SLUG : 'admin.php?page=' . self::SLUG . '&tab=' . $page;
+	}
+
+	public static function plugin_links( $links ) {
+		array_unshift(
+			$links,
+			'<a href="' . esc_url( self::page_url() ) . '">' . esc_html__( 'Dashboard', 'sudemi' ) . '</a>'
+		);
+		return $links;
+	}
+
+	/** The sudemi mark for the admin menu (WordPress colours it like the other menu icons). */
+	private static function menu_icon() {
+		$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="black" d="M10 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Zm3.2 11.6c-.6 1.1-1.9 1.7-3.6 1.7-1.5 0-2.9-.5-3.8-1.3l.9-1.5c.8.6 1.9 1 2.9 1 1 0 1.6-.4 1.6-1 0-.7-.7-.9-2-1.3-1.6-.4-3.1-1-3.1-2.8 0-1.7 1.5-2.9 3.6-2.9 1.3 0 2.5.4 3.3 1l-.8 1.5c-.7-.5-1.6-.8-2.5-.8-.9 0-1.4.4-1.4.9 0 .6.7.9 1.9 1.2 1.7.5 3.2 1.1 3.2 2.9 0 .5-.1.9-.2 1.4Z"/></svg>';
+		return 'data:image/svg+xml;base64,' . base64_encode( $svg ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- an SVG data URI, the format WordPress takes for menu icons.
+	}
+
+	/** The sudemi screens' own stylesheet, only on them. */
+	public static function enqueue( $hook ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation only, nothing changes.
+		if ( ! isset( $_GET['page'] ) || self::SLUG !== $_GET['page'] ) {
+			return;
+		}
+		wp_enqueue_style( 'sudemi-admin', plugins_url( 'assets/admin.css', SUDEMI_PLUGIN_FILE ), array(), SUDEMI_VERSION );
+	}
+
+	/** sudemi's seller portal, for what is managed there (company details, payout account). */
+	public static function portal_url( $path = '/seller' ) {
+		$parts = wp_parse_url( Sudemi_Client::api_base() );
+		if ( ! is_array( $parts ) || empty( $parts['host'] ) ) {
+			return 'https://sudemi.com' . $path;
+		}
+		$host = preg_replace( '/^api\./', '', (string) $parts['host'] );
+		$port = isset( $parts['port'] ) ? ':' . (int) $parts['port'] : '';
+		return ( isset( $parts['scheme'] ) ? $parts['scheme'] : 'https' ) . '://' . $host . $port . $path;
+	}
+
+	/**
+	 * The connection in one word, for the header: live, connected but not shown, cannot reach
+	 * sudemi, waiting for the claim, or not connected.
+	 *
+	 * @return array{0:string,1:string} css state, label.
+	 */
+	public static function connection_state() {
+		if ( ! Sudemi_Client::is_connected() ) {
+			return Sudemi_Pairing::claim_url()
+				? array( 'waiting', __( 'Waiting for your confirmation', 'sudemi' ) )
+				: array( 'off', __( 'Not connected', 'sudemi' ) );
+		}
+		$status = Sudemi_Heartbeat::status();
+		if ( empty( $status ) ) {
+			return array( 'waiting', __( 'Connected, first report pending', 'sudemi' ) );
+		}
+		if ( empty( $status['reachable'] ) ) {
+			return array( 'error', __( 'Cannot reach sudemi', 'sudemi' ) );
+		}
+		if ( empty( $status['connected'] ) ) {
+			return array( 'error', __( 'Refused by sudemi', 'sudemi' ) );
+		}
+		if ( empty( $status['listed'] ) ) {
+			return array( 'warning', __( 'Connected, products not shown', 'sudemi' ) );
+		}
+		// The last answer said "listed", but sudemi pauses a shop that stops reporting in.
+		if ( self::reporting_stale() ) {
+			return array( 'warning', __( 'Not reporting in to sudemi', 'sudemi' ) );
+		}
+		return array( 'live', __( 'Live on sudemi', 'sudemi' ) );
+	}
+
+	/** No successful report for 15 minutes: sudemi has paused this shop's products by now. */
+	public static function reporting_stale() {
+		$last_ok = Sudemi_Heartbeat::last_ok();
+		return ! $last_ok || $last_ok < time() - 15 * MINUTE_IN_SECONDS;
+	}
+
+	/** Brand bar, connection state and the page navigation, on every sudemi page. */
+	private static function render_header( $current ) {
+		list( $state, $label ) = self::connection_state();
+		echo '<div class="sudemi-header">';
+		echo '<div class="sudemi-brand"><span class="sudemi-logo" aria-hidden="true">s</span>'
+			. '<span class="sudemi-brand-text"><span class="sudemi-wordmark">sudemi</span>'
+			. '<span class="sudemi-brand-shop">' . esc_html( get_bloginfo( 'name' ) ) . '</span></span></div>';
+		echo '<div class="sudemi-header-meta">'
+			. '<span class="sudemi-pill sudemi-pill-' . esc_attr( $state ) . '"><span class="sudemi-dot" aria-hidden="true"></span>' . esc_html( $label ) . '</span>'
+			. '<a class="sudemi-header-link" href="' . esc_url( self::portal_url() ) . '" target="_blank" rel="noopener noreferrer">'
+			. esc_html__( 'Seller portal', 'sudemi' ) . ' <span aria-hidden="true">&#8599;</span></a></div>';
+		echo '</div>';
+		echo '<nav class="sudemi-nav" aria-label="' . esc_attr__( 'sudemi', 'sudemi' ) . '">';
+		foreach ( self::PAGES as $page ) {
+			echo '<a class="sudemi-nav-item' . ( $current === $page ? ' is-active' : '' ) . '" href="' . esc_url( self::page_url( $page ) ) . '"'
+				. ( $current === $page ? ' aria-current="page"' : '' ) . '>' . esc_html( self::page_label( $page ) ) . '</a>';
+		}
+		echo '</nav>';
+	}
+
+	/** The page title row, with optional actions on the right. */
+	public static function page_title( $title, $subtitle = '', $actions_html = '' ) {
+		echo '<div class="sudemi-titlebar"><div><h1 class="sudemi-title">' . esc_html( $title ) . '</h1>';
+		if ( '' !== $subtitle ) {
+			echo '<p class="sudemi-subtitle">' . esc_html( $subtitle ) . '</p>';
+		}
+		echo '</div>';
+		if ( '' !== $actions_html ) {
+			echo '<div class="sudemi-title-actions">' . $actions_html . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built escaped by the callers.
+		}
+		echo '</div><hr class="wp-header-end" />';
+	}
+
+	/** An empty or "not connected yet" state with a call to action. */
+	public static function empty_state( $title, $text, $action_html = '' ) {
+		echo '<div class="sudemi-card sudemi-empty"><span class="sudemi-empty-mark" aria-hidden="true">s</span><h2>' . esc_html( $title ) . '</h2><p>' . esc_html( $text ) . '</p>';
+		if ( '' !== $action_html ) {
+			echo '<p>' . $action_html . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built escaped by the callers.
+		}
+		echo '</div>';
 	}
 
 	public static function render() {
@@ -49,61 +235,100 @@ final class Sudemi_Admin {
 			wp_die( esc_html__( 'You do not have permission to manage this shop.', 'sudemi' ) );
 		}
 
-		$connected  = Sudemi_Client::is_connected();
-		$claim_url  = Sudemi_Pairing::claim_url();
-		$supported  = Sudemi_Keys::is_supported();
+		$connected = Sudemi_Client::is_connected();
+		$page      = self::current_page();
 
-		echo '<div class="wrap"><h1>' . esc_html__( 'sudemi', 'sudemi' ) . '</h1>';
+		echo '<div class="wrap sudemi-admin">';
+		self::render_header( $page );
+		echo '<div class="sudemi-page sudemi-page-' . esc_attr( $page ) . '">';
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation only, nothing changes.
-		$tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'overview';
-		$tab = in_array( $tab, array( 'orders', 'shipping', 'payouts', 'support' ), true ) ? $tab : 'overview';
-		self::render_tabs( $tab );
-		if ( 'support' === $tab ) {
-			self::render_support( $connected );
-			echo '</div>';
-			return;
-		}
-		if ( 'orders' === $tab ) {
-			Sudemi_Admin_Manage::render_orders();
-			echo '</div>';
-			return;
-		}
-		if ( 'shipping' === $tab ) {
-			Sudemi_Admin_Manage::render_shipping();
-			echo '</div>';
-			return;
-		}
-		if ( 'payouts' === $tab ) {
-			Sudemi_Admin_Manage::render_payouts();
-			echo '</div>';
-			return;
-		}
-
-		if ( ! $supported ) {
-			echo '<div class="notice notice-error"><p>'
+		if ( ! Sudemi_Keys::is_supported() ) {
+			echo '<div class="notice notice-error inline"><p>'
 				. esc_html__( 'This server is missing the sodium extension. The connection needs it to sign requests, and will not work without it. Ask your host to enable it.', 'sudemi' )
 				. '</p></div>';
 		}
 
-		if ( $connected ) {
-			self::render_connected();
+		switch ( $page ) {
+			case 'products':
+				Sudemi_Admin_Insights::render_products();
+				break;
+			case 'orders':
+				self::page_title( self::page_label( 'orders' ), __( 'Orders buyers placed through their AI assistant. Accept, ship, refund and export them here.', 'sudemi' ) );
+				if ( $connected ) {
+					self::render_requests();
+				}
+				Sudemi_Admin_Manage::render_orders();
+				break;
+			case 'shipping':
+				self::page_title( self::page_label( 'shipping' ), __( 'What sudemi buyers pay for delivery, per country.', 'sudemi' ) );
+				Sudemi_Admin_Manage::render_shipping();
+				break;
+			case 'payouts':
+				self::page_title( self::page_label( 'payouts' ), __( 'What sudemi has paid you and what is still to come.', 'sudemi' ) );
+				Sudemi_Admin_Manage::render_payouts();
+				break;
+			case 'profile':
+				Sudemi_Admin_Insights::render_profile();
+				break;
+			case 'support':
+				self::page_title( self::page_label( 'support' ), __( 'Questions about an order, a payment, payouts or this plugin? sudemi support answers here.', 'sudemi' ) );
+				self::render_support( $connected );
+				break;
+			case 'settings':
+				self::page_title( self::page_label( 'settings' ), __( 'The connection with sudemi, delivery times, currency and the shop\'s reporting.', 'sudemi' ) );
+				self::render_settings();
+				break;
+			default:
+				if ( $connected ) {
+					Sudemi_Admin_Insights::render_dashboard();
+				} else {
+					self::page_title( __( 'Sell through AI assistants', 'sudemi' ) );
+					self::render_onboarding();
+				}
+		}
+
+		echo '</div></div>';
+	}
+
+	/** The first screen of a shop that is not connected: what sudemi is and the one button. */
+	private static function render_onboarding() {
+		$claim_url = Sudemi_Pairing::claim_url();
+		echo '<div class="sudemi-card sudemi-hero">';
+		echo '<div class="sudemi-hero-text"><h2>' . esc_html__( 'Let ChatGPT, Claude and other AI assistants sell your products', 'sudemi' ) . '</h2>';
+		echo '<p>' . esc_html__( 'Buyers ask their AI assistant for a product. sudemi shows them your products with the price and delivery to their country, and the order arrives here as a normal WooCommerce order. You stay the seller; sudemi takes a commission only on what sells.', 'sudemi' ) . '</p>';
+		echo '<ol class="sudemi-steps">'
+			. '<li><strong>' . esc_html__( 'Connect', 'sudemi' ) . '</strong> ' . esc_html__( 'Click the button and confirm on sudemi that this shop is yours.', 'sudemi' ) . '</li>'
+			. '<li><strong>' . esc_html__( 'Your products go live', 'sudemi' ) . '</strong> ' . esc_html__( 'Your catalogue, prices, stock and shipping are sent and kept up to date by themselves.', 'sudemi' ) . '</li>'
+			. '<li><strong>' . esc_html__( 'Orders come in', 'sudemi' ) . '</strong> ' . esc_html__( 'You confirm, ship, and are paid out by sudemi.', 'sudemi' ) . '</li>'
+			. '</ol></div>';
+		echo '<div class="sudemi-hero-action">';
+		if ( Sudemi_Client::is_connected() ) {
+			echo '<p>' . esc_html__( 'This shop is connected to sudemi.', 'sudemi' ) . '</p>';
 		} elseif ( $claim_url ) {
 			self::render_waiting( $claim_url );
 		} else {
-			self::render_disconnected( $supported );
+			self::render_disconnected( Sudemi_Keys::is_supported() );
 		}
+		echo '</div></div>';
+	}
 
+	/** The old overview: connection, listing status, currency, delivery times, cron, log. */
+	private static function render_settings() {
+		if ( ! Sudemi_Client::is_connected() ) {
+			self::render_onboarding();
+			self::render_log();
+			return;
+		}
+		self::render_connected();
 		self::render_log();
-		echo '</div>';
 	}
 
 	private static function render_disconnected( $supported ) {
-		echo '<p>' . esc_html__( 'Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account - this plugin never asks for your sudemi password.', 'sudemi' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'You confirm the connection on sudemi, signed in to your own account. This plugin never asks for your sudemi password.', 'sudemi' ) . '</p>';
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
 		wp_nonce_field( 'sudemi_connect' );
 		echo '<input type="hidden" name="action" value="sudemi_connect" />';
-		submit_button( __( 'Connect this shop', 'sudemi' ), 'primary', 'submit', true, $supported ? array() : array( 'disabled' => 'disabled' ) );
+		submit_button( __( 'Connect this shop', 'sudemi' ), 'primary large', 'submit', false, $supported ? array() : array( 'disabled' => 'disabled' ) );
 		echo '</form>';
 	}
 
@@ -111,7 +336,7 @@ final class Sudemi_Admin {
 		echo '<div class="notice notice-info"><p>'
 			. esc_html__( 'Almost there. Open the link below, sign in to sudemi and confirm that this shop is yours. This page will pick it up by itself.', 'sudemi' )
 			. '</p></div>';
-		echo '<p><a class="button button-primary" target="_blank" rel="noopener noreferrer" href="'
+		echo '<p><a class="button button-primary button-large" target="_blank" rel="noopener noreferrer" href="'
 			. esc_url( $claim_url ) . '">' . esc_html__( 'Confirm this shop on sudemi', 'sudemi' ) . '</a></p>';
 		echo '<p class="description">' . esc_html(
 			sprintf(
@@ -123,34 +348,44 @@ final class Sudemi_Admin {
 	}
 
 	private static function render_connected() {
-		echo '<div class="notice notice-success"><p>' . esc_html__( 'This shop is connected to sudemi.', 'sudemi' ) . '</p></div>';
-
-		echo '<table class="widefat striped" style="max-width:48rem"><tbody>';
+		echo '<div class="sudemi-grid sudemi-grid-2">';
+		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'Connection', 'sudemi' ) . '</h2>';
+		echo '<table class="sudemi-kv"><tbody>';
 		self::row( __( 'Shop address', 'sudemi' ), home_url( '/' ), __( 'Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from - so changing it means connecting again from the new address.', 'sudemi' ) );
 		self::row( __( 'Install', 'sudemi' ), (string) Sudemi_Client::install_id(), __( 'Which installation this is. Revoke it on sudemi to cut this shop off immediately.', 'sudemi' ) );
 		self::row( __( 'Signing key', 'sudemi' ), __( 'held on this server', 'sudemi' ), __( 'The private half never leaves this server and is never sent to sudemi. It cannot be shown here either.', 'sudemi' ) );
 		echo '</tbody></table>';
-
-		self::render_listing_status();
-		self::render_currency();
-		self::render_delivery();
-		self::render_requests();
-		self::render_order_history();
-
-		echo '<h2>' . esc_html__( 'Set on sudemi, not here', 'sudemi' ) . '</h2>';
-		echo '<p>' . esc_html__( 'Your legal name, country, trader status and VAT number decide what a buyer is owed, so they are confirmed once on sudemi and changed there. This plugin cannot edit them.', 'sudemi' ) . '</p>';
-
-		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="display:inline">';
+		echo '<h3>' . esc_html__( 'Set on sudemi, not here', 'sudemi' ) . '</h3>';
+		echo '<p class="description">' . esc_html__( 'Your legal name, country, trader status and VAT number decide what a buyer is owed, so they are confirmed once on sudemi and changed there. This plugin cannot edit them.', 'sudemi' ) . '</p>';
+		echo '<div class="sudemi-actions-row">';
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
 		wp_nonce_field( 'sudemi_sync_now' );
 		echo '<input type="hidden" name="action" value="sudemi_sync_now" />';
 		submit_button( __( 'Sync the catalogue now', 'sudemi' ), 'secondary', 'submit', false );
-		echo '</form> ';
-
-		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="display:inline">';
+		echo '</form>';
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" onsubmit="return window.confirm(this.dataset.confirm);" data-confirm="'
+			. esc_attr__( 'Disconnect this shop from sudemi? Its products stop being shown to buyers right away.', 'sudemi' ) . '">';
 		wp_nonce_field( 'sudemi_disconnect' );
 		echo '<input type="hidden" name="action" value="sudemi_disconnect" />';
 		submit_button( __( 'Disconnect', 'sudemi' ), 'delete', 'submit', false );
-		echo '</form>';
+		echo '</form></div>';
+		echo '</section>';
+
+		echo '<section class="sudemi-card">';
+		self::render_listing_status();
+		echo '</section></div>';
+
+		echo '<div class="sudemi-grid sudemi-grid-2">';
+		echo '<section class="sudemi-card">';
+		self::render_delivery();
+		echo '</section>';
+		echo '<section class="sudemi-card">';
+		self::render_currency();
+		echo '</section></div>';
+
+		echo '<section class="sudemi-card">';
+		self::render_cron_advice();
+		echo '</section>';
 	}
 
 	/**
@@ -162,8 +397,8 @@ final class Sudemi_Admin {
 		$confirmed = Sudemi_Currency::confirmed();
 		$refused   = (string) get_option( Sudemi_Currency::OPTION_REFUSED, '' );
 
-		echo '<h2>' . esc_html__( 'Currency', 'sudemi' ) . '</h2>';
-		echo '<table class="widefat striped" style="max-width:48rem"><tbody>';
+		echo '<h2 class="sudemi-card-title">' . esc_html__( 'Currency', 'sudemi' ) . '</h2>';
+		echo '<table class="sudemi-kv"><tbody>';
 		self::row(
 			__( 'Your shop currency', 'sudemi' ),
 			$shop,
@@ -220,7 +455,7 @@ final class Sudemi_Admin {
 	private static function render_listing_status() {
 		$status = Sudemi_Heartbeat::status();
 
-		echo '<h2>' . esc_html__( 'Listing status', 'sudemi' ) . '</h2>';
+		echo '<h2 class="sudemi-card-title">' . esc_html__( 'Listing status', 'sudemi' ) . '</h2>';
 
 		if ( empty( $status ) ) {
 			echo '<div class="notice notice-warning inline"><p>'
@@ -247,6 +482,10 @@ final class Sudemi_Admin {
 			echo '<div class="notice notice-warning inline"><p>'
 				. esc_html( ! empty( $status['reason'] ) ? $status['reason'] : __( 'This shop is connected but its products are not being shown.', 'sudemi' ) )
 				. '</p></div>';
+		} elseif ( self::reporting_stale() ) {
+			echo '<div class="notice notice-warning inline"><p>'
+				. esc_html__( 'This shop has not reported in to sudemi for more than 15 minutes, so its products are paused. Set up the cron job below.', 'sudemi' )
+				. '</p></div>';
 		} else {
 			echo '<div class="notice notice-success inline"><p>'
 				. esc_html__( 'Products are being shown on sudemi.', 'sudemi' )
@@ -257,7 +496,7 @@ final class Sudemi_Admin {
 		/* translators: %s: human-readable time difference, e.g. "4 mins". */
 		$ok_when = $last_ok ? sprintf( __( '%s ago', 'sudemi' ), human_time_diff( $last_ok, time() ) ) : __( 'never', 'sudemi' );
 
-		echo '<table class="widefat striped" style="max-width:48rem"><tbody>';
+		echo '<table class="sudemi-kv"><tbody>';
 		self::row( __( 'Last reported in', 'sudemi' ), $when, __( 'This shop tells sudemi every five minutes that it is still here and that its prices still stand. When that stops, the listings are paused rather than left at prices nobody is confirming.', 'sudemi' ) );
 		self::row(
 			__( 'Last successful report', 'sudemi' ),
@@ -291,8 +530,6 @@ final class Sudemi_Admin {
 				: __( 'Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted.', 'sudemi' )
 		);
 		echo '</tbody></table>';
-
-		self::render_cron_advice();
 	}
 
 	/**
@@ -303,7 +540,7 @@ final class Sudemi_Admin {
 		$cron_url = site_url( 'wp-cron.php?doing_wp_cron' );
 		$disabled = defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON;
 
-		echo '<h3>' . esc_html__( 'Keep this shop reporting in (cron)', 'sudemi' ) . '</h3>';
+		echo '<h2 class="sudemi-card-title">' . esc_html__( 'Keep this shop reporting in (cron)', 'sudemi' ) . '</h2>';
 		echo '<p>' . esc_html__( 'WordPress runs its scheduled tasks (WP-Cron) only when someone visits the site. In a quiet hour nobody does, this shop stops reporting in, and sudemi pauses its products and cannot ask it about new orders. Let the server call WP-Cron every 5 minutes instead.', 'sudemi' ) . '</p>';
 		echo '<p>' . esc_html__( '1. Add this line to the server\'s crontab (crontab -e), or as a cron job in your hosting panel:', 'sudemi' ) . '</p>';
 		echo '<p><code>' . esc_html( '*/5 * * * * wget -q -O - "' . $cron_url . '" >/dev/null 2>&1' ) . '</code></p>';
@@ -317,98 +554,9 @@ final class Sudemi_Admin {
 	}
 
 	private static function row( $label, $value, $note ) {
-		echo '<tr><th scope="row" style="width:12rem">' . esc_html( $label ) . '</th><td><code>'
-			. esc_html( $value ) . '</code><p class="description">' . esc_html( $note )
+		echo '<tr><th scope="row">' . esc_html( $label ) . '</th><td><span class="sudemi-kv-value">'
+			. esc_html( $value ) . '</span><p class="description">' . esc_html( $note )
 			. '</p></td></tr>';
-	}
-
-	/**
-	 * The orders sudemi holds for this shop, with what each one earned.
-	 *
-	 * Shown here as well as on the sudemi website because a merchant looking at their shop admin
-	 * should not have to go elsewhere to see what sold. Both read the same endpoint, so the two
-	 * cannot drift apart and leave a merchant with two numbers and no way to tell which is wrong.
-	 */
-	private static function render_order_history() {
-		if ( ! Sudemi_Client::is_connected() ) {
-			return;
-		}
-
-		echo '<h2>' . esc_html__( 'Orders through sudemi', 'sudemi' ) . '</h2>';
-		echo '<p><a class="button" href="' . esc_url( admin_url( 'admin.php?page=' . self::SLUG . '&tab=orders' ) ) . '">'
-			. esc_html__( 'Manage orders: filters, export, accept, ship, refund', 'sudemi' ) . '</a></p>';
-
-		$history = Sudemi_Orders::history( '', 20 );
-		if ( null === $history ) {
-			echo '<div class="notice notice-warning inline"><p>'
-				. esc_html__( 'Could not reach sudemi to load the order history just now. Nothing is wrong with the orders themselves; try again shortly.', 'sudemi' )
-				. '</p></div>';
-			return;
-		}
-
-		$counts = isset( $history['counts'] ) && is_array( $history['counts'] ) ? $history['counts'] : array();
-		$awaiting = isset( $counts['AWAITING_SELLER'] ) ? (int) $counts['AWAITING_SELLER'] : 0;
-		if ( $awaiting > 0 ) {
-			echo '<div class="notice notice-warning inline"><p>'
-				. esc_html(
-					sprintf(
-						/* translators: %d: number of orders waiting. */
-						_n(
-							'%d order is waiting to be confirmed. The buyer has not been charged for it yet.',
-							'%d orders are waiting to be confirmed. Those buyers have not been charged yet.',
-							$awaiting,
-							'sudemi'
-						),
-						$awaiting
-					)
-				)
-				. '</p></div>';
-		}
-
-		$orders = isset( $history['orders'] ) && is_array( $history['orders'] ) ? $history['orders'] : array();
-		if ( empty( $orders ) ) {
-			echo '<p class="description">'
-				. esc_html__( 'No orders through sudemi yet.', 'sudemi' )
-				. '</p>';
-			return;
-		}
-
-		echo '<table class="widefat striped" style="max-width:60rem"><thead><tr>'
-			. '<th>' . esc_html__( 'Order', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'What sold', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Status', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'You receive', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Customer', 'sudemi' ) . '</th>'
-			. '</tr></thead><tbody>';
-
-		foreach ( $orders as $order ) {
-			$items = array();
-			if ( ! empty( $order['lines'] ) && is_array( $order['lines'] ) ) {
-				foreach ( $order['lines'] as $line ) {
-					$title = isset( $line['title'] ) ? (string) $line['title'] : '';
-					$qty   = isset( $line['quantity'] ) ? (int) $line['quantity'] : 1;
-					$items[] = $qty > 1 ? $title . ' × ' . $qty : $title;
-				}
-			}
-
-			// The currency the buyer's card was charged in; the shop's own for an older core.
-			$currency = ! empty( $order['currency_code'] ) ? Sudemi_Currency::normalise( $order['currency_code'] ) : Sudemi_Currency::shop_currency();
-			$net      = isset( $order['your_net_minor'] ) ? (int) $order['your_net_minor'] : 0;
-
-			echo '<tr>';
-			echo '<td><code>' . esc_html( substr( (string) $order['order_id'], 0, 8 ) ) . '</code><br />'
-				. '<span class="description">' . esc_html( isset( $order['placed_at'] ) ? substr( (string) $order['placed_at'], 0, 10 ) : '' ) . '</span></td>';
-			echo '<td>' . esc_html( implode( ', ', $items ) ) . '</td>';
-			$asked = ! empty( $order['customer_request'] ) && is_array( $order['customer_request'] )
-				? ' (' . __( 'return requested', 'sudemi' ) . ')' : '';
-			echo '<td>' . esc_html( self::order_status_label( $order ) . $asked ) . '</td>';
-			$places = Sudemi_Currency::decimals( $currency );
-			echo '<td>' . esc_html( number_format_i18n( $net / ( 10 ** $places ), $places ) . ' ' . $currency ) . '</td>';
-			// Only present once sudemi has released it, which is only after this shop confirmed.
-			echo '<td>' . esc_html( isset( $order['customer_name'] ) ? (string) $order['customer_name'] : ' - ' ) . '</td>';
-			echo '</tr>';
-		}
-		echo '</tbody></table>';
 	}
 
 	/** A merchant-readable status, including what it means for the money. */
@@ -447,14 +595,17 @@ final class Sudemi_Admin {
 		if ( empty( $entries ) ) {
 			return;
 		}
-		echo '<h2>' . esc_html__( 'Recent activity', 'sudemi' ) . '</h2>';
-		echo '<table class="widefat striped" style="max-width:48rem"><tbody>';
-		foreach ( $entries as $entry ) {
+		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'Recent activity', 'sudemi' ) . '</h2>';
+		echo '<table class="sudemi-table sudemi-log"><tbody>';
+		foreach ( array_slice( $entries, 0, 20 ) as $entry ) {
 			$at      = isset( $entry['at'] ) ? $entry['at'] : '';
 			$message = isset( $entry['message'] ) ? $entry['message'] : '';
-			echo '<tr><td style="width:14rem">' . esc_html( $at ) . '</td><td>' . esc_html( $message ) . '</td></tr>';
+			$level   = isset( $entry['level'] ) ? (string) $entry['level'] : 'info';
+			$ts      = strtotime( (string) $at );
+			echo '<tr><td class="sudemi-log-at">' . esc_html( $ts ? wp_date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $ts ) : $at ) . '</td>'
+				. '<td><span class="sudemi-badge sudemi-badge-' . esc_attr( 'warn' === $level || 'error' === $level ? 'warning' : 'neutral' ) . '">' . esc_html( $level ) . '</span> ' . esc_html( $message ) . '</td></tr>';
 		}
-		echo '</tbody></table>';
+		echo '</tbody></table></section>';
 	}
 
 	// ---------------------------------------------------------- return requests ----
@@ -467,14 +618,13 @@ final class Sudemi_Admin {
 	 */
 	private static function render_requests() {
 		$requests = Sudemi_Requests::all();
-		echo '<h2 id="sudemi-requests">' . esc_html__( 'Return requests', 'sudemi' ) . '</h2>';
 		self::render_request_flash();
 		if ( empty( $requests ) ) {
-			echo '<p class="description">' . esc_html__( 'No return requests waiting for an answer.', 'sudemi' ) . '</p>';
 			return;
 		}
+		echo '<section class="sudemi-card sudemi-card-attention"><h2 class="sudemi-card-title" id="sudemi-requests">' . esc_html__( 'Return requests', 'sudemi' ) . '</h2>';
 		echo '<p>' . esc_html__( 'Buyers asked to return these delivered orders. Answer each by the date shown: accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on the order.', 'sudemi' ) . '</p>';
-		echo '<table class="widefat striped" style="max-width:60rem"><thead><tr>'
+		echo '<table class="sudemi-table"><thead><tr>'
 			. '<th>' . esc_html__( 'Order', 'sudemi' ) . '</th>'
 			. '<th>' . esc_html__( 'Buyer\'s reason', 'sudemi' ) . '</th>'
 			. '<th>' . esc_html__( 'Answer by', 'sudemi' ) . '</th>'
@@ -492,13 +642,13 @@ final class Sudemi_Admin {
 			self::render_request_forms( $request );
 			echo '</td></tr>';
 		}
-		echo '</tbody></table>';
+		echo '</tbody></table></section>';
 	}
 
 	/** Accept, and reject with a required reason: two forms, so the reason is required only for one. */
 	public static function render_request_forms( array $request ) {
 		$order_id = $request['order_id'];
-		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="margin-bottom:.5em">';
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="sudemi-inline-form">';
 		wp_nonce_field( 'sudemi_request_answer' );
 		echo '<input type="hidden" name="action" value="sudemi_request_answer" />';
 		echo '<input type="hidden" name="order_id" value="' . esc_attr( $order_id ) . '" />';
@@ -596,23 +746,6 @@ final class Sudemi_Admin {
 
 	// ------------------------------------------------------------------ support ----
 
-	private static function render_tabs( $current ) {
-		$tabs = array(
-			'overview' => __( 'Overview', 'sudemi' ),
-			'orders'   => __( 'Orders', 'sudemi' ),
-			'shipping' => __( 'Shipping', 'sudemi' ),
-			'payouts'  => __( 'Payouts', 'sudemi' ),
-			'support'  => __( 'Support', 'sudemi' ),
-		);
-		echo '<nav class="nav-tab-wrapper" style="margin-bottom:1em">';
-		foreach ( $tabs as $key => $label ) {
-			$url = admin_url( 'admin.php?page=' . self::SLUG . ( 'overview' === $key ? '' : '&tab=' . $key ) );
-			echo '<a class="nav-tab' . ( $current === $key ? ' nav-tab-active' : '' ) . '" href="' . esc_url( $url ) . '">'
-				. esc_html( $label ) . '</a>';
-		}
-		echo '</nav>';
-	}
-
 	/**
 	 * Tickets between this shop and sudemi support.
 	 *
@@ -621,9 +754,11 @@ final class Sudemi_Admin {
 	 */
 	private static function render_support( $connected ) {
 		if ( ! $connected ) {
-			echo '<div class="notice notice-info inline"><p>'
-				. esc_html__( 'Support is available once this shop is connected to sudemi.', 'sudemi' )
-				. '</p></div>';
+			self::empty_state(
+				__( 'Not connected yet', 'sudemi' ),
+				__( 'Support is available once this shop is connected to sudemi.', 'sudemi' ),
+				'<a class="button button-primary" href="' . esc_url( self::page_url() ) . '">' . esc_html__( 'Connect this shop', 'sudemi' ) . '</a>'
+			);
 			return;
 		}
 
@@ -641,16 +776,27 @@ final class Sudemi_Admin {
 			return;
 		}
 
-		echo '<p>' . esc_html__( 'Questions about an order, a payment, payouts or this plugin? Open a ticket and sudemi support answers here. You also get an e-mail when they reply.', 'sudemi' ) . '</p>';
+		// A ticket started from another page (asking for a new shop name): category and subject filled in.
+		if ( empty( $draft ) ) {
+			// phpcs:disable WordPress.Security.NonceVerification.Recommended -- a prefill, nothing changes.
+			if ( isset( $_GET['category'] ) && in_array( strtoupper( sanitize_key( wp_unslash( $_GET['category'] ) ) ), Sudemi_Support::CATEGORIES, true ) ) {
+				$draft['category'] = strtoupper( sanitize_key( wp_unslash( $_GET['category'] ) ) );
+			}
+			if ( isset( $_GET['subject'] ) ) {
+				$draft['subject'] = sanitize_text_field( wp_unslash( $_GET['subject'] ) );
+			}
+			// phpcs:enable
+		}
 
-		echo '<h2>' . esc_html__( 'Your tickets', 'sudemi' ) . '</h2>';
+		echo '<div class="sudemi-grid sudemi-grid-support">';
+		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'Your tickets', 'sudemi' ) . '</h2>';
 		$list = Sudemi_Support::list_tickets();
 		if ( ! $list['ok'] ) {
 			echo '<div class="notice notice-warning inline"><p>' . esc_html( Sudemi_Support::error_message( $list['error'] ) ) . '</p></div>';
 		} elseif ( empty( $list['tickets'] ) ) {
-			echo '<p class="description">' . esc_html__( 'No tickets yet.', 'sudemi' ) . '</p>';
+			echo '<p class="sudemi-muted">' . esc_html__( 'No tickets yet.', 'sudemi' ) . '</p>';
 		} else {
-			echo '<table class="widefat striped" style="max-width:60rem"><thead><tr>'
+			echo '<table class="sudemi-table"><thead><tr>'
 				. '<th>' . esc_html__( 'Number', 'sudemi' ) . '</th>'
 				. '<th>' . esc_html__( 'Subject', 'sudemi' ) . '</th>'
 				. '<th>' . esc_html__( 'Status', 'sudemi' ) . '</th>'
@@ -660,19 +806,23 @@ final class Sudemi_Admin {
 				if ( ! is_array( $ticket ) || empty( $ticket['id'] ) ) {
 					continue;
 				}
-				$url = self::support_url( (string) $ticket['id'] );
+				$url    = self::support_url( (string) $ticket['id'] );
+				$status = isset( $ticket['status'] ) ? (string) $ticket['status'] : '';
 				echo '<tr>';
 				echo '<td><a href="' . esc_url( $url ) . '"><code>' . esc_html( isset( $ticket['number'] ) ? (string) $ticket['number'] : '' ) . '</code></a></td>';
-				echo '<td><a href="' . esc_url( $url ) . '">' . esc_html( isset( $ticket['subject'] ) ? (string) $ticket['subject'] : '' ) . '</a><br />'
-					. '<span class="description">' . esc_html( Sudemi_Support::category_label( isset( $ticket['category'] ) ? (string) $ticket['category'] : '' ) ) . '</span></td>';
-				echo '<td>' . esc_html( Sudemi_Support::status_label( isset( $ticket['status'] ) ? (string) $ticket['status'] : '' ) ) . '</td>';
+				echo '<td><a href="' . esc_url( $url ) . '"><strong>' . esc_html( isset( $ticket['subject'] ) ? (string) $ticket['subject'] : '' ) . '</strong></a><br />'
+					. '<span class="sudemi-muted">' . esc_html( Sudemi_Support::category_label( isset( $ticket['category'] ) ? (string) $ticket['category'] : '' ) ) . '</span></td>';
+				echo '<td><span class="sudemi-badge sudemi-badge-' . esc_attr( 'CLOSED' === $status ? 'neutral' : 'info' ) . '">' . esc_html( Sudemi_Support::status_label( $status ) ) . '</span></td>';
 				echo '<td>' . esc_html( self::support_time( isset( $ticket['updatedAt'] ) ? $ticket['updatedAt'] : '' ) ) . '</td>';
 				echo '</tr>';
 			}
 			echo '</tbody></table>';
 		}
+		echo '</section>';
 
+		echo '<section class="sudemi-card">';
 		self::render_support_open_form( $draft );
+		echo '</section></div>';
 	}
 
 	private static function render_support_open_form( array $draft ) {
@@ -680,8 +830,9 @@ final class Sudemi_Admin {
 			return isset( $draft[ $key ] ) && is_string( $draft[ $key ] ) ? $draft[ $key ] : '';
 		};
 
-		echo '<h2>' . esc_html__( 'Open a ticket', 'sudemi' ) . '</h2>';
-		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="max-width:48rem">';
+		echo '<h2 class="sudemi-card-title">' . esc_html__( 'Open a ticket', 'sudemi' ) . '</h2>';
+		echo '<p class="sudemi-muted">' . esc_html__( 'sudemi support answers here, and by e-mail.', 'sudemi' ) . '</p>';
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="sudemi-form">';
 		wp_nonce_field( 'sudemi_support_open' );
 		echo '<input type="hidden" name="action" value="sudemi_support_open" />';
 		echo '<table class="form-table" role="presentation"><tbody>';
@@ -714,7 +865,7 @@ final class Sudemi_Admin {
 	}
 
 	private static function render_support_ticket( $ticket_id, array $draft ) {
-		echo '<p><a href="' . esc_url( self::support_url() ) . '">&larr; ' . esc_html__( 'Back to your tickets', 'sudemi' ) . '</a></p>';
+		echo '<p><a class="sudemi-back" href="' . esc_url( self::support_url() ) . '">&larr; ' . esc_html__( 'Back to your tickets', 'sudemi' ) . '</a></p>';
 
 		$result = Sudemi_Support::get_ticket( $ticket_id );
 		if ( ! $result['ok'] ) {
@@ -723,7 +874,7 @@ final class Sudemi_Admin {
 		}
 		$ticket = $result['ticket'];
 
-		echo '<h2>' . esc_html(
+		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html(
 			sprintf(
 				/* translators: 1: ticket number, e.g. S-000123; 2: ticket subject. */
 				__( 'Ticket %1$s: %2$s', 'sudemi' ),
@@ -738,39 +889,36 @@ final class Sudemi_Admin {
 			. '</p>';
 
 		$messages = isset( $ticket['messages'] ) && is_array( $ticket['messages'] ) ? $ticket['messages'] : array();
-		echo '<div style="max-width:48rem">';
+		echo '<div class="sudemi-thread">';
 		foreach ( $messages as $message ) {
 			if ( ! is_array( $message ) ) {
 				continue;
 			}
 			$from_support = isset( $message['author'] ) && 'SUPPORT' === $message['author'];
-			$style        = $from_support
-				? 'background:#f0f6fc;border-left:4px solid #2271b1;margin:0 3rem 1em 0;'
-				: 'background:#f6f7f7;border-left:4px solid #8c8f94;margin:0 0 1em 3rem;';
-			echo '<div style="' . esc_attr( $style . 'padding:.75em 1em' ) . '">';
-			echo '<p style="margin:0 0 .5em"><strong>'
+			echo '<div class="sudemi-message ' . ( $from_support ? 'sudemi-message-support' : 'sudemi-message-you' ) . '">';
+			echo '<p class="sudemi-message-meta"><strong>'
 				. esc_html( $from_support ? __( 'sudemi support', 'sudemi' ) : __( 'You', 'sudemi' ) )
 				. '</strong> <span class="description">'
 				. esc_html( self::support_time( isset( $message['createdAt'] ) ? $message['createdAt'] : '' ) )
 				. '</span></p>';
 			// Plain text from either side: escaped, never rendered as HTML; line breaks kept.
-			echo '<div style="white-space:pre-wrap;overflow-wrap:anywhere">' . esc_html( isset( $message['body'] ) ? (string) $message['body'] : '' ) . '</div>';
+			echo '<div class="sudemi-message-body">' . esc_html( isset( $message['body'] ) ? (string) $message['body'] : '' ) . '</div>';
 			echo '</div>';
 		}
 		echo '</div>';
 
-		echo '<h3>' . esc_html__( 'Reply', 'sudemi' ) . '</h3>';
+		echo '<h3 class="sudemi-section-title">' . esc_html__( 'Reply', 'sudemi' ) . '</h3>';
 		if ( isset( $ticket['status'] ) && 'CLOSED' === $ticket['status'] ) {
 			echo '<p class="description">' . esc_html__( 'This ticket is closed. Replying opens it again.', 'sudemi' ) . '</p>';
 		}
-		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" style="max-width:48rem">';
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="sudemi-form">';
 		wp_nonce_field( 'sudemi_support_reply' );
 		echo '<input type="hidden" name="action" value="sudemi_support_reply" />';
 		echo '<input type="hidden" name="ticket" value="' . esc_attr( $ticket_id ) . '" />';
 		echo '<p><textarea name="message" rows="6" class="large-text" required maxlength="' . esc_attr( Sudemi_Support::MESSAGE_MAX ) . '" aria-label="'
 			. esc_attr__( 'Reply', 'sudemi' ) . '">' . esc_textarea( isset( $draft['message'] ) && is_string( $draft['message'] ) ? $draft['message'] : '' ) . '</textarea></p>';
 		submit_button( __( 'Send reply', 'sudemi' ), 'primary', 'submit', false );
-		echo '</form>';
+		echo '</form></section>';
 	}
 
 	public static function handle_support_open() {
@@ -862,7 +1010,7 @@ final class Sudemi_Admin {
 		if ( is_wp_error( $result ) ) {
 			Sudemi_Logger::warn( $result->get_error_message() );
 		}
-		self::back();
+		self::back( 'dashboard' );
 	}
 
 	public static function handle_disconnect() {
@@ -883,7 +1031,7 @@ final class Sudemi_Admin {
 		// shop that believes it has disconnected.
 		Sudemi_Keys::forget();
 		Sudemi_Logger::info( __( 'Disconnected from sudemi.', 'sudemi' ) );
-		self::back();
+		self::back( 'dashboard' );
 	}
 
 	/**
@@ -893,7 +1041,7 @@ final class Sudemi_Admin {
 	 * not offered to buyers there); the delivery times are this plugin's own two settings.
 	 */
 	private static function render_delivery() {
-		echo '<h2>' . esc_html__( 'Delivery to sudemi buyers', 'sudemi' ) . '</h2>';
+		echo '<h2 class="sudemi-card-title">' . esc_html__( 'Delivery to sudemi buyers', 'sudemi' ) . '</h2>';
 		$sample = wc_get_products( array( 'limit' => 1, 'status' => 'publish', 'virtual' => false ) );
 		$rates  = $sample ? Sudemi_Shipping::rates_for( $sample[0] ) : array();
 		if ( empty( $rates ) ) {
@@ -945,8 +1093,8 @@ final class Sudemi_Admin {
 		check_admin_referer( $action );
 	}
 
-	private static function back() {
-		wp_safe_redirect( admin_url( 'admin.php?page=' . self::SLUG ) );
+	private static function back( $page = 'settings' ) {
+		wp_safe_redirect( self::page_url( $page ) );
 		exit;
 	}
 }

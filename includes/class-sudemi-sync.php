@@ -570,17 +570,21 @@ final class Sudemi_Sync {
 	}
 
 	private static function push_shop() {
-		$response = Sudemi_Client::post_signed(
-			'/integration/v1/shop',
-			array(
-				'displayName'   => get_bloginfo( 'name' ),
-				'description'   => get_bloginfo( 'description' ),
-				'languages'     => array( substr( get_locale(), 0, 2 ) ),
-				'currency'      => get_woocommerce_currency(),
-				'supportEmail'  => get_option( 'woocommerce_email_from_address', get_option( 'admin_email' ) ),
-				'shipsTo'       => self::shipping_countries(),
-			)
+		// The description, support e-mail and return period chosen on the sudemi Shop profile
+		// page win over the WordPress tagline and e-mail, so a sync never puts those back.
+		$profile = Sudemi_Insights::local_profile();
+		$body    = array(
+			'displayName'   => get_bloginfo( 'name' ),
+			'description'   => $profile['description'],
+			'languages'     => array( substr( get_locale(), 0, 2 ) ),
+			'currency'      => get_woocommerce_currency(),
+			'supportEmail'  => $profile['support_email'],
+			'shipsTo'       => self::shipping_countries(),
 		);
+		if ( null !== $profile['returns_days'] ) {
+			$body['returnsWindowDays'] = $profile['returns_days'];
+		}
+		$response = Sudemi_Client::post_signed( '/integration/v1/shop', $body );
 		// sudemi echoes the currency it holds for this shop, or refuses one it does not support;
 		// the settings page shows either.
 		Sudemi_Currency::remember_shop_answer( $response );

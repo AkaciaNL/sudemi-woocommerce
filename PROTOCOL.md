@@ -1,4 +1,4 @@
-<!-- Copy of docs/seller-integration-protocol.md in the sudemi core repository (updated 2026-11-09). The core copy is the source of truth. -->
+<!-- Copy of docs/seller-integration-protocol.md in the sudemi core repository (updated 2026-11-13). The core copy is the source of truth. -->
 
 # Seller Integration Protocol v1
 
@@ -556,7 +556,7 @@ a capture attempted after it lapses simply fails. A plugin that answers late get
 | Status | Body | Meaning |
 | --- | --- | --- |
 | 200 | `{"status": "ok"}` | Applied. On accept, the money has been captured. |
-| 200 | `{"status": "already_resolved", "order_status": "..."}` | Answered before, or the window closed. Not an error; stop retrying. `order_status` says how it ended: `PAID` (or `ACCEPTED`, `SHIPPED`, ...) means your earlier accept landed, so keep the local order; `DECLINED` means it was released, so cancel the local order and restock. Never cancel on `already_resolved` alone. |
+| 200 | `{"status": "already_resolved", "order_status": "..."}` | Answered before, or the window closed. Not an error; stop retrying. `order_status` says how it ended: `PAID` (or `ACCEPTED`, `SHIPPED`, ...) means your earlier accept landed, so keep the local order; `DECLINED` means it was released, so cancel the local order and restock; for a `DECLINED` or `CANCELLED` order `cancelled_by` says who ended it (`buyer`, `shop` or `sudemi`), as in `settled_orders`. Never cancel on `already_resolved` alone. |
 | 404 | `{"error": "no_such_order"}` | No such order awaiting an answer *from this shop*. Identical whether it does not exist, belongs to another seller, or belongs to another shop of the same company, so an install cannot probe for other shops' order ids. |
 | 409 | `{"error": "authorisation_lapsed"}` | The buyer's authorisation could no longer be charged. The order will be released. |
 
@@ -615,14 +615,14 @@ array are `{"externalId", "reason"}`). Unknown request fields are ignored.
 | `POST /sync` | - | `sync_id`, `expires_at`, `max_products_per_request` |
 | `POST /sync/{id}/commit` | `catalogueRevision` (optional: the shop's revision when this sync started) | `status: committed` (`products_seen`, `delisted`) or `status: held` (`would_delist`, `live_products`, `message`) |
 | `POST /orders/{id}/accept` / `reject` | reject: `reason` optional | see §4a; accept adds `payment: captured` or `waiting_for_other_shops` |
-| `GET /orders?status=&limit=&after=` | - | `counts`, `orders[{order_id,status,placed_at,total_minor,currency_code,your_net_minor,lines[{title,quantity}],respond_by?,declined_reason?,customer_request?,customer_name?}]`, `next_cursor` (only when there is a next page). Since core 2026-11-09 each row also has `destination_country`, `shipping_minor`, `tracking{carrier,code}\|null`, `shipped_at`, `delivered_at`, `revision`, `refunded_minor`, `payout{state,expected_minor,paid_out_minor,currency_code,due_at}` |
+| `GET /orders?status=&limit=&after=` | - | `counts`, `orders[{order_id,status,placed_at,total_minor,currency_code,your_net_minor,lines[{title,quantity}],respond_by?,declined_reason?,customer_request?,customer_name?}]`, `next_cursor` (only when there is a next page). Since core 2026-11-09 each row also has `destination_country`, `shipping_minor`, `tracking{carrier,code}\|null`, `shipped_at`, `delivered_at`, `revision`, `refunded_minor`, `payout{state,expected_minor,paid_out_minor,currency_code,due_at,carried_to_owed_minor,owed_paid_off_minor}` |
 | `GET /orders?from=&to=&q=&sort=&dir=&offset=&status=&limit=` | any of `from`, `to` (date `YYYY-MM-DD`, `to` inclusive, or ISO instant, exclusive), `q` (order reference or product title words), `sort` (`placed`, `total`, `status`), `dir` (`asc`/`desc`), `offset` switches to the portal's table; `limit` 1-100; `after` ignored | `counts`, `orders[...]` (rows as above), `total`, `offset`, `limit`, `next_offset` (null on the last page); 400 `invalid_date` |
-| `GET /orders/{id}` | - | the portal's order page in snake_case: `order_id`, `id`, `status`, `placed_at`, `quantity`, `destination_country`, `lines[{product_id,external_id,title,quantity,unit_price_minor,goods_minor,withdrawal_exclusion}]`, `shop{install_id,name,origin,platform}`, `money{currency_code,goods_minor,shipping_minor,total_minor,commission_minor,your_net_minor,refunded_minor}`, `customer_request?{id,kind,reason,requested_at,respond_by}`, `respond_by?`, `note?`, `captured_at?`, `declined_reason?`, `shipped_at?`, `delivered_at?`, `withdrawal_deadline?`, `tracking?{carrier,code}`, `customer_name?` (after capture, never the address), `allowed_actions[]`, `timeline[{type,at,...}]`, `payout{settled,converted,currency_code,expected_minor,paid_out_minor,state,due_at}`, `revision`; 404 `no_such_order` (also another shop's, same company included); 409 `previous_connection` |
+| `GET /orders/{id}` | - | the portal's order page in snake_case: `order_id`, `id`, `status`, `placed_at`, `quantity`, `destination_country`, `lines[{product_id,external_id,title,quantity,unit_price_minor,goods_minor,withdrawal_exclusion}]`, `shop{install_id,name,origin,platform}`, `money{currency_code,goods_minor,shipping_minor,total_minor,commission_minor,your_net_minor,refunded_minor}`, `customer_request?{id,kind,reason,requested_at,respond_by}`, `respond_by?`, `note?`, `captured_at?`, `declined_reason?`, `shipped_at?`, `delivered_at?`, `withdrawal_deadline?`, `tracking?{carrier,code}`, `customer_name?` (after capture, never the address), `allowed_actions[]`, `timeline[{type,at,...}]`, `payout{settled,converted,currency_code,expected_minor,paid_out_minor,state,due_at,carried_to_owed_minor,owed_paid_off_minor,card_fee_minor,card_fee_shop_minor}`, `revision`; 404 `no_such_order` (also another shop's, same company included); 409 `previous_connection` |
 | `GET /orders/export.csv?status=&from=&to=&q=&sort=&dir=&lang=&decimal=` | `lang`: en nl tr de fr es it pl ru zh ar he (else en); `decimal=comma`: decimal comma and `;` | `text/csv; charset=UTF-8` with BOM, the portal's columns, at most 10,000 rows; headers `X-Total-Count`, `X-Export-Truncated`; no buyer name or address |
 | `POST /orders/bulk` | `action` (`accept`, `reject`, `shipped`, `delivered`), `reason` (reject: required, max 500), `items[{orderId,carrier,trackingCode}]` (1-100) | `action`, `done`, `refused`, `results[{order_id,result: done\|refused,error?,message?,payment?}]` (errors per order: `no_such_order`, `previous_connection`, `already_resolved`, `authorisation_lapsed`, `wrong_state`, `provider_refused`, `failed`); 400 `invalid_request`; 403 `seller_suspended` (accept only) |
 | `GET /shipping` | - | `shop_id`, `shop_name`, `mode` (`shop`/`custom`), `currency`, `max_price_minor`, `countries[{country,enabled,price_minor,offered,shop_price_min_minor,shop_price_max_minor,shop_price_products}]` (as the seller API), `effective[{country,offered,source: shop_price\|sudemi_price\|null,min_minor,max_minor}]` |
 | `PUT` or `POST /shipping` | `mode`, `currency` (optional, must be the shop's), `countries[{country,enabled,priceMinor}]` (custom mode: every country offered) | as GET; 400 `invalid_request` (unknown country, a country twice, price below 0 or over `max_price_minor`, wrong currency, bad mode) |
-| `GET /payouts` | - | `account{connected,charges_enabled,details_submitted,payouts_active,state,action_deadline,disabled_reason}`, `payout_delay_days`, `currencies[{currency_code,orders,paid_out_minor,outstanding_minor,waiting_for_shipment_minor,scheduled_minor,processing_minor,held_minor,next_due_at}]`, `note` |
+| `GET /payouts` | - | `account{connected,charges_enabled,details_submitted,payouts_active,state,action_deadline,disabled_reason}`, `payout_delay_days`, `currencies[{currency_code,orders,paid_out_minor,outstanding_minor,waiting_for_shipment_minor,scheduled_minor,processing_minor,held_minor,next_due_at,card_fee_shop_minor}]`, `owed_to_sudemi[{currency_code,amount_minor,last_change_at}]`, `owed_by_sudemi[{currency_code,amount_minor,last_change_at}]` (a credit sudemi owes the company, paid with its next payout in that currency), `note` |
 | `GET /orders/{id}/fulfilment` | - | `deliverable`, `ship_to{recipient_name,line1,line2,postal_code,city,region,country,phone}`, `lines[{product_id,external_id,title,quantity}]`; 409 `not_confirmed_yet`, `payment_pending`, `not_payable` |
 | `POST /orders/{id}/shipped` / `delivered` | shipped: `carrier`, `trackingCode` (optional, max 100 chars each) | `status: ok` / `already_resolved`; 409 `not_paid` |
 | `POST /orders/{id}/tracking` | `trackingCode` (required; `tracking_code` also accepted), `carrier` (optional: left out or blank keeps the current one); max 100 chars each, control characters stripped. Optional `Idempotency-Key` | `status: ok` (changed, buyer e-mailed) / `already_resolved` (the order has exactly this tracking; nothing changed, nobody e-mailed); 400 `tracking_code_required`; 404 `no_such_order` (also another shop's); 409 `not_shipped` (PAID: send `shipped` with the tracking instead; DELIVERED, CANCELLED, REFUNDED: final) |
@@ -717,7 +717,9 @@ support, Stripe events, the deadlines that run out).
 - Apply an entry only when its `revision` is higher than the one the plugin holds for that order
   (equal: a repeat, ignore it). An entry is a summary; `GET /orders/{id}` has the rest.
 - The feed reads 30 seconds behind real time, so a change shows up on the first heartbeat at least
-  30 seconds after it was made. A cursor that cannot be read starts over from the last 7 days and
+  30 seconds after it was made, and later while a change on sudemi is still being saved (the feed
+  never reads past the oldest unfinished save, so no change is ever skipped; the cursor then simply
+  stays where it is). A cursor that cannot be read starts over from the last 7 days and
   says `changes_cursor_reset: true`; so does `""`.
 - The cursor is opaque. Keep it per install; after a re-pairing start again with `""`.
 - Orders waiting for an answer still come as `pending_orders`, return requests to answer as
@@ -747,6 +749,18 @@ Payout states: `not_charged` (no money taken, or never), `waiting_for_shipment` 
 shipped), `scheduled` (due at `due_at`), `processing` (due, the transfer is on its way), `held` (a
 chargeback), `partly_paid_out`, `paid_out`, `nothing_due` (refunded in full). `expected_minor` is
 in the payout currency, which differs from the order's for a converted payment (§4c).
+`carried_to_owed_minor` (core 2026-11-09, V68): what this order could not cover after a refund
+(the shop pays Stripe's whole currency conversion fee and the currency difference of a refund) and
+was added to the company's owed balance, net of what this order's own payout had paid off (a payout that paid off older debt and was then reversed in full gives that debt back to the balance; it is not counted here as this order's cost); `owed_paid_off_minor`: the part of this order's payout that
+paid that balance off instead of being transferred (it counts as paid out for `state`).
+`card_fee_shop_minor` (core 2026-11-09, V70): the shop's half of Stripe's card processing fee for
+this order, in the payout currency, already taken off `expected_minor` (owner 2026-11-09: sudemi and
+the shop share the fee equally; the shop's half is rounded down, sudemi pays the odd cent). Stripe
+does not return the fee on a refund, so it stays on a refunded order. 0 for orders from before
+9 November 2026 and until the fee is read. In `GET /orders/{id}` the payout also has
+`card_fee_minor`: the order's whole part of the payment's fee (null when none applies), split over
+the orders of a shared payment in proportion to their totals. Example: 100.00 EUR order, Stripe fee
+1.75 EUR: `card_fee_minor` 175, `card_fee_shop_minor` 87, `expected_minor` 9813.
 
 `GET /integration/v1/orders/{id}` is the portal's order page: lines with the shop's own
 `external_id`, money with `refunded_minor`, tracking, the `timeline` (`PLACED`, `ACCEPTED`, `PAID`,
@@ -843,8 +857,102 @@ Other shops of the company keep their own settings.
 `INCOMPLETE`, `UNDER_REVIEW`, `ACTIVE`, `ACTION_REQUIRED`; managed on the portal only) and this
 shop's payouts per currency: `paid_out_minor`, and `outstanding_minor` split into
 `waiting_for_shipment_minor`, `scheduled_minor` (with `next_due_at`), `processing_minor` and
-`held_minor`. A shop is paid `payout_delay_days` after delivery (that plus 14 days after shipping
-when delivery is never reported), never while a chargeback is open.
+`held_minor`; `card_fee_shop_minor` is the shop's half of the card fees on those orders, already
+taken off. A shop is paid `payout_delay_days` after delivery (that plus 14 days after shipping
+when delivery is never reported), never while a chargeback is open. `owed_to_sudemi` (core
+2026-11-09): what the company owes sudemi per currency (currency conversion costs, or its half of
+a card fee, that a refund left nothing to take from), for the whole company, not only this shop; it is taken from the company's
+next payouts in that currency, never more than one payout, the rest carried. Empty when nothing is
+owed.
+
+## 4e. Statistics, the shop's products on sudemi, the shop profile (core 2026-11-13)
+
+Owner 2026-11-13: "Everything should be visible to the shop via plugin ... statistics, sales on
+sudemi, how many times his products are listed". All calls are signed like every other plugin call
+(GET signing: section "Signing a GET") and see **only this shop** (install), never its sister shops.
+Money is in minor units of the shop's currency (`currency`).
+
+### What sudemi counts (counts only, no buyers)
+
+Per product and UTC day (table `product_stats_daily`):
+- `impressions`: the product was in the results a buyer's AI assistant (or the buyer API) got back
+  from a search. One per search answer, not per buyer.
+- `detail_views`: the assistant opened the product's details (price for an address, offers).
+- `cart_adds`: the product was put in a buyer's cart.
+
+Orders come from the orders themselves, not from these counters.
+
+### `GET /integration/v1/stats?from=YYYY-MM-DD&to=YYYY-MM-DD`
+
+Both optional, UTC days, inclusive. Default: the last 30 days up to today. At most 366 days;
+otherwise `400 {"error":"bad_period"}`.
+
+```json
+{
+  "install_id": "...", "shop_name": "sudemi Demo Store", "currency": "EUR",
+  "from": "2026-10-15", "to": "2026-11-13",
+  "totals": {
+    "impressions": 1200, "detail_views": 140, "cart_adds": 22,
+    "orders": 9, "units": 12,
+    "sales_minor": 24550, "refunded_minor": 1200, "commission_minor": 2455, "net_minor": 20895,
+    "average_order_minor": 2727, "conversion_bps": 643
+  },
+  "daily": [ { "day": "2026-10-15", "impressions": 40, "detail_views": 5, "cart_adds": 1, "orders": 0, "sales_minor": 0 } ],
+  "top_products": [ { "external_id": "27", "title": "...", "impressions": 300, "detail_views": 40,
+                      "cart_adds": 6, "orders": 3, "units": 4, "sales_minor": 13980 } ],
+  "orders_by_status": { "PAID": 2, "SHIPPED": 1, "DELIVERED": 5, "REFUNDED": 1 },
+  "countries": [ { "country": "DE", "orders": 4, "sales_minor": 11000 } ],
+  "listings": { "total": 14, "listed": 13, "not_listed": 1 }
+}
+```
+
+- `daily` has every day of the period, zeros included (draw it as is).
+- `orders`: orders of this shop the buyer paid (authorised) in the period, whatever happened later.
+  `sales_minor`: what buyers paid for them (goods + shipping, VAT included). `refunded_minor`,
+  `commission_minor`: of those orders. `net_minor` = sales - refunded - commission (a guide; the
+  payout figures in `GET /payouts` are what is actually paid). `conversion_bps` = orders x 10000 /
+  detail_views (0 when there were no views). `top_products`: up to 20, by sales then impressions.
+
+### `GET /integration/v1/listings?status=all|listed|not_listed&q=&page=0&size=50`
+
+The shop's products as sudemi holds them (deleted ones left out). `size` at most 200; `q` matches
+title, SKU or external id.
+
+```json
+{ "total": 14, "page": 0, "size": 50, "items": [ {
+    "external_id": "27", "title": "Porcelain teapot, 1 litre - Celadon green", "sku": "AD-TEAPOT-GRN",
+    "price_minor": 3495, "currency": "EUR", "quantity": 6, "in_stock": true,
+    "enabled": true, "listed": true, "not_listed_reasons": [],
+    "images": 1, "shipping_countries": 8, "updated_at": "2026-11-12T21:49:49Z",
+    "impressions_30d": 120, "detail_views_30d": 14, "orders_30d": 2 } ] }
+```
+
+`not_listed_reasons` (zero or more, show them in the shop's language): `disabled_by_shop` (the
+switch below), `not_in_shop` (the last full sync no longer contained it: deleted, switched off or
+hidden in the shop), `out_of_stock`, `no_shipping` (no shipping price for any country),
+`suspended` (taken down by sudemi), `payouts_not_ready` (the company's payout account is not
+active), `shop_not_reporting` (this shop's heartbeat stopped or it was disconnected). Unknown
+values may be added later: show them as "not listed".
+
+### `POST /integration/v1/listings/{externalId}/enabled` `{"enabled": false}`
+
+The shop's own "show on sudemi" switch for one product. Kept by sudemi: a sync never turns it back
+on. Answer: `{"external_id": "27", "enabled": false, "listed": false}`; unknown product `404`.
+
+### Shop profile
+
+`GET /integration/v1/shop` also returns `shop_name`, `shop_description`, `support_email`,
+`returns_window_days`, `currency` and `rename_via_support: true`. `POST /integration/v1/shop`
+(existing) changes the description, support e-mail and returns window. The name buyers see is not
+changed by a plugin (owner 2026-11-09: rename only via a support ticket): show it read-only with a
+button that opens a support ticket.
+
+### What the plugin shows (all three, same structure, all 12 languages)
+
+A **sudemi** menu of its own with: Dashboard (statistics: KPI cards, a daily chart, top products,
+period 7 / 30 / 90 days), Products on sudemi (the listings list with reasons and the switch),
+Orders, Shipping, Payouts, Shop profile, Support, Settings / connection. Charts are drawn in the
+page itself (inline SVG), no outside scripts.
 
 ## 5. What a plugin may **not** change
 

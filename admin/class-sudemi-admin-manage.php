@@ -170,9 +170,11 @@ final class Sudemi_Admin_Manage {
 	}
 
 	private static function not_connected() {
-		echo '<div class="notice notice-info inline"><p>'
-			. esc_html__( 'This is available once this shop is connected to sudemi.', 'sudemi' )
-			. '</p></div>';
+		Sudemi_Admin::empty_state(
+			__( 'Not connected yet', 'sudemi' ),
+			__( 'This is available once this shop is connected to sudemi.', 'sudemi' ),
+			'<a class="button button-primary" href="' . esc_url( Sudemi_Admin::page_url() ) . '">' . esc_html__( 'Connect this shop', 'sudemi' ) . '</a>'
+		);
 	}
 
 	// ------------------------------------------------------------------- orders ----
@@ -238,7 +240,8 @@ final class Sudemi_Admin_Manage {
 
 		// Status links, with sudemi's counts (all statuses, not only this page).
 		$all = array_sum( array_map( 'intval', $counts ) );
-		echo '<ul class="subsubsub" style="float:none">';
+		echo '<section class="sudemi-card sudemi-card-flush">';
+		echo '<ul class="subsubsub sudemi-subsub">';
 		echo '<li><a href="' . esc_url( self::url( self::filter_args( $f, array( 'status' => null, 'offset' => null ) ) ) ) . '"' . ( '' === $f['status'] ? ' class="current"' : '' ) . '>'
 			. esc_html__( 'All', 'sudemi' ) . ' <span class="count">(' . esc_html( number_format_i18n( $all ) ) . ')</span></a></li>';
 		foreach ( Sudemi_Manage::STATUSES as $status ) {
@@ -254,14 +257,16 @@ final class Sudemi_Admin_Manage {
 		self::render_export_form( $f );
 
 		if ( empty( $orders ) ) {
-			echo '<p class="description">' . esc_html__( 'No orders match.', 'sudemi' ) . '</p>';
+			echo '<div class="sudemi-empty-inline"><strong>' . esc_html__( 'No orders match.', 'sudemi' ) . '</strong><br />'
+				. esc_html__( 'Orders appear here as soon as a buyer orders one of your products through their AI assistant.', 'sudemi' ) . '</div>';
+			echo '</section>';
 			return;
 		}
 
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" id="sudemi-orders-bulk">';
 		wp_nonce_field( 'sudemi_orders_bulk' );
 		echo '<input type="hidden" name="action" value="sudemi_orders_bulk" />';
-		echo '<div style="overflow-x:auto"><table class="widefat striped sudemi-orders"><thead><tr>'
+		echo '<div class="sudemi-table-scroll"><table class="sudemi-table sudemi-orders"><thead><tr>'
 			. '<td class="check-column"><span class="screen-reader-text">' . esc_html__( 'Select', 'sudemi' ) . '</span></td>'
 			. '<th>' . esc_html__( 'Order', 'sudemi' ) . '</th>'
 			. '<th>' . esc_html__( 'What sold', 'sudemi' ) . '</th>'
@@ -281,7 +286,7 @@ final class Sudemi_Admin_Manage {
 		}
 		echo '</tbody></table></div>';
 
-		echo '<p class="sudemi-bulk" style="margin-top:1em">';
+		echo '<p class="sudemi-bulk">';
 		echo '<label>' . esc_html__( 'With the selected orders', 'sudemi' ) . ' <select name="bulk_action">'
 			. '<option value="">' . esc_html__( 'Choose an action', 'sudemi' ) . '</option>'
 			. '<option value="accept">' . esc_html__( 'Accept', 'sudemi' ) . '</option>'
@@ -313,7 +318,7 @@ final class Sudemi_Admin_Manage {
 		if ( null !== $next ) {
 			echo '<a class="button" href="' . esc_url( self::url( self::filter_args( $f, array( 'offset' => $next ) ) ) ) . '">' . esc_html__( 'Next', 'sudemi' ) . '</a>';
 		}
-		echo '</p>';
+		echo '</p></section>';
 	}
 
 	private static function render_order_row( array $order ) {
@@ -352,7 +357,7 @@ final class Sudemi_Admin_Manage {
 			/* translators: %s: amount. */
 			$extra = sprintf( __( 'refunded %s', 'sudemi' ), self::money( $order['refunded_minor'], $currency ) );
 		}
-		echo '<td><span class="sudemi-status sudemi-status-' . esc_attr( strtolower( $status ) ) . '">' . esc_html( self::status_label( $status ) ) . '</span>'
+		echo '<td><span class="sudemi-badge sudemi-status sudemi-status-' . esc_attr( strtolower( $status ) ) . '">' . esc_html( self::status_label( $status ) ) . '</span>'
 			. ( '' !== $extra ? '<br /><span class="description">' . esc_html( $extra ) . '</span>' : '' ) . '</td>';
 		echo '<td>' . esc_html( self::money( isset( $order['total_minor'] ) ? $order['total_minor'] : null, $currency ) ) . '</td>';
 		echo '<td>' . esc_html( self::money( isset( $order['your_net_minor'] ) ? $order['your_net_minor'] : null, $currency ) ) . '</td>';
@@ -379,7 +384,7 @@ final class Sudemi_Admin_Manage {
 	}
 
 	private static function render_filters( array $f ) {
-		echo '<form method="get" action="' . esc_url( admin_url( 'admin.php' ) ) . '" class="sudemi-filters" style="margin:1em 0">';
+		echo '<form method="get" action="' . esc_url( admin_url( 'admin.php' ) ) . '" class="sudemi-filters">';
 		echo '<input type="hidden" name="page" value="' . esc_attr( Sudemi_Admin::SLUG ) . '" />';
 		echo '<input type="hidden" name="tab" value="orders" />';
 		echo '<label>' . esc_html__( 'Status', 'sudemi' ) . ' <select name="status"><option value="">' . esc_html__( 'All', 'sudemi' ) . '</option>';
@@ -408,7 +413,7 @@ final class Sudemi_Admin_Manage {
 		$lang  = Sudemi_Support::locale_for( get_user_locale() );
 		$lang  = null === $lang ? 'en' : $lang;
 		$comma = function_exists( 'wc_get_price_decimal_separator' ) && ',' === wc_get_price_decimal_separator();
-		echo '<form method="get" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="sudemi-export" style="margin:0 0 1em">';
+		echo '<form method="get" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="sudemi-export">';
 		echo '<input type="hidden" name="action" value="sudemi_orders_export" />';
 		wp_nonce_field( 'sudemi_orders_export', '_wpnonce', false );
 		foreach ( array( 'status', 'from', 'to', 'q', 'sort', 'dir' ) as $key ) {
@@ -431,7 +436,7 @@ final class Sudemi_Admin_Manage {
 	/** Automatic confirmation on or off: with it off, waiting orders are answered here by hand. */
 	private static function render_auto_confirm() {
 		$auto = Sudemi_Orders::auto_confirm_enabled();
-		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="sudemi-auto" style="margin:1em 0">';
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="sudemi-auto">';
 		wp_nonce_field( 'sudemi_auto_confirm' );
 		echo '<input type="hidden" name="action" value="sudemi_auto_confirm" />';
 		echo '<label><input type="checkbox" name="auto_confirm" value="yes"' . checked( $auto, true, false ) . ' /> '
@@ -448,7 +453,7 @@ final class Sudemi_Admin_Manage {
 	// ------------------------------------------------------------- order detail ----
 
 	private static function render_order( $id ) {
-		echo '<p><a href="' . esc_url( self::url( array( 'tab' => 'orders' ) ) ) . '">&larr; ' . esc_html__( 'Back to the orders', 'sudemi' ) . '</a></p>';
+		echo '<p><a class="sudemi-back" href="' . esc_url( self::url( array( 'tab' => 'orders' ) ) ) . '">&larr; ' . esc_html__( 'Back to the orders', 'sudemi' ) . '</a></p>';
 		$read = Sudemi_Manage::order( $id );
 		if ( ! $read['ok'] ) {
 			echo '<div class="notice notice-error inline"><p>' . esc_html( Sudemi_Manage::error_message( $read['error'], $read['message'] ) ) . '</p></div>';
@@ -464,7 +469,7 @@ final class Sudemi_Admin_Manage {
 		$allowed  = isset( $d['allowed_actions'] ) && is_array( $d['allowed_actions'] ) ? array_map( 'strval', $d['allowed_actions'] ) : array();
 		$local    = Sudemi_Orders::find_any_local_order( $id );
 
-		echo '<h2>' . esc_html(
+		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html(
 			sprintf(
 				/* translators: 1: short order number, 2: status. */
 				__( 'Order %1$s: %2$s', 'sudemi' ),
@@ -494,7 +499,7 @@ final class Sudemi_Admin_Manage {
 			echo '</div>';
 		}
 
-		echo '<table class="widefat striped" style="max-width:60rem"><tbody>';
+		echo '<table class="sudemi-table"><tbody>';
 		self::detail_row( __( 'sudemi order', 'sudemi' ), '<code>' . esc_html( $id ) . '</code>' );
 		self::detail_row( __( 'Placed', 'sudemi' ), esc_html( self::date( self::str( $d, 'placed_at' ) ) ) );
 		self::detail_row( __( 'Ship to', 'sudemi' ), esc_html( self::country( self::str( $d, 'destination_country' ) ) ) );
@@ -526,8 +531,8 @@ final class Sudemi_Admin_Manage {
 		echo '</tbody></table>';
 
 		// Lines.
-		echo '<h3>' . esc_html__( 'Items', 'sudemi' ) . '</h3>';
-		echo '<table class="widefat striped" style="max-width:60rem"><thead><tr>'
+		echo '<h3 class="sudemi-section-title">' . esc_html__( 'Items', 'sudemi' ) . '</h3>';
+		echo '<table class="sudemi-table"><thead><tr>'
 			. '<th>' . esc_html__( 'Product', 'sudemi' ) . '</th>'
 			. '<th>' . esc_html__( 'Quantity', 'sudemi' ) . '</th>'
 			. '<th>' . esc_html__( 'Price', 'sudemi' ) . '</th>'
@@ -554,8 +559,8 @@ final class Sudemi_Admin_Manage {
 		echo '</tbody></table>';
 
 		// Money and payout.
-		echo '<h3>' . esc_html__( 'Money', 'sudemi' ) . '</h3>';
-		echo '<table class="widefat striped" style="max-width:60rem"><tbody>';
+		echo '<h3 class="sudemi-section-title">' . esc_html__( 'Money', 'sudemi' ) . '</h3>';
+		echo '<table class="sudemi-table"><tbody>';
 		foreach ( array(
 			'goods_minor'      => __( 'Goods', 'sudemi' ),
 			'shipping_minor'   => __( 'Shipping', 'sudemi' ),
@@ -581,7 +586,7 @@ final class Sudemi_Admin_Manage {
 		// The buyer's open request.
 		$request = isset( $d['customer_request'] ) && is_array( $d['customer_request'] ) ? $d['customer_request'] : null;
 		if ( $request ) {
-			echo '<h3 id="sudemi-request">' . esc_html__( 'The buyer asked to return this order', 'sudemi' ) . '</h3>';
+			echo '<h3 class="sudemi-section-title" id="sudemi-request">' . esc_html__( 'The buyer asked to return this order', 'sudemi' ) . '</h3>';
 			echo '<p>' . esc_html__( 'Buyer\'s reason', 'sudemi' ) . ': ' . esc_html( '' === self::str( $request, 'reason' ) ? __( 'none given', 'sudemi' ) : self::str( $request, 'reason' ) ) . '<br />'
 				. esc_html__( 'Answer by', 'sudemi' ) . ': ' . esc_html( self::date( self::str( $request, 'respond_by' ) ) ) . '</p>';
 			if ( in_array( 'request_accept', $allowed, true ) || in_array( 'request_reject', $allowed, true ) ) {
@@ -592,7 +597,7 @@ final class Sudemi_Admin_Manage {
 		self::render_actions( $id, $allowed, $currency, $money, $tracking );
 
 		// Timeline.
-		echo '<h3>' . esc_html__( 'History', 'sudemi' ) . '</h3><ol class="sudemi-timeline">';
+		echo '<h3 class="sudemi-section-title">' . esc_html__( 'History', 'sudemi' ) . '</h3><ol class="sudemi-timeline">';
 		foreach ( isset( $d['timeline'] ) && is_array( $d['timeline'] ) ? $d['timeline'] : array() as $event ) {
 			if ( ! is_array( $event ) ) {
 				continue;
@@ -614,12 +619,12 @@ final class Sudemi_Admin_Manage {
 				. '<span class="description">' . esc_html( self::date( self::str( $event, 'at' ) ) ) . '</span>'
 				. ( empty( $parts ) ? '' : ': ' . esc_html( implode( ', ', $parts ) ) ) . '</li>';
 		}
-		echo '</ol>';
+		echo '</ol></section>';
 	}
 
 	private static function detail_row( $label, $html ) {
 		// $html is built escaped by every caller.
-		echo '<tr><th scope="row" style="width:14rem">' . esc_html( $label ) . '</th><td>' . $html . '</td></tr>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<tr><th scope="row">' . esc_html( $label ) . '</th><td>' . $html . '</td></tr>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/** One form per action sudemi allows now (allowed_actions); sudemi still decides. */
@@ -628,9 +633,9 @@ final class Sudemi_Admin_Manage {
 		if ( empty( $shown ) ) {
 			return;
 		}
-		echo '<h3>' . esc_html__( 'Actions', 'sudemi' ) . '</h3><div class="sudemi-actions" style="max-width:60rem">';
+		echo '<h3 class="sudemi-section-title">' . esc_html__( 'Actions', 'sudemi' ) . '</h3><div class="sudemi-actions">';
 		foreach ( $shown as $action ) {
-			echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="sudemi-action sudemi-action-' . esc_attr( $action ) . '" style="margin:0 0 1em;padding:.5em 1em;border:1px solid #dcdcde;background:#fff">';
+			echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="sudemi-action sudemi-action-' . esc_attr( $action ) . '">';
 			wp_nonce_field( 'sudemi_order_action' );
 			echo '<input type="hidden" name="action" value="sudemi_order_action" />';
 			echo '<input type="hidden" name="order_id" value="' . esc_attr( $id ) . '" />';
@@ -819,6 +824,7 @@ final class Sudemi_Admin_Manage {
 		$zones   = $prefill ? self::zone_prices() : array();
 		$mode    = $prefill ? 'custom' : ( 'custom' === self::str( $s, 'mode' ) ? 'custom' : 'shop' );
 
+		echo '<section class="sudemi-card">';
 		echo '<p>' . esc_html__( 'What sudemi buyers pay for shipping, per country. By default the prices this plugin sends from your WooCommerce shipping zones apply. You can instead set your own price per country on sudemi, and choose the countries you deliver to. One charge per parcel, never per item.', 'sudemi' ) . '</p>';
 		if ( $prefill ) {
 			echo '<div class="notice notice-info inline"><p>' . esc_html__( 'Prices filled in from your WooCommerce shipping zones. Check them and save; nothing is changed on sudemi until you do.', 'sudemi' ) . '</p></div>';
@@ -828,13 +834,13 @@ final class Sudemi_Admin_Manage {
 		wp_nonce_field( 'sudemi_shipping_save' );
 		echo '<input type="hidden" name="action" value="sudemi_shipping_save" />';
 		echo '<input type="hidden" name="currency" value="' . esc_attr( $currency ) . '" />';
-		echo '<fieldset style="margin:1em 0"><legend class="screen-reader-text">' . esc_html__( 'Shipping prices', 'sudemi' ) . '</legend>';
+		echo '<fieldset class="sudemi-fieldset"><legend class="screen-reader-text">' . esc_html__( 'Shipping prices', 'sudemi' ) . '</legend>';
 		echo '<label><input type="radio" name="mode" value="shop"' . checked( $mode, 'shop', false ) . ' /> '
 			. esc_html__( 'Use the prices from my WooCommerce shipping zones', 'sudemi' ) . '</label><br />';
 		echo '<label><input type="radio" name="mode" value="custom"' . checked( $mode, 'custom', false ) . ' /> '
 			. esc_html__( 'Set my own countries and prices on sudemi', 'sudemi' ) . '</label></fieldset>';
 
-		echo '<div style="overflow-x:auto"><table class="widefat striped" style="max-width:60rem"><thead><tr>'
+		echo '<div class="sudemi-table-scroll"><table class="sudemi-table"><thead><tr>'
 			. '<th>' . esc_html__( 'Country', 'sudemi' ) . '</th>'
 			. '<th>' . esc_html__( 'Deliver there', 'sudemi' ) . '</th>'
 			. '<th>' . esc_html(
@@ -880,7 +886,7 @@ final class Sudemi_Admin_Manage {
 		echo '<p class="description">' . esc_html__( 'With your own countries and prices: only the ticked countries are offered. A country with an empty price uses the price from your shipping zones.', 'sudemi' ) . '</p>';
 		submit_button( __( 'Save shipping on sudemi', 'sudemi' ), 'primary', 'submit', false );
 		echo ' <a class="button" href="' . esc_url( self::url( array( 'tab' => 'shipping', 'prefill' => '1' ) ) ) . '">' . esc_html__( 'Fill in from my WooCommerce shipping zones', 'sudemi' ) . '</a>';
-		echo '</form>';
+		echo '</form></section>';
 	}
 
 	private static function range( $min, $max, $currency ) {
@@ -966,8 +972,8 @@ final class Sudemi_Admin_Manage {
 		$account = isset( $p['account'] ) && is_array( $p['account'] ) ? $p['account'] : array();
 		$state   = self::str( $account, 'state' );
 
-		echo '<h2>' . esc_html__( 'Payout account', 'sudemi' ) . '</h2>';
-		echo '<table class="widefat striped" style="max-width:48rem"><tbody>';
+		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'Payout account', 'sudemi' ) . '</h2>';
+		echo '<table class="sudemi-table"><tbody>';
 		self::detail_row( __( 'State', 'sudemi' ), esc_html( '' === $state ? '-' : self::account_label( $state ) ) );
 		if ( '' !== self::str( $account, 'action_deadline' ) ) {
 			self::detail_row( __( 'Act before', 'sudemi' ), esc_html( self::date( self::str( $account, 'action_deadline' ) ) ) );
@@ -991,14 +997,16 @@ final class Sudemi_Admin_Manage {
 		} else {
 			echo '<p class="description">' . esc_html__( 'The payout account is managed on the sudemi seller portal (Payouts).', 'sudemi' ) . '</p>';
 		}
+		echo '<p><a class="button" href="' . esc_url( Sudemi_Admin::portal_url( '/seller/payouts' ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Open payouts on the seller portal', 'sudemi' ) . '</a></p>';
+		echo '</section>';
 
-		echo '<h2>' . esc_html__( 'This shop\'s payouts', 'sudemi' ) . '</h2>';
+		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'This shop\'s payouts', 'sudemi' ) . '</h2>';
 		$currencies = isset( $p['currencies'] ) && is_array( $p['currencies'] ) ? $p['currencies'] : array();
 		if ( empty( $currencies ) ) {
-			echo '<p class="description">' . esc_html__( 'No payouts yet.', 'sudemi' ) . '</p>';
+			echo '<p class="sudemi-muted">' . esc_html__( 'No payouts yet.', 'sudemi' ) . '</p></section>';
 			return;
 		}
-		echo '<div style="overflow-x:auto"><table class="widefat striped sudemi-payouts" style="max-width:60rem"><thead><tr>'
+		echo '<div class="sudemi-table-scroll"><table class="sudemi-table sudemi-payouts"><thead><tr>'
 			. '<th>' . esc_html__( 'Currency', 'sudemi' ) . '</th>'
 			. '<th>' . esc_html__( 'Orders', 'sudemi' ) . '</th>'
 			. '<th>' . esc_html__( 'Paid out', 'sudemi' ) . '</th>'
@@ -1020,6 +1028,6 @@ final class Sudemi_Admin_Manage {
 			}
 			echo '<td>' . esc_html( self::date( self::str( $row, 'next_due_at' ) ) ) . '</td></tr>';
 		}
-		echo '</tbody></table></div>';
+		echo '</tbody></table></div></section>';
 	}
 }
