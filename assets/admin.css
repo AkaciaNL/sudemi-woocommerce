@@ -240,6 +240,7 @@
 .sudemi-card:not(.sudemi-card-flush) .sudemi-table td:first-child { padding-inline-start: 0; }
 .sudemi-orders td:nth-child(6),
 .sudemi-orders td:nth-child(7) { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.sudemi-table code { white-space: nowrap; }
 .sudemi-log-at { width: 13rem; color: var(--sudemi-muted); white-space: nowrap; }
 
 .sudemi-kv { width: 100%; border-collapse: collapse; }
