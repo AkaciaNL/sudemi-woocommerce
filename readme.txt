@@ -15,8 +15,22 @@ List your WooCommerce catalogue on sudemi, so an AI assistant can find your prod
 sudemi is a marketplace that an AI assistant can search on a shopper's behalf. This plugin keeps
 your catalogue in step with it: categories, products, specifications, images, prices and stock.
 
-You remain the merchant of record. sudemi does not take the payment and does not ship anything;
-a buyer who finds your product is sent to you.
+You remain the seller and you ship the order. How the buyer pays depends on your Stripe account,
+and the plugin shows which way applies on every sudemi page:
+
+* **Stripe connected (payment through sudemi):** the buyer pays in a secure payment page. Payments
+  are processed by Stripe, a licensed payment provider; sudemi never sees or stores card details.
+  Stripe holds the payment and passes your share on to your own Stripe account; sudemi keeps only
+  its commission. You pay Stripe's card processing fee plus sudemi's 1% commission, both taken
+  from your payout. The order arrives in WooCommerce with the buyer's name and delivery address.
+* **Stripe not connected (payment on your own website):** your products are listed for free and
+  the buyer is sent to your own product page to pay in your checkout. sudemi is not involved in the
+  payment at all and passes nothing about the buyer to you.
+
+The plugin also brings sudemi into your WordPress admin: a dashboard with statistics (how often AI
+assistants showed your products, views, cart additions, orders and sales), your products as sudemi
+holds them with a per-product switch, orders, delivery prices, payouts, your shop profile and
+support. All texts are in 12 languages.
 
 **What the plugin cannot change.** Your shop address, legal name, country, trader status and VAT
 number are confirmed once on sudemi and locked afterwards, because a buyer's rights depend on
@@ -28,7 +42,7 @@ host and sends sudemi only the public half.
 == Installation ==
 
 1. Install and activate the plugin.
-2. Go to WooCommerce → sudemi and press Connect this shop.
+2. Open sudemi > Settings in the WordPress admin menu and press Connect this shop.
 3. Open the link shown, sign in to your sudemi account, and confirm the shop is yours.
 
 == Frequently Asked Questions ==
