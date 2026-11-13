@@ -3,10 +3,10 @@ on: [push, pull_request]
 
 jobs:
   lint:
-    # The org's own runner on the akacia host (owner 2026-11-09): GitHub-hosted machines cost
-    # Actions minutes on this private repository. PHP runs in a php:8.3-cli container (sodium
-    # built in); nothing is installed on the host.
-    runs-on: [self-hosted, akacia]
+    # GitHub-hosted runner: the repository is public, so a self-hosted runner would let a pull
+    # request from a fork run code on sudemi's server; hosted minutes are free for public
+    # repositories. PHP runs in a php:8.3-cli container (sodium built in).
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       # Every file, on the oldest PHP the plugin header claims to support as well as the newest:

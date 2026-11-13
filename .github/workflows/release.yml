@@ -1,7 +1,7 @@
 name: Release
 
-# Owner decision 2026-11-07: the plugin stays closed source and is distributed as a GitHub release
-# of this private repository; sudemi.com/downloads serves the latest release zip to shops.
+# The plugin is open source (public repository, owner 2026-11-13) and is distributed as a
+# GitHub release of this repository; sudemi.com/downloads serves the latest release zip to shops.
 #
 # Push a tag v<version> (for example v1.2.2). The tag must equal the version inside the plugin
 # (plugin header, SUDEMI_VERSION, readme.txt Stable tag and a readme.txt changelog entry), or the
@@ -17,10 +17,10 @@ permissions:
 
 jobs:
   release:
-    # The org's own runner on the akacia host (owner 2026-11-09): GitHub-hosted machines cost
-    # Actions minutes on this private repository. PHP runs in a php:8.3-cli container (sodium
-    # built in); nothing is installed on the host.
-    runs-on: [self-hosted, akacia]
+    # GitHub-hosted runner: the repository is public, so a self-hosted runner would let a pull
+    # request from a fork run code on sudemi's server; hosted minutes are free for public
+    # repositories. PHP runs in a php:8.3-cli container (sodium built in).
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
