@@ -52,7 +52,7 @@ jobs:
           python3 -c 'import sys, zipfile; print("\n".join(zipfile.ZipFile(sys.argv[1]).namelist()))' "$zip" > files.txt
           grep -vq '^sudemi-connector/' files.txt && { echo "file outside sudemi-connector/"; exit 1; } || true
           grep -q '^sudemi-connector/sudemi-connector.php$' files.txt || { echo "main plugin file missing"; exit 1; }
-          grep -Eq '^sudemi-connector/(tests|\.github)/|\.git(ignore|attributes)$' files.txt && { echo "dev files in the zip"; exit 1; } || true
+          grep -Eq '^sudemi-connector/(tests|\.github|\.wordpress-org)/|\.git(ignore|attributes)$' files.txt && { echo "dev files in the zip"; exit 1; } || true
           sha256sum "$zip" > "$zip.sha256"
           cat "$zip.sha256"; ls -l "$zip"
           echo "ZIP=$zip" >> "$GITHUB_ENV"

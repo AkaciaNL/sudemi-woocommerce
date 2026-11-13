@@ -108,6 +108,7 @@ Details and the review checklist: [SECURITY.md](SECURITY.md). Found a vulnerabil
 - [PROTOCOL.md](PROTOCOL.md): the signed protocol between the plugin and sudemi (connection, catalogue, check-in, orders, statistics).
 - [readme.txt](readme.txt): the WordPress.org readme, with the changelog.
 - Tests are in `tests/`.
+- `.wordpress-org/`: the WordPress.org banners, icons and screenshots (the SVN assets folder, not in the plugin zip), with the HTML they are rendered from.
 
 ## Support
 

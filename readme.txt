@@ -1,64 +1,139 @@
 === sudemi Connector ===
 Contributors: akacia
-Tags: woocommerce, marketplace, ai, product feed
+Tags: woocommerce, marketplace, ai, chatgpt, product feed
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-List your WooCommerce catalogue on sudemi, so an AI assistant can find your products and send buyers to you.
+Puts your WooCommerce products in front of people who shop by asking an AI assistant such as ChatGPT or Claude.
 
 == Description ==
 
-sudemi is a marketplace that an AI assistant can search on a shopper's behalf. This plugin keeps
-your catalogue in step with it: categories, products, specifications, images, prices and stock.
+More and more people shop by asking an AI assistant: "find me a wool scarf under 40 euros, delivered to Germany by Friday". [sudemi](https://sudemi.com) is a shopping service built for that. The assistant searches sudemi, sudemi searches the catalogues of all connected shops at once, and the buyer sees real offers with each shop's own price, stock and delivery cost.
 
-You remain the seller and you ship the order. How the buyer pays depends on your Stripe account,
-and the plugin shows which way applies on every sudemi page:
+This plugin connects your WooCommerce shop to sudemi. It keeps your catalogue there up to date and brings sudemi's orders, statistics and settings into your WordPress admin.
 
-* **Stripe connected (payment through sudemi):** the buyer pays in a secure payment page. Payments
-  are processed by Stripe, a licensed payment provider; sudemi never sees or stores card details.
-  Stripe holds the payment and passes your share on to your own Stripe account; sudemi keeps only
-  its commission. You pay Stripe's card processing fee plus sudemi's 1% commission, both taken
-  from your payout. The order arrives in WooCommerce with the buyer's name and delivery address.
-* **Stripe not connected (payment on your own website):** your products are listed for free and
-  the buyer is sent to your own product page to pay in your checkout. sudemi is not involved in the
-  payment at all and passes nothing about the buyer to you.
+**You need a free sudemi seller account.** The plugin is free and there is no monthly fee. You create the account when you connect the shop; nothing is sent to sudemi before you press **Connect this shop**.
 
-The plugin also brings sudemi into your WordPress admin: a dashboard with statistics (how often AI
-assistants showed your products, views, cart additions, orders and sales), your products as sudemi
-holds them with a per-product switch, orders, delivery prices, payouts, your shop profile and
-support. All texts are in 12 languages.
+= What the plugin does =
 
-**What the plugin cannot change.** Your shop address, legal name, country, trader status and VAT
-number are confirmed once on sudemi and locked afterwards, because a buyer's rights depend on
-them being true.
+* **Lists your catalogue on sudemi:** categories, products with their descriptions and specifications, photos, prices, stock and delivery prices. Every variation of a variable product is its own listing with its own price, stock and photo.
+* **Keeps it current:** a price or stock change is sent the moment you save it, so sudemi and your shop agree within seconds.
+* **Checks in every 5 minutes,** so sudemi only shows your products while your shop is online and its prices are current.
+* **Dashboard:** sales, orders, average order, what you receive, how often AI assistants showed your products, how often they were opened and put in a cart, for 7, 30 or 90 days, with daily charts, top products and the countries your buyers are in.
+* **Products on sudemi:** every product as sudemi holds it, whether buyers can find it and, if not, why, with a switch per product to hide it on sudemi only.
+* **Orders:** accept or decline, ship with carrier and tracking, mark delivered, refund, cancel and answer return requests. Every sudemi order is linked to the WooCommerce order it created.
+* **Shipping, Payouts, Shop profile and Support** pages, so you rarely need to open the sudemi website.
+* **Shows how buyers pay for your products right now** at the top of every sudemi page.
 
-**Your signing key never leaves your server.** The plugin generates an Ed25519 keypair on your
-host and sends sudemi only the public half.
+= How buyers pay: two ways =
+
+Which way applies is decided by your Stripe account; you never set it by hand.
+
+**Payment through sudemi (Stripe connected).** The buyer pays in a secure payment page without leaving the conversation with their assistant. Payments are processed by Stripe, a licensed payment provider. sudemi never sees or stores card details. Stripe holds the payment and passes the shop's share on to the shop's own Stripe account; sudemi keeps only its commission.
+
+* The order arrives in WooCommerce with the buyer's name and delivery address, so you can ship it.
+* Cost per order, both taken from your payout: Stripe's card processing fee (about 1.5% + 0.25 EUR for a card from the European Economic Area, more for other cards) and sudemi's 1% commission on your own price of each item. Delivery carries no commission.
+* Example: a 50.00 EUR order paid with a European card. Stripe's fee is 1.00 EUR and sudemi's commission is 0.50 EUR, so you receive 48.50 EUR.
+* On a refund the commission on the refunded amount comes back to you; Stripe does not return its own fee. Declined orders cost nothing. Each month you receive a commission invoice.
+
+**Payment on your own website (Stripe not connected).** Your products are listed anyway, for free. The assistant sends the buyer to your own product page and the buyer pays in your own checkout. sudemi is not involved in the payment and charges no commission, and it passes nothing about the buyer to your shop. The link carries utm_source=sudemi, so these visitors show up in your own analytics.
+
+= Languages =
+
+Every text of the plugin is in 12 languages: English, Arabic, Chinese, Dutch, French, German, Hebrew, Italian, Polish, Russian, Spanish and Turkish (Arabic and Hebrew right to left).
+
+= Security =
+
+When you connect, the plugin creates an Ed25519 key pair on your own server. The private key never leaves your server; sudemi receives only the public half. Every call to sudemi is signed and cannot be replayed. The plugin never asks for your sudemi password. Your company details (legal name, address, country, VAT number) are confirmed once in the sudemi seller portal and are locked afterwards, because a buyer's rights depend on them; the plugin cannot change them.
+
+== External services ==
+
+This plugin connects your shop to sudemi, an online service run by Akacia at https://sudemi.com. The plugin cannot work without it, and it needs a free sudemi seller account. Nothing is sent before you press **Connect this shop**.
+
+All calls go to https://api.sudemi.com over HTTPS. Every call carries your shop's web address and the plugin version, and every call after the connection is signed with your shop's own key. The plugin never sends e-mail and never sends anything about your own customers or your other orders.
+
+* **Connection (claiming the shop).** When you press Connect this shop: your shop's web address, the platform (WooCommerce), the plugin version, the public half of the shop's key, and a proposed profile (the site title and the store country from your WooCommerce settings). Until you have confirmed the shop on sudemi, the plugin asks once a minute whether it is done, with a one-time code. sudemi checks the domain by fetching a one-time token from /.well-known/sudemi-challenge on your shop.
+* **Catalogue sync.** Every hour, when sudemi asks for it, and whenever you save a product or its price or stock: your product categories, and for each published product for sale its name, description, link, SKU, barcode, brand, price with VAT, currency, stock, weight, photo links, attributes, delivery prices per country (from your shipping zones), delivery times and the right-of-withdrawal setting. With it the shop details: site title, the Shop profile description, support e-mail and return period, language, currency and the countries you ship to. sudemi downloads the product photos from your shop.
+* **Heartbeat.** Every 5 minutes (WP-Cron): a fingerprint of the catalogue (a hash), the number of products, the plugin version and how far the plugin has read sudemi's list of order changes. The answer brings new and changed sudemi orders.
+* **Orders.** Only for orders placed through sudemi: accepting or declining (with your reason), shipped with carrier and tracking code, delivered, refunds and cancellations made in WooCommerce, answers to return requests, and what you do on the plugin's Orders, Shipping and Payouts pages. The plugin reads these orders from sudemi, with the buyer's name and delivery address when the buyer paid through sudemi.
+* **Statistics.** When you open the Dashboard: the period you chose. sudemi counts searches, views, cart additions and orders; the plugin only reads the totals.
+* **Products on sudemi.** When you open the page: the filter, search and page number. The switch per product sends the product's ID and on or off.
+* **Shop profile and payment mode.** When you open a sudemi page (at most once a minute): a read of the shop profile and of how buyers pay. Saving the Shop profile page sends the description, support e-mail and return period.
+* **Support.** When you open the Support page or send a ticket or reply: the category, subject, message, your admin language and, if you give one, a sudemi order number.
+* **Uninstall.** Deleting the plugin asks sudemi to revoke this shop's key.
+
+The Connect Stripe button and the other sudemi links open the sudemi website in your browser; the plugin itself never contacts Stripe.
+
+sudemi terms of use: https://sudemi.com/terms
+sudemi privacy statement: https://sudemi.com/privacy
 
 == Installation ==
 
-1. Install and activate the plugin.
-2. Open sudemi > Settings in the WordPress admin menu and press Connect this shop.
-3. Open the link shown, sign in to your sudemi account, and confirm the shop is yours.
+1. Install and activate the plugin. WooCommerce 8.0 or later must be active.
+2. Open **sudemi > Settings** in the WordPress admin menu and press **Connect this shop**.
+3. Open the link shown, sign in to your sudemi seller account (creating one is free), and confirm the shop is yours.
+4. Your catalogue is sent within a few minutes. Connect Stripe on sudemi when you want buyers to pay through sudemi.
+
+WordPress runs its scheduled tasks (WP-Cron) only when somebody visits the shop, so a quiet shop stops checking in. Ask your host for a real cron job every 5 minutes that calls https://your-shop/wp-cron.php, and add `define( 'DISABLE_WP_CRON', true );` to wp-config.php. If a shop misses three check-ins in a row, its products are taken out of search until it checks in again (nothing is deleted).
+
+Requirements: PHP 8.0 or later with the sodium extension (part of PHP since 7.2 and enabled almost everywhere; the plugin checks it) and HTTPS on the shop's own domain.
 
 == Frequently Asked Questions ==
 
+= Do I need a sudemi account? =
+
+Yes, a sudemi seller account. It is free. You create it or sign in to it when you connect the shop.
+
+= What does it cost? =
+
+The plugin is free and there is no monthly fee. With Stripe connected, each order costs Stripe's card processing fee and sudemi's 1% commission on your own price of the items (not on delivery), both taken from your payout. Payments are processed by Stripe, a licensed payment provider; sudemi never sees or stores card details. Stripe holds the payment and passes the shop's share on to the shop's own Stripe account; sudemi keeps only its commission. Without Stripe connected, your products are listed for free and buyers pay in your own checkout.
+
 = Does this send my customers' data anywhere? =
 
-No. It sends your catalogue - products, prices, stock, images - and what you do with sudemi orders
-(accepted, shipped with tracking, delivered, refunded). It never sends anything about your other
-orders or your customers, and the plugin never sends e-mail.
+No. The plugin sends your catalogue and what you do with sudemi orders. It never sends anything about your other orders or your customers, and it never sends e-mail. For orders paid through sudemi, sudemi sends you the buyer's name and delivery address so you can ship. The section External services lists every call.
+
+= What happens when I uninstall the plugin? =
+
+Deactivating stops the sync and the heartbeat but keeps the connection, so you can switch it on again without connecting anew. While it is off, your shop does not check in and its products leave sudemi search until it does again. Deleting the plugin removes the signing key, all plugin settings and the plugin's database table, and asks sudemi to revoke the shop's key, so your products leave sudemi search. Your WooCommerce products and orders are not touched.
+
+= Which buyers will see my products? =
+
+People who ask an AI assistant such as ChatGPT or Claude to find and buy something for them. sudemi shows a product to a buyer only when you have a delivery price for the buyer's country, the product is in stock and your shop is checking in. How a shop is shown in search never depends on which way its buyers pay.
+
+= What does the red or green bar at the top of the sudemi pages mean? =
+
+It shows how buyers pay for your products right now. Red, "Stripe is not connected": your products are listed and buyers pay on your own website; the Connect Stripe button opens the payout page of your sudemi seller account. Green, "Connect Stripe is done": buyers pay through sudemi. Red with a link to support: sudemi has paused the shop while it reviews a restriction from the payment provider.
 
 = What if my host does not have the sodium extension? =
 
-The plugin tells you on its settings screen and refuses to connect, rather than failing later.
-Ask your host to enable it; it ships with PHP 7.2 and later.
+The plugin tells you on its Settings page and does not connect, rather than failing later. Ask your host to enable it; it is part of PHP since 7.2.
+
+= Where do I get help? =
+
+Use the Support page inside the plugin, or the seller guides at https://sudemi.com/docs/en/sellers. Security issues: security@sudemi.com.
+
+== Screenshots ==
+
+1. Dashboard: sales, orders, how often AI assistants showed your products, and daily charts.
+2. Products on sudemi: every product as sudemi holds it, whether buyers can find it, and a switch per product.
+3. Orders: the orders placed through sudemi, with filters, bulk actions and export.
+4. The bar at the top of every sudemi page: Stripe is not connected, so buyers pay on your own website.
+5. Settings: the connection, the check-in status and the plugin's options.
+
+== Upgrade Notice ==
+
+= 1.4.3 =
+Clearer WordPress.org description, a list of every call to sudemi (External services), and screenshots. No change in how the plugin works.
 
 == Changelog ==
+
+= 1.4.3 =
+* WordPress.org listing: a full description in plain words, every call the plugin makes to sudemi listed under External services, more questions answered, and screenshots.
+* Nothing changes in how the plugin works with sudemi, your orders, the statistics or the payment bar.
 
 = 1.4.2 =
 * Ready for the WordPress.org plugin directory: the plugin passes WordPress.org's Plugin Check.

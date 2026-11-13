@@ -2,6 +2,7 @@
 # developer documentation. Shops get the plugin, readme.txt and the licence.
 /tests export-ignore
 /.github export-ignore
+/.wordpress-org export-ignore
 /.gitignore export-ignore
 /.gitattributes export-ignore
 /README.md export-ignore
