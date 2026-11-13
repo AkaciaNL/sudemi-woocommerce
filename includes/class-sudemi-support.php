@@ -199,44 +199,44 @@ final class Sudemi_Support {
 	public static function error_message( $code ) {
 		switch ( $code ) {
 			case 'invalid_category':
-				return __( 'Choose a category.', 'sudemi' );
+				return __( 'Choose a category.', 'sudemi-connector' );
 			case 'invalid_subject':
-				return __( 'The subject must be between 3 and 200 characters.', 'sudemi' );
+				return __( 'The subject must be between 3 and 200 characters.', 'sudemi-connector' );
 			case 'invalid_message':
-				return __( 'The message cannot be empty or longer than 10,000 characters.', 'sudemi' );
+				return __( 'The message cannot be empty or longer than 10,000 characters.', 'sudemi-connector' );
 			case 'invalid_order':
-				return __( 'That does not look like a sudemi order ID. Copy the full ID, or leave the field empty.', 'sudemi' );
+				return __( 'That does not look like a sudemi order ID. Copy the full ID, or leave the field empty.', 'sudemi-connector' );
 			case 'invalid_request':
-				return __( 'sudemi could not accept this. Check the subject and the message, and that the order ID belongs to an order of this shop.', 'sudemi' );
+				return __( 'sudemi could not accept this. Check the subject and the message, and that the order ID belongs to an order of this shop.', 'sudemi-connector' );
 			case 'not_found':
-				return __( 'This ticket was not found. It may belong to another shop or to an earlier connection.', 'sudemi' );
+				return __( 'This ticket was not found. It may belong to another shop or to an earlier connection.', 'sudemi-connector' );
 			case 'too_many_tickets':
-				return __( 'This shop has too many open tickets, or opened several in the last hour. Please wait a while, or reply to an existing ticket instead.', 'sudemi' );
+				return __( 'This shop has too many open tickets, or opened several in the last hour. Please wait a while, or reply to an existing ticket instead.', 'sudemi-connector' );
 			case 'not_connected':
-				return __( 'This shop is not connected to sudemi.', 'sudemi' );
+				return __( 'This shop is not connected to sudemi.', 'sudemi-connector' );
 			case 'refused':
-				return __( 'sudemi refused this shop. Check the connection on the overview tab.', 'sudemi' );
+				return __( 'sudemi refused this shop. Check the connection on the overview tab.', 'sudemi-connector' );
 			default:
-				return __( 'Could not reach sudemi just now. Please try again shortly.', 'sudemi' );
+				return __( 'Could not reach sudemi just now. Please try again shortly.', 'sudemi-connector' );
 		}
 	}
 
 	public static function category_label( $category ) {
 		switch ( $category ) {
 			case 'ORDER':
-				return __( 'Order', 'sudemi' );
+				return __( 'Order', 'sudemi-connector' );
 			case 'PAYMENT':
-				return __( 'Payment', 'sudemi' );
+				return __( 'Payment', 'sudemi-connector' );
 			case 'REFUND_RETURN':
-				return __( 'Refund or return', 'sudemi' );
+				return __( 'Refund or return', 'sudemi-connector' );
 			case 'ACCOUNT':
-				return __( 'Account', 'sudemi' );
+				return __( 'Account', 'sudemi-connector' );
 			case 'SHOP_PLUGIN':
-				return __( 'Shop plugin or connection', 'sudemi' );
+				return __( 'Shop plugin or connection', 'sudemi-connector' );
 			case 'PAYOUTS':
-				return __( 'Payouts', 'sudemi' );
+				return __( 'Payouts', 'sudemi-connector' );
 			case 'OTHER':
-				return __( 'Other', 'sudemi' );
+				return __( 'Other', 'sudemi-connector' );
 			default:
 				return (string) $category;
 		}
@@ -245,13 +245,13 @@ final class Sudemi_Support {
 	public static function status_label( $status ) {
 		switch ( $status ) {
 			case 'OPEN':
-				return _x( 'Open', 'support ticket status', 'sudemi' );
+				return _x( 'Open', 'support ticket status', 'sudemi-connector' );
 			case 'WAITING_FOR_CUSTOMER':
-				return __( 'Waiting for your reply', 'sudemi' );
+				return __( 'Waiting for your reply', 'sudemi-connector' );
 			case 'ANSWERED':
-				return __( 'Answered', 'sudemi' );
+				return __( 'Answered', 'sudemi-connector' );
 			case 'CLOSED':
-				return __( 'Closed', 'sudemi' );
+				return __( 'Closed', 'sudemi-connector' );
 			default:
 				return (string) $status;
 		}

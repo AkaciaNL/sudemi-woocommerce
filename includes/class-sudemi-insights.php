@@ -119,21 +119,21 @@ final class Sudemi_Insights {
 	public static function reason_label( $code ) {
 		switch ( (string) $code ) {
 			case 'disabled_by_shop':
-				return __( 'Switched off by you', 'sudemi' );
+				return __( 'Switched off by you', 'sudemi-connector' );
 			case 'not_in_shop':
-				return __( 'No longer in your shop (deleted, hidden or not published)', 'sudemi' );
+				return __( 'No longer in your shop (deleted, hidden or not published)', 'sudemi-connector' );
 			case 'out_of_stock':
-				return __( 'Out of stock', 'sudemi' );
+				return __( 'Out of stock', 'sudemi-connector' );
 			case 'no_shipping':
-				return __( 'No shipping price for any country', 'sudemi' );
+				return __( 'No shipping price for any country', 'sudemi-connector' );
 			case 'suspended':
-				return __( 'Taken down by sudemi (see your e-mail or contact support)', 'sudemi' );
+				return __( 'Taken down by sudemi (see your e-mail or contact support)', 'sudemi-connector' );
 			case 'payouts_not_ready':
-				return __( 'Your payout account is not active yet', 'sudemi' );
+				return __( 'Your payout account is not active yet', 'sudemi-connector' );
 			case 'shop_not_reporting':
-				return __( 'This shop stopped reporting in to sudemi', 'sudemi' );
+				return __( 'This shop stopped reporting in to sudemi', 'sudemi-connector' );
 		}
-		return __( 'Not listed', 'sudemi' );
+		return __( 'Not listed', 'sudemi-connector' );
 	}
 
 	/** Basis points as a percentage with one decimal ("6.4%"). */
@@ -393,22 +393,22 @@ final class Sudemi_Insights {
 			case 'description_too_long':
 				return sprintf(
 					/* translators: %d: maximum number of characters. */
-					__( 'The description can be at most %d characters.', 'sudemi' ),
+					__( 'The description can be at most %d characters.', 'sudemi-connector' ),
 					self::DESCRIPTION_MAX
 				);
 			case 'invalid_email':
-				return __( 'Enter a valid e-mail address for buyers\' questions.', 'sudemi' );
+				return __( 'Enter a valid e-mail address for buyers\' questions.', 'sudemi-connector' );
 			case 'invalid_returns_days':
 				return sprintf(
 					/* translators: 1: minimum days, 2: maximum days. */
-					__( 'The return period must be a whole number of days from %1$d to %2$d.', 'sudemi' ),
+					__( 'The return period must be a whole number of days from %1$d to %2$d.', 'sudemi-connector' ),
 					self::RETURNS_MIN,
 					self::RETURNS_MAX
 				);
 			case 'bad_period':
-				return __( 'That period cannot be shown.', 'sudemi' );
+				return __( 'That period cannot be shown.', 'sudemi-connector' );
 			case 'not_found':
-				return __( 'sudemi does not have this product for this shop (yet). It arrives with the next sync.', 'sudemi' );
+				return __( 'sudemi does not have this product for this shop (yet). It arrives with the next sync.', 'sudemi-connector' );
 		}
 		return Sudemi_Manage::error_message( $code, $message );
 	}

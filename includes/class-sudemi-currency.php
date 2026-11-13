@@ -129,12 +129,12 @@ final class Sudemi_Currency {
 		$code = self::normalise( $pending['currency_code'] );
 		$shop = self::normalise( $shop );
 		if ( '' === $code ) {
-			return __( 'the order did not say which currency it was paid in', 'sudemi' );
+			return __( 'the order did not say which currency it was paid in', 'sudemi-connector' );
 		}
 		if ( $code !== $shop ) {
 			return sprintf(
 				/* translators: 1: the order's currency, e.g. PLN, 2: the shop's currency, e.g. EUR. */
-				__( 'the order was paid in %1$s but this shop sells in %2$s, so it cannot be booked here', 'sudemi' ),
+				__( 'the order was paid in %1$s but this shop sells in %2$s, so it cannot be booked here', 'sudemi-connector' ),
 				$code,
 				$shop
 			);
@@ -160,7 +160,7 @@ final class Sudemi_Currency {
 		}
 		return sprintf(
 			/* translators: 1: the refund's currency, 2: the currency the buyer paid in. */
-			__( 'this refund is in %1$s but the buyer paid in %2$s; change the order back to %2$s and refund again', 'sudemi' ),
+			__( 'this refund is in %1$s but the buyer paid in %2$s; change the order back to %2$s and refund again', 'sudemi-connector' ),
 			'' === $refund_currency ? '?' : $refund_currency,
 			$charged
 		);

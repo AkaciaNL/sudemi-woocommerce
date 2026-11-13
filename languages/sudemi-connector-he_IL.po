@@ -7,35 +7,35 @@ msgstr ""
 "POT-Creation-Date: 2026-11-05 00:00+0000\n"
 "PO-Revision-Date: 2026-11-06 00:00+0000\n"
 "Last-Translator: Akacia\n"
-"Language-Team: zh_CN\n"
-"Language: zh_CN\n"
+"Language-Team: he_IL\n"
+"Language: he_IL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Domain: sudemi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: sudemi-connector\n"
 
 #. Plugin Name of the plugin
 #: sudemi-connector.php
 msgid "sudemi Connector"
-msgstr "sudemi 连接器"
+msgstr "מחבר sudemi"
 
 #. Description of the plugin
 #: sudemi-connector.php
 msgid "Lists this shop's products on sudemi, so an AI assistant can find them and send buyers to you. You stay the merchant of record."
-msgstr "将本店商品发布到 sudemi，让 AI 助手能找到它们并为你带来买家。你仍是交易中的卖家。"
+msgstr "מציג את מוצרי החנות הזו ב-sudemi, כך שעוזר בינה מלאכותית יוכל למצוא אותם ולשלוח אליכם קונים. אתם נשארים המוכר הרשמי."
 
 #: sudemi-connector.php:49
 msgid "Every minute (sudemi pairing)"
-msgstr "每分钟（sudemi 配对）"
+msgstr "כל דקה (צימוד sudemi)"
 
 #: sudemi-connector.php:56
 msgid "Every five minutes (sudemi heartbeat)"
-msgstr "每五分钟（sudemi 心跳）"
+msgstr "כל חמש דקות (דיווח ל-sudemi)"
 
 #: sudemi-connector.php:71
 msgid "sudemi Connector needs WooCommerce to be active."
-msgstr "sudemi 连接器需要启用 WooCommerce。"
+msgstr "מחבר sudemi דורש ש-WooCommerce יהיה פעיל."
 
 #: admin/class-sudemi-admin.php:31 admin/class-sudemi-admin.php:32
 #: admin/class-sudemi-admin.php:50
@@ -44,2179 +44,2186 @@ msgstr "sudemi"
 
 #: admin/class-sudemi-admin.php:43
 msgid "You do not have permission to manage this shop."
-msgstr "你无权管理此店铺。"
+msgstr "אין לכם הרשאה לנהל את החנות הזו."
 
 #: admin/class-sudemi-admin.php:54
 msgid "This server is missing the sodium extension. The connection needs it to sign requests, and will not work without it. Ask your host to enable it."
-msgstr "此服务器缺少 sodium 扩展。连接需要它来签名请求，没有它将无法工作。请联系你的主机服务商启用它。"
+msgstr "בשרת הזה חסרה ההרחבה sodium. החיבור זקוק לה כדי לחתום על בקשות, והוא לא יעבוד בלעדיה. יש לבקש מספק האחסון להפעיל אותה."
 
 #: admin/class-sudemi-admin.php:71
 msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account - this plugin never asks for your sudemi password."
-msgstr "连接此店铺后，AI 助手即可找到你的商品并为你带来买家。你需要登录自己的账户，在 sudemi 上确认连接，本插件绝不会索要你的 sudemi 密码。"
+msgstr "חיבור החנות הזו מאפשר לעוזר בינה מלאכותית למצוא את המוצרים שלכם ולשלוח אליכם קונים. את החיבור מאשרים ב-sudemi, כשמחוברים לחשבון שלכם - התוסף הזה לעולם לא מבקש את הסיסמה שלכם ב-sudemi."
 
 #: admin/class-sudemi-admin.php:75
 msgid "Connect this shop"
-msgstr "连接此店铺"
+msgstr "חיבור החנות הזו"
 
 #: admin/class-sudemi-admin.php:81
 msgid "Almost there. Open the link below, sign in to sudemi and confirm that this shop is yours. This page will pick it up by itself."
-msgstr "快完成了。打开下方链接，登录 sudemi 并确认此店铺归你所有。本页面会自动检测到。"
+msgstr "כמעט סיימנו. יש לפתוח את הקישור שלמטה, להתחבר ל-sudemi ולאשר שהחנות הזו שלכם. הדף הזה יזהה זאת בעצמו."
 
 #: admin/class-sudemi-admin.php:84
 msgid "Confirm this shop on sudemi"
-msgstr "在 sudemi 上确认此店铺"
+msgstr "אישור החנות הזו ב-sudemi"
 
 #. translators: %s: the public path the token is served at.
 #: admin/class-sudemi-admin.php:88
 #, php-format
 msgid "While this is open, the shop answers at %s with a one-time token so sudemi can confirm the request came from here. It stops being served the moment the connection completes."
-msgstr "在此页面打开期间，店铺会在 %s 提供一个一次性令牌，以便 sudemi 确认请求来自这里。连接完成后将立即停止提供。"
+msgstr "כל עוד הדף הזה פתוח, החנות עונה בכתובת %s עם אסימון חד-פעמי, כדי ש-sudemi תוכל לוודא שהבקשה הגיעה מכאן. האסימון מפסיק להיות זמין ברגע שהחיבור הושלם."
 
 #: admin/class-sudemi-admin.php:95
 msgid "This shop is connected to sudemi."
-msgstr "此店铺已连接到 sudemi。"
+msgstr "החנות הזו מחוברת ל-sudemi."
 
 #: admin/class-sudemi-admin.php:98
 msgid "Shop address"
-msgstr "店铺地址"
+msgstr "כתובת החנות"
 
 #: admin/class-sudemi-admin.php:98
 msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from - so changing it means connecting again from the new address."
-msgstr "已固定。sudemi 已核实此店铺从该地址作出响应，且商品信息会告诉买家其来源，因此更改地址意味着需要从新地址重新连接。"
+msgstr "קבועה. sudemi בדקה שהחנות הזו ענתה מהכתובת הזו, ורישום מוצר מציין לקונה מאיפה הוא הגיע - לכן שינוי הכתובת פירושו חיבור מחדש מהכתובת החדשה."
 
 #: admin/class-sudemi-admin.php:99
 msgid "Install"
-msgstr "安装"
+msgstr "התקנה"
 
 #: admin/class-sudemi-admin.php:99
 msgid "Which installation this is. Revoke it on sudemi to cut this shop off immediately."
-msgstr "这是哪一个安装实例。在 sudemi 上将其撤销即可立即切断此店铺的连接。"
+msgstr "איזו התקנה זו. ביטול שלה ב-sudemi מנתק את החנות הזו מיד."
 
 #: admin/class-sudemi-admin.php:100
 msgid "Signing key"
-msgstr "签名密钥"
+msgstr "מפתח חתימה"
 
 #: admin/class-sudemi-admin.php:100
 msgid "held on this server"
-msgstr "保存在此服务器上"
+msgstr "שמור בשרת הזה"
 
 #: admin/class-sudemi-admin.php:100
 msgid "The private half never leaves this server and is never sent to sudemi. It cannot be shown here either."
-msgstr "私钥部分绝不会离开此服务器，也绝不会发送给 sudemi。它也无法在此显示。"
+msgstr "החלק הפרטי לעולם לא יוצא מהשרת הזה ולעולם לא נשלח ל-sudemi. גם אי אפשר להציג אותו כאן."
 
 #: admin/class-sudemi-admin.php:107
 msgid "Set on sudemi, not here"
-msgstr "在 sudemi 上设置，而非此处"
+msgstr "מוגדר ב-sudemi, לא כאן"
 
 #: admin/class-sudemi-admin.php:108
 msgid "Your legal name, country, trader status and VAT number decide what a buyer is owed, so they are confirmed once on sudemi and changed there. This plugin cannot edit them."
-msgstr "你的法定名称、国家/地区、经营者身份和增值税号决定了买家享有哪些权益，因此它们只在 sudemi 上确认一次，并在那里修改。本插件无法编辑这些信息。"
+msgstr "השם המשפטי, המדינה, מעמד העוסק ומספר המע״מ שלכם קובעים מה מגיע לקונה, ולכן הם מאושרים פעם אחת ב-sudemi ומשתנים שם. התוסף הזה לא יכול לערוך אותם."
 
 #: admin/class-sudemi-admin.php:113
 msgid "Sync the catalogue now"
-msgstr "立即同步商品目录"
+msgstr "סנכרון הקטלוג עכשיו"
 
 #: admin/class-sudemi-admin.php:119
 msgid "Disconnect"
-msgstr "断开连接"
+msgstr "ניתוק"
 
 #: admin/class-sudemi-admin.php:137
 msgid "Listing status"
-msgstr "上架状态"
+msgstr "סטטוס הרישום"
 
 #: admin/class-sudemi-admin.php:141
 msgid "This shop has not reported in to sudemi yet. That happens within a few minutes of connecting, and needs WP-Cron to be running on this site."
-msgstr "此店铺尚未向 sudemi 报告。这通常在连接后几分钟内完成，并且需要本站点运行 WP-Cron。"
+msgstr "החנות הזו עדיין לא דיווחה ל-sudemi. זה קורה תוך דקות ספורות מהחיבור, ודורש ש-WP-Cron יפעל באתר הזה."
 
 #: admin/class-sudemi-admin.php:149
 #, php-format
 msgid "%s ago"
-msgstr "%s前"
+msgstr "לפני %s"
 
 #: admin/class-sudemi-admin.php:150
 msgid "never"
-msgstr "从未"
+msgstr "אף פעם"
 
 #: admin/class-sudemi-admin.php:154
 msgid "This shop could not reach sudemi. Its products stay listed for a short while and are then paused, because sudemi will not quote a price it cannot confirm."
-msgstr "此店铺无法连接到 sudemi。其商品会继续上架一小段时间，然后被暂停，因为 sudemi 不会报出无法确认的价格。"
+msgstr "החנות הזו לא הצליחה להגיע ל-sudemi. המוצרים שלה נשארים רשומים לזמן קצר ואז מושהים, כי sudemi לא תציע מחיר שאינה יכולה לאשר."
 
 #: admin/class-sudemi-admin.php:158
 msgid "sudemi refused this shop."
-msgstr "sudemi 拒绝了此店铺。"
+msgstr "sudemi דחתה את החנות הזו."
 
 #: admin/class-sudemi-admin.php:162
 msgid "This shop is connected but its products are not being shown."
-msgstr "此店铺已连接，但其商品目前未展示。"
+msgstr "החנות הזו מחוברת, אבל המוצרים שלה לא מוצגים."
 
 #: admin/class-sudemi-admin.php:166
 msgid "Products are being shown on sudemi."
-msgstr "商品正在 sudemi 上展示。"
+msgstr "המוצרים מוצגים ב-sudemi."
 
 #: admin/class-sudemi-admin.php:171
 msgid "Last reported in"
-msgstr "最近一次报告"
+msgstr "דיווח אחרון"
 
 #: admin/class-sudemi-admin.php:171
 msgid "This shop tells sudemi every five minutes that it is still here and that its prices still stand. When that stops, the listings are paused rather than left at prices nobody is confirming."
-msgstr "此店铺每五分钟告知 sudemi 它仍在运行且价格依然有效。一旦停止报告，商品将被暂停，而不是继续以无人确认的价格展示。"
+msgstr "החנות הזו מודיעה ל-sudemi כל חמש דקות שהיא עדיין כאן ושהמחירים שלה עדיין בתוקף. כשזה מפסיק, הרישומים מושהים במקום להישאר במחירים שאיש אינו מאשר."
 
 #: admin/class-sudemi-admin.php:173
 msgid "Prices confirmed until"
-msgstr "价格确认有效至"
+msgstr "המחירים מאושרים עד"
 
 #: admin/class-sudemi-admin.php:173
 msgid "After this, sudemi stops showing this shop until it reports in again. Nothing is deleted."
-msgstr "此时间之后，sudemi 将停止展示此店铺，直到它再次报告。不会删除任何内容。"
+msgstr "לאחר מכן, sudemi מפסיקה להציג את החנות הזו עד שתדווח שוב. שום דבר לא נמחק."
 
 #: admin/class-sudemi-admin.php:177
 msgid "Price changes waiting"
-msgstr "待发送的价格变更"
+msgstr "שינויי מחיר ממתינים"
 
 #: admin/class-sudemi-admin.php:180
 msgid "Price or stock changes that could not be sent yet. They are retried on the next report and are not lost."
-msgstr "尚未能发送的价格或库存变更。它们会在下次报告时重试，不会丢失。"
+msgstr "שינויי מחיר או מלאי שעדיין לא ניתן היה לשלוח. הם יישלחו שוב בדיווח הבא ולא יאבדו."
 
 #: admin/class-sudemi-admin.php:181
 msgid "Every price change has reached sudemi."
-msgstr "所有价格变更均已送达 sudemi。"
+msgstr "כל שינויי המחיר הגיעו ל-sudemi."
 
 #: admin/class-sudemi-admin.php:184
 msgid "Confirming orders"
-msgstr "订单确认方式"
+msgstr "אישור הזמנות"
 
 #: admin/class-sudemi-admin.php:186
 msgid "automatically"
-msgstr "自动"
+msgstr "אוטומטי"
 
 #: admin/class-sudemi-admin.php:187
 msgid "by hand"
-msgstr "手动"
+msgstr "ידני"
 
 #: admin/class-sudemi-admin.php:189
 msgid "A buyer on sudemi is authorised but not charged until this shop confirms it has the item. That check runs against this shop's live stock every five minutes: in stock means the order is accepted and the money taken, out of stock means it is declined and the buyer's money released. Nothing is ever charged without this shop agreeing to it."
-msgstr "sudemi 上的买家付款已获授权，但在此店铺确认有货之前不会扣款。系统每五分钟根据此店铺的实时库存进行检查：有货则接受订单并扣款，缺货则拒绝订单并释放买家的款项。未经此店铺同意，绝不会扣款。"
+msgstr "התשלום של קונה ב-sudemi מאושר אך לא נגבה עד שהחנות הזו מאשרת שהפריט במלאי. הבדיקה הזו רצה מול המלאי החי של החנות כל חמש דקות: אם הפריט במלאי, ההזמנה מתקבלת והכסף נגבה; אם אזל מהמלאי, ההזמנה נדחית והסכום ששוריין בכרטיס של הקונה משתחרר. שום חיוב לא מתבצע לעולם בלי הסכמת החנות הזו."
 
 #: admin/class-sudemi-admin.php:190
 msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted."
-msgstr "订单需要等待这里有人处理。如果在 sudemi 显示的截止时间前无人处理，买家的款项将被释放，不会扣款，未答复的订单绝不会被视为已接受。"
+msgstr "ההזמנות ממתינות שמישהו כאן יענה להן. אם איש לא עונה לפני המועד האחרון ש-sudemi מציגה, הסכום ששוריין בכרטיס של הקונה משתחרר והקונה לא מחויב בדבר - הזמנה שלא נענתה לעולם לא נחשבת כמאושרת."
 
 #: admin/class-sudemi-admin.php:213
 msgid "Orders through sudemi"
-msgstr "通过 sudemi 的订单"
+msgstr "הזמנות דרך sudemi"
 
 #: admin/class-sudemi-admin.php:218
 msgid "Could not reach sudemi to load the order history just now. Nothing is wrong with the orders themselves; try again shortly."
-msgstr "目前无法连接 sudemi 加载订单历史。订单本身没有问题，请稍后重试。"
+msgstr "לא ניתן היה להגיע ל-sudemi כדי לטעון את היסטוריית ההזמנות כרגע. אין שום בעיה בהזמנות עצמן; כדאי לנסות שוב בעוד רגע."
 
 #: admin/class-sudemi-admin.php:231
 #, php-format
 msgid "%d order is waiting to be confirmed. The buyer has not been charged for it yet."
 msgid_plural "%d orders are waiting to be confirmed. Those buyers have not been charged yet."
-msgstr[0] "%d 个订单正在等待确认。买家尚未被扣款。"
+msgstr[0] "%d הזמנה ממתינה לאישור. הקונה עדיין לא חויב עבורה."
+msgstr[1] "%d הזמנות ממתינות לאישור. הקונים האלה עדיין לא חויבו."
 
 #: admin/class-sudemi-admin.php:245
 msgid "No orders through sudemi yet."
-msgstr "尚无通过 sudemi 的订单。"
+msgstr "עדיין אין הזמנות דרך sudemi."
 
 #: admin/class-sudemi-admin.php:251
 msgid "Order"
-msgstr "订单"
+msgstr "הזמנה"
 
 #: admin/class-sudemi-admin.php:252
 msgid "What sold"
-msgstr "售出商品"
+msgstr "מה נמכר"
 
 #: admin/class-sudemi-admin.php:253
 msgid "Status"
-msgstr "状态"
+msgstr "סטטוס"
 
 #: admin/class-sudemi-admin.php:254
 msgid "You receive"
-msgstr "你的收入"
+msgstr "הסכום שתקבלו"
 
 #: admin/class-sudemi-admin.php:255
 msgid "Customer"
-msgstr "买家"
+msgstr "לקוח"
 
 #: admin/class-sudemi-admin.php:289
 msgid "Waiting for you - buyer not charged"
-msgstr "等待你处理，买家未扣款"
+msgstr "ממתינה לכם - הקונה לא חויב"
 
 #: admin/class-sudemi-admin.php:291
 msgid "Accepted - waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
-msgstr "已接受，正在等待买家本次付款中的其他店铺；买家尚未扣款，请勿发货"
+msgstr "התקבלה - ממתינה לחנויות האחרות בתשלום של הקונה; הקונה עדיין לא חויב, אין לשלוח"
 
 #: admin/class-sudemi-admin.php:293
 msgid "Confirmed and charged"
-msgstr "已确认并扣款"
+msgstr "אושרה והקונה חויב"
 
 #. translators: %s: the reason the order was declined.
 #: admin/class-sudemi-admin.php:298
 #, php-format
 msgid "Declined (%s) - nothing charged"
-msgstr "已拒绝（%s），未扣款"
+msgstr "נדחתה (%s) - לא בוצע חיוב"
 
 #: admin/class-sudemi-admin.php:301
 msgid "Declined - nothing charged"
-msgstr "已拒绝，未扣款"
+msgstr "נדחתה - לא בוצע חיוב"
 
 #: admin/class-sudemi-admin.php:303
 msgid "Shipped"
-msgstr "已发货"
+msgstr "נשלחה"
 
 #: admin/class-sudemi-admin.php:305
 msgid "Delivered"
-msgstr "已送达"
+msgstr "נמסרה"
 
 #: admin/class-sudemi-admin.php:316
 msgid "Recent activity"
-msgstr "最近活动"
+msgstr "פעילות אחרונה"
 
 #: admin/class-sudemi-admin.php:350
 msgid "Disconnected from sudemi."
-msgstr "已与 sudemi 断开连接。"
+msgstr "נותק מ-sudemi."
 
 #: admin/class-sudemi-admin.php:361
 msgid "Delivery to sudemi buyers"
-msgstr "向 sudemi 买家配送"
+msgstr "משלוח לקונים של sudemi"
 
 #: admin/class-sudemi-admin.php:365
 msgid "No shipping price could be read from your WooCommerce shipping zones, so sudemi buyers cannot order. Add a zone with a flat rate (a fixed amount) or unconditional free shipping for the countries you ship to."
-msgstr "无法从你的 WooCommerce 配送区域读取运费，因此 sudemi 买家无法下单。请为你配送的国家/地区添加一个使用统一费率（固定金额）或无条件免运费的区域。"
+msgstr "לא ניתן היה לקרוא אף מחיר משלוח מאזורי המשלוח שלכם ב-WooCommerce, ולכן קונים ב-sudemi לא יכולים להזמין. יש להוסיף אזור עם תעריף קבוע (סכום קבוע) או משלוח חינם ללא תנאים עבור המדינות שאליהן אתם שולחים."
 
 #: admin/class-sudemi-admin.php:371
 msgid "Shipping prices sent to sudemi (from your shipping zones; one item, your first product):"
-msgstr "发送给 sudemi 的运费（来自你的配送区域；按一件商品、以你的第一个商品计算）："
+msgstr "מחירי משלוח שנשלחו ל-sudemi (מאזורי המשלוח שלכם; פריט אחד, המוצר הראשון שלכם):"
 
 #: admin/class-sudemi-admin.php:372
 msgid "Countries without a fixed price (cost formulas, free shipping with a minimum, postcode-only zones) are left out rather than guessed."
-msgstr "没有固定价格的国家/地区（费用公式、有最低消费的免运费、仅限邮编的区域）将被略去，而不是估算。"
+msgstr "מדינות ללא מחיר קבוע (נוסחאות עלות, משלוח חינם עם מינימום, אזורים לפי מיקוד בלבד) מושמטות במקום לנחש."
 
 #: admin/class-sudemi-admin.php:377
 msgid "Days until you dispatch an order (at most)"
-msgstr "你发出订单所需天数（最多）"
+msgstr "ימים עד שליחת הזמנה (לכל היותר)"
 
 #: admin/class-sudemi-admin.php:378
 msgid "Days the carrier takes (at most)"
-msgstr "承运商运送所需天数（最多）"
+msgstr "ימים שלוקח לחברת המשלוחים (לכל היותר)"
 
 #: admin/class-sudemi-admin.php:379
 msgid "Buyers see the sum as the latest delivery estimate. Set your real times; the defaults are deliberately cautious."
-msgstr "买家看到的两者之和即为最晚预计送达时间。请设置你的真实时间；默认值特意设得较为保守。"
+msgstr "הקונים רואים את הסכום כהערכת המסירה המאוחרת ביותר. יש להגדיר את הזמנים האמיתיים שלכם; ברירות המחדל זהירות בכוונה."
 
 #: admin/class-sudemi-admin.php:380
 msgid "Save delivery times"
-msgstr "保存配送时间"
+msgstr "שמירת זמני משלוח"
 
 #: admin/class-sudemi-admin.php:401
 msgid "A catalogue sync was queued."
-msgstr "商品目录同步已加入队列。"
+msgstr "סנכרון קטלוג נוסף לתור."
 
 #: admin/class-sudemi-admin.php:408
 msgid "You do not have permission to do that."
-msgstr "你无权执行此操作。"
+msgstr "אין לכם הרשאה לעשות זאת."
 
 #: includes/class-sudemi-client.php:99
 msgid "sudemi is still asking this shop to slow down. Stopping for now; this will continue on the next scheduled run and nothing has been lost."
-msgstr "sudemi 仍在要求此店铺放慢速度。暂时停止；将在下一次计划运行时继续，没有丢失任何数据。"
+msgstr "sudemi עדיין מבקשת מהחנות הזו להאט. עוצרים לעת עתה; התהליך ימשיך בהרצה המתוזמנת הבאה ושום דבר לא אבד."
 
 #. translators: %d: seconds to wait.
 #: includes/class-sudemi-client.php:110
 #, php-format
 msgid "sudemi asked this shop to slow down; waiting %d seconds before continuing."
-msgstr "sudemi 要求此店铺放慢速度；将等待 %d 秒后继续。"
+msgstr "sudemi ביקשה מהחנות הזו להאט; ממתינים %d שניות לפני ההמשך."
 
 #: includes/class-sudemi-client.php:126
 msgid "The payload could not be encoded."
-msgstr "无法对请求数据进行编码。"
+msgstr "לא ניתן היה לקודד את המטען."
 
 #: includes/class-sudemi-client.php:135
 msgid "This shop is not connected to sudemi."
-msgstr "此店铺未连接到 sudemi。"
+msgstr "החנות הזו לא מחוברת ל-sudemi."
 
 #: includes/class-sudemi-client.php:145
 msgid "This site has no signing key."
-msgstr "此站点没有签名密钥。"
+msgstr "לאתר הזה אין מפתח חתימה."
 
 #. translators: %d: HTTP status code.
 #: includes/class-sudemi-client.php:181
 #, php-format
 msgid "sudemi answered %d with something that was not JSON."
-msgstr "sudemi 返回了 %d，但内容不是 JSON。"
+msgstr "sudemi ענתה %d עם תוכן שאינו JSON."
 
 #: includes/class-sudemi-heartbeat.php:105
 msgid "sudemi no longer recognises this shop. Connect it again."
-msgstr "sudemi 已不再识别此店铺。请重新连接。"
+msgstr "sudemi כבר לא מזהה את החנות הזו. יש לחבר אותה מחדש."
 
 #. translators: %d: HTTP status code.
 #: includes/class-sudemi-heartbeat.php:117
 #, php-format
 msgid "sudemi answered %d."
-msgstr "sudemi 返回了 %d。"
+msgstr "sudemi ענתה %d."
 
 #: includes/class-sudemi-heartbeat.php:166
 msgid "sudemi asked for a full sync; scheduling one."
-msgstr "sudemi 请求完整同步；正在安排。"
+msgstr "sudemi ביקשה סנכרון מלא; מתזמנים סנכרון."
 
 #. translators: %d: number of orders waiting.
 #: includes/class-sudemi-orders.php:46
 #, php-format
 msgid "%d order(s) are waiting for confirmation. Automatic confirmation is off, so they must be answered by hand before their window closes."
-msgstr "%d 个订单正在等待确认。自动确认已关闭，因此必须在其期限结束前手动处理。"
+msgstr "%d הזמנות ממתינות לאישור. האישור האוטומטי כבוי, ולכן יש לענות עליהן ידנית לפני שחלון הזמן שלהן נסגר."
 
 #. translators: 1: sudemi order id, 2: error message.
 #: includes/class-sudemi-orders.php:63
 #, php-format
 msgid "Could not answer sudemi order %1$s: %2$s"
-msgstr "无法答复 sudemi 订单 %1$s：%2$s"
+msgstr "לא ניתן היה לענות להזמנת sudemi %1$s: %2$s"
 
 #. translators: 1: sudemi order id, 2: reason.
 #: includes/class-sudemi-orders.php:104
 #, php-format
 msgid "Declined sudemi order %1$s: %2$s. Nothing was charged."
-msgstr "已拒绝 sudemi 订单 %1$s：%2$s。未扣款。"
+msgstr "הזמנת sudemi %1$s נדחתה: %2$s. לא בוצע חיוב."
 
 #: includes/class-sudemi-orders.php:116
 msgid "this shop could not record the order"
-msgstr "此店铺无法记录该订单"
+msgstr "החנות הזו לא הצליחה לרשום את ההזמנה"
 
 #. translators: 1: sudemi order id, 2: error message.
 #: includes/class-sudemi-orders.php:142
 #, php-format
 msgid "Could not reach sudemi to confirm order %1$s (%2$s). Will try again on the next heartbeat."
-msgstr "无法连接 sudemi 以确认订单 %1$s（%2$s）。将在下一次心跳时重试。"
+msgstr "לא ניתן היה להגיע ל-sudemi כדי לאשר את הזמנה %1$s (%2$s). ננסה שוב בדיווח הבא."
 
 #: includes/class-sudemi-orders.php:171
 msgid "Confirmed with sudemi; the buyer has been charged."
-msgstr "已与 sudemi 确认；买家已被扣款。"
+msgstr "אושרה מול sudemi; הקונה חויב."
 
 #. translators: 1: sudemi order id, 2: local order number.
 #: includes/class-sudemi-orders.php:176
 #, php-format
 msgid "Confirmed sudemi order %1$s as order #%2$s."
-msgstr "已确认 sudemi 订单 %1$s，对应订单 #%2$s。"
+msgstr "הזמנת sudemi %1$s אושרה כהזמנה #%2$s."
 
 #. translators: %s: the reason sudemi gave.
 #: includes/class-sudemi-orders.php:194
 #, php-format
 msgid "sudemi did not accept the confirmation: %s. Nothing was charged and the stock has been restored."
-msgstr "sudemi 未接受此确认：%s。未扣款，库存已恢复。"
+msgstr "sudemi לא קיבלה את האישור: %s. לא בוצע חיוב והמלאי שוחזר."
 
 #. translators: 1: sudemi order id, 2: reason.
 #: includes/class-sudemi-orders.php:201
 #, php-format
 msgid "sudemi refused the confirmation of order %1$s: %2$s. The local order was cancelled and stock restored."
-msgstr "sudemi 拒绝了订单 %1$s 的确认：%2$s。本地订单已取消，库存已恢复。"
+msgstr "sudemi דחתה את אישור הזמנה %1$s: %2$s. ההזמנה המקומית בוטלה והמלאי שוחזר."
 
 #: includes/class-sudemi-orders.php:221
 msgid "Accepted on sudemi. The buyer paid several shops in one payment; sudemi takes the money once every shop has answered. Do NOT ship until this order moves to Processing."
-msgstr "已在 sudemi 上接受。买家在一次付款中向多家店铺付款；所有店铺答复后，sudemi 才会扣款。在此订单变为“处理中”之前，请勿发货。"
+msgstr "התקבלה ב-sudemi. הקונה שילם לכמה חנויות בתשלום אחד; sudemi גובה את הכסף לאחר שכל החנויות ענו. אין לשלוח עד שההזמנה עוברת לסטטוס \"בטיפול\"."
 
 #. translators: 1: sudemi order id, 2: local order number.
 #: includes/class-sudemi-orders.php:226
 #, php-format
 msgid "Accepted sudemi order %1$s (order #%2$s). Not paid yet: waiting for the other shops in the same payment."
-msgstr "已接受 sudemi 订单 %1$s（订单 #%2$s）。尚未付款：正在等待同一笔付款中的其他店铺。"
+msgstr "הזמנת sudemi %1$s התקבלה (הזמנה #%2$s). עדיין לא שולמה: ממתינה לחנויות האחרות באותו תשלום."
 
 #. translators: 1: sudemi order id, 2: error message.
 #: includes/class-sudemi-orders.php:256
 #, php-format
 msgid "Could not apply the outcome of sudemi order %1$s: %2$s"
-msgstr "无法应用 sudemi 订单 %1$s 的结果：%2$s"
+msgstr "לא ניתן היה להחיל את התוצאה של הזמנת sudemi %1$s: %2$s"
 
 #: includes/class-sudemi-orders.php:293 includes/class-sudemi-orders.php:365
 msgid "reason not given"
-msgstr "未提供原因"
+msgstr "לא צוינה סיבה"
 
 #. translators: %s: the reason sudemi gave.
 #: includes/class-sudemi-orders.php:299
 #, php-format
 msgid "sudemi released the buyer's payment: %s. Nothing was charged and the stock has been restored."
-msgstr "sudemi 已释放买家的款项：%s。未扣款，库存已恢复。"
+msgstr "sudemi שחררה את הסכום ששוריין בכרטיס של הקונה: %s. לא בוצע חיוב והמלאי שוחזר."
 
 #. translators: 1: sudemi order id, 2: reason.
 #: includes/class-sudemi-orders.php:306
 #, php-format
 msgid "sudemi order %1$s was released after all: %2$s. The local order was cancelled and stock restored."
-msgstr "sudemi 订单 %1$s 最终被释放：%2$s。本地订单已取消，库存已恢复。"
+msgstr "הסכום ששוריין עבור הזמנת sudemi %1$s שוחרר בכל זאת: %2$s. ההזמנה המקומית בוטלה והמלאי שוחזר."
 
 #: includes/class-sudemi-orders.php:319
 msgid "Paid on sudemi: every shop in the buyer's payment has answered and the buyer has been charged. This order can be shipped."
-msgstr "已在 sudemi 上付款：买家付款中的所有店铺均已答复，买家已被扣款。此订单可以发货。"
+msgstr "שולמה ב-sudemi: כל החנויות בתשלום של הקונה ענו והקונה חויב. אפשר לשלוח את ההזמנה הזו."
 
 #. translators: 1: sudemi order id, 2: local order number.
 #: includes/class-sudemi-orders.php:324
 #, php-format
 msgid "sudemi order %1$s is paid; order #%2$s moved to Processing."
-msgstr "sudemi 订单 %1$s 已付款；订单 #%2$s 已转为“处理中”。"
+msgstr "הזמנת sudemi %1$s שולמה; הזמנה #%2$s עברה לסטטוס \"בטיפול\"."
 
 #: includes/class-sudemi-orders.php:354
 msgid "Could not fetch the delivery address from sudemi yet. The order is paid; open it again shortly or contact support before shipping."
-msgstr "暂时无法从 sudemi 获取收货地址。订单已付款；请稍后重新打开，或在发货前联系 sudemi 客服。"
+msgstr "עדיין לא ניתן היה לקבל את כתובת המשלוח מ-sudemi. ההזמנה שולמה; יש לפתוח אותה שוב בעוד זמן קצר או לפנות לתמיכה לפני השליחה."
 
 #. translators: %s: the explanation sudemi gave.
 #: includes/class-sudemi-orders.php:364
 #, php-format
 msgid "sudemi has no delivery address for this order: %s"
-msgstr "sudemi 没有此订单的收货地址：%s"
+msgstr "ל-sudemi אין כתובת משלוח להזמנה הזו: %s"
 
 #: includes/class-sudemi-orders.php:403
 msgid "the order had no recognisable items"
-msgstr "订单中没有可识别的商品"
+msgstr "בהזמנה לא היו פריטים מזוהים"
 
 #. translators: %s: the product title as sudemi knows it.
 #: includes/class-sudemi-orders.php:411
 #, php-format
 msgid "\"%s\" is no longer sold here"
-msgstr "“%s”已不在本店销售"
+msgstr "\"%s\" כבר לא נמכר כאן"
 
 #: includes/class-sudemi-orders.php:412
 msgid "an item"
-msgstr "某件商品"
+msgstr "פריט"
 
 #. translators: %s: the product name.
 #: includes/class-sudemi-orders.php:419
 #, php-format
 msgid "\"%s\" is out of stock"
-msgstr "“%s”缺货"
+msgstr "\"%s\" אזל מהמלאי"
 
 #. translators: %s: the product name.
 #: includes/class-sudemi-orders.php:426
 #, php-format
 msgid "\"%s\" cannot currently be bought"
-msgstr "“%s”目前无法购买"
+msgstr "\"%s\" לא ניתן לרכישה כרגע"
 
 #. translators: %s: the sudemi order id.
 #: includes/class-sudemi-orders.php:471
 #, php-format
 msgid "Placed through sudemi (order %s). The buyer has been authorised but not yet charged."
-msgstr "通过 sudemi 下单（订单 %s）。买家付款已获授权，但尚未扣款。"
+msgstr "בוצעה דרך sudemi (הזמנה %s). התשלום של הקונה אושר אך עדיין לא נגבה."
 
 #: includes/class-sudemi-orders.php:478
 msgid "Awaiting confirmation with sudemi."
-msgstr "等待 sudemi 确认。"
+msgstr "ממתינה לאישור מול sudemi."
 
 #. translators: 1: event name, 2: sudemi order id, 3: error message.
 #: includes/class-sudemi-orders.php:610
 #, php-format
 msgid "Could not report %1$s for sudemi order %2$s: %3$s"
-msgstr "无法为 sudemi 订单 %2$s 报告 %1$s：%3$s"
+msgstr "לא ניתן היה לדווח על %1$s עבור הזמנת sudemi %2$s: %3$s"
 
 #. translators: 1: event name, 2: sudemi order id.
 #: includes/class-sudemi-orders.php:621
 #, php-format
 msgid "Reported %1$s for sudemi order %2$s."
-msgstr "已为 sudemi 订单 %2$s 报告 %1$s。"
+msgstr "דווח על %1$s עבור הזמנת sudemi %2$s."
 
 #: includes/class-sudemi-pairing.php:36
 msgid "This server is missing the sodium extension, which the connection needs in order to sign requests. Ask your host to enable it."
-msgstr "此服务器缺少 sodium 扩展，连接需要它来签名请求。请联系你的主机服务商启用它。"
+msgstr "בשרת הזה חסרה ההרחבה sodium, שהחיבור זקוק לה כדי לחתום על בקשות. יש לבקש מספק האחסון להפעיל אותה."
 
 #: includes/class-sudemi-pairing.php:40
 msgid "A signing key could not be created on this server."
-msgstr "无法在此服务器上创建签名密钥。"
+msgstr "לא ניתן היה ליצור מפתח חתימה בשרת הזה."
 
 #: includes/class-sudemi-pairing.php:60
 msgid "sudemi refused to start the connection."
-msgstr "sudemi 拒绝建立连接。"
+msgstr "sudemi סירבה להתחיל את החיבור."
 
 #. translators: %d: number of products.
 #: includes/class-sudemi-sync.php:108
 #, php-format
 msgid "Synced %d products."
-msgstr "已同步 %d 个商品。"
+msgstr "סונכרנו %d מוצרים."
 
 msgid "the full amount"
-msgstr "全部金额"
+msgstr "מלוא הסכום"
 
 #, php-format
 msgid "Refunded %s to the buyer through sudemi."
-msgstr "已通过 sudemi 向买家退款 %s。"
+msgstr "בוצע לקונה החזר כספי של %s דרך sudemi."
 
 #, php-format
 msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com)."
-msgstr "sudemi 未退款：%s。买家尚未收到退款；请联系 sudemi 客服（support@sudemi.com）。"
+msgstr "sudemi לא ביצעה את ההחזר הכספי: %s. הקונה לא קיבל את הכסף בחזרה; פנו לתמיכה של sudemi (support@sudemi.com)."
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Right of withdrawal"
-msgstr "撤回权"
+msgstr "זכות ביטול"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "None - normal right of withdrawal applies"
-msgstr "无，适用常规撤回权"
+msgstr "אין - חלה זכות הביטול הרגילה"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed."
-msgstr "仅适用于依法属于例外情形的商品。买家在付款前即可看到；不得滥用。"
+msgstr "רק עבור מוצרים שחל עליהם חריג על פי חוק. הקונים רואים זאת לפני התשלום; שימוש לרעה אסור."
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Sealed for health or hygiene reasons (not returnable once unsealed)"
-msgstr "因健康或卫生原因密封（拆封后不可退货）"
+msgstr "אטום מטעמי בריאות או היגיינה (לא ניתן להחזיר לאחר פתיחת האריזה)"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Made to the buyer’s specifications or personalised"
-msgstr "按买家要求定制或个性化"
+msgstr "מיוצר לפי מפרט הקונה או מותאם אישית"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Perishable or quickly expiring"
-msgstr "易腐或保质期短"
+msgstr "מתכלה או בעל תוקף קצר"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Sealed audio, video or software (not returnable once unsealed)"
-msgstr "密封的音像制品或软件（拆封后不可退货）"
+msgstr "הקלטות שמע, וידאו או תוכנה באריזה אטומה (לא ניתן להחזיר לאחר פתיחה)"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Newspaper, periodical or magazine"
-msgstr "报纸、期刊或杂志"
+msgstr "עיתון, כתב עת או מגזין"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Inseparably mixed with other items after delivery"
-msgstr "交付后与其他物品不可分离地混合"
+msgstr "מתערבב לאחר המסירה באופן בלתי נפרד עם פריטים אחרים"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Alcohol with a market-dependent price, delivered after 30+ days"
-msgstr "价格随市场波动、30 天后交付的酒精饮料"
+msgstr "משקאות אלכוהוליים במחיר תלוי שוק, הנמסרים לאחר יותר מ-30 יום"
 
 #: includes/class-sudemi-support.php
 msgid "Choose a category."
-msgstr "请选择一个类别。"
+msgstr "בחרו קטגוריה."
 
 #: includes/class-sudemi-support.php
 msgid "The subject must be between 3 and 200 characters."
-msgstr "主题长度须为 3 到 200 个字符。"
+msgstr "הנושא חייב להכיל בין 3 ל־200 תווים."
 
 #: includes/class-sudemi-support.php
 msgid "The message cannot be empty or longer than 10,000 characters."
-msgstr "消息不能为空，也不能超过 10,000 个字符。"
+msgstr "ההודעה לא יכולה להיות ריקה או ארוכה מ־10,000 תווים."
 
 #: includes/class-sudemi-support.php
 msgid "That does not look like a sudemi order ID. Copy the full ID, or leave the field empty."
-msgstr "这看起来不像 sudemi 订单 ID。请复制完整的 ID，或将此栏留空。"
+msgstr "זה לא נראה כמו מזהה הזמנה של sudemi. העתיקו את המזהה המלא או השאירו את השדה ריק."
 
 #: includes/class-sudemi-support.php
 msgid "sudemi could not accept this. Check the subject and the message, and that the order ID belongs to an order of this shop."
-msgstr "sudemi 无法受理此请求。请检查主题和消息，并确认订单 ID 属于本店的订单。"
+msgstr "sudemi לא יכלה לקבל את הפנייה. בדקו את הנושא וההודעה, וודאו שמזהה ההזמנה שייך להזמנה של החנות הזו."
 
 #: includes/class-sudemi-support.php
 msgid "This ticket was not found. It may belong to another shop or to an earlier connection."
-msgstr "未找到此工单。它可能属于其他店铺或之前的连接。"
+msgstr "הפנייה לא נמצאה. ייתכן שהיא שייכת לחנות אחרת או לחיבור קודם."
 
 #: includes/class-sudemi-support.php
 msgid "This shop has too many open tickets, or opened several in the last hour. Please wait a while, or reply to an existing ticket instead."
-msgstr "本店未关闭的工单过多，或在过去一小时内已提交多个工单。请稍候，或直接回复现有工单。"
+msgstr "לחנות הזו יש יותר מדי פניות פתוחות, או שנפתחו כמה פניות בשעה האחרונה. המתינו מעט, או השיבו בפנייה קיימת."
 
 #: includes/class-sudemi-support.php
 msgid "sudemi refused this shop. Check the connection on the overview tab."
-msgstr "sudemi 拒绝了本店。请在“概览”选项卡中检查连接。"
+msgstr "sudemi דחתה את החנות הזו. בדקו את החיבור בלשונית סקירה כללית."
 
 #: includes/class-sudemi-support.php
 msgid "Could not reach sudemi just now. Please try again shortly."
-msgstr "暂时无法连接 sudemi，请稍后再试。"
+msgstr "לא ניתן להתחבר ל־sudemi כרגע. נסו שוב בעוד רגע."
 
 #: includes/class-sudemi-support.php
 msgid "Payment"
-msgstr "付款"
+msgstr "תשלום"
 
 #: includes/class-sudemi-support.php
 msgid "Refund or return"
-msgstr "退款或退货"
+msgstr "החזר כספי או החזרת מוצר"
 
 #: includes/class-sudemi-support.php
 msgid "Account"
-msgstr "账户"
+msgstr "חשבון"
 
 #: includes/class-sudemi-support.php
 msgid "Shop plugin or connection"
-msgstr "店铺插件或连接"
+msgstr "תוסף החנות או החיבור"
 
 #: includes/class-sudemi-support.php
 msgid "Payouts"
-msgstr "打款"
+msgstr "תשלומים אליכם"
 
 #: includes/class-sudemi-support.php
 msgid "Other"
-msgstr "其他"
+msgstr "אחר"
 
 #: includes/class-sudemi-support.php
 msgctxt "support ticket status"
 msgid "Open"
-msgstr "处理中"
+msgstr "פתוחה"
 
 #: includes/class-sudemi-support.php
 msgid "Waiting for your reply"
-msgstr "等待你的回复"
+msgstr "ממתינה לתגובתכם"
 
 #: includes/class-sudemi-support.php
 msgid "Answered"
-msgstr "已回复"
+msgstr "נענתה"
 
 #: includes/class-sudemi-support.php
 msgid "Closed"
-msgstr "已关闭"
+msgstr "סגורה"
 
 #: admin/class-sudemi-admin.php
 msgid "Overview"
-msgstr "概览"
+msgstr "סקירה כללית"
 
 #: admin/class-sudemi-admin.php
 msgid "Support"
-msgstr "客服支持"
+msgstr "תמיכה"
 
 #: admin/class-sudemi-admin.php
 msgid "Support is available once this shop is connected to sudemi."
-msgstr "本店连接到 sudemi 后即可使用客服支持。"
+msgstr "התמיכה זמינה ברגע שהחנות הזו מחוברת ל־sudemi."
 
 #: admin/class-sudemi-admin.php
 msgid "Questions about an order, a payment, payouts or this plugin? Open a ticket and sudemi support answers here. You also get an e-mail when they reply."
-msgstr "对订单、付款、打款或本插件有疑问？请提交工单，sudemi 客服会在这里回复。收到回复时，你也会收到一封电子邮件。"
+msgstr "יש לכם שאלה על הזמנה, תשלום, התשלומים אליכם או על התוסף הזה? פתחו פנייה, והתמיכה של sudemi תענה כאן. תקבלו גם הודעת דוא״ל כשתגיע תשובה."
 
 #: admin/class-sudemi-admin.php
 msgid "Your tickets"
-msgstr "你的工单"
+msgstr "הפניות שלכם"
 
 #: admin/class-sudemi-admin.php
 msgid "No tickets yet."
-msgstr "暂无工单。"
+msgstr "אין פניות עדיין."
 
 #: admin/class-sudemi-admin.php
 msgid "Number"
-msgstr "编号"
+msgstr "מספר"
 
 #: admin/class-sudemi-admin.php
 msgid "Subject"
-msgstr "主题"
+msgstr "נושא"
 
 #: admin/class-sudemi-admin.php
 msgid "Last updated"
-msgstr "最后更新"
+msgstr "עדכון אחרון"
 
 #: admin/class-sudemi-admin.php
 msgid "Open a ticket"
-msgstr "提交工单"
+msgstr "פתיחת פנייה"
 
 #: admin/class-sudemi-admin.php
 msgid "Category"
-msgstr "类别"
+msgstr "קטגוריה"
 
 #: admin/class-sudemi-admin.php
 msgid "Message"
-msgstr "消息"
+msgstr "הודעה"
 
 #: admin/class-sudemi-admin.php
 msgid "sudemi order ID (optional)"
-msgstr "sudemi 订单 ID（可选）"
+msgstr "מזהה הזמנה ב־sudemi (לא חובה)"
 
 #: admin/class-sudemi-admin.php
 msgid "The full order ID as sudemi shows it, if your question is about one order."
-msgstr "如果你的问题涉及某个订单，请填写 sudemi 显示的完整订单 ID。"
+msgstr "מזהה ההזמנה המלא כפי שהוא מוצג ב־sudemi, אם השאלה נוגעת להזמנה אחת."
 
 #: admin/class-sudemi-admin.php
 msgid "Send ticket"
-msgstr "提交工单"
+msgstr "שליחת הפנייה"
 
 #: admin/class-sudemi-admin.php
 msgid "Back to your tickets"
-msgstr "返回工单列表"
+msgstr "חזרה לפניות שלכם"
 
 #. translators: 1: ticket number, e.g. S-000123; 2: ticket subject.
 #: admin/class-sudemi-admin.php
 #, php-format
 msgid "Ticket %1$s: %2$s"
-msgstr "工单 %1$s：%2$s"
+msgstr "פנייה %1$s: %2$s"
 
 #: admin/class-sudemi-admin.php
 msgid "sudemi support"
-msgstr "sudemi 客服"
+msgstr "התמיכה של sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "You"
-msgstr "你"
+msgstr "אתם"
 
 #: admin/class-sudemi-admin.php
 msgid "Reply"
-msgstr "回复"
+msgstr "תגובה"
 
 #: admin/class-sudemi-admin.php
 msgid "This ticket is closed. Replying opens it again."
-msgstr "此工单已关闭。回复后将重新打开。"
+msgstr "הפנייה הזו סגורה. תגובה תפתח אותה מחדש."
 
 #: admin/class-sudemi-admin.php
 msgid "Send reply"
-msgstr "发送回复"
+msgstr "שליחת התגובה"
 
 #: admin/class-sudemi-admin.php
 msgid "Your ticket was sent. sudemi support answers here, and by e-mail."
-msgstr "你的工单已提交。sudemi 客服将在这里并通过电子邮件回复你。"
+msgstr "הפנייה נשלחה. התמיכה של sudemi תענה כאן ובדוא״ל."
 
 #: admin/class-sudemi-admin.php
 msgid "Your reply was sent."
-msgstr "你的回复已发送。"
+msgstr "התגובה נשלחה."
 
 #. translators: %s: the address the shop is connected to sudemi under, e.g. https://shop.example.com
 #: includes/class-sudemi-heartbeat.php
 #, php-format
 msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address (%s). If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
-msgstr "sudemi 拒绝了来自此网站的请求：此店铺以另一个地址（%s）连接到 sudemi。如果此网站是测试副本（staging）或恢复的备份，请在此断开 sudemi 连接。如果店铺已迁移到此地址，请重新连接。"
+msgstr "sudemi דחתה בקשות מהאתר הזה: החנות הזו מחוברת ל-sudemi בכתובת אחרת (%s). אם האתר הזה הוא עותק בדיקות (staging) או גיבוי משוחזר, יש לנתק את sudemi כאן. אם החנות עברה לכתובת הזו, יש לחבר אותה מחדש."
 
 #: includes/class-sudemi-heartbeat.php
 msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address. If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
-msgstr "sudemi 拒绝了来自此网站的请求：此店铺以另一个地址连接到 sudemi。如果此网站是测试副本（staging）或恢复的备份，请在此断开 sudemi 连接。如果店铺已迁移到此地址，请重新连接。"
+msgstr "sudemi דחתה בקשות מהאתר הזה: החנות הזו מחוברת ל-sudemi בכתובת אחרת. אם האתר הזה הוא עותק בדיקות (staging) או גיבוי משוחזר, יש לנתק את sudemi כאן. אם החנות עברה לכתובת הזו, יש לחבר אותה מחדש."
 
 #. translators: 1: the buyer's reason, 2: the date the shop has to answer by.
 #: includes/class-sudemi-requests.php
 #, php-format
 msgid "The buyer asked on sudemi to return this order. Reason: %1$s. Accept or reject (with a reason) by %2$s on this order or under WooCommerce > sudemi."
-msgstr "买家已在 sudemi 上申请退回此订单。原因：%1$s。请在 %2$s 之前在此订单或 WooCommerce > sudemi 中接受或拒绝（需说明原因）。"
+msgstr "הקונה ביקש ב-sudemi להחזיר הזמנה זו. סיבה: %1$s. אשרו או דחו (עם סיבה) עד %2$s בהזמנה זו או תחת WooCommerce > sudemi."
 
 #: includes/class-sudemi-requests.php
 msgid "none given"
-msgstr "未说明"
+msgstr "לא צוינה"
 
 #: includes/class-sudemi-requests.php
 msgid "A rejection needs a reason. The buyer is shown it."
-msgstr "拒绝需要说明原因，买家会看到该原因。"
+msgstr "לדחייה נדרשת סיבה. הקונה יראה אותה."
 
 #: includes/class-sudemi-requests.php
 msgid "That is not a sudemi order."
-msgstr "这不是 sudemi 订单。"
+msgstr "זו אינה הזמנת sudemi."
 
 #: includes/class-sudemi-requests.php
 msgid "Return request accepted on sudemi. Refund the buyer here (WooCommerce refund) once the item is back; the refund goes through sudemi and closes the request."
-msgstr "已在 sudemi 上接受退货申请。商品退回后请在此处为买家退款（WooCommerce 退款）；退款通过 sudemi 完成并关闭该申请。"
+msgstr "בקשת ההחזרה אושרה ב-sudemi. החזירו לקונה את הכסף כאן (החזר WooCommerce) לאחר שהפריט חזר; ההחזר עובר דרך sudemi וסוגר את הבקשה."
 
 #. translators: %s: the reason the shop gave, shown to the buyer.
 #: includes/class-sudemi-requests.php
 #, php-format
 msgid "Return request rejected on sudemi. Reason shown to the buyer: %s"
-msgstr "已在 sudemi 上拒绝退货申请。向买家显示的原因：%s"
+msgstr "בקשת ההחזרה נדחתה ב-sudemi. הסיבה שמוצגת לקונה: %s"
 
 #: includes/class-sudemi-requests.php
 msgid "Return accepted. Refund the buyer once the item is back, with a WooCommerce refund on the order."
-msgstr "已接受退货。商品退回后，请在订单上通过 WooCommerce 退款为买家退款。"
+msgstr "ההחזרה אושרה. החזירו לקונה את הכסף לאחר שהפריט חזר, בהחזר WooCommerce בהזמנה."
 
 #: includes/class-sudemi-requests.php
 msgid "Return rejected. The buyer is shown your reason."
-msgstr "已拒绝退货。买家会看到你的原因。"
+msgstr "ההחזרה נדחתה. הקונה רואה את הסיבה שלכם."
 
 #: includes/class-sudemi-requests.php
 msgid "This request was already answered."
-msgstr "此申请已答复过。"
+msgstr "כבר ניתנה תשובה לבקשה זו."
 
 #: includes/class-sudemi-requests.php
 msgid "This order has no open return request on sudemi any more."
-msgstr "此订单在 sudemi 上已没有未处理的退货申请。"
+msgstr "להזמנה זו אין עוד בקשת החזרה פתוחה ב-sudemi."
 
 #. translators: %s: error message.
 #: includes/class-sudemi-requests.php
 #, php-format
 msgid "Could not reach sudemi: %s. Nothing was sent; try again."
-msgstr "无法连接 sudemi：%s。未发送任何内容，请重试。"
+msgstr "לא ניתן להתחבר ל-sudemi: %s. דבר לא נשלח; נסו שוב."
 
 #: includes/class-sudemi-orders.php
 msgid "Cancelled by the buyer on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
-msgstr "买家已在发货前于 sudemi 上取消；已向买家全额退款。请勿发出此订单。"
+msgstr "בוטלה על ידי הקונה ב-sudemi לפני המשלוח; הקונה קיבל החזר מלא. אל תשלחו הזמנה זו."
 
 #. translators: 1: sudemi order id, 2: local order number.
 #: includes/class-sudemi-orders.php
 #, php-format
 msgid "sudemi order %1$s was cancelled by the buyer before shipping; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi 订单 %1$s 已由买家在发货前取消；订单 #%2$s 已在此取消，库存已恢复。"
+msgstr "הזמנת sudemi %1$s בוטלה על ידי הקונה לפני המשלוח; הזמנה מס' %2$s בוטלה כאן והמלאי הוחזר."
 
 #: admin/class-sudemi-admin.php
 msgid "return requested"
-msgstr "已申请退货"
+msgstr "התבקשה החזרה"
 
 #: admin/class-sudemi-admin.php
 msgid "Return requests"
-msgstr "退货申请"
+msgstr "בקשות החזרה"
 
 #: admin/class-sudemi-admin.php
 msgid "No return requests waiting for an answer."
-msgstr "没有等待答复的退货申请。"
+msgstr "אין בקשות החזרה שממתינות לתשובה."
 
 #: admin/class-sudemi-admin.php
 msgid "Buyers asked to return these delivered orders. Answer each by the date shown: accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on the order."
-msgstr "买家申请退回以下已送达的订单。请在显示的日期前逐一答复：接受，或说明原因后拒绝（买家会看到原因）。未答复时由 sudemi 决定。接受后，商品退回时请在订单上通过 WooCommerce 退款为买家退款。"
+msgstr "קונים ביקשו להחזיר את ההזמנות שנמסרו האלה. ענו על כל אחת עד התאריך המוצג: אשרו, או דחו עם סיבה (הקונה יראה אותה). ללא תשובה, sudemi מחליטה. לאחר האישור, החזירו לקונה את הכסף לאחר שהפריט חזר, בהחזר WooCommerce בהזמנה."
 
 #: admin/class-sudemi-admin.php
 msgid "Buyer's reason"
-msgstr "买家的原因"
+msgstr "הסיבה של הקונה"
 
 #: admin/class-sudemi-admin.php
 msgid "Answer by"
-msgstr "答复截止"
+msgstr "לענות עד"
 
 #: admin/class-sudemi-admin.php
 msgid "Your answer"
-msgstr "你的答复"
+msgstr "התשובה שלכם"
 
 #: admin/class-sudemi-admin.php
 msgid "Accept the return"
-msgstr "接受退货"
+msgstr "אישור ההחזרה"
 
 #: admin/class-sudemi-admin.php
 msgid "Reject the return"
-msgstr "拒绝退货"
+msgstr "דחיית ההחזרה"
 
 #: admin/class-sudemi-admin.php
 msgid "Reason for rejecting (shown to the buyer)"
-msgstr "拒绝原因（会显示给买家）"
+msgstr "סיבת הדחייה (מוצגת לקונה)"
 
 #: admin/class-sudemi-admin.php
 msgid "sudemi: the buyer asked to return this order"
-msgstr "sudemi：买家申请退回此订单"
+msgstr "sudemi: הקונה מבקש להחזיר הזמנה זו"
 
 #: admin/class-sudemi-admin.php
 msgid "Accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on this order."
-msgstr "接受，或说明原因后拒绝（买家会看到原因）。未答复时由 sudemi 决定。接受后，商品退回时请在此订单上通过 WooCommerce 退款为买家退款。"
+msgstr "אשרו, או דחו עם סיבה (הקונה יראה אותה). ללא תשובה, sudemi מחליטה. לאחר האישור, החזירו לקונה את הכסף לאחר שהפריט חזר, בהחזר WooCommerce בהזמנה זו."
 
 msgid "1. Add this line to the server's crontab (crontab -e), or as a cron job in your hosting panel:"
-msgstr "1. 将这一行添加到服务器的 crontab（crontab -e），或在主机控制面板中添加为定时任务："
+msgstr "1. הוסיפו שורה זו ל-crontab של השרת (crontab -e), או כמשימת cron בלוח הבקרה של האחסון:"
 
 msgid "2. Then switch off the visit-driven WP-Cron by adding this line to wp-config.php, above the line that says to stop editing:"
-msgstr "2. 然后在 wp-config.php 中提示停止编辑的那一行之上添加这一行，关闭依赖访问触发的 WP-Cron："
+msgstr "2. לאחר מכן כבו את WP-Cron המופעל על ידי ביקורים, על ידי הוספת שורה זו ל-wp-config.php, מעל השורה שאומרת להפסיק לערוך:"
 
 msgid "Cancelled on sudemi as well: the buyer was not charged for this order."
-msgstr "已在 sudemi 上一并取消：买家未因此订单被扣款。"
+msgstr "בוטלה גם ב-sudemi: הקונה לא חויב עבור הזמנה זו."
 
 msgid "Could not report %1$s for sudemi order %2$s yet (%3$s). It is sent again on the next heartbeat."
-msgstr "暂时无法为 sudemi 订单 %2$s 报告 %1$s（%3$s）。将在下一次心跳时重新发送。"
+msgstr "עדיין לא ניתן היה לדווח %1$s עבור הזמנת sudemi %2$s (%3$s). הדיווח יישלח שוב בדיווח הבא."
 
 msgid "Could not tell sudemi about this cancellation yet. It is retried on the next heartbeat; the buyer is not charged for it."
-msgstr "暂时无法将此取消通知 sudemi。将在下一次心跳时重试；买家不会被扣款。"
+msgstr "עדיין לא ניתן היה לעדכן את sudemi על הביטול. יתבצע ניסיון חוזר בדיווח הבא; הקונה לא מחויב על כך."
 
 msgid "Keep this shop reporting in (cron)"
-msgstr "保持本店定期报到（cron）"
+msgstr "שמרו על דיווח קבוע של החנות (cron)"
 
 msgid "Last successful report"
-msgstr "上次成功报到"
+msgstr "הדיווח המוצלח האחרון"
 
 msgid "More than 15 minutes ago: sudemi pauses this shop's products until it reports in again. Set up the cron job below."
-msgstr "已超过 15 分钟：在本店重新报到之前，sudemi 会暂停其商品。请在下方设置定时任务。"
+msgstr "לפני יותר מ-15 דקות: sudemi משהה את מוצרי החנות עד שתדווח שוב. הגדירו את משימת ה-cron למטה."
 
 msgid "Order updates waiting"
-msgstr "待发送的订单更新"
+msgstr "עדכוני הזמנות ממתינים"
 
 msgid "Shipped, delivered or cancelled orders that sudemi has not heard about yet. They are sent again on every report until sudemi answers."
-msgstr "sudemi 尚未获知的已发货、已送达或已取消的订单。每次报到都会重新发送，直到 sudemi 回复。"
+msgstr "הזמנות שנשלחו, נמסרו או בוטלו ו-sudemi עדיין לא יודעת עליהן. הן נשלחות שוב בכל דיווח עד ש-sudemi עונה."
 
 msgid "The catalogue sync is on hold: it would remove %1$d of %2$d listed products from sudemi, so nothing was changed. If those products really were removed from this shop, contact sudemi support (support@sudemi.com)."
-msgstr "目录同步已暂停：它会从 sudemi 下架 %2$d 个在售商品中的 %1$d 个，因此未做任何更改。如果这些商品确实已从本店移除，请联系 sudemi 客服（support@sudemi.com）。"
+msgstr "סנכרון הקטלוג מושהה: הוא היה מסיר מ-sudemi %1$d מתוך %2$d מוצרים מוצגים, ולכן דבר לא שונה. אם המוצרים האלה באמת הוסרו מהחנות, פנו לתמיכה של sudemi (support@sudemi.com)."
 
 msgid "WP-Cron is still visit-driven on this site. It works on busy shops, but a real cron job is more reliable."
-msgstr "本站的 WP-Cron 仍依赖访问触发。访问量大的店铺可以这样运行，但真正的定时任务更可靠。"
+msgstr "באתר זה WP-Cron עדיין מופעל על ידי ביקורים. זה עובד בחנויות עמוסות, אבל משימת cron אמיתית אמינה יותר."
 
 msgid "WP-Cron is switched off on this site (DISABLE_WP_CRON), so the cron job in step 1 is required: without it this shop never reports in."
-msgstr "本站已关闭 WP-Cron（DISABLE_WP_CRON），因此必须设置第 1 步中的定时任务：否则本店永远不会报到。"
+msgstr "WP-Cron כבוי באתר זה (DISABLE_WP_CRON), ולכן משימת ה-cron משלב 1 נדרשת: בלעדיה החנות לעולם לא מדווחת."
 
 msgid "WordPress runs its scheduled tasks (WP-Cron) only when someone visits the site. In a quiet hour nobody does, this shop stops reporting in, and sudemi pauses its products and cannot ask it about new orders. Let the server call WP-Cron every 5 minutes instead."
-msgstr "WordPress 只有在有人访问网站时才会运行计划任务（WP-Cron）。在冷清的时段没有人访问，本店就停止报到，sudemi 会暂停其商品，也无法向其询问新订单。请改由服务器每 5 分钟调用一次 WP-Cron。"
+msgstr "וורדפרס מריצה משימות מתוזמנות (WP-Cron) רק כשמישהו מבקר באתר. בשעה שקטה אף אחד לא מבקר, החנות מפסיקה לדווח, ו-sudemi משהה את מוצריה ואינה יכולה לשאול אותה על הזמנות חדשות. במקום זאת, תנו לשרת להפעיל את WP-Cron כל 5 דקות."
 
 msgid "no answer"
-msgstr "无应答"
+msgstr "אין תשובה"
 
 msgid "sudemi answered the last report in time."
-msgstr "sudemi 已及时回复上次报到。"
+msgstr "sudemi ענתה לדיווח האחרון בזמן."
 
 msgid "sudemi has not answered the confirmation yet. The order stays on hold with its stock reserved and is asked about again on the next heartbeat. Do not ship it until it moves to Processing."
-msgstr "sudemi 尚未回复确认。订单保持暂挂并保留库存，将在下一次心跳时再次询问。在状态变为“处理中”之前请勿发货。"
+msgstr "sudemi עדיין לא ענתה לאישור. ההזמנה נשארת בהמתנה עם מלאי שמור, ותיבדק שוב בדיווח הבא. אל תשלחו אותה עד שתעבור לסטטוס \"בטיפול\"."
 
 msgid "sudemi says this order is PAID, but it is cancelled here. Either ship it, or refund it to the buyer (set it to Processing and then Cancelled, or contact support@sudemi.com)."
-msgstr "sudemi 显示此订单已付款，但在这里已被取消。请发货，或给买家退款（先设为“处理中”再设为“已取消”，或联系 support@sudemi.com）。"
+msgstr "sudemi מציינת שההזמנה הזו שולמה, אבל כאן היא מבוטלת. שלחו אותה, או החזירו לקונה את הכסף (העבירו אותה לסטטוס \"בטיפול\" ואז ל\"בוטלה\", או פנו אל support@sudemi.com)."
 
 msgid "the order was cancelled in this shop"
-msgstr "订单已在本店取消"
+msgstr "ההזמנה בוטלה בחנות זו"
 
 msgid "sudemi shipping"
-msgstr "sudemi 配送"
+msgstr "משלוח sudemi"
 
 #, php-format
 msgid "sudemi order %1$s could not be booked: %2$s. Check the shop currency on the sudemi settings page."
-msgstr "无法记录 sudemi 订单 %1$s：%2$s。请在 sudemi 设置页面检查店铺货币。"
+msgstr "לא ניתן היה לרשום את הזמנת sudemi %1$s: %2$s. בדקו את מטבע החנות בדף ההגדרות של sudemi."
 
 msgid "the order did not say which currency it was paid in"
-msgstr "订单没有说明用哪种货币付款"
+msgstr "ההזמנה לא ציינה באיזה מטבע שולמה"
 
 #, php-format
 msgid "the order was paid in %1$s but this shop sells in %2$s, so it cannot be booked here"
-msgstr "订单用 %1$s 付款，但本店以 %2$s 销售，因此无法在这里记录"
+msgstr "ההזמנה שולמה ב-%1$s אבל החנות הזו מוכרת ב-%2$s, ולכן אי אפשר לרשום אותה כאן"
 
 #, php-format
 msgid "this refund is in %1$s but the buyer paid in %2$s; change the order back to %2$s and refund again"
-msgstr "这笔退款是 %1$s，但买家用 %2$s 付款；请把订单改回 %2$s 后重新退款"
+msgstr "ההחזר הזה הוא ב-%1$s אבל הקונה שילם ב-%2$s; החזירו את ההזמנה ל-%2$s ובצעו את ההחזר שוב"
 
 #, php-format
 msgid "This refund was NOT sent to sudemi: %s. The buyer has not been paid back."
-msgstr "这笔退款没有发送到 sudemi：%s。买家没有收到退款。"
+msgstr "ההחזר הזה לא נשלח ל-sudemi: %s. הקונה לא קיבל את הכסף בחזרה."
 
 msgid "Currency"
-msgstr "货币"
+msgstr "מטבע"
 
 msgid "Your shop currency"
-msgstr "你的店铺货币"
+msgstr "מטבע החנות שלכם"
 
 msgid "From your WooCommerce settings. Your prices are sent to sudemi in it, buyers pay in it, and orders arrive in it."
-msgstr "来自你的 WooCommerce 设置。你的价格以这种货币发送到 sudemi，买家用它付款，订单也以它到达。"
+msgstr "מהגדרות WooCommerce שלכם. המחירים שלכם נשלחים ל-sudemi במטבע הזה, הקונים משלמים בו וההזמנות מגיעות בו."
 
 msgid "Currency sudemi has for your shop"
-msgstr "sudemi 为你的店铺记录的货币"
+msgstr "המטבע ש-sudemi רושמת לחנות שלכם"
 
 msgid "not confirmed yet"
-msgstr "尚未确认"
+msgstr "עדיין לא אושר"
 
 msgid "What sudemi answered the last time this shop sent its details. It updates after the next sync."
-msgstr "本店上次发送资料时 sudemi 的回复。下次同步后更新。"
+msgstr "מה ש-sudemi ענתה בפעם האחרונה שהחנות הזו שלחה את פרטיה. מתעדכן אחרי הסנכרון הבא."
 
 #, php-format
 msgid "sudemi cannot sell in %1$s yet, so your products are not shown to buyers and no orders can come in. Currencies sudemi supports: %2$s."
-msgstr "sudemi 暂时无法以 %1$s 销售，因此买家看不到你的商品，也不会有订单。sudemi 支持的货币：%2$s。"
+msgstr "sudemi עדיין לא יכולה למכור ב-%1$s, ולכן המוצרים שלכם לא מוצגים לקונים ולא יכולות להגיע הזמנות. מטבעות ש-sudemi תומכת בהם: %2$s."
 
 #, php-format
 msgid "sudemi still has %1$s for your shop, but your shop sells in %2$s. Orders in %1$s are declined until this matches. Click \"Sync the catalogue now\" to send the new currency."
-msgstr "sudemi 仍为你的店铺记录 %1$s，但你的店铺以 %2$s 销售。在两者一致之前，%1$s 的订单会被拒绝。点击“立即同步商品目录”发送新的货币。"
+msgstr "אצל sudemi עדיין רשום %1$s לחנות שלכם, אבל החנות שלכם מוכרת ב-%2$s. הזמנות ב-%1$s נדחות עד שזה יתאים. לחצו על \"סנכרון הקטלוג עכשיו\" כדי לשלוח את המטבע החדש."
 
 msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
-msgstr "买家用你的货币付款。sudemi 以欧元向你打款：按照条款，支付服务商的货币兑换费（约 2%）会从你的打款中扣除。"
+msgstr "הקונים משלמים במטבע שלכם. התשלומים של sudemi אליכם הם באירו: עמלת המרת המטבע של ספק התשלומים (כ-2%) מנוכה מהתשלום אליכם, כפי שכתוב בתנאים."
 
 msgid "Waiting for you"
-msgstr "等待你处理"
+msgstr "ממתינה לכם"
 
 msgid "Accepted, waiting for payment"
-msgstr "已接受，等待付款"
+msgstr "התקבלה, ממתינה לתשלום"
 
 msgid "Paid, ready to ship"
-msgstr "已付款，可以发货"
+msgstr "שולמה, מוכנה למשלוח"
 
 msgid "Declined"
-msgstr "已拒绝"
+msgstr "נדחתה"
 
 msgid "Cancelled"
-msgstr "已取消"
+msgstr "בוטלה"
 
 msgid "Refunded"
-msgstr "已退款"
+msgstr "בוצע החזר"
 
 msgid "Nothing charged"
-msgstr "未扣款"
+msgstr "לא בוצע חיוב"
 
 msgid "Due once shipped"
-msgstr "发货后应打款"
+msgstr "יגיע אליכם לאחר המשלוח"
 
 msgid "Scheduled"
-msgstr "已排期"
+msgstr "מתוזמן"
 
 msgid "On its way to you"
-msgstr "正在打款给你"
+msgstr "בדרך אליכם"
 
 msgid "Held (chargeback)"
-msgstr "已冻结（拒付）"
+msgstr "מעוכב (הכחשת עסקה)"
 
 msgid "Partly paid out"
-msgstr "部分已打款"
+msgstr "שולם לכם חלקית"
 
 msgid "Paid out"
-msgstr "已打款"
+msgstr "שולם לכם"
 
 msgid "Nothing due (refunded)"
-msgstr "无需打款（已退款）"
+msgstr "אין סכום לתשלום (בוצע החזר)"
 
 msgid "Placed by the buyer"
-msgstr "买家已下单"
+msgstr "בוצעה על ידי הקונה"
 
 msgid "Accepted"
-msgstr "已接受"
+msgstr "התקבלה"
 
 msgid "Paid"
-msgstr "已付款"
+msgstr "שולמה"
 
 msgid "Refund"
-msgstr "退款"
+msgstr "החזר כספי"
 
 msgid "Buyer asked to return or cancel"
-msgstr "买家申请退货或取消"
+msgstr "הקונה ביקש להחזיר או לבטל"
 
 msgid "Request answered"
-msgstr "申请已答复"
+msgstr "ניתנה תשובה לבקשה"
 
 msgid "Not set up yet"
-msgstr "尚未设置"
+msgstr "עדיין לא הוגדר"
 
 msgid "Details missing"
-msgstr "资料不全"
+msgstr "חסרים פרטים"
 
 msgid "Under review"
-msgstr "审核中"
+msgstr "בבדיקה"
 
 msgid "Active"
-msgstr "已激活"
+msgstr "פעיל"
 
 msgid "Action required"
-msgstr "需要处理"
+msgstr "נדרשת פעולה"
 
 msgid "This is available once this shop is connected to sudemi."
-msgstr "本店连接到 sudemi 后即可使用此功能。"
+msgstr "זה זמין ברגע שהחנות הזו מחוברת ל-sudemi."
 
 msgid "All"
-msgstr "全部"
+msgstr "הכול"
 
 msgid "No orders match."
-msgstr "没有符合条件的订单。"
+msgstr "אין הזמנות תואמות."
 
 msgid "Select"
-msgstr "选择"
+msgstr "בחירה"
 
 msgid "Ship to"
-msgstr "收货地"
+msgstr "משלוח אל"
 
 msgid "Total"
-msgstr "总额"
+msgstr "סה\"כ"
 
 msgid "Payout"
-msgstr "打款"
+msgstr "תשלום אליכם"
 
 msgid "Tracking"
-msgstr "物流跟踪"
+msgstr "מעקב"
 
 msgid "WooCommerce order"
-msgstr "WooCommerce 订单"
+msgstr "הזמנת WooCommerce"
 
 msgid "With the selected orders"
-msgstr "对所选订单"
+msgstr "עם ההזמנות שנבחרו"
 
 msgid "Choose an action"
-msgstr "选择操作"
+msgstr "בחרו פעולה"
 
 msgid "Accept"
-msgstr "接受"
+msgstr "אישור"
 
 msgid "Decline"
-msgstr "拒绝"
+msgstr "דחייה"
 
 msgid "Mark shipped"
-msgstr "标记为已发货"
+msgstr "סימון כנשלחה"
 
 msgid "Mark delivered"
-msgstr "标记为已送达"
+msgstr "סימון כנמסרה"
 
 msgid "Reason for declining (shown to the buyers)"
-msgstr "拒绝原因（会显示给买家）"
+msgstr "סיבת הדחייה (מוצגת לקונים)"
 
 msgid "Carrier"
-msgstr "承运商"
+msgstr "חברת המשלוחים"
 
 msgid "Apply"
-msgstr "应用"
+msgstr "החלה"
 
 msgid "Refunds and cancellations are made one order at a time, on the order's own page: each moves a different amount of money."
-msgstr "退款和取消需在订单自己的页面上逐单进行：每一项涉及的金额都不同。"
+msgstr "החזרים וביטולים מתבצעים להזמנה אחת בכל פעם, בדף של ההזמנה עצמה: כל אחד מהם מעביר סכום כסף שונה."
 
 #, php-format
 msgid "Orders %1$d to %2$d of %3$d"
-msgstr "第 %1$d 至 %2$d 个订单，共 %3$d 个"
+msgstr "הזמנות %1$d עד %2$d מתוך %3$d"
 
 msgid "Previous"
-msgstr "上一页"
+msgstr "הקודם"
 
 msgid "Next"
-msgstr "下一页"
+msgstr "הבא"
 
 #, php-format
 msgid "answer by %s"
-msgstr "答复截止 %s"
+msgstr "לענות עד %s"
 
 #, php-format
 msgid "refunded %s"
-msgstr "已退款 %s"
+msgstr "הוחזרו %s"
 
 msgid "Tracking code"
-msgstr "物流单号"
+msgstr "קוד מעקב"
 
 msgid "From"
-msgstr "开始日期"
+msgstr "מתאריך"
 
 msgid "To"
-msgstr "结束日期"
+msgstr "עד תאריך"
 
 msgid "Search"
-msgstr "搜索"
+msgstr "חיפוש"
 
 msgid "Order number or product"
-msgstr "订单号或商品"
+msgstr "מספר הזמנה או מוצר"
 
 msgid "Sort by"
-msgstr "排序方式"
+msgstr "מיון לפי"
 
 msgid "Date"
-msgstr "日期"
+msgstr "תאריך"
 
 msgid "Newest or highest first"
-msgstr "最新或最高优先"
+msgstr "החדש או הגבוה ביותר קודם"
 
 msgid "Oldest or lowest first"
-msgstr "最早或最低优先"
+msgstr "הישן או הנמוך ביותר קודם"
 
 msgid "Filter"
-msgstr "筛选"
+msgstr "סינון"
 
 msgid "Language of the file"
-msgstr "文件语言"
+msgstr "שפת הקובץ"
 
 msgid "Numbers"
-msgstr "数字格式"
+msgstr "מספרים"
 
 msgid "1234.50, comma separated"
-msgstr "1234.50，逗号分隔"
+msgstr "1234.50, מופרד בפסיקים"
 
 msgid "1234,50, semicolon separated"
-msgstr "1234,50，分号分隔"
+msgstr "1234,50, מופרד בנקודה ופסיק"
 
 msgid "Download these orders (CSV)"
-msgstr "下载这些订单（CSV）"
+msgstr "הורדת ההזמנות האלה (CSV)"
 
 msgid "Every order that matches the filters, up to 10,000, without buyer names or addresses."
-msgstr "所有符合筛选条件的订单，最多 10,000 个，不含买家姓名和地址。"
+msgstr "כל ההזמנות שתואמות את המסננים, עד 10,000, ללא שמות או כתובות של קונים."
 
 msgid "Confirm orders automatically when the items are in stock"
-msgstr "商品有库存时自动确认订单"
+msgstr "אישור הזמנות אוטומטי כשהפריטים במלאי"
 
 msgid "Save"
-msgstr "保存"
+msgstr "שמירה"
 
 msgid "On: every five minutes this shop accepts orders whose items are in stock and declines the others."
-msgstr "开启：本店每五分钟接受商品有库存的订单，并拒绝其他订单。"
+msgstr "מופעל: כל חמש דקות החנות הזו מאשרת הזמנות שהפריטים שלהן במלאי ודוחה את האחרות."
 
 msgid "Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing."
-msgstr "关闭：订单等待你处理。请在显示的日期前在这里接受或拒绝每个订单；未答复时，买家的款项将被释放，不会扣款。"
+msgstr "כבוי: ההזמנות ממתינות לכם. אשרו או דחו כל אחת מהן כאן לפני התאריך המוצג; ללא תשובה הסכום ששוריין בכרטיס של הקונה משתחרר והקונה לא מחויב בכלום."
 
 msgid "Back to the orders"
-msgstr "返回订单列表"
+msgstr "חזרה להזמנות"
 
 #, php-format
 msgid "Order %1$s: %2$s"
-msgstr "订单 %1$s：%2$s"
+msgstr "הזמנה %1$s: %2$s"
 
 #, php-format
 msgid "Waiting for your answer. The buyer is not charged until you accept. Answer by %s; without an answer the buyer is released."
-msgstr "等待你的答复。在你接受之前，买家不会被扣款。请在 %s 前答复；未答复时，买家的款项将被释放。"
+msgstr "ממתינה לתשובתכם. הקונה לא מחויב עד שתאשרו. ענו עד %s; ללא תשובה הסכום ששוריין בכרטיס של הקונה משתחרר."
 
 #, php-format
 msgid "Stock check: %s."
-msgstr "库存检查：%s。"
+msgstr "בדיקת מלאי: %s."
 
 msgid "sudemi order"
-msgstr "sudemi 订单"
+msgstr "הזמנת sudemi"
 
 msgid "Placed"
-msgstr "下单时间"
+msgstr "תאריך ההזמנה"
 
 msgid "none yet (it is created when the order is accepted)"
-msgstr "暂无（订单被接受时创建）"
+msgstr "עדיין אין (היא נוצרת כשההזמנה מאושרת)"
 
 msgid "Buyer may withdraw until"
-msgstr "买家可撤回至"
+msgstr "הקונה רשאי לבטל עד"
 
 msgid "Reason declined"
-msgstr "拒绝原因"
+msgstr "סיבת הדחייה"
 
 msgid "Items"
-msgstr "商品"
+msgstr "פריטים"
 
 msgid "Product"
-msgstr "商品"
+msgstr "מוצר"
 
 msgid "Quantity"
-msgstr "数量"
+msgstr "כמות"
 
 msgid "Price"
-msgstr "价格"
+msgstr "מחיר"
 
 msgid "Amount"
-msgstr "金额"
+msgstr "סכום"
 
 msgid "No right of withdrawal"
-msgstr "无撤回权"
+msgstr "אין זכות ביטול"
 
 msgid "Money"
-msgstr "款项"
+msgstr "כסף"
 
 msgid "Goods"
-msgstr "商品"
+msgstr "סחורה"
 
 msgid "Shipping"
-msgstr "运费"
+msgstr "משלוח"
 
 msgid "Buyer paid"
-msgstr "买家已付"
+msgstr "הקונה שילם"
 
 msgid "sudemi commission"
-msgstr "sudemi 佣金"
+msgstr "עמלת sudemi"
 
 msgid "Refunded to the buyer"
-msgstr "已退还买家"
+msgstr "הוחזר לקונה"
 
 msgid "Payout expected"
-msgstr "预计打款"
+msgstr "תשלום צפוי אליכם"
 
 msgid "Payout due"
-msgstr "应付打款"
+msgstr "תשלום שמגיע לכם"
 
 msgid "The buyer asked to return this order"
-msgstr "买家申请退回此订单"
+msgstr "הקונה ביקש להחזיר את ההזמנה הזו"
 
 msgid "History"
-msgstr "历史记录"
+msgstr "היסטוריה"
 
 msgid "Actions"
-msgstr "操作"
+msgstr "פעולות"
 
 msgid "Accept: the buyer is charged and you ship the order."
-msgstr "接受：买家将被扣款，由你发货。"
+msgstr "אישור: הקונה מחויב ואתם שולחים את ההזמנה."
 
 msgid "Accept the order"
-msgstr "接受订单"
+msgstr "אישור ההזמנה"
 
 msgid "Reason for declining (shown to the buyer)"
-msgstr "拒绝原因（会显示给买家）"
+msgstr "סיבת הדחייה (מוצגת לקונה)"
 
 msgid "Decline the order"
-msgstr "拒绝订单"
+msgstr "דחיית ההזמנה"
 
 #, php-format
 msgid "Amount to refund (%s)"
-msgstr "退款金额（%s）"
+msgstr "סכום להחזר (%s)"
 
 #, php-format
 msgid "Leave empty to refund everything not refunded yet (%s)."
-msgstr "留空则退还所有尚未退款的金额（%s）。"
+msgstr "השאירו ריק כדי להחזיר את כל מה שעדיין לא הוחזר (%s)."
 
 msgid "Reason"
-msgstr "原因"
+msgstr "סיבה"
 
 msgid "Refund through sudemi"
-msgstr "通过 sudemi 退款"
+msgstr "החזר כספי דרך sudemi"
 
 msgid "Cancel: you cannot fulfil this paid order. The buyer is refunded in full."
-msgstr "取消：你无法履行这个已付款的订单。买家将获得全额退款。"
+msgstr "ביטול: אין באפשרותכם לספק את ההזמנה הזו ששולמה. הקונה מקבל החזר מלא."
 
 msgid "Cancel and refund in full"
-msgstr "取消并全额退款"
+msgstr "ביטול והחזר מלא"
 
 #, php-format
 msgid "The order export was cut off at 10,000 of %d orders. Narrow the dates to get the rest."
-msgstr "订单导出在 %d 个订单中的第 10,000 个处截断。请缩小日期范围以获取其余订单。"
+msgstr "ייצוא ההזמנות נעצר ב-10,000 מתוך %d הזמנות. צמצמו את טווח התאריכים כדי לקבל את השאר."
 
 msgid "Orders are confirmed automatically."
-msgstr "订单会自动确认。"
+msgstr "ההזמנות מאושרות אוטומטית."
 
 msgid "Orders now wait for you to accept or decline them."
-msgstr "现在订单会等待你接受或拒绝。"
+msgstr "ההזמנות ממתינות עכשיו שתאשרו או תדחו אותן."
 
 msgid "What sudemi buyers pay for shipping, per country. By default the prices this plugin sends from your WooCommerce shipping zones apply. You can instead set your own price per country on sudemi, and choose the countries you deliver to. One charge per parcel, never per item."
-msgstr "sudemi 买家按国家/地区支付的运费。默认使用本插件根据你的 WooCommerce 配送区域发送的价格。你也可以在 sudemi 上为每个国家/地区设置自己的价格，并选择你配送的国家/地区。每个包裹只收一次运费，绝不按件收费。"
+msgstr "כמה קונים של sudemi משלמים על משלוח, לכל מדינה. כברירת מחדל חלים המחירים שהתוסף הזה שולח מאזורי המשלוח של WooCommerce. במקום זאת אפשר לקבוע ב-sudemi מחיר משלכם לכל מדינה, ולבחור לאילו מדינות אתם שולחים. חיוב אחד לכל חבילה, אף פעם לא לכל פריט."
 
 msgid "Prices filled in from your WooCommerce shipping zones. Check them and save; nothing is changed on sudemi until you do."
-msgstr "已根据你的 WooCommerce 配送区域填入价格。请检查并保存；保存之前 sudemi 上不会有任何更改。"
+msgstr "המחירים מולאו מאזורי המשלוח של WooCommerce. בדקו אותם ושמרו; שום דבר לא משתנה ב-sudemi עד שתעשו זאת."
 
 msgid "Shipping prices"
-msgstr "运费"
+msgstr "מחירי משלוח"
 
 msgid "Use the prices from my WooCommerce shipping zones"
-msgstr "使用我的 WooCommerce 配送区域中的价格"
+msgstr "שימוש במחירים מאזורי המשלוח שלי ב-WooCommerce"
 
 msgid "Set my own countries and prices on sudemi"
-msgstr "在 sudemi 上设置我自己的国家/地区和价格"
+msgstr "הגדרת מדינות ומחירים משלי ב-sudemi"
 
 msgid "Country"
-msgstr "国家/地区"
+msgstr "מדינה"
 
 msgid "Deliver there"
-msgstr "配送到此"
+msgstr "משלוח לשם"
 
 #, php-format
 msgid "Your price on sudemi (%s)"
-msgstr "你在 sudemi 上的价格（%s）"
+msgstr "המחיר שלכם ב-sudemi (%s)"
 
 msgid "Prices from your shipping zones"
-msgstr "来自你配送区域的价格"
+msgstr "מחירים מאזורי המשלוח שלכם"
 
 msgid "Buyers pay now"
-msgstr "买家当前支付"
+msgstr "הקונים משלמים עכשיו"
 
 msgid "not offered"
-msgstr "不提供"
+msgstr "לא מוצע"
 
 msgid "your price on sudemi"
-msgstr "你在 sudemi 上的价格"
+msgstr "המחיר שלכם ב-sudemi"
 
 msgid "from your shop"
-msgstr "来自你的店铺"
+msgstr "מהחנות שלכם"
 
 msgid "With your own countries and prices: only the ticked countries are offered. A country with an empty price uses the price from your shipping zones."
-msgstr "使用你自己的国家/地区和价格时：只提供勾选的国家/地区。价格留空的国家/地区使用你配送区域中的价格。"
+msgstr "עם מדינות ומחירים משלכם: רק המדינות המסומנות מוצעות. מדינה עם מחיר ריק משתמשת במחיר מאזורי המשלוח שלכם."
 
 msgid "Save shipping on sudemi"
-msgstr "在 sudemi 上保存运费设置"
+msgstr "שמירת המשלוח ב-sudemi"
 
 msgid "Fill in from my WooCommerce shipping zones"
-msgstr "从我的 WooCommerce 配送区域填入"
+msgstr "מילוי מאזורי המשלוח שלי ב-WooCommerce"
 
 msgid "Shipping settings saved on sudemi."
-msgstr "运费设置已保存到 sudemi。"
+msgstr "הגדרות המשלוח נשמרו ב-sudemi."
 
 msgid "Saved on sudemi. Buyers see these shipping prices from now on."
-msgstr "已保存到 sudemi。从现在起买家将看到这些运费。"
+msgstr "נשמר ב-sudemi. מעכשיו הקונים רואים את מחירי המשלוח האלה."
 
 msgid "Payout account"
-msgstr "收款账户"
+msgstr "חשבון לתשלומים אליכם"
 
 msgid "State"
-msgstr "状态"
+msgstr "מצב"
 
 msgid "Act before"
-msgstr "处理截止"
+msgstr "לפעול לפני"
 
 msgid "When you are paid"
-msgstr "你何时收款"
+msgstr "מתי תקבלו תשלום"
 
 #, php-format
 msgid "%1$d days after the buyer received the order, or %2$d days after shipping if delivery is never reported; never while a chargeback is open."
-msgstr "买家收到订单后 %1$d 天；如果始终未报告送达，则在发货后 %2$d 天；存在未解决的拒付时绝不打款。"
+msgstr "%1$d ימים אחרי שהקונה קיבל את ההזמנה, או %2$d ימים אחרי המשלוח אם המסירה לא דווחה; אף פעם לא כשיש הכחשת עסקה פתוחה."
 
 msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."
-msgstr "你的收款账户需要处理。它在 sudemi 卖家门户（打款）中管理，而不是在这里。"
+msgstr "החשבון לתשלומים אליכם דורש טיפול. הוא מנוהל בפורטל המוכרים של sudemi (תשלומים אליכם), לא כאן."
 
 msgid "The payout account is managed on the sudemi seller portal (Payouts)."
-msgstr "收款账户在 sudemi 卖家门户（打款）中管理。"
+msgstr "החשבון לתשלומים אליכם מנוהל בפורטל המוכרים של sudemi (תשלומים אליכם)."
 
 msgid "This shop's payouts"
-msgstr "本店的打款"
+msgstr "התשלומים לחנות הזו"
 
 msgid "No payouts yet."
-msgstr "暂无打款。"
+msgstr "עדיין אין תשלומים אליכם."
 
 msgid "Orders"
-msgstr "订单"
+msgstr "הזמנות"
 
 msgid "Still to come"
-msgstr "待打款"
+msgstr "עוד צפוי"
 
 msgid "Next payout"
-msgstr "下次打款"
+msgstr "התשלום הבא אליכם"
 
 msgid "Manage orders: filters, export, accept, ship, refund"
-msgstr "管理订单：筛选、导出、接受、发货、退款"
+msgstr "ניהול הזמנות: סינון, ייצוא, אישור, משלוח, החזר"
 
 msgid "sudemi started the order change list over (last 7 days); orders are checked again, nothing is applied twice."
-msgstr "sudemi 已重新开始订单变更列表（最近 7 天）；订单会重新检查，不会重复应用任何内容。"
+msgstr "sudemi התחילה מחדש את רשימת שינויי ההזמנות (7 הימים האחרונים); ההזמנות נבדקות שוב, ושום דבר לא מוחל פעמיים."
 
 #, php-format
 msgid "%d WooCommerce order(s) updated from sudemi."
-msgstr "已根据 sudemi 更新 %d 个 WooCommerce 订单。"
+msgstr "%d הזמנות WooCommerce עודכנו מ-sudemi."
 
 msgid "An order change from sudemi could not be applied yet; it is read again on the next heartbeat."
-msgstr "来自 sudemi 的订单变更暂时无法应用；将在下一次心跳时重新读取。"
+msgstr "שינוי בהזמנה מ-sudemi עדיין לא הוחל; הוא ייקרא שוב בדיווח הבא."
 
 msgid "Paid on sudemi; the buyer has been charged. This order can be shipped."
-msgstr "已在 sudemi 上付款；买家已被扣款。此订单可以发货。"
+msgstr "שולמה ב-sudemi; הקונה חויב. אפשר לשלוח את ההזמנה הזו."
 
 msgid "Marked shipped on sudemi."
-msgstr "已在 sudemi 上标记为已发货。"
+msgstr "סומנה כנשלחה ב-sudemi."
 
 msgid "Declined on sudemi: the buyer was not charged. The stock has been restored."
-msgstr "已在 sudemi 上拒绝：买家未被扣款。库存已恢复。"
+msgstr "נדחתה ב-sudemi: הקונה לא חויב. המלאי שוחזר."
 
 msgid "Cancelled on sudemi; the buyer has been refunded in full. Do not ship this order. The stock has been restored."
-msgstr "已在 sudemi 上取消；已向买家全额退款。请勿发出此订单。库存已恢复。"
+msgstr "בוטלה ב-sudemi; הקונה קיבל החזר מלא. אל תשלחו הזמנה זו. המלאי שוחזר."
 
 #, php-format
 msgid "Delivered (recorded on sudemi, %s)."
-msgstr "已送达（sudemi 上记录于 %s）。"
+msgstr "נמסרה (נרשם ב-sudemi, %s)."
 
 #, php-format
 msgid "Tracking on sudemi: %1$s %2$s"
-msgstr "sudemi 上的物流跟踪：%1$s %2$s"
+msgstr "מעקב ב-sudemi: %1$s %2$s"
 
 msgid "Refund made on sudemi"
-msgstr "已在 sudemi 上退款"
+msgstr "החזר שבוצע ב-sudemi"
 
 #, php-format
 msgid "A refund of %s made on sudemi is recorded here. The buyer was paid back by sudemi."
-msgstr "在 sudemi 上进行的 %s 退款已记录在此。款项已由 sudemi 退还给买家。"
+msgstr "החזר כספי של %s שבוצע ב-sudemi נרשם כאן. sudemi החזירה לקונה את הכסף."
 
 msgid "Booked from sudemi: this order was accepted on sudemi (on the portal or in a bulk action)."
-msgstr "从 sudemi 记入：此订单已在 sudemi 上被接受（在门户上或通过批量操作）。"
+msgstr "נרשמה מ-sudemi: ההזמנה הזו אושרה ב-sudemi (בפורטל או בפעולה קבוצתית)."
 
 #, php-format
 msgid "sudemi order %1$s was accepted on sudemi; booked here as order #%2$s."
-msgstr "sudemi 订单 %1$s 已在 sudemi 上被接受；在此记为订单 #%2$s。"
+msgstr "הזמנת sudemi %1$s אושרה ב-sudemi; נרשמה כאן כהזמנה #%2$s."
 
 msgid "sudemi has no such order for this shop."
-msgstr "sudemi 上没有本店的此订单。"
+msgstr "ל-sudemi אין הזמנה כזו עבור החנות הזו."
 
 msgid "This order belongs to an earlier sudemi connection of this shop. Leave it as it is; sudemi support can help."
-msgstr "此订单属于本店之前的一个 sudemi 连接。请保持原样；sudemi 客服可以提供帮助。"
+msgstr "ההזמנה הזו שייכת לחיבור קודם של החנות הזו ל-sudemi. השאירו אותה כמו שהיא; התמיכה של sudemi יכולה לעזור."
 
 msgid "This order was already answered."
-msgstr "此订单已答复过。"
+msgstr "כבר ניתנה תשובה להזמנה הזו."
 
 msgid "The buyer's payment authorisation ran out, so the order can no longer be accepted."
-msgstr "买家的付款授权已过期，因此无法再接受此订单。"
+msgstr "תוקף אישור התשלום של הקונה פג, ולכן אי אפשר עוד לאשר את ההזמנה."
 
 msgid "The order is not in a state that allows this (it may have changed in the meantime). Reload the order."
-msgstr "订单当前状态不允许此操作（可能已在此期间发生变化）。请重新加载订单。"
+msgstr "מצב ההזמנה לא מאפשר זאת (ייתכן שהוא השתנה בינתיים). טענו מחדש את ההזמנה."
 
 msgid "The payment provider refused this. Nothing changed; try again later or contact sudemi support."
-msgstr "支付服务商拒绝了此操作。未做任何更改；请稍后重试或联系 sudemi 客服。"
+msgstr "ספק התשלומים סירב לכך. שום דבר לא השתנה; נסו שוב מאוחר יותר או פנו לתמיכה של sudemi."
 
 msgid "The amount is not in the currency the buyer paid in."
-msgstr "金额不是买家付款时使用的货币。"
+msgstr "הסכום אינו במטבע שבו הקונה שילם."
 
 msgid "This shop is suspended on sudemi: it cannot accept orders. Paid orders can still be shipped and refunded. Contact sudemi support."
-msgstr "本店已在 sudemi 上被暂停：无法接受订单。已付款的订单仍可发货和退款。请联系 sudemi 客服。"
+msgstr "החנות הזו מושעית ב-sudemi: היא לא יכולה לאשר הזמנות. עדיין אפשר לשלוח הזמנות ששולמו ולבצע עבורן החזר. פנו לתמיכה של sudemi."
 
 msgid "Dates must be in the form YYYY-MM-DD."
-msgstr "日期格式必须为 YYYY-MM-DD。"
+msgstr "התאריכים חייבים להיות בפורמט YYYY-MM-DD."
 
 msgid "sudemi asked this shop to slow down. Wait a minute and try again."
-msgstr "sudemi 要求本店放慢速度。请等待一分钟后重试。"
+msgstr "sudemi ביקשה מהחנות הזו להאט. המתינו דקה ונסו שוב."
 
 msgid "Give a reason. The buyer is shown it."
-msgstr "请说明原因。买家会看到该原因。"
+msgstr "ציינו סיבה. הקונה יראה אותה."
 
 msgid "Select at least one order."
-msgstr "请至少选择一个订单。"
+msgstr "בחרו לפחות הזמנה אחת."
 
 msgid "Select at most 100 orders at once."
-msgstr "一次最多选择 100 个订单。"
+msgstr "בחרו עד 100 הזמנות בכל פעם."
 
 msgid "That action is not available."
-msgstr "该操作不可用。"
+msgstr "הפעולה הזו אינה זמינה."
 
 msgid "Prices must be numbers of 0 or more."
-msgstr "价格必须是 0 或更大的数字。"
+msgstr "המחירים חייבים להיות מספרים של 0 ומעלה."
 
 msgid "Enter an amount greater than 0, or leave it empty to refund the rest."
-msgstr "请输入大于 0 的金额，或留空以退还剩余金额。"
+msgstr "הזינו סכום גדול מ-0, או השאירו ריק כדי להחזיר את היתרה."
 
 msgid "Could not reach sudemi. Nothing was changed; try again shortly."
-msgstr "无法连接 sudemi。未做任何更改；请稍后重试。"
+msgstr "לא ניתן היה להגיע ל-sudemi. שום דבר לא השתנה; נסו שוב בעוד רגע."
 
 msgid "sudemi refused this."
-msgstr "sudemi 拒绝了此操作。"
+msgstr "sudemi סירבה לכך."
 
 msgid "Declined on sudemi. The buyer is not charged."
-msgstr "已在 sudemi 上拒绝。买家不会被扣款。"
+msgstr "נדחתה ב-sudemi. הקונה לא מחויב."
 
 msgid "Marked shipped on sudemi. The buyer is told."
-msgstr "已在 sudemi 上标记为已发货。买家已收到通知。"
+msgstr "סומנה כנשלחה ב-sudemi. הקונה מקבל הודעה."
 
 msgid "Marked delivered on sudemi."
-msgstr "已在 sudemi 上标记为已送达。"
+msgstr "סומנה כנמסרה ב-sudemi."
 
 msgid "Refunded through sudemi. The refund is recorded on the WooCommerce order."
-msgstr "已通过 sudemi 退款。退款已记录在 WooCommerce 订单上。"
+msgstr "בוצע החזר דרך sudemi. ההחזר נרשם בהזמנת WooCommerce."
 
 msgid "Cancelled on sudemi and refunded in full. The WooCommerce order is cancelled and the stock restored."
-msgstr "已在 sudemi 上取消并全额退款。WooCommerce 订单已取消，库存已恢复。"
+msgstr "בוטלה ב-sudemi והקונה קיבל החזר מלא. הזמנת WooCommerce בוטלה והמלאי שוחזר."
 
 msgid "The WooCommerce order for this sudemi order is cancelled. Decline it instead."
-msgstr "此 sudemi 订单对应的 WooCommerce 订单已取消。请改为拒绝该订单。"
+msgstr "הזמנת WooCommerce של הזמנת sudemi זו בוטלה. דחו אותה במקום זאת."
 
 msgid "The order could not be recorded in WooCommerce (a product in it is no longer in this shop). Decline it instead."
-msgstr "无法在 WooCommerce 中记录该订单（其中某件商品已不在本店）。请改为拒绝该订单。"
+msgstr "לא ניתן היה לרשום את ההזמנה ב-WooCommerce (אחד המוצרים שבה כבר לא נמצא בחנות הזו). דחו אותה במקום זאת."
 
 msgid "Accepted. The buyer has been charged; the WooCommerce order is ready to ship."
-msgstr "已接受。买家已被扣款；WooCommerce 订单可以发货。"
+msgstr "התקבלה. הקונה חויב; הזמנת WooCommerce מוכנה למשלוח."
 
 msgid "Accepted. sudemi takes the money once the other shops in the buyer's payment have answered; do not ship until the order moves to Processing."
-msgstr "已接受。买家本次付款中的其他店铺答复后，sudemi 才会扣款；在订单变为“处理中”之前请勿发货。"
+msgstr "התקבלה. sudemi גובה את הכסף לאחר שהחנויות האחרות בתשלום של הקונה ענו; אל תשלחו עד שההזמנה תעבור לסטטוס \"בטיפול\"."
 
 msgid "sudemi did not answer. The WooCommerce order stays on hold and the acceptance is sent again on the next heartbeat."
-msgstr "sudemi 未响应。WooCommerce 订单保持暂挂，接受操作将在下一次心跳时重新发送。"
+msgstr "sudemi לא ענתה. הזמנת WooCommerce נשארת \"בהמתנה\" והאישור יישלח שוב בדיווח הבא."
 
 #, php-format
 msgid "%1$d done, %2$d refused."
-msgstr "%1$d 个已完成，%2$d 个被拒绝。"
+msgstr "%1$d בוצעו, %2$d נדחו."
 
 msgid "Mark delivered on sudemi"
-msgstr "在 sudemi 上标记为已送达"
+msgstr "סימון כנמסרה ב-sudemi"
 
 msgid "sudemi did not record the delivery (the order may not be shipped there yet). Check the order under WooCommerce > sudemi > Orders."
-msgstr "sudemi 未记录送达（该订单在那里可能尚未发货）。请在 WooCommerce > sudemi > 订单 中检查该订单。"
+msgstr "sudemi לא רשמה את המסירה (ייתכן שההזמנה עוד לא סומנה שם כנשלחה). בדקו את ההזמנה תחת WooCommerce > sudemi > הזמנות."
 
 msgid "Could not reach sudemi to report the delivery. It is sent again on the next heartbeat."
-msgstr "无法连接 sudemi 报告送达。将在下一次心跳时重新发送。"
+msgstr "לא ניתן היה להגיע ל-sudemi כדי לדווח על המסירה. הדיווח יישלח שוב בדיווח הבא."
 
 #, php-format
 msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
-msgstr "%d 个订单正在 WooCommerce > sudemi > 订单 中等待你的答复。自动确认已关闭，因此必须在期限结束前手动处理。"
+msgstr "%d הזמנות ממתינות לתשובתכם תחת WooCommerce > sudemi > הזמנות. האישור האוטומטי כבוי, ולכן יש לענות עליהן ידנית לפני שחלון הזמן שלהן נסגר."
 
 msgid "Cancelled by your shop on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
-msgstr "已由你的店铺在发货前于 sudemi 上取消；已向买家全额退款。请勿发出此订单。"
+msgstr "בוטלה על ידי החנות שלכם ב-sudemi לפני המשלוח; הקונה קיבל החזר מלא. אל תשלחו הזמנה זו."
 
 msgid "Cancelled by sudemi before shipping (for example because the order was not answered in time); the buyer has been refunded in full. Do not ship this order."
-msgstr "已由 sudemi 在发货前取消（例如订单未在规定时间内答复）；已向买家全额退款。请勿发出此订单。"
+msgstr "בוטלה על ידי sudemi לפני המשלוח (למשל כי לא ניתנה תשובה להזמנה בזמן); הקונה קיבל החזר מלא. אל תשלחו הזמנה זו."
 
 msgid "Cancelled on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
-msgstr "已在发货前于 sudemi 上取消；已向买家全额退款。请勿发出此订单。"
+msgstr "בוטלה ב-sudemi לפני המשלוח; הקונה קיבל החזר מלא. אל תשלחו הזמנה זו."
 
 #, php-format
 msgid "sudemi order %1$s was cancelled by your shop on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi 订单 %1$s 已由你的店铺在发货前于 sudemi 上取消；订单 #%2$s 已在此取消，库存已恢复。"
+msgstr "הזמנת sudemi %1$s בוטלה על ידי החנות שלכם ב-sudemi לפני המשלוח; הזמנה #%2$s בוטלה כאן והמלאי שוחזר."
 
 #, php-format
 msgid "sudemi order %1$s was cancelled by sudemi before shipping; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi 订单 %1$s 已由 sudemi 在发货前取消；订单 #%2$s 已在此取消，库存已恢复。"
+msgstr "הזמנת sudemi %1$s בוטלה על ידי sudemi לפני המשלוח; הזמנה #%2$s בוטלה כאן והמלאי שוחזר."
 
 #, php-format
 msgid "sudemi order %1$s was cancelled on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi 订单 %1$s 已在发货前于 sudemi 上取消；订单 #%2$s 已在此取消，库存已恢复。"
+msgstr "הזמנת sudemi %1$s בוטלה ב-sudemi לפני המשלוח; הזמנה #%2$s בוטלה כאן והמלאי שוחזר."
 
 msgid "The stock has been restored."
-msgstr "库存已恢复。"
+msgstr "המלאי שוחזר."
 
 #, php-format
 msgid "New tracking sent to sudemi: %s. sudemi e-mails the buyer the new code."
-msgstr "新的物流单号已发送给 sudemi：%s。sudemi 会通过电子邮件把新单号告诉买家。"
+msgstr "מספר מעקב חדש נשלח ל-sudemi: %s. sudemi שולחת לקונה את המספר החדש בדוא\"ל."
 
 #, php-format
 msgid "Could not send the new tracking (%s) to sudemi yet. It is sent again on the next heartbeat."
-msgstr "新的物流单号（%s）暂时无法发送给 sudemi。将在下一次心跳时重新发送。"
+msgstr "עדיין לא ניתן היה לשלוח את מספר המעקב החדש (%s) ל-sudemi. הוא יישלח שוב בדיווח הבא."
 
 #, php-format
 msgid "The new tracking (%s) was not sent: on sudemi this order is already delivered, cancelled or refunded, so its tracking can no longer change."
-msgstr "新的物流单号（%s）未发送：此订单在 sudemi 上已送达、已取消或已退款，物流单号不能再更改。"
+msgstr "מספר המעקב החדש (%s) לא נשלח: ב-sudemi ההזמנה הזו כבר נמסרה, בוטלה או הוחזרה, ולכן לא ניתן עוד לשנות את מספר המעקב."
 
 #, php-format
 msgid "sudemi did not take the new tracking (%s). Check the order under WooCommerce > sudemi > Orders."
-msgstr "sudemi 未接受新的物流单号（%s）。请在 WooCommerce > sudemi > 订单 中查看此订单。"
+msgstr "sudemi לא קיבלה את מספר המעקב החדש (%s). בדקו את ההזמנה תחת WooCommerce > sudemi > הזמנות."
 
 #, php-format
 msgid "Could not send the new tracking for sudemi order %1$s yet. It is sent again on the next heartbeat."
-msgstr "sudemi 订单 %1$s 的新物流单号暂时无法发送。将在下一次心跳时重新发送。"
+msgstr "עדיין לא ניתן היה לשלוח את מספר המעקב החדש של הזמנת sudemi %1$s. הוא יישלח שוב בדיווח הבא."
 
 #, php-format
 msgid "Sent the new tracking for sudemi order %1$s."
-msgstr "已发送 sudemi 订单 %1$s 的新物流单号。"
+msgstr "מספר המעקב החדש של הזמנת sudemi %1$s נשלח."
 
 #, php-format
 msgid "The new tracking for sudemi order %1$s was not sent: the order is already delivered, cancelled or refunded on sudemi."
-msgstr "sudemi 订单 %1$s 的新物流单号未发送：该订单在 sudemi 上已送达、已取消或已退款。"
+msgstr "מספר המעקב החדש של הזמנת sudemi %1$s לא נשלח: ההזמנה כבר נמסרה, בוטלה או הוחזרה ב-sudemi."
 
 msgid "The tracking can no longer be changed: on sudemi this order is already delivered, cancelled or refunded."
-msgstr "物流单号不能再更改：此订单在 sudemi 上已送达、已取消或已退款。"
+msgstr "לא ניתן עוד לשנות את מספר המעקב: ב-sudemi ההזמנה הזו כבר נמסרה, בוטלה או הוחזרה."
 
 msgid "Enter a tracking code."
-msgstr "请输入物流单号。"
+msgstr "הזינו מספר מעקב."
 
 msgid "Tracking changed on sudemi. sudemi e-mails the buyer the new code."
-msgstr "已在 sudemi 上更改物流单号。sudemi 会通过电子邮件把新单号告诉买家。"
+msgstr "מספר המעקב שונה ב-sudemi. sudemi שולחת לקונה את המספר החדש בדוא\"ל."
 
 msgid "sudemi already has this tracking. Nothing was changed."
-msgstr "sudemi 已有此物流单号。没有任何更改。"
+msgstr "ל-sudemi כבר יש את מספר המעקב הזה. דבר לא השתנה."
 
 msgid "Shipped already. Wrong or missing tracking? Enter the right one: sudemi e-mails the buyer the new code."
-msgstr "已发货。物流单号有误或缺失？请输入正确的单号：sudemi 会通过电子邮件把新单号告诉买家。"
+msgstr "כבר נשלחה. מספר מעקב שגוי או חסר? הזינו את הנכון: sudemi שולחת לקונה את המספר החדש בדוא\"ל."
 
 msgid "Change tracking"
-msgstr "更改物流单号"
+msgstr "שינוי מספר המעקב"
 
 msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
-msgstr "已由你的店铺在 sudemi 上拒绝；买家未被扣款。库存已恢复。"
+msgstr "נדחתה על ידי החנות שלכם ב-sudemi; הקונה לא חויב. המלאי שוחזר."
 
 msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
-msgstr "已由 sudemi 自动拒绝（例如因为订单未在规定时间内得到答复）；买家未被扣款。库存已恢复。"
+msgstr "נדחתה אוטומטית על ידי sudemi (למשל כי לא ניתנה תשובה להזמנה בזמן); הקונה לא חויב. המלאי שוחזר."
 
 msgid "Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored."
-msgstr "买家在订单确认前已于 sudemi 上取消；买家未被扣款。库存已恢复。"
+msgstr "בוטלה על ידי הקונה ב-sudemi לפני שההזמנה אושרה; הקונה לא חויב. המלאי שוחזר."
 
 #, php-format
 msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi 订单 %1$s 已由你的店铺在 sudemi 上拒绝；订单 #%2$s 已在此取消，库存已恢复。"
+msgstr "הזמנת sudemi %1$s נדחתה על ידי החנות שלכם ב-sudemi; הזמנה #%2$s בוטלה כאן והמלאי שוחזר."
 
 #, php-format
 msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi 订单 %1$s 已由 sudemi 自动拒绝；订单 #%2$s 已在此取消，库存已恢复。"
+msgstr "הזמנת sudemi %1$s נדחתה אוטומטית על ידי sudemi; הזמנה #%2$s בוטלה כאן והמלאי שוחזר."
 
 #, php-format
 msgid "sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi 订单 %1$s 已由买家在确认前取消；订单 #%2$s 已在此取消，库存已恢复。"
+msgstr "הזמנת sudemi %1$s בוטלה על ידי הקונה לפני שאושרה; הזמנה #%2$s בוטלה כאן והמלאי שוחזר."
 
 #, php-format
 msgid "sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi 订单 %1$s 已在 sudemi 上被拒绝；订单 #%2$s 已在此取消，库存已恢复。"
+msgstr "הזמנת sudemi %1$s נדחתה ב-sudemi; הזמנה #%2$s בוטלה כאן והמלאי שוחזר."
 
 #, php-format
 msgid "Reason: %s."
-msgstr "原因：%s。"
+msgstr "סיבה: %s."
 
 #, php-format
 msgid "sudemi order %1$s could not be applied here yet (%2$s); it is read from sudemi again on the next heartbeats."
-msgstr "sudemi 订单 %1$s 暂时无法在此应用（%2$s）；将在接下来的心跳中重新从 sudemi 读取。"
+msgstr "לא ניתן היה עדיין להחיל כאן את הזמנת sudemi %1$s (%2$s); היא תיקרא שוב מ-sudemi בדיווחים הבאים."
 
 #, php-format
 msgid "sudemi order %1$s is not applied here: sudemi no longer has it for this shop (%2$s). Check the WooCommerce order by hand."
-msgstr "sudemi 订单 %1$s 不会在此应用：sudemi 上已不再有此店铺的该订单（%2$s）。请手动检查 WooCommerce 订单。"
+msgstr "הזמנת sudemi %1$s לא מוחלת כאן: ל-sudemi כבר אין אותה עבור החנות הזו (%2$s). בדקו את הזמנת WooCommerce ידנית."
 
 #, php-format
 msgid "Gave up applying sudemi order %1$s here after %2$d tries (%3$s). Check this order under WooCommerce > sudemi > Orders and update the WooCommerce order by hand."
-msgstr "尝试 %2$d 次后已放弃在此应用 sudemi 订单 %1$s（%3$s）。请在 WooCommerce > sudemi > 订单 中查看此订单，并手动更新 WooCommerce 订单。"
+msgstr "ויתרנו על החלת הזמנת sudemi %1$s כאן אחרי %2$d ניסיונות (%3$s). בדקו את ההזמנה תחת WooCommerce > sudemi > הזמנות ועדכנו את הזמנת WooCommerce ידנית."
 
 #: includes/class-sudemi-insights.php
 msgid "Switched off by you"
-msgstr "已被你关闭"
+msgstr "כובה על ידיכם"
 
 #: includes/class-sudemi-insights.php
 msgid "No longer in your shop (deleted, hidden or not published)"
-msgstr "已不在你的店铺中（已删除、已隐藏或未发布）"
+msgstr "כבר לא בחנות שלכם (נמחק, הוסתר או לא פורסם)"
 
 #: includes/class-sudemi-insights.php
 msgid "Out of stock"
-msgstr "缺货"
+msgstr "אזל מהמלאי"
 
 #: includes/class-sudemi-insights.php
 msgid "No shipping price for any country"
-msgstr "没有任何国家的运费"
+msgstr "אין מחיר משלוח לאף מדינה"
 
 #: includes/class-sudemi-insights.php
 msgid "Taken down by sudemi (see your e-mail or contact support)"
-msgstr "已被 sudemi 下架（请查看邮件或联系客服支持）"
+msgstr "הוסר על ידי sudemi (בדקו את הדוא\"ל או פנו לתמיכה)"
 
 #: includes/class-sudemi-insights.php
 msgid "Your payout account is not active yet"
-msgstr "你的打款账户尚未启用"
+msgstr "חשבון התשלומים אליכם עדיין לא פעיל"
 
 #: includes/class-sudemi-insights.php
 msgid "This shop stopped reporting in to sudemi"
-msgstr "本店已停止向 sudemi 报告"
+msgstr "החנות הזו הפסיקה לדווח ל-sudemi"
 
 #: includes/class-sudemi-insights.php
 msgid "Not listed"
-msgstr "未展示"
+msgstr "לא מוצג"
 
 #: includes/class-sudemi-insights.php
 msgid "The description can be at most %d characters."
-msgstr "描述最多 %d 个字符。"
+msgstr "התיאור יכול להכיל עד %d תווים."
 
 #: includes/class-sudemi-insights.php
 msgid "Enter a valid e-mail address for buyers' questions."
-msgstr "请填写有效的邮箱地址，用于回答买家问题。"
+msgstr "הזינו כתובת דוא\"ל תקינה לשאלות של קונים."
 
 #: includes/class-sudemi-insights.php
 msgid "The return period must be a whole number of days from %1$d to %2$d."
-msgstr "退货期限必须是 %1$d 到 %2$d 之间的整数天。"
+msgstr "תקופת ההחזרה חייבת להיות מספר שלם של ימים בין %1$d ל-%2$d."
 
 #: includes/class-sudemi-insights.php
 msgid "That period cannot be shown."
-msgstr "无法显示该时间段。"
+msgstr "לא ניתן להציג את התקופה הזו."
 
 #: includes/class-sudemi-insights.php
 msgid "sudemi does not have this product for this shop (yet). It arrives with the next sync."
-msgstr "sudemi 上（还）没有本店的这个商品。下次同步时会传过去。"
+msgstr "ב-sudemi (עדיין) אין את המוצר הזה עבור החנות הזו. הוא יגיע בסנכרון הבא."
 
 #: admin/class-sudemi-admin-manage.php
 msgid "Not connected yet"
-msgstr "尚未连接"
+msgstr "עדיין לא מחוברת"
 
 #: admin/class-sudemi-admin-manage.php
 msgid "Orders appear here as soon as a buyer orders one of your products through their AI assistant."
-msgstr "买家通过 AI 助手订购你的商品后，订单会立即显示在这里。"
+msgstr "הזמנות יופיעו כאן ברגע שקונה יזמין אחד מהמוצרים שלכם דרך עוזר ה-AI שלו."
 
 #: admin/class-sudemi-admin-manage.php
 msgid "Open payouts on the seller portal"
-msgstr "在卖家门户中打开打款"
+msgstr "פתיחת התשלומים בפורטל המוכרים"
 
 #: admin/class-sudemi-admin.php
 msgid "Dashboard"
-msgstr "概览"
+msgstr "לוח בקרה"
 
 #: admin/class-sudemi-admin.php
 msgid "Products on sudemi"
-msgstr "sudemi 上的商品"
+msgstr "מוצרים ב-sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "Shop profile"
-msgstr "店铺资料"
+msgstr "פרופיל החנות"
 
 #: admin/class-sudemi-admin.php
 msgid "Settings"
-msgstr "设置"
+msgstr "הגדרות"
 
 #: admin/class-sudemi-admin.php
 msgid "Waiting for your confirmation"
-msgstr "等待你确认"
+msgstr "ממתין לאישור שלכם"
 
 #: admin/class-sudemi-admin.php
 msgid "Not connected"
-msgstr "未连接"
+msgstr "לא מחוברת"
 
 #: admin/class-sudemi-admin.php
 msgid "Connected, first report pending"
-msgstr "已连接，等待首次报告"
+msgstr "מחוברת, ממתין לדיווח הראשון"
 
 #: admin/class-sudemi-admin.php
 msgid "Cannot reach sudemi"
-msgstr "无法连接 sudemi"
+msgstr "אין גישה ל-sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "Refused by sudemi"
-msgstr "被 sudemi 拒绝"
+msgstr "נדחתה על ידי sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "Connected, products not shown"
-msgstr "已连接，商品未展示"
+msgstr "מחוברת, המוצרים לא מוצגים"
 
 #: admin/class-sudemi-admin.php
 msgid "Live on sudemi"
-msgstr "已在 sudemi 上线"
+msgstr "פעילה ב-sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "Seller portal"
-msgstr "卖家门户"
+msgstr "פורטל המוכרים"
 
 #: admin/class-sudemi-admin.php
 msgid "Orders buyers placed through their AI assistant. Accept, ship, refund and export them here."
-msgstr "买家通过 AI 助手下的订单。在这里接单、发货、退款和导出。"
+msgstr "הזמנות שקונים ביצעו דרך עוזר ה-AI שלהם. כאן מאשרים, שולחים, מחזירים כסף ומייצאים אותן."
 
 #: admin/class-sudemi-admin.php
 msgid "What sudemi buyers pay for delivery, per country."
-msgstr "sudemi 买家按国家支付的配送费用。"
+msgstr "כמה קונים ב-sudemi משלמים על משלוח, לפי מדינה."
 
 #: admin/class-sudemi-admin.php
 msgid "What sudemi has paid you and what is still to come."
-msgstr "sudemi 已向你打款的金额和待打款的金额。"
+msgstr "מה sudemi כבר שילמה לכם ומה עוד צפוי."
 
 #: admin/class-sudemi-admin.php
 msgid "Questions about an order, a payment, payouts or this plugin? sudemi support answers here."
-msgstr "对订单、付款、打款或本插件有疑问？sudemi 客服支持在这里回复。"
+msgstr "שאלות על הזמנה, תשלום, תשלומים אליכם או התוסף הזה? התמיכה של sudemi עונה כאן."
 
 #: admin/class-sudemi-admin.php
 msgid "The connection with sudemi, delivery times, currency and the shop's reporting."
-msgstr "与 sudemi 的连接、配送时间、货币和店铺报告。"
+msgstr "החיבור ל-sudemi, זמני המשלוח, המטבע והדיווחים של החנות."
 
 #: admin/class-sudemi-admin.php
 msgid "Sell through AI assistants"
-msgstr "通过 AI 助手销售"
+msgstr "מכירה דרך עוזרי AI"
 
 #: admin/class-sudemi-admin.php
 msgid "Let ChatGPT, Claude and other AI assistants sell your products"
-msgstr "让 ChatGPT、Claude 等 AI 助手销售你的商品"
+msgstr "תנו ל-ChatGPT, ל-Claude ולעוזרי AI אחרים למכור את המוצרים שלכם"
 
 #: admin/class-sudemi-admin.php
 msgid "Buyers ask their AI assistant for a product. sudemi shows them your products with the price and delivery to their country, and the order arrives here as a normal WooCommerce order. You stay the seller; sudemi takes a commission only on what sells."
-msgstr "买家向 AI 助手询问商品。sudemi 向他们展示你的商品，以及价格和送到其国家的配送，订单会作为普通的 WooCommerce 订单到达这里。你仍然是卖家；sudemi 只对售出的商品收取佣金。"
+msgstr "קונים מבקשים מוצר מעוזר ה-AI שלהם. sudemi מציגה להם את המוצרים שלכם עם המחיר והמשלוח למדינה שלהם, וההזמנה מגיעה לכאן כהזמנת WooCommerce רגילה. אתם נשארים המוכרים; sudemi לוקחת עמלה רק על מה שנמכר."
 
 #: admin/class-sudemi-admin.php
 msgid "Connect"
-msgstr "连接"
+msgstr "התחברו"
 
 #: admin/class-sudemi-admin.php
 msgid "Click the button and confirm on sudemi that this shop is yours."
-msgstr "点击按钮，并在 sudemi 上确认这是你的店铺。"
+msgstr "לחצו על הכפתור ואשרו ב-sudemi שהחנות הזו שלכם."
 
 #: admin/class-sudemi-admin.php
 msgid "Your products go live"
-msgstr "商品上线"
+msgstr "המוצרים שלכם עולים לאוויר"
 
 #: admin/class-sudemi-admin.php
 msgid "Your catalogue, prices, stock and shipping are sent and kept up to date by themselves."
-msgstr "你的商品目录、价格、库存和运费会自动发送并保持最新。"
+msgstr "הקטלוג, המחירים, המלאי והמשלוחים נשלחים ומתעדכנים מעצמם."
 
 #: admin/class-sudemi-admin.php
 msgid "Orders come in"
-msgstr "订单到来"
+msgstr "הזמנות מגיעות"
 
 #: admin/class-sudemi-admin.php
 msgid "You confirm, ship, and are paid out by sudemi."
-msgstr "你确认并发货，sudemi 向你打款。"
+msgstr "אתם מאשרים ושולחים, ו-sudemi משלמת לכם."
 
 #: admin/class-sudemi-admin.php
 msgid "You confirm the connection on sudemi, signed in to your own account. This plugin never asks for your sudemi password."
-msgstr "你登录自己的账户在 sudemi 上确认连接。本插件从不询问你的 sudemi 密码。"
+msgstr "את החיבור מאשרים ב-sudemi, מחוברים לחשבון שלכם. התוסף הזה אף פעם לא מבקש את הסיסמה שלכם ל-sudemi."
 
 #: admin/class-sudemi-admin.php
 msgid "Connection"
-msgstr "连接"
+msgstr "חיבור"
 
 #: admin/class-sudemi-admin.php
 msgid "Disconnect this shop from sudemi? Its products stop being shown to buyers right away."
-msgstr "要断开本店与 sudemi 的连接吗？其商品会立即停止向买家展示。"
+msgstr "לנתק את החנות הזו מ-sudemi? המוצרים שלה יפסיקו מיד להיות מוצגים לקונים."
 
 #: admin/class-sudemi-admin.php
 msgid "sudemi support answers here, and by e-mail."
-msgstr "sudemi 客服支持会在这里和通过邮件回复。"
+msgstr "התמיכה של sudemi עונה כאן ובדוא\"ל."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Period"
-msgstr "时间段"
+msgstr "תקופה"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%d days"
-msgstr "%d 天"
+msgstr "%d ימים"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "How your products did on sudemi in the last %d days."
-msgstr "你的商品在过去 %d 天在 sudemi 上的表现。"
+msgstr "איך המוצרים שלכם הצליחו ב-sudemi ב-%d הימים האחרונים."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Sales"
-msgstr "销售额"
+msgstr "מכירות"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "What buyers paid, shipping and VAT included"
-msgstr "买家支付的金额，含运费和增值税"
+msgstr "מה שקונים שילמו, כולל משלוח ומע\"מ"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "After %1$s refunds and %2$s commission"
-msgstr "扣除 %1$s 退款和 %2$s 佣金后"
+msgstr "אחרי %1$s החזרים ו-%2$s עמלה"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Average order"
-msgstr "平均订单金额"
+msgstr "הזמנה ממוצעת"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Per order, shipping included"
-msgstr "每单，含运费"
+msgstr "להזמנה, כולל משלוח"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shown in search results"
-msgstr "搜索结果展示次数"
+msgstr "הופעות בתוצאות חיפוש"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Times an AI assistant got one of your products back from a search"
-msgstr "AI 助手在搜索中得到你的商品的次数"
+msgstr "מספר הפעמים שעוזר AI קיבל אחד מהמוצרים שלכם בחיפוש"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Product views"
-msgstr "商品查看次数"
+msgstr "צפיות במוצרים"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Times an assistant opened a product's details for a buyer"
-msgstr "助手为买家打开商品详情的次数"
+msgstr "מספר הפעמים שעוזר פתח את פרטי המוצר עבור קונה"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Added to a cart"
-msgstr "加入购物车"
+msgstr "נוסף לעגלה"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Times a buyer put one of your products in a cart"
-msgstr "买家把你的商品加入购物车的次数"
+msgstr "מספר הפעמים שקונה הוסיף אחד מהמוצרים שלכם לעגלה"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Conversion"
-msgstr "转化率"
+msgstr "המרה"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Orders per product view"
-msgstr "每次商品查看带来的订单"
+msgstr "הזמנות לכל צפייה במוצר"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Seen by buyers"
-msgstr "买家看到的情况"
+msgstr "מה שקונים ראו"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Searches and product views per day"
-msgstr "每天的搜索展示和商品查看"
+msgstr "הופעות בחיפוש וצפיות במוצרים ליום"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Sales per day"
-msgstr "每日销售额"
+msgstr "מכירות ליום"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "The buyer is not charged until you accept. Without an answer by the deadline the order lapses."
-msgstr "在你接单之前不会向买家扣款。截止时间前未答复，订单将失效。"
+msgstr "הקונה לא מחויב עד שתאשרו. בלי תשובה עד המועד, ההזמנה פוקעת."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Answer now"
-msgstr "立即答复"
+msgstr "לענות עכשיו"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Buyers cannot see your products right now. The Settings page shows why and what to do."
-msgstr "买家目前看不到你的商品。“设置”页面会说明原因和处理方法。"
+msgstr "כרגע קונים לא רואים את המוצרים שלכם. בעמוד ההגדרות מוסבר למה ומה לעשות."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Open settings"
-msgstr "打开设置"
+msgstr "פתיחת ההגדרות"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Top products"
-msgstr "热门商品"
+msgstr "המוצרים המובילים"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "All products on sudemi"
-msgstr "sudemi 上的全部商品"
+msgstr "כל המוצרים ב-sudemi"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "No activity in this period yet. Buyers find your products by asking their AI assistant; the numbers show up here day by day."
-msgstr "该时间段内还没有动态。买家通过询问 AI 助手找到你的商品；数据会逐日显示在这里。"
+msgstr "עדיין אין פעילות בתקופה הזו. קונים מוצאים את המוצרים שלכם כששואלים את עוזר ה-AI שלהם; המספרים מופיעים כאן יום אחרי יום."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shown"
-msgstr "展示"
+msgstr "הופעות"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Views"
-msgstr "查看"
+msgstr "צפיות"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "In cart"
-msgstr "加购"
+msgstr "בעגלה"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Your products on sudemi"
-msgstr "你在 sudemi 上的商品"
+msgstr "המוצרים שלכם ב-sudemi"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "shown to buyers"
-msgstr "正在向买家展示"
+msgstr "מוצגים לקונים"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Orders by status"
-msgstr "按状态统计订单"
+msgstr "הזמנות לפי סטטוס"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "No orders in this period."
-msgstr "该时间段内没有订单。"
+msgstr "אין הזמנות בתקופה הזו."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Where buyers are"
-msgstr "买家所在地"
+msgstr "איפה הקונים"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Your products as sudemi has them: whether buyers can see each one, why not, and how often it was found in the last 30 days."
-msgstr "sudemi 上你的商品：买家能否看到每件商品、看不到的原因，以及过去 30 天被找到的次数。"
+msgstr "המוצרים שלכם כפי שהם ב-sudemi: האם קונים רואים כל אחד, למה לא, וכמה פעמים הוא נמצא ב-30 הימים האחרונים."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shown to buyers"
-msgstr "向买家展示"
+msgstr "מוצגים לקונים"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Not shown"
-msgstr "未展示"
+msgstr "לא מוצג"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Search products"
-msgstr "搜索商品"
+msgstr "חיפוש מוצרים"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Name, SKU or ID"
-msgstr "名称、SKU 或 ID"
+msgstr "שם, מק\"ט או מזהה"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "No products match."
-msgstr "没有匹配的商品。"
+msgstr "אין מוצרים מתאימים."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Products reach sudemi with the catalogue sync, a few minutes after you publish them."
-msgstr "商品发布几分钟后，会随目录同步到达 sudemi。"
+msgstr "מוצרים מגיעים ל-sudemi עם סנכרון הקטלוג, כמה דקות אחרי שמפרסמים אותם."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Stock"
-msgstr "库存"
+msgstr "מלאי"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Buyers see it"
-msgstr "买家可见"
+msgstr "קונים רואים"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shown (30 days)"
-msgstr "展示（30 天）"
+msgstr "הופעות (30 יום)"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Views (30 days)"
-msgstr "查看（30 天）"
+msgstr "צפיות (30 יום)"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Orders (30 days)"
-msgstr "订单（30 天）"
+msgstr "הזמנות (30 יום)"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Show on sudemi"
-msgstr "在 sudemi 上展示"
+msgstr "הצגה ב-sudemi"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "SKU %s"
-msgstr "SKU %s"
+msgstr "מק\"ט %s"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "ID %s"
-msgstr "ID %s"
+msgstr "מזהה %s"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "in stock"
-msgstr "有货"
+msgstr "במלאי"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Show %s on sudemi"
-msgstr "在 sudemi 上展示 %s"
+msgstr "הצגת %s ב-sudemi"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "On"
-msgstr "开"
+msgstr "פועל"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Off"
-msgstr "关"
+msgstr "כבוי"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Products %1$d to %2$d of %3$d"
-msgstr "第 %1$d 到 %2$d 件，共 %3$d 件"
+msgstr "מוצרים %1$d עד %2$d מתוך %3$d"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Prices, stock, photos and texts come from your WooCommerce products and are sent by themselves when you change them. The switch only decides whether sudemi shows a product; it does not change anything in your shop."
-msgstr "价格、库存、图片和文字来自你的 WooCommerce 商品，修改后会自动发送。开关只决定 sudemi 是否展示某件商品，不会改变你店铺里的任何内容。"
+msgstr "מחירים, מלאי, תמונות וטקסטים מגיעים ממוצרי ה-WooCommerce שלכם ונשלחים מעצמם כשאתם משנים אותם. המתג רק קובע אם sudemi מציגה מוצר; הוא לא משנה דבר בחנות שלכם."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Product %s switched on for sudemi."
-msgstr "商品 %s 已在 sudemi 上开启。"
+msgstr "המוצר %s הופעל עבור sudemi."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Product %s switched off for sudemi."
-msgstr "商品 %s 已在 sudemi 上关闭。"
+msgstr "המוצר %s כובה עבור sudemi."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Switched on. sudemi shows this product again (when it is in stock and can be shipped)."
-msgstr "已开启。sudemi 会再次展示此商品（在有货且可发货时）。"
+msgstr "הופעל. sudemi מציגה שוב את המוצר (כשהוא במלאי וניתן לשלוח אותו)."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Switched off. sudemi no longer shows this product to buyers. Your shop is not changed."
-msgstr "已关闭。sudemi 不再向买家展示此商品。你的店铺不受影响。"
+msgstr "כובה. sudemi כבר לא מציגה את המוצר לקונים. החנות שלכם לא משתנה."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "What buyers and their AI assistant are told about your shop."
-msgstr "买家及其 AI 助手了解到的关于你店铺的信息。"
+msgstr "מה מספרים לקונים ולעוזר ה-AI שלהם על החנות שלכם."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shop name buyers see"
-msgstr "买家看到的店铺名称"
+msgstr "שם החנות שקונים רואים"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "The name is checked by sudemi, so it is changed through support."
-msgstr "店铺名称由 sudemi 审核，因此需通过客服支持修改。"
+msgstr "sudemi בודקת את השם, ולכן משנים אותו דרך התמיכה."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Please change my shop name"
-msgstr "请修改我的店铺名称"
+msgstr "בקשה לשינוי שם החנות שלי"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Ask for a new name"
-msgstr "申请新名称"
+msgstr "בקשת שם חדש"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "About your shop"
-msgstr "店铺介绍"
+msgstr "על החנות שלכם"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "A few sentences: what you sell and what makes your shop worth buying from. AI assistants may quote it to buyers."
-msgstr "用几句话说明：你卖什么，以及为什么值得在你这里购买。AI 助手可能会向买家引用。"
+msgstr "כמה משפטים: מה אתם מוכרים ולמה כדאי לקנות אצלכם. עוזרי AI עשויים לצטט את זה לקונים."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "E-mail for buyers' questions"
-msgstr "回答买家问题的邮箱"
+msgstr "דוא\"ל לשאלות של קונים"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shown to buyers after they ordered, for questions about delivery and returns."
-msgstr "买家下单后会看到，用于询问配送和退货。"
+msgstr "מוצג לקונים אחרי שהזמינו, לשאלות על משלוח והחזרות."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Return period (days)"
-msgstr "退货期限（天）"
+msgstr "תקופת החזרה (ימים)"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "How long after delivery a buyer may change their mind. The law gives at least 14 days; you may give more."
-msgstr "买家收货后可以反悔的期限。法律规定至少 14 天；你可以给更长时间。"
+msgstr "כמה זמן אחרי המסירה קונה יכול לחזור בו. החוק נותן לפחות 14 ימים; אפשר לתת יותר."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Save on sudemi"
-msgstr "保存到 sudemi"
+msgstr "שמירה ב-sudemi"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Fixed details"
-msgstr "固定信息"
+msgstr "פרטים קבועים"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Company details on the seller portal"
-msgstr "卖家门户中的公司信息"
+msgstr "פרטי החברה בפורטל המוכרים"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shop profile saved on sudemi."
-msgstr "店铺资料已保存到 sudemi。"
+msgstr "פרופיל החנות נשמר ב-sudemi."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Saved on sudemi. Buyers see the new details from now on."
-msgstr "已保存到 sudemi。买家从现在起会看到新的信息。"
+msgstr "נשמר ב-sudemi. מעכשיו קונים רואים את הפרטים החדשים."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%s item sold"
 msgid_plural "%s items sold"
-msgstr[0] "售出 %s 件"
+msgstr[0] "נמכר פריט %s"
+msgstr[1] "נמכרו %s פריטים"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%d order is waiting for your answer"
 msgid_plural "%d orders are waiting for your answer"
-msgstr[0] "%d 个订单等待你答复"
+msgstr[0] "הזמנה אחת ממתינה לתשובה שלכם"
+msgstr[1] "%d הזמנות ממתינות לתשובה שלכם"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%d return request is waiting for your answer"
 msgid_plural "%d return requests are waiting for your answer"
-msgstr[0] "%d 个退货申请等待你答复"
+msgstr[0] "בקשת החזרה אחת ממתינה לתשובה שלכם"
+msgstr[1] "%d בקשות החזרה ממתינות לתשובה שלכם"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%d product is not shown: see why"
 msgid_plural "%d products are not shown: see why"
-msgstr[0] "%d 件商品未展示：查看原因"
+msgstr[0] "מוצר אחד לא מוצג: ראו למה"
+msgstr[1] "%d מוצרים לא מוצגים: ראו למה"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%d photo"
 msgid_plural "%d photos"
-msgstr[0] "%d 张图片"
+msgstr[0] "תמונה אחת"
+msgstr[1] "%d תמונות"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "ships to %d country"
 msgid_plural "ships to %d countries"
-msgstr[0] "配送到 %d 个国家"
+msgstr[0] "משלוח למדינה אחת"
+msgstr[1] "משלוח ל-%d מדינות"
 
 #: admin/class-sudemi-admin.php
 msgid "Not reporting in to sudemi"
-msgstr "未向 sudemi 报告"
+msgstr "לא מדווחת ל-sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "This shop has not reported in to sudemi for more than 15 minutes, so its products are paused. Set up the cron job below."
-msgstr "本店已超过 15 分钟未向 sudemi 报告，因此其商品已暂停展示。请设置下面的 cron 任务。"
+msgstr "החנות הזו לא דיווחה ל-sudemi יותר מ-15 דקות, ולכן המוצרים שלה מושהים. הגדירו את משימת ה-cron למטה."
 
 #: admin/class-sudemi-admin.php
 msgid "Stripe is not connected. Your products are listed on sudemi, Connect Stripe"
-msgstr "Stripe 未连接。你的商品已在 sudemi 上架，请连接 Stripe"
+msgstr "Stripe לא מחוברת. המוצרים שלכם מוצגים ב‑sudemi, חברו את Stripe"
 
 #: admin/class-sudemi-admin.php
 msgid "Until then buyers pay on your own website: free listing, no commission."
-msgstr "在此之前，买家在你自己的网站付款：免费上架，无佣金。"
+msgstr "עד אז הקונים משלמים באתר שלכם: הצגה בחינם, בלי עמלה."
 
 #: admin/class-sudemi-admin.php
 msgid "Stripe needs more information from you."
-msgstr "Stripe 需要你提供更多信息。"
+msgstr "Stripe צריכה מכם מידע נוסף."
 
 #: admin/class-sudemi-admin.php
 msgid "Connect Stripe"
-msgstr "连接 Stripe"
+msgstr "חיבור Stripe"
 
 #: admin/class-sudemi-admin.php
 msgid "Connect Stripe is done"
-msgstr "Stripe 已连接"
+msgstr "Stripe מחוברת"
 
 #: admin/class-sudemi-admin.php
 msgid "Buyers pay through sudemi, and you get your orders and payouts here."
-msgstr "买家通过 sudemi 付款，你的订单和打款都在这里。"
+msgstr "הקונים משלמים דרך sudemi, וההזמנות וההעברות שלכם נמצאות כאן."
 
 #: admin/class-sudemi-admin.php
 msgid "Your shop is paused on sudemi while we review a payment provider restriction"
-msgstr "我们正在审核支付服务商的限制，你的店铺在 sudemi 上已暂停"
+msgstr "החנות שלכם מושהית ב‑sudemi בזמן שאנחנו בודקים הגבלה של ספק התשלומים"
 
 #: admin/class-sudemi-admin.php
 msgid "Your products are not shown for now. We e-mail you what is needed."
-msgstr "你的商品暂时不展示。我们会通过电子邮件告诉你需要什么。"
+msgstr "המוצרים שלכם לא מוצגים בינתיים. נכתוב לכם במייל מה נדרש."
 
 #: admin/class-sudemi-admin.php
 msgid "Contact support"
-msgstr "联系客服"
+msgstr "פנייה לתמיכה"

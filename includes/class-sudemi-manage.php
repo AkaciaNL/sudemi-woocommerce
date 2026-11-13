@@ -282,52 +282,52 @@ final class Sudemi_Manage {
 		switch ( (string) $code ) {
 			case 'no_such_order':
 			case 'not_found':
-				return __( 'sudemi has no such order for this shop.', 'sudemi' );
+				return __( 'sudemi has no such order for this shop.', 'sudemi-connector' );
 			case 'previous_connection':
-				return __( 'This order belongs to an earlier sudemi connection of this shop. Leave it as it is; sudemi support can help.', 'sudemi' );
+				return __( 'This order belongs to an earlier sudemi connection of this shop. Leave it as it is; sudemi support can help.', 'sudemi-connector' );
 			case 'already_resolved':
-				return __( 'This order was already answered.', 'sudemi' );
+				return __( 'This order was already answered.', 'sudemi-connector' );
 			case 'authorisation_lapsed':
-				return __( 'The buyer\'s payment authorisation ran out, so the order can no longer be accepted.', 'sudemi' );
+				return __( 'The buyer\'s payment authorisation ran out, so the order can no longer be accepted.', 'sudemi-connector' );
 			case 'wrong_state':
 			case 'not_paid':
 			case 'refused':
-				return __( 'The order is not in a state that allows this (it may have changed in the meantime). Reload the order.', 'sudemi' );
+				return __( 'The order is not in a state that allows this (it may have changed in the meantime). Reload the order.', 'sudemi-connector' );
 			case 'provider_refused':
-				return __( 'The payment provider refused this. Nothing changed; try again later or contact sudemi support.', 'sudemi' );
+				return __( 'The payment provider refused this. Nothing changed; try again later or contact sudemi support.', 'sudemi-connector' );
 			case 'currency_mismatch':
-				return __( 'The amount is not in the currency the buyer paid in.', 'sudemi' );
+				return __( 'The amount is not in the currency the buyer paid in.', 'sudemi-connector' );
 			case 'seller_suspended':
-				return __( 'This shop is suspended on sudemi: it cannot accept orders. Paid orders can still be shipped and refunded. Contact sudemi support.', 'sudemi' );
+				return __( 'This shop is suspended on sudemi: it cannot accept orders. Paid orders can still be shipped and refunded. Contact sudemi support.', 'sudemi-connector' );
 			case 'invalid_date':
-				return __( 'Dates must be in the form YYYY-MM-DD.', 'sudemi' );
+				return __( 'Dates must be in the form YYYY-MM-DD.', 'sudemi-connector' );
 			case 'too_many_requests':
-				return __( 'sudemi asked this shop to slow down. Wait a minute and try again.', 'sudemi' );
+				return __( 'sudemi asked this shop to slow down. Wait a minute and try again.', 'sudemi-connector' );
 			case 'reason_required':
-				return __( 'Give a reason. The buyer is shown it.', 'sudemi' );
+				return __( 'Give a reason. The buyer is shown it.', 'sudemi-connector' );
 			case 'no_orders':
-				return __( 'Select at least one order.', 'sudemi' );
+				return __( 'Select at least one order.', 'sudemi-connector' );
 			case 'too_many':
-				return __( 'Select at most 100 orders at once.', 'sudemi' );
+				return __( 'Select at most 100 orders at once.', 'sudemi-connector' );
 			case 'invalid_action':
-				return __( 'That action is not available.', 'sudemi' );
+				return __( 'That action is not available.', 'sudemi-connector' );
 			case 'invalid_price':
-				return __( 'Prices must be numbers of 0 or more.', 'sudemi' );
+				return __( 'Prices must be numbers of 0 or more.', 'sudemi-connector' );
 			case 'invalid_amount':
-				return __( 'Enter an amount greater than 0, or leave it empty to refund the rest.', 'sudemi' );
+				return __( 'Enter an amount greater than 0, or leave it empty to refund the rest.', 'sudemi-connector' );
 			case 'unreachable':
-				return __( 'Could not reach sudemi. Nothing was changed; try again shortly.', 'sudemi' );
+				return __( 'Could not reach sudemi. Nothing was changed; try again shortly.', 'sudemi-connector' );
 			case 'not_connected':
-				return __( 'This shop is not connected to sudemi.', 'sudemi' );
+				return __( 'This shop is not connected to sudemi.', 'sudemi-connector' );
 			case 'not_shipped':
-				return __( 'The tracking can no longer be changed: on sudemi this order is already delivered, cancelled or refunded.', 'sudemi' );
+				return __( 'The tracking can no longer be changed: on sudemi this order is already delivered, cancelled or refunded.', 'sudemi-connector' );
 			case 'tracking_code_required':
-				return __( 'Enter a tracking code.', 'sudemi' );
+				return __( 'Enter a tracking code.', 'sudemi-connector' );
 		}
 		if ( '' !== (string) $message ) {
 			return (string) $message;
 		}
-		return __( 'sudemi refused this.', 'sudemi' );
+		return __( 'sudemi refused this.', 'sudemi-connector' );
 	}
 
 	// ----------------------------------------------------------------- reading ----
@@ -501,15 +501,15 @@ final class Sudemi_Manage {
 		Sudemi_Logger::info( 'sudemi order ' . $id . ': ' . $action . ' sent from the sudemi page.' );
 		switch ( $action ) {
 			case 'reject':
-				return self::outcome( true, __( 'Declined on sudemi. The buyer is not charged.', 'sudemi' ) );
+				return self::outcome( true, __( 'Declined on sudemi. The buyer is not charged.', 'sudemi-connector' ) );
 			case 'shipped':
-				return self::outcome( true, __( 'Marked shipped on sudemi. The buyer is told.', 'sudemi' ) );
+				return self::outcome( true, __( 'Marked shipped on sudemi. The buyer is told.', 'sudemi-connector' ) );
 			case 'delivered':
-				return self::outcome( true, __( 'Marked delivered on sudemi.', 'sudemi' ) );
+				return self::outcome( true, __( 'Marked delivered on sudemi.', 'sudemi-connector' ) );
 			case 'refund':
-				return self::outcome( true, __( 'Refunded through sudemi. The refund is recorded on the WooCommerce order.', 'sudemi' ) );
+				return self::outcome( true, __( 'Refunded through sudemi. The refund is recorded on the WooCommerce order.', 'sudemi-connector' ) );
 			default:
-				return self::outcome( true, __( 'Cancelled on sudemi and refunded in full. The WooCommerce order is cancelled and the stock restored.', 'sudemi' ) );
+				return self::outcome( true, __( 'Cancelled on sudemi and refunded in full. The WooCommerce order is cancelled and the stock restored.', 'sudemi-connector' ) );
 		}
 	}
 
@@ -543,11 +543,11 @@ final class Sudemi_Manage {
 				self::reflect( $id );
 				Sudemi_Logger::info( 'sudemi order ' . $id . ': ' . $result['call'] . ' sent from the sudemi page.' );
 				return 'shipped' === $result['call']
-					? self::outcome( true, __( 'Marked shipped on sudemi. The buyer is told.', 'sudemi' ) )
-					: self::outcome( true, __( 'Tracking changed on sudemi. sudemi e-mails the buyer the new code.', 'sudemi' ) );
+					? self::outcome( true, __( 'Marked shipped on sudemi. The buyer is told.', 'sudemi-connector' ) )
+					: self::outcome( true, __( 'Tracking changed on sudemi. sudemi e-mails the buyer the new code.', 'sudemi-connector' ) );
 			case 'same':
 				self::reflect( $id );
-				return self::outcome( true, __( 'sudemi already has this tracking. Nothing was changed.', 'sudemi' ) );
+				return self::outcome( true, __( 'sudemi already has this tracking. Nothing was changed.', 'sudemi-connector' ) );
 			case 'final':
 				self::reflect( $id );
 				return self::outcome( false, self::error_message( 'not_shipped' ) );
@@ -593,7 +593,7 @@ final class Sudemi_Manage {
 		}
 		$local = Sudemi_Orders::find_any_local_order( $id );
 		if ( $local && $local->has_status( Sudemi_Orders::closed_statuses() ) ) {
-			return self::outcome( false, __( 'The WooCommerce order for this sudemi order is cancelled. Decline it instead.', 'sudemi' ) );
+			return self::outcome( false, __( 'The WooCommerce order for this sudemi order is cancelled. Decline it instead.', 'sudemi-connector' ) );
 		}
 		if ( ! $local ) {
 			$pending = self::pending_from_detail( $detail );
@@ -607,20 +607,20 @@ final class Sudemi_Manage {
 			}
 			$local = $got['order'];
 			if ( ! $local ) {
-				return self::outcome( false, __( 'The order could not be recorded in WooCommerce (a product in it is no longer in this shop). Decline it instead.', 'sudemi' ) );
+				return self::outcome( false, __( 'The order could not be recorded in WooCommerce (a product in it is no longer in this shop). Decline it instead.', 'sudemi-connector' ) );
 			}
 			if ( $local->has_status( Sudemi_Orders::closed_statuses() ) ) {
-				return self::outcome( false, __( 'The WooCommerce order for this sudemi order is cancelled. Decline it instead.', 'sudemi' ) );
+				return self::outcome( false, __( 'The WooCommerce order for this sudemi order is cancelled. Decline it instead.', 'sudemi-connector' ) );
 			}
 		}
 		$result = Sudemi_Orders::accept( $id, $local );
 		switch ( $result['outcome'] ) {
 			case 'paid':
-				return self::outcome( true, __( 'Accepted. The buyer has been charged; the WooCommerce order is ready to ship.', 'sudemi' ) );
+				return self::outcome( true, __( 'Accepted. The buyer has been charged; the WooCommerce order is ready to ship.', 'sudemi-connector' ) );
 			case 'waiting':
-				return self::outcome( true, __( 'Accepted. sudemi takes the money once the other shops in the buyer\'s payment have answered; do not ship until the order moves to Processing.', 'sudemi' ) );
+				return self::outcome( true, __( 'Accepted. sudemi takes the money once the other shops in the buyer\'s payment have answered; do not ship until the order moves to Processing.', 'sudemi-connector' ) );
 			case 'retry':
-				return self::outcome( false, __( 'sudemi did not answer. The WooCommerce order stays on hold and the acceptance is sent again on the next heartbeat.', 'sudemi' ) );
+				return self::outcome( false, __( 'sudemi did not answer. The WooCommerce order stays on hold and the acceptance is sent again on the next heartbeat.', 'sudemi-connector' ) );
 			default:
 				$read = self::read( $result['response'] );
 				return self::outcome( false, self::error_message( $read['ok'] ? 'wrong_state' : $read['error'], $read['message'] ) );
@@ -716,7 +716,7 @@ final class Sudemi_Manage {
 		Sudemi_Logger::info( 'Bulk ' . $action . ' from the sudemi page: ' . $done . ' done, ' . $refused . ' refused.' );
 		$message = sprintf(
 			/* translators: 1: orders done, 2: orders refused. */
-			__( '%1$d done, %2$d refused.', 'sudemi' ),
+			__( '%1$d done, %2$d refused.', 'sudemi-connector' ),
 			$done,
 			$refused
 		);
@@ -769,7 +769,7 @@ final class Sudemi_Manage {
 		$local = Sudemi_Orders::find_any_local_order( $id );
 		if ( $local ) {
 			return $local->has_status( Sudemi_Orders::closed_statuses() )
-				? array( 'ok' => false, 'message' => __( 'The WooCommerce order for this sudemi order is cancelled. Decline it instead.', 'sudemi' ) )
+				? array( 'ok' => false, 'message' => __( 'The WooCommerce order for this sudemi order is cancelled. Decline it instead.', 'sudemi-connector' ) )
 				: array( 'ok' => true );
 		}
 		$read = self::order( $id );
@@ -789,11 +789,11 @@ final class Sudemi_Manage {
 			return array( 'ok' => false, 'message' => self::busy_message() );
 		}
 		if ( ! $got['order'] ) {
-			return array( 'ok' => false, 'message' => __( 'The order could not be recorded in WooCommerce (a product in it is no longer in this shop). Decline it instead.', 'sudemi' ) );
+			return array( 'ok' => false, 'message' => __( 'The order could not be recorded in WooCommerce (a product in it is no longer in this shop). Decline it instead.', 'sudemi-connector' ) );
 		}
 		if ( 'existing' === $got['state'] ) {
 			return $got['order']->has_status( Sudemi_Orders::closed_statuses() )
-				? array( 'ok' => false, 'message' => __( 'The WooCommerce order for this sudemi order is cancelled. Decline it instead.', 'sudemi' ) )
+				? array( 'ok' => false, 'message' => __( 'The WooCommerce order for this sudemi order is cancelled. Decline it instead.', 'sudemi-connector' ) )
 				: array( 'ok' => true );
 		}
 		return array( 'ok' => true, 'created' => true );
@@ -857,7 +857,7 @@ final class Sudemi_Manage {
 			return $actions;
 		}
 		if ( $order->has_status( array( 'processing', 'completed' ) ) && '' === (string) $order->get_meta( Sudemi_Changes::META_DELIVERED ) ) {
-			$actions['sudemi_mark_delivered'] = __( 'Mark delivered on sudemi', 'sudemi' );
+			$actions['sudemi_mark_delivered'] = __( 'Mark delivered on sudemi', 'sudemi-connector' );
 		}
 		return $actions;
 	}
@@ -880,8 +880,8 @@ final class Sudemi_Manage {
 		if ( $now ) {
 			$now->add_order_note(
 				$sent
-					? __( 'sudemi did not record the delivery (the order may not be shipped there yet). Check the order under WooCommerce > sudemi > Orders.', 'sudemi' )
-					: __( 'Could not reach sudemi to report the delivery. It is sent again on the next heartbeat.', 'sudemi' )
+					? __( 'sudemi did not record the delivery (the order may not be shipped there yet). Check the order under WooCommerce > sudemi > Orders.', 'sudemi-connector' )
+					: __( 'Could not reach sudemi to report the delivery. It is sent again on the next heartbeat.', 'sudemi-connector' )
 			);
 		}
 	}

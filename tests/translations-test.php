@@ -1,7 +1,7 @@
 <?php
 /**
  * Every text the plugin shows exists in all twelve languages (owner: "everything in 12
- * languages"): each __(), esc_html__(), _n() ... in the plugin is in sudemi.pot and translated
+ * languages"): each __(), esc_html__(), _n() ... in the plugin is in sudemi-connector.pot and translated
  * in the 11 .po files, with the same placeholders, the right number of plural forms, and no long
  * dash anywhere. The compiled .mo files are newer than or as new as their .po.
  *
@@ -9,6 +9,11 @@
  */
 
 declare(strict_types=1);
+
+// Runs from the command line only; ABSPATH keeps the WordPress direct-access rule satisfied.
+defined( 'ABSPATH' ) || define( 'ABSPATH', __DIR__ );
+defined( 'ABSPATH' ) || exit;
+// phpcs:disable WordPress.Security.EscapeOutput,WordPress.NamingConventions.PrefixAllGlobals,WordPress.PHP.DevelopmentFunctions -- a command-line test (plain text output, test doubles of WordPress functions); left out of the release zip.
 
 $root     = dirname( __DIR__ );
 $failures = 0;
@@ -36,15 +41,15 @@ function sources( $root ) {
 			continue;
 		}
 		$src = (string) file_get_contents( $path );
-		preg_match_all( '/(?:__|esc_html__|esc_attr__|esc_html_e|esc_attr_e|_e)\(\s*' . $s . '\s*,\s*\'sudemi\'\s*\)/', $src, $m );
+		preg_match_all( '/(?:__|esc_html__|esc_attr__|esc_html_e|esc_attr_e|_e)\(\s*' . $s . '\s*,\s*\'sudemi-connector\'\s*\)/', $src, $m );
 		foreach ( $m[1] as $id ) {
 			$out[ "\x04" . $unesc( $id ) ] = array( '', $unesc( $id ), null );
 		}
-		preg_match_all( '/_n\(\s*' . $s . '\s*,\s*' . $s . '\s*,[^;]*?\'sudemi\'\s*\)/s', $src, $m );
+		preg_match_all( '/_n\(\s*' . $s . '\s*,\s*' . $s . '\s*,[^;]*?\'sudemi-connector\'\s*\)/s', $src, $m );
 		foreach ( $m[1] as $i => $id ) {
 			$out[ "\x04" . $unesc( $id ) ] = array( '', $unesc( $id ), $unesc( $m[2][ $i ] ) );
 		}
-		preg_match_all( '/_x\(\s*' . $s . '\s*,\s*' . $s . '\s*,\s*\'sudemi\'\s*\)/', $src, $m );
+		preg_match_all( '/_x\(\s*' . $s . '\s*,\s*' . $s . '\s*,\s*\'sudemi-connector\'\s*\)/', $src, $m );
 		foreach ( $m[1] as $i => $id ) {
 			$out[ $unesc( $m[2][ $i ] ) . "\x04" . $unesc( $id ) ] = array( $unesc( $m[2][ $i ] ), $unesc( $id ), null );
 		}
@@ -124,18 +129,32 @@ function placeholders( $s ) {
 $texts = sources( $root );
 expect_true( 'the plugin has texts to translate', count( $texts ) > 400, (string) count( $texts ) );
 
-$pot = read_po( $root . '/languages/sudemi.pot' );
+// The text domain equals the WordPress.org slug (Plugin Check, TextDomainMismatch): no call may
+// still use the old domain 'sudemi'.
+$old_domain = array();
+foreach ( new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $root, FilesystemIterator::SKIP_DOTS ) ) as $file ) {
+	$path = (string) $file;
+	if ( '.php' !== substr( $path, -4 ) || false !== strpos( $path, '/tests/' ) || false !== strpos( $path, '/.git/' ) ) {
+		continue;
+	}
+	if ( preg_match_all( '/\b(?:__|_e|_n|_x|_nx|esc_html__|esc_attr__|esc_html_e|esc_attr_e|esc_html_x|esc_attr_x)\([^;]*?\'sudemi\'\s*\)/s', (string) file_get_contents( $path ), $m ) ) {
+		$old_domain[] = basename( $path ) . ': ' . count( $m[0] );
+	}
+}
+expect_true( 'every text uses the text domain sudemi-connector', empty( $old_domain ), implode( ' | ', $old_domain ) );
+
+$pot = read_po( $root . '/languages/sudemi-connector.pot' );
 $missing = array();
 foreach ( $texts as $key => $t ) {
 	if ( ! isset( $pot[ $key ] ) ) {
 		$missing[] = $t[1];
 	}
 }
-expect_true( 'every text is in sudemi.pot', empty( $missing ), implode( ' | ', array_slice( $missing, 0, 5 ) ) );
+expect_true( 'every text is in sudemi-connector.pot', empty( $missing ), implode( ' | ', array_slice( $missing, 0, 5 ) ) );
 
 $plurals = array( 'ar' => 6, 'de_DE' => 2, 'es_ES' => 2, 'fr_FR' => 2, 'he_IL' => 2, 'it_IT' => 2, 'nl_NL' => 2, 'pl_PL' => 3, 'ru_RU' => 3, 'tr_TR' => 2, 'zh_CN' => 1 );
 foreach ( $plurals as $lang => $forms ) {
-	$po      = read_po( $root . "/languages/sudemi-$lang.po" );
+	$po      = read_po( $root . "/languages/sudemi-connector-$lang.po" );
 	$untrans = array();
 	$badph   = array();
 	$badpl   = array();
@@ -168,7 +187,7 @@ foreach ( $plurals as $lang => $forms ) {
 	expect_true( "$lang: same placeholders as the English", empty( $badph ), implode( ' | ', array_slice( $badph, 0, 3 ) ) );
 	expect_true( "$lang: $forms plural forms where the English has a plural", empty( $badpl ), implode( ' | ', array_slice( $badpl, 0, 3 ) ) );
 	expect_true( "$lang: no long dash", empty( $dash ), implode( ' | ', array_slice( $dash, 0, 3 ) ) );
-	$mo = $root . "/languages/sudemi-$lang.mo";
+	$mo = $root . "/languages/sudemi-connector-$lang.mo";
 	expect_true( "$lang: compiled .mo present", is_file( $mo ) && filesize( $mo ) > 1000 );
 }
 

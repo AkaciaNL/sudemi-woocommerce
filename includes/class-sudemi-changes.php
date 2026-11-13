@@ -99,7 +99,7 @@ final class Sudemi_Changes {
 			return null;
 		}
 		if ( ! empty( $body['changes_cursor_reset'] ) ) {
-			Sudemi_Logger::info( __( 'sudemi started the order change list over (last 7 days); orders are checked again, nothing is applied twice.', 'sudemi' ) );
+			Sudemi_Logger::info( __( 'sudemi started the order change list over (last 7 days); orders are checked again, nothing is applied twice.', 'sudemi-connector' ) );
 		}
 		$applied = 0;
 		foreach ( $body['changed_orders'] as $entry ) {
@@ -128,7 +128,7 @@ final class Sudemi_Changes {
 			Sudemi_Logger::info(
 				sprintf(
 					/* translators: %d: number of orders. */
-					__( '%d WooCommerce order(s) updated from sudemi.', 'sudemi' ),
+					__( '%d WooCommerce order(s) updated from sudemi.', 'sudemi-connector' ),
 					$applied
 				)
 			);
@@ -228,7 +228,7 @@ final class Sudemi_Changes {
 		Sudemi_Logger::warn(
 			sprintf(
 				/* translators: 1: sudemi order id, 2: what went wrong. */
-				__( 'sudemi order %1$s could not be applied here yet (%2$s); it is read from sudemi again on the next heartbeats.', 'sudemi' ),
+				__( 'sudemi order %1$s could not be applied here yet (%2$s); it is read from sudemi again on the next heartbeats.', 'sudemi-connector' ),
 				$id,
 				$list[ $id ]['why']
 			)
@@ -271,7 +271,7 @@ final class Sudemi_Changes {
 					Sudemi_Logger::error(
 						sprintf(
 							/* translators: 1: sudemi order id, 2: sudemi's answer. */
-							__( 'sudemi order %1$s is not applied here: sudemi no longer has it for this shop (%2$s). Check the WooCommerce order by hand.', 'sudemi' ),
+							__( 'sudemi order %1$s is not applied here: sudemi no longer has it for this shop (%2$s). Check the WooCommerce order by hand.', 'sudemi-connector' ),
 							$id,
 							(string) $read['error']
 						)
@@ -290,7 +290,7 @@ final class Sudemi_Changes {
 				Sudemi_Logger::error(
 					sprintf(
 						/* translators: 1: sudemi order id, 2: number of tries, 3: what went wrong. */
-						__( 'Gave up applying sudemi order %1$s here after %2$d tries (%3$s). Check this order under WooCommerce > sudemi > Orders and update the WooCommerce order by hand.', 'sudemi' ),
+						__( 'Gave up applying sudemi order %1$s here after %2$d tries (%3$s). Check this order under WooCommerce > sudemi > Orders and update the WooCommerce order by hand.', 'sudemi-connector' ),
 						$id,
 						(int) $list[ $id ]['attempts'],
 						$list[ $id ]['why']
@@ -405,13 +405,13 @@ final class Sudemi_Changes {
 				break;
 			case 'processing':
 				Sudemi_Orders::fill_customer( $order, $id );
-				$order->update_status( 'processing', __( 'Paid on sudemi; the buyer has been charged. This order can be shipped.', 'sudemi' ) );
+				$order->update_status( 'processing', __( 'Paid on sudemi; the buyer has been charged. This order can be shipped.', 'sudemi-connector' ) );
 				break;
 			case 'completed':
 				if ( in_array( $local, array( 'on-hold', 'pending' ), true ) ) {
 					Sudemi_Orders::fill_customer( $order, $id );
 				}
-				$order->update_status( 'completed', __( 'Marked shipped on sudemi.', 'sudemi' ) );
+				$order->update_status( 'completed', __( 'Marked shipped on sudemi.', 'sudemi-connector' ) );
 				break;
 			case 'cancel':
 				$by = isset( $entry['cancelled_by'] ) ? $entry['cancelled_by'] : null;
@@ -419,7 +419,7 @@ final class Sudemi_Changes {
 					Sudemi_Orders::cancel_locally( $order, Sudemi_Orders::decline_note( $by ) );
 					Sudemi_Logger::warn( Sudemi_Orders::decline_log( $by, $id, $order->get_order_number() ) );
 				} else {
-					Sudemi_Orders::cancel_locally( $order, Sudemi_Orders::cancel_note( $by ) . ' ' . __( 'The stock has been restored.', 'sudemi' ) );
+					Sudemi_Orders::cancel_locally( $order, Sudemi_Orders::cancel_note( $by ) . ' ' . __( 'The stock has been restored.', 'sudemi-connector' ) );
 					Sudemi_Logger::warn( Sudemi_Orders::cancel_log( $by, $id, $order->get_order_number() ) );
 				}
 				break;
@@ -436,7 +436,7 @@ final class Sudemi_Changes {
 			$order->add_order_note(
 				sprintf(
 					/* translators: %s: date and time. */
-					__( 'Delivered (recorded on sudemi, %s).', 'sudemi' ),
+					__( 'Delivered (recorded on sudemi, %s).', 'sudemi-connector' ),
 					Sudemi_Requests::date( $at )
 				)
 			);
@@ -469,7 +469,7 @@ final class Sudemi_Changes {
 		$order->add_order_note(
 			sprintf(
 				/* translators: 1: carrier, 2: tracking code. */
-				__( 'Tracking on sudemi: %1$s %2$s', 'sudemi' ),
+				__( 'Tracking on sudemi: %1$s %2$s', 'sudemi-connector' ),
 				'' === $carrier ? '-' : esc_html( $carrier ),
 				'' === $code ? '-' : esc_html( $code )
 			)
@@ -518,6 +518,7 @@ final class Sudemi_Changes {
 			return $fn();
 		}
 		$key = substr( 'sudemi_' . $wpdb->prefix . $name, 0, 64 );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- a MySQL named lock, not data; a cached answer would be wrong.
 		if ( 1 !== (int) $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK(%s, %d)', $key, (int) $wait ) ) ) {
 			Sudemi_Logger::warn( 'Busy: ' . $name . ' is being applied by another request; left to it.' );
 			return null;
@@ -525,6 +526,7 @@ final class Sudemi_Changes {
 		try {
 			return $fn();
 		} finally {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- releases the named lock taken above.
 			$wpdb->query( $wpdb->prepare( 'SELECT RELEASE_LOCK(%s)', $key ) );
 		}
 	}
@@ -550,7 +552,7 @@ final class Sudemi_Changes {
 			array(
 				'order_id'       => $order->get_id(),
 				'amount'         => Sudemi_Currency::to_major( $gap, $currency ),
-				'reason'         => __( 'Refund made on sudemi', 'sudemi' ),
+				'reason'         => __( 'Refund made on sudemi', 'sudemi-connector' ),
 				'refund_payment' => false,
 				'restock_items'  => false,
 			)
@@ -562,7 +564,7 @@ final class Sudemi_Changes {
 		$order->add_order_note(
 			sprintf(
 				/* translators: %s: amount with currency. */
-				__( 'A refund of %s made on sudemi is recorded here. The buyer was paid back by sudemi.', 'sudemi' ),
+				__( 'A refund of %s made on sudemi is recorded here. The buyer was paid back by sudemi.', 'sudemi-connector' ),
 				Sudemi_Currency::to_major( $gap, $currency ) . ' ' . $currency
 			)
 		);
@@ -603,11 +605,11 @@ final class Sudemi_Changes {
 			Sudemi_Logger::error( 'sudemi order ' . $id . ' was accepted on sudemi but could not be booked here (a product in it is no longer in this shop).' );
 			return null;
 		}
-		$order->add_order_note( __( 'Booked from sudemi: this order was accepted on sudemi (on the portal or in a bulk action).', 'sudemi' ) );
+		$order->add_order_note( __( 'Booked from sudemi: this order was accepted on sudemi (on the portal or in a bulk action).', 'sudemi-connector' ) );
 		Sudemi_Logger::info(
 			sprintf(
 				/* translators: 1: sudemi order id, 2: local order number. */
-				__( 'sudemi order %1$s was accepted on sudemi; booked here as order #%2$s.', 'sudemi' ),
+				__( 'sudemi order %1$s was accepted on sudemi; booked here as order #%2$s.', 'sudemi-connector' ),
 				$id,
 				$order->get_order_number()
 			)

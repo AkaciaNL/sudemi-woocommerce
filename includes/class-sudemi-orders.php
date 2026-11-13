@@ -43,7 +43,7 @@ class Sudemi_Orders {
 			Sudemi_Logger::info(
 				sprintf(
 					/* translators: %d: number of orders waiting. */
-					__( '%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes.', 'sudemi' ),
+					__( '%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes.', 'sudemi-connector' ),
 					count( $pending )
 				)
 			);
@@ -60,7 +60,7 @@ class Sudemi_Orders {
 				Sudemi_Logger::error(
 					sprintf(
 						/* translators: 1: sudemi order id, 2: error message. */
-						__( 'Could not answer sudemi order %1$s: %2$s', 'sudemi' ),
+						__( 'Could not answer sudemi order %1$s: %2$s', 'sudemi-connector' ),
 						$order['order_id'],
 						$e->getMessage()
 					)
@@ -105,7 +105,7 @@ class Sudemi_Orders {
 			Sudemi_Logger::error(
 				sprintf(
 					/* translators: 1: sudemi order id, 2: reason. */
-					__( 'sudemi order %1$s could not be booked: %2$s. Check the shop currency on the sudemi settings page.', 'sudemi' ),
+					__( 'sudemi order %1$s could not be booked: %2$s. Check the shop currency on the sudemi settings page.', 'sudemi-connector' ),
 					$sudemi_id,
 					$shortfall
 				)
@@ -123,7 +123,7 @@ class Sudemi_Orders {
 			Sudemi_Logger::info(
 				sprintf(
 					/* translators: 1: sudemi order id, 2: reason. */
-					__( 'Declined sudemi order %1$s: %2$s. Nothing was charged.', 'sudemi' ),
+					__( 'Declined sudemi order %1$s: %2$s. Nothing was charged.', 'sudemi-connector' ),
 					$sudemi_id,
 					$shortfall
 				)
@@ -141,7 +141,7 @@ class Sudemi_Orders {
 		if ( ! $order ) {
 			Sudemi_Client::post_signed(
 				'/integration/v1/orders/' . rawurlencode( $sudemi_id ) . '/reject',
-				array( 'reason' => __( 'this shop could not record the order', 'sudemi' ) )
+				array( 'reason' => __( 'this shop could not record the order', 'sudemi-connector' ) )
 			);
 			return;
 		}
@@ -275,11 +275,11 @@ class Sudemi_Orders {
 			$why = is_wp_error( $response )
 				? $response->get_error_message()
 				: ( is_array( $response ) && isset( $response['status'] ) ? 'HTTP ' . (int) $response['status']
-					. ( isset( $body['error'] ) ? ' ' . (string) $body['error'] : '' ) : __( 'no answer', 'sudemi' ) );
+					. ( isset( $body['error'] ) ? ' ' . (string) $body['error'] : '' ) : __( 'no answer', 'sudemi-connector' ) );
 			Sudemi_Logger::warn(
 				sprintf(
 					/* translators: 1: sudemi order id, 2: error message. */
-					__( 'Could not reach sudemi to confirm order %1$s (%2$s). Will try again on the next heartbeat.', 'sudemi' ),
+					__( 'Could not reach sudemi to confirm order %1$s (%2$s). Will try again on the next heartbeat.', 'sudemi-connector' ),
 					$sudemi_id,
 					$why
 				)
@@ -288,7 +288,7 @@ class Sudemi_Orders {
 				$order->update_meta_data( '_sudemi_retry_noted', time() );
 				$order->save();
 				$order->add_order_note(
-					__( 'sudemi has not answered the confirmation yet. The order stays on hold with its stock reserved and is asked about again on the next heartbeat. Do not ship it until it moves to Processing.', 'sudemi' )
+					__( 'sudemi has not answered the confirmation yet. The order stays on hold with its stock reserved and is asked about again on the next heartbeat. Do not ship it until it moves to Processing.', 'sudemi-connector' )
 				);
 			}
 			return;
@@ -314,12 +314,12 @@ class Sudemi_Orders {
 			self::fill_customer( $order, $sudemi_id );
 			$order->update_status(
 				'processing',
-				__( 'Confirmed with sudemi; the buyer has been charged.', 'sudemi' )
+				__( 'Confirmed with sudemi; the buyer has been charged.', 'sudemi-connector' )
 			);
 			Sudemi_Logger::info(
 				sprintf(
 					/* translators: 1: sudemi order id, 2: local order number. */
-					__( 'Confirmed sudemi order %1$s as order #%2$s.', 'sudemi' ),
+					__( 'Confirmed sudemi order %1$s as order #%2$s.', 'sudemi-connector' ),
 					$sudemi_id,
 					$order->get_order_number()
 				)
@@ -342,14 +342,14 @@ class Sudemi_Orders {
 		if ( ! $order->has_status( array( 'on-hold', 'pending' ) ) ) {
 			return;
 		}
-		$reason = isset( $body['message'] ) ? (string) $body['message'] : __( 'reason not given', 'sudemi' );
+		$reason = isset( $body['message'] ) ? (string) $body['message'] : __( 'reason not given', 'sudemi-connector' );
 		if ( '' !== $by ) {
 			// sudemi said who declined it: the same note as when the change feed reports it.
 			self::cancel_locally( $order, self::decline_note( $by ) );
 			Sudemi_Logger::warn(
 				sprintf(
 					/* translators: 1: sudemi order id, 2: reason. */
-					__( 'sudemi refused the confirmation of order %1$s: %2$s. The local order was cancelled and stock restored.', 'sudemi' ),
+					__( 'sudemi refused the confirmation of order %1$s: %2$s. The local order was cancelled and stock restored.', 'sudemi-connector' ),
 					$sudemi_id,
 					$reason
 				)
@@ -360,14 +360,14 @@ class Sudemi_Orders {
 			$order,
 			sprintf(
 				/* translators: %s: the reason sudemi gave. */
-				__( 'sudemi did not accept the confirmation: %s. Nothing was charged and the stock has been restored.', 'sudemi' ),
+				__( 'sudemi did not accept the confirmation: %s. Nothing was charged and the stock has been restored.', 'sudemi-connector' ),
 				$reason
 			)
 		);
 		Sudemi_Logger::warn(
 			sprintf(
 				/* translators: 1: sudemi order id, 2: reason. */
-				__( 'sudemi refused the confirmation of order %1$s: %2$s. The local order was cancelled and stock restored.', 'sudemi' ),
+				__( 'sudemi refused the confirmation of order %1$s: %2$s. The local order was cancelled and stock restored.', 'sudemi-connector' ),
 				$sudemi_id,
 				$reason
 			)
@@ -407,7 +407,7 @@ class Sudemi_Orders {
 			// Paid on sudemi although cancelled here: the merchant has to decide (ship it, or
 			// cancel it on sudemi so the buyer is refunded). Said loudly, never guessed.
 			$order->add_order_note(
-				__( 'sudemi says this order is PAID, but it is cancelled here. Either ship it, or refund it to the buyer (set it to Processing and then Cancelled, or contact support@sudemi.com).', 'sudemi' )
+				__( 'sudemi says this order is PAID, but it is cancelled here. Either ship it, or refund it to the buyer (set it to Processing and then Cancelled, or contact support@sudemi.com).', 'sudemi-connector' )
 			);
 			Sudemi_Logger::error( 'sudemi order ' . $sudemi_id . ' is paid on sudemi but cancelled in WooCommerce (order #' . $order->get_order_number() . ').' );
 			return;
@@ -419,9 +419,9 @@ class Sudemi_Orders {
 		Sudemi_Logger::info(
 			sprintf(
 				/* translators: 1: sudemi order id, 2: reason. */
-				__( 'Declined sudemi order %1$s: %2$s. Nothing was charged.', 'sudemi' ),
+				__( 'Declined sudemi order %1$s: %2$s. Nothing was charged.', 'sudemi-connector' ),
 				$sudemi_id,
-				__( 'the order was cancelled in this shop', 'sudemi' )
+				__( 'the order was cancelled in this shop', 'sudemi-connector' )
 			)
 		);
 	}
@@ -496,12 +496,12 @@ class Sudemi_Orders {
 		$order->update_meta_data( '_sudemi_waiting_noted', time() );
 		$order->save();
 		$order->add_order_note(
-			__( 'Accepted on sudemi. The buyer paid several shops in one payment; sudemi takes the money once every shop has answered. Do NOT ship until this order moves to Processing.', 'sudemi' )
+			__( 'Accepted on sudemi. The buyer paid several shops in one payment; sudemi takes the money once every shop has answered. Do NOT ship until this order moves to Processing.', 'sudemi-connector' )
 		);
 		Sudemi_Logger::info(
 			sprintf(
 				/* translators: 1: sudemi order id, 2: local order number. */
-				__( 'Accepted sudemi order %1$s (order #%2$s). Not paid yet: waiting for the other shops in the same payment.', 'sudemi' ),
+				__( 'Accepted sudemi order %1$s (order #%2$s). Not paid yet: waiting for the other shops in the same payment.', 'sudemi-connector' ),
 				$sudemi_id,
 				$order->get_order_number()
 			)
@@ -531,7 +531,7 @@ class Sudemi_Orders {
 				Sudemi_Logger::error(
 					sprintf(
 						/* translators: 1: sudemi order id, 2: error message. */
-						__( 'Could not apply the outcome of sudemi order %1$s: %2$s', 'sudemi' ),
+						__( 'Could not apply the outcome of sudemi order %1$s: %2$s', 'sudemi-connector' ),
 						$entry['order_id'],
 						$e->getMessage()
 					)
@@ -588,12 +588,12 @@ class Sudemi_Orders {
 		self::fill_customer( $order, $sudemi_id );
 		$order->update_status(
 			'processing',
-			__( 'Paid on sudemi: every shop in the buyer\'s payment has answered and the buyer has been charged. This order can be shipped.', 'sudemi' )
+			__( 'Paid on sudemi: every shop in the buyer\'s payment has answered and the buyer has been charged. This order can be shipped.', 'sudemi-connector' )
 		);
 		Sudemi_Logger::info(
 			sprintf(
 				/* translators: 1: sudemi order id, 2: local order number. */
-				__( 'sudemi order %1$s is paid; order #%2$s moved to Processing.', 'sudemi' ),
+				__( 'sudemi order %1$s is paid; order #%2$s moved to Processing.', 'sudemi-connector' ),
 				$sudemi_id,
 				$order->get_order_number()
 			)
@@ -651,13 +651,13 @@ class Sudemi_Orders {
 	public static function cancel_note( $by ) {
 		switch ( self::cancelled_by( $by ) ) {
 			case 'buyer':
-				return __( 'Cancelled by the buyer on sudemi before shipping; the buyer has been refunded in full. Do not ship this order.', 'sudemi' );
+				return __( 'Cancelled by the buyer on sudemi before shipping; the buyer has been refunded in full. Do not ship this order.', 'sudemi-connector' );
 			case 'shop':
-				return __( 'Cancelled by your shop on sudemi before shipping; the buyer has been refunded in full. Do not ship this order.', 'sudemi' );
+				return __( 'Cancelled by your shop on sudemi before shipping; the buyer has been refunded in full. Do not ship this order.', 'sudemi-connector' );
 			case 'sudemi':
-				return __( 'Cancelled by sudemi before shipping (for example because the order was not answered in time); the buyer has been refunded in full. Do not ship this order.', 'sudemi' );
+				return __( 'Cancelled by sudemi before shipping (for example because the order was not answered in time); the buyer has been refunded in full. Do not ship this order.', 'sudemi-connector' );
 		}
-		return __( 'Cancelled on sudemi before shipping; the buyer has been refunded in full. Do not ship this order.', 'sudemi' );
+		return __( 'Cancelled on sudemi before shipping; the buyer has been refunded in full. Do not ship this order.', 'sudemi-connector' );
 	}
 
 	/**
@@ -672,19 +672,19 @@ class Sudemi_Orders {
 		switch ( self::cancelled_by( $by ) ) {
 			case 'buyer':
 				/* translators: 1: sudemi order id, 2: local order number. */
-				$text = __( 'sudemi order %1$s was cancelled by the buyer before shipping; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+				$text = __( 'sudemi order %1$s was cancelled by the buyer before shipping; order #%2$s was cancelled here and the stock restored.', 'sudemi-connector' );
 				break;
 			case 'shop':
 				/* translators: 1: sudemi order id, 2: local order number. */
-				$text = __( 'sudemi order %1$s was cancelled by your shop on sudemi before shipping; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+				$text = __( 'sudemi order %1$s was cancelled by your shop on sudemi before shipping; order #%2$s was cancelled here and the stock restored.', 'sudemi-connector' );
 				break;
 			case 'sudemi':
 				/* translators: 1: sudemi order id, 2: local order number. */
-				$text = __( 'sudemi order %1$s was cancelled by sudemi before shipping; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+				$text = __( 'sudemi order %1$s was cancelled by sudemi before shipping; order #%2$s was cancelled here and the stock restored.', 'sudemi-connector' );
 				break;
 			default:
 				/* translators: 1: sudemi order id, 2: local order number. */
-				$text = __( 'sudemi order %1$s was cancelled on sudemi before shipping; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+				$text = __( 'sudemi order %1$s was cancelled on sudemi before shipping; order #%2$s was cancelled here and the stock restored.', 'sudemi-connector' );
 		}
 		return sprintf( $text, $sudemi_id, $number );
 	}
@@ -702,22 +702,22 @@ class Sudemi_Orders {
 	public static function decline_note( $by, $reason = null ) {
 		switch ( self::cancelled_by( $by ) ) {
 			case 'shop':
-				$note = __( 'Declined by your shop on sudemi; the buyer was not charged. The stock has been restored.', 'sudemi' );
+				$note = __( 'Declined by your shop on sudemi; the buyer was not charged. The stock has been restored.', 'sudemi-connector' );
 				break;
 			case 'sudemi':
-				$note = __( 'Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored.', 'sudemi' );
+				$note = __( 'Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored.', 'sudemi-connector' );
 				break;
 			case 'buyer':
-				$note = __( 'Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored.', 'sudemi' );
+				$note = __( 'Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored.', 'sudemi-connector' );
 				break;
 			default:
 				if ( null === $reason ) {
-					return __( 'Declined on sudemi: the buyer was not charged. The stock has been restored.', 'sudemi' );
+					return __( 'Declined on sudemi: the buyer was not charged. The stock has been restored.', 'sudemi-connector' );
 				}
 				return sprintf(
 					/* translators: %s: the reason sudemi gave. */
-					__( 'sudemi released the buyer\'s payment: %s. Nothing was charged and the stock has been restored.', 'sudemi' ),
-					'' !== (string) $reason ? (string) $reason : __( 'reason not given', 'sudemi' )
+					__( 'sudemi released the buyer\'s payment: %s. Nothing was charged and the stock has been restored.', 'sudemi-connector' ),
+					'' !== (string) $reason ? (string) $reason : __( 'reason not given', 'sudemi-connector' )
 				);
 		}
 		return self::with_reason( $note, $reason );
@@ -736,27 +736,27 @@ class Sudemi_Orders {
 		switch ( self::cancelled_by( $by ) ) {
 			case 'shop':
 				/* translators: 1: sudemi order id, 2: local order number. */
-				$text = __( 'sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+				$text = __( 'sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored.', 'sudemi-connector' );
 				break;
 			case 'sudemi':
 				/* translators: 1: sudemi order id, 2: local order number. */
-				$text = __( 'sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+				$text = __( 'sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored.', 'sudemi-connector' );
 				break;
 			case 'buyer':
 				/* translators: 1: sudemi order id, 2: local order number. */
-				$text = __( 'sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+				$text = __( 'sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored.', 'sudemi-connector' );
 				break;
 			default:
 				if ( null !== $reason ) {
 					return sprintf(
 						/* translators: 1: sudemi order id, 2: reason. */
-						__( 'sudemi order %1$s was released after all: %2$s. The local order was cancelled and stock restored.', 'sudemi' ),
+						__( 'sudemi order %1$s was released after all: %2$s. The local order was cancelled and stock restored.', 'sudemi-connector' ),
 						$sudemi_id,
-						'' !== (string) $reason ? (string) $reason : __( 'reason not given', 'sudemi' )
+						'' !== (string) $reason ? (string) $reason : __( 'reason not given', 'sudemi-connector' )
 					);
 				}
 				/* translators: 1: sudemi order id, 2: local order number. */
-				$text = __( 'sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored.', 'sudemi' );
+				$text = __( 'sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored.', 'sudemi-connector' );
 		}
 		return self::with_reason( sprintf( $text, $sudemi_id, $number ), $reason );
 	}
@@ -767,7 +767,7 @@ class Sudemi_Orders {
 			return $text;
 		}
 		/* translators: %s: the reason sudemi gave. */
-		return $text . ' ' . sprintf( __( 'Reason: %s.', 'sudemi' ), rtrim( trim( (string) $reason ), '.' ) );
+		return $text . ' ' . sprintf( __( 'Reason: %s.', 'sudemi-connector' ), rtrim( trim( (string) $reason ), '.' ) );
 	}
 
 	/**
@@ -783,8 +783,8 @@ class Sudemi_Orders {
 		$orders = wc_get_orders(
 			array(
 				'limit'      => 1,
-				'meta_key'   => self::META_ORDER_ID,
-				'meta_value' => $sudemi_id,
+				'meta_key'   => self::META_ORDER_ID, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- the one link from a sudemi order to its WooCommerce order; limit 1.
+				'meta_value' => $sudemi_id, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- see meta_key above.
 				'status'     => array( 'on-hold', 'pending', 'processing' ),
 			)
 		);
@@ -828,7 +828,7 @@ class Sudemi_Orders {
 			// loudly on the order itself rather than only in a log, because a merchant about to
 			// pack this needs to know it has no destination yet.
 			$order->add_order_note(
-				__( 'Could not fetch the delivery address from sudemi yet. The order is paid; open it again shortly or contact support before shipping.', 'sudemi' )
+				__( 'Could not fetch the delivery address from sudemi yet. The order is paid; open it again shortly or contact support before shipping.', 'sudemi-connector' )
 			);
 			return;
 		}
@@ -838,8 +838,8 @@ class Sudemi_Orders {
 			$order->add_order_note(
 				sprintf(
 					/* translators: %s: the explanation sudemi gave. */
-					__( 'sudemi has no delivery address for this order: %s', 'sudemi' ),
-					isset( $body['message'] ) ? (string) $body['message'] : __( 'reason not given', 'sudemi' )
+					__( 'sudemi has no delivery address for this order: %s', 'sudemi-connector' ),
+					isset( $body['message'] ) ? (string) $body['message'] : __( 'reason not given', 'sudemi-connector' )
 				)
 			);
 			return;
@@ -877,7 +877,7 @@ class Sudemi_Orders {
 	public static function first_shortfall( array $pending ) {
 		$lines = isset( $pending['lines'] ) && is_array( $pending['lines'] ) ? $pending['lines'] : array();
 		if ( empty( $lines ) ) {
-			return __( 'the order had no recognisable items', 'sudemi' );
+			return __( 'the order had no recognisable items', 'sudemi-connector' );
 		}
 
 		foreach ( $lines as $line ) {
@@ -885,22 +885,22 @@ class Sudemi_Orders {
 			if ( ! $product ) {
 				return sprintf(
 					/* translators: %s: the product title as sudemi knows it. */
-					__( '"%s" is no longer sold here', 'sudemi' ),
-					isset( $line['title'] ) ? (string) $line['title'] : __( 'an item', 'sudemi' )
+					__( '"%s" is no longer sold here', 'sudemi-connector' ),
+					isset( $line['title'] ) ? (string) $line['title'] : __( 'an item', 'sudemi-connector' )
 				);
 			}
 			$quantity = isset( $line['quantity'] ) ? (int) $line['quantity'] : 1;
 			if ( ! $product->is_in_stock() || ! $product->has_enough_stock( $quantity ) ) {
 				return sprintf(
 					/* translators: %s: the product name. */
-					__( '"%s" is out of stock', 'sudemi' ),
+					__( '"%s" is out of stock', 'sudemi-connector' ),
 					$product->get_name()
 				);
 			}
 			if ( ! $product->is_purchasable() ) {
 				return sprintf(
 					/* translators: %s: the product name. */
-					__( '"%s" cannot currently be bought', 'sudemi' ),
+					__( '"%s" cannot currently be bought', 'sudemi-connector' ),
 					$product->get_name()
 				);
 			}
@@ -1031,7 +1031,7 @@ class Sudemi_Orders {
 
 		if ( null !== $paid ) {
 			$shipping = new WC_Order_Item_Shipping();
-			$shipping->set_method_title( __( 'sudemi shipping', 'sudemi' ) );
+			$shipping->set_method_title( __( 'sudemi shipping', 'sudemi-connector' ) );
 			$shipping->set_method_id( 'sudemi' );
 			// Taxed the way the shop's own checkout taxes shipping (its shipping tax class setting).
 			$taxes = self::taxes_within( $paid['shipping'], self::tax_rates( $country, Sudemi_Shipping::tax_class( $item_classes ), true ), $currency );
@@ -1043,7 +1043,7 @@ class Sudemi_Orders {
 		// The buyer paid on sudemi, so the order says so; a blank payment method reads in the
 		// shop's books as an order nobody has paid for.
 		$order->set_payment_method( 'sudemi' );
-		$order->set_payment_method_title( __( 'sudemi', 'sudemi' ) );
+		$order->set_payment_method_title( __( 'sudemi', 'sudemi-connector' ) );
 		$order->update_meta_data( self::META_ORDER_ID, $sudemi_id );
 		$order->set_created_via( 'sudemi' );
 		if ( '' !== $country ) {
@@ -1055,7 +1055,7 @@ class Sudemi_Orders {
 		$order->add_order_note(
 			sprintf(
 				/* translators: %s: the sudemi order id. */
-				__( 'Placed through sudemi (order %s). The buyer has been authorised but not yet charged.', 'sudemi' ),
+				__( 'Placed through sudemi (order %s). The buyer has been authorised but not yet charged.', 'sudemi-connector' ),
 				$sudemi_id
 			)
 		);
@@ -1074,7 +1074,7 @@ class Sudemi_Orders {
 		}
 		// Held rather than processing until sudemi confirms the capture: an order that looks
 		// payable before the money is taken is one somebody ships too early.
-		$order->update_status( 'on-hold', __( 'Awaiting confirmation with sudemi.', 'sudemi' ) );
+		$order->update_status( 'on-hold', __( 'Awaiting confirmation with sudemi.', 'sudemi-connector' ) );
 		$order->save();
 
 		// Taken now, with the order, so this shop's storefront cannot sell the same unit while
@@ -1218,8 +1218,8 @@ class Sudemi_Orders {
 		$orders = wc_get_orders(
 			array(
 				'limit'      => 1,
-				'meta_key'   => self::META_ORDER_ID,
-				'meta_value' => $sudemi_id,
+				'meta_key'   => self::META_ORDER_ID, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- the one link from a sudemi order to its WooCommerce order; limit 1.
+				'meta_value' => $sudemi_id, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- see meta_key above.
 				'status'     => array( 'on-hold' ),
 			)
 		);
@@ -1237,8 +1237,8 @@ class Sudemi_Orders {
 		$orders = wc_get_orders(
 			array(
 				'limit'      => 1,
-				'meta_key'   => self::META_ORDER_ID,
-				'meta_value' => $sudemi_id,
+				'meta_key'   => self::META_ORDER_ID, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- the one link from a sudemi order to its WooCommerce order; limit 1.
+				'meta_value' => $sudemi_id, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- see meta_key above.
 				'status'     => array_merge( array_keys( wc_get_order_statuses() ), array( 'trash' ) ),
 			)
 		);
@@ -1333,7 +1333,7 @@ class Sudemi_Orders {
 			$order->add_order_note(
 				sprintf(
 					/* translators: %s: why the refund was not sent. */
-					__( 'This refund was NOT sent to sudemi: %s. The buyer has not been paid back.', 'sudemi' ),
+					__( 'This refund was NOT sent to sudemi: %s. The buyer has not been paid back.', 'sudemi-connector' ),
 					$body
 				)
 			);
@@ -1421,7 +1421,7 @@ class Sudemi_Orders {
 			'/integration/v1/orders/' . rawurlencode( $sudemi_id ) . '/cancel',
 			array( 'reason' => 'Cancelled by the shop' )
 		);
-		self::note_money_result( $order, $response, __( 'the full amount', 'sudemi' ) );
+		self::note_money_result( $order, $response, __( 'the full amount', 'sudemi-connector' ) );
 	}
 
 	/**
@@ -1446,7 +1446,7 @@ class Sudemi_Orders {
 				return false;
 			}
 			$order->add_order_note(
-				__( 'Could not tell sudemi about this cancellation yet. It is retried on the next heartbeat; the buyer is not charged for it.', 'sudemi' )
+				__( 'Could not tell sudemi about this cancellation yet. It is retried on the next heartbeat; the buyer is not charged for it.', 'sudemi-connector' )
 			);
 			return false;
 		}
@@ -1454,7 +1454,7 @@ class Sudemi_Orders {
 			self::cancel_paid( $sudemi_id, $order );
 			return true;
 		}
-		$order->add_order_note( __( 'Cancelled on sudemi as well: the buyer was not charged for this order.', 'sudemi' ) );
+		$order->add_order_note( __( 'Cancelled on sudemi as well: the buyer was not charged for this order.', 'sudemi-connector' ) );
 		return true;
 	}
 
@@ -1464,7 +1464,7 @@ class Sudemi_Orders {
 			$order->add_order_note(
 				sprintf(
 					/* translators: %s: the amount refunded, e.g. "€12.00" or "the full amount". */
-					__( 'Refunded %s to the buyer through sudemi.', 'sudemi' ),
+					__( 'Refunded %s to the buyer through sudemi.', 'sudemi-connector' ),
 					$what
 				)
 			);
@@ -1476,7 +1476,7 @@ class Sudemi_Orders {
 		$order->add_order_note(
 			sprintf(
 				/* translators: %s: the reason sudemi gave. */
-				__( 'sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com).', 'sudemi' ),
+				__( 'sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com).', 'sudemi-connector' ),
 				$message
 			)
 		);
@@ -1547,7 +1547,7 @@ class Sudemi_Orders {
 			Sudemi_Logger::info(
 				sprintf(
 					/* translators: 1: event name, 2: sudemi order id. */
-					__( 'Reported %1$s for sudemi order %2$s.', 'sudemi' ),
+					__( 'Reported %1$s for sudemi order %2$s.', 'sudemi-connector' ),
 					$event,
 					$sudemi_id
 				)
@@ -1562,7 +1562,7 @@ class Sudemi_Orders {
 			Sudemi_Logger::error(
 				sprintf(
 					/* translators: 1: event name, 2: sudemi order id, 3: error message. */
-					__( 'Could not report %1$s for sudemi order %2$s: %3$s', 'sudemi' ),
+					__( 'Could not report %1$s for sudemi order %2$s: %3$s', 'sudemi-connector' ),
 					$event,
 					$sudemi_id,
 					$message
@@ -1574,7 +1574,7 @@ class Sudemi_Orders {
 		Sudemi_Logger::warn(
 			sprintf(
 				/* translators: 1: event name, 2: sudemi order id, 3: error message. */
-				__( 'Could not report %1$s for sudemi order %2$s yet (%3$s). It is sent again on the next heartbeat.', 'sudemi' ),
+				__( 'Could not report %1$s for sudemi order %2$s yet (%3$s). It is sent again on the next heartbeat.', 'sudemi-connector' ),
 				$event,
 				$sudemi_id,
 				$message
@@ -1849,7 +1849,7 @@ class Sudemi_Orders {
 			case 'done':
 				$note = sprintf(
 					/* translators: %s: carrier and tracking code. */
-					__( 'New tracking sent to sudemi: %s. sudemi e-mails the buyer the new code.', 'sudemi' ),
+					__( 'New tracking sent to sudemi: %s. sudemi e-mails the buyer the new code.', 'sudemi-connector' ),
 					$shown
 				);
 				break;
@@ -1859,21 +1859,21 @@ class Sudemi_Orders {
 			case 'retry':
 				$note = sprintf(
 					/* translators: %s: carrier and tracking code. */
-					__( 'Could not send the new tracking (%s) to sudemi yet. It is sent again on the next heartbeat.', 'sudemi' ),
+					__( 'Could not send the new tracking (%s) to sudemi yet. It is sent again on the next heartbeat.', 'sudemi-connector' ),
 					$shown
 				);
 				break;
 			case 'final':
 				$note = sprintf(
 					/* translators: %s: carrier and tracking code. */
-					__( 'The new tracking (%s) was not sent: on sudemi this order is already delivered, cancelled or refunded, so its tracking can no longer change.', 'sudemi' ),
+					__( 'The new tracking (%s) was not sent: on sudemi this order is already delivered, cancelled or refunded, so its tracking can no longer change.', 'sudemi-connector' ),
 					$shown
 				);
 				break;
 			default:
 				$note = sprintf(
 					/* translators: %s: carrier and tracking code. */
-					__( 'sudemi did not take the new tracking (%s). Check the order under WooCommerce > sudemi > Orders.', 'sudemi' ),
+					__( 'sudemi did not take the new tracking (%s). Check the order under WooCommerce > sudemi > Orders.', 'sudemi-connector' ),
 					$shown
 				);
 		}
@@ -1971,7 +1971,7 @@ class Sudemi_Orders {
 			Sudemi_Logger::warn(
 				sprintf(
 					/* translators: 1: sudemi order id. */
-					__( 'Could not send the new tracking for sudemi order %1$s yet. It is sent again on the next heartbeat.', 'sudemi' ),
+					__( 'Could not send the new tracking for sudemi order %1$s yet. It is sent again on the next heartbeat.', 'sudemi-connector' ),
 					$sudemi_id
 				)
 			);
@@ -1986,7 +1986,7 @@ class Sudemi_Orders {
 			Sudemi_Logger::info(
 				sprintf(
 					/* translators: 1: sudemi order id. */
-					__( 'Sent the new tracking for sudemi order %1$s.', 'sudemi' ),
+					__( 'Sent the new tracking for sudemi order %1$s.', 'sudemi-connector' ),
 					$sudemi_id
 				)
 			);
@@ -1994,7 +1994,7 @@ class Sudemi_Orders {
 			Sudemi_Logger::warn(
 				sprintf(
 					/* translators: 1: sudemi order id. */
-					__( 'The new tracking for sudemi order %1$s was not sent: the order is already delivered, cancelled or refunded on sudemi.', 'sudemi' ),
+					__( 'The new tracking for sudemi order %1$s was not sent: the order is already delivered, cancelled or refunded on sudemi.', 'sudemi-connector' ),
 					$sudemi_id
 				)
 			);
@@ -2003,7 +2003,7 @@ class Sudemi_Orders {
 			Sudemi_Logger::error(
 				sprintf(
 					/* translators: 1: event name, 2: sudemi order id, 3: error message. */
-					__( 'Could not report %1$s for sudemi order %2$s: %3$s', 'sudemi' ),
+					__( 'Could not report %1$s for sudemi order %2$s: %3$s', 'sudemi-connector' ),
 					'tracking',
 					$sudemi_id,
 					is_array( $response ) ? 'HTTP ' . (int) $response['status'] . ( isset( $response['body']['error'] ) ? ' ' . (string) $response['body']['error'] : '' ) : ''

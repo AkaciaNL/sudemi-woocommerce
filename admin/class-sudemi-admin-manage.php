@@ -29,21 +29,21 @@ final class Sudemi_Admin_Manage {
 	public static function status_label( $status ) {
 		switch ( (string) $status ) {
 			case 'AWAITING_SELLER':
-				return __( 'Waiting for you', 'sudemi' );
+				return __( 'Waiting for you', 'sudemi-connector' );
 			case 'ACCEPTED':
-				return __( 'Accepted, waiting for payment', 'sudemi' );
+				return __( 'Accepted, waiting for payment', 'sudemi-connector' );
 			case 'PAID':
-				return __( 'Paid, ready to ship', 'sudemi' );
+				return __( 'Paid, ready to ship', 'sudemi-connector' );
 			case 'DECLINED':
-				return __( 'Declined', 'sudemi' );
+				return __( 'Declined', 'sudemi-connector' );
 			case 'SHIPPED':
-				return __( 'Shipped', 'sudemi' );
+				return __( 'Shipped', 'sudemi-connector' );
 			case 'DELIVERED':
-				return __( 'Delivered', 'sudemi' );
+				return __( 'Delivered', 'sudemi-connector' );
 			case 'CANCELLED':
-				return __( 'Cancelled', 'sudemi' );
+				return __( 'Cancelled', 'sudemi-connector' );
 			case 'REFUNDED':
-				return __( 'Refunded', 'sudemi' );
+				return __( 'Refunded', 'sudemi-connector' );
 		}
 		return (string) $status;
 	}
@@ -51,21 +51,21 @@ final class Sudemi_Admin_Manage {
 	public static function payout_label( $state ) {
 		switch ( (string) $state ) {
 			case 'not_charged':
-				return __( 'Nothing charged', 'sudemi' );
+				return __( 'Nothing charged', 'sudemi-connector' );
 			case 'waiting_for_shipment':
-				return __( 'Due once shipped', 'sudemi' );
+				return __( 'Due once shipped', 'sudemi-connector' );
 			case 'scheduled':
-				return __( 'Scheduled', 'sudemi' );
+				return __( 'Scheduled', 'sudemi-connector' );
 			case 'processing':
-				return __( 'On its way to you', 'sudemi' );
+				return __( 'On its way to you', 'sudemi-connector' );
 			case 'held':
-				return __( 'Held (chargeback)', 'sudemi' );
+				return __( 'Held (chargeback)', 'sudemi-connector' );
 			case 'partly_paid_out':
-				return __( 'Partly paid out', 'sudemi' );
+				return __( 'Partly paid out', 'sudemi-connector' );
 			case 'paid_out':
-				return __( 'Paid out', 'sudemi' );
+				return __( 'Paid out', 'sudemi-connector' );
 			case 'nothing_due':
-				return __( 'Nothing due (refunded)', 'sudemi' );
+				return __( 'Nothing due (refunded)', 'sudemi-connector' );
 		}
 		return (string) $state;
 	}
@@ -73,25 +73,25 @@ final class Sudemi_Admin_Manage {
 	private static function event_label( $type ) {
 		switch ( (string) $type ) {
 			case 'PLACED':
-				return __( 'Placed by the buyer', 'sudemi' );
+				return __( 'Placed by the buyer', 'sudemi-connector' );
 			case 'ACCEPTED':
-				return __( 'Accepted', 'sudemi' );
+				return __( 'Accepted', 'sudemi-connector' );
 			case 'PAID':
-				return __( 'Paid', 'sudemi' );
+				return __( 'Paid', 'sudemi-connector' );
 			case 'DECLINED':
-				return __( 'Declined', 'sudemi' );
+				return __( 'Declined', 'sudemi-connector' );
 			case 'SHIPPED':
-				return __( 'Shipped', 'sudemi' );
+				return __( 'Shipped', 'sudemi-connector' );
 			case 'DELIVERED':
-				return __( 'Delivered', 'sudemi' );
+				return __( 'Delivered', 'sudemi-connector' );
 			case 'REFUND':
-				return __( 'Refund', 'sudemi' );
+				return __( 'Refund', 'sudemi-connector' );
 			case 'CANCELLED':
-				return __( 'Cancelled', 'sudemi' );
+				return __( 'Cancelled', 'sudemi-connector' );
 			case 'REQUEST':
-				return __( 'Buyer asked to return or cancel', 'sudemi' );
+				return __( 'Buyer asked to return or cancel', 'sudemi-connector' );
 			case 'REQUEST_DECIDED':
-				return __( 'Request answered', 'sudemi' );
+				return __( 'Request answered', 'sudemi-connector' );
 		}
 		return (string) $type;
 	}
@@ -99,15 +99,15 @@ final class Sudemi_Admin_Manage {
 	private static function account_label( $state ) {
 		switch ( (string) $state ) {
 			case 'NOT_STARTED':
-				return __( 'Not set up yet', 'sudemi' );
+				return __( 'Not set up yet', 'sudemi-connector' );
 			case 'INCOMPLETE':
-				return __( 'Details missing', 'sudemi' );
+				return __( 'Details missing', 'sudemi-connector' );
 			case 'UNDER_REVIEW':
-				return __( 'Under review', 'sudemi' );
+				return __( 'Under review', 'sudemi-connector' );
 			case 'ACTIVE':
-				return __( 'Active', 'sudemi' );
+				return __( 'Active', 'sudemi-connector' );
 			case 'ACTION_REQUIRED':
-				return __( 'Action required', 'sudemi' );
+				return __( 'Action required', 'sudemi-connector' );
 		}
 		return (string) $state;
 	}
@@ -164,16 +164,16 @@ final class Sudemi_Admin_Manage {
 
 	private static function guard( $action ) {
 		if ( ! current_user_can( self::CAPABILITY ) ) {
-			wp_die( esc_html__( 'You do not have permission to do that.', 'sudemi' ), '', array( 'response' => 403 ) );
+			wp_die( esc_html__( 'You do not have permission to do that.', 'sudemi-connector' ), '', array( 'response' => 403 ) );
 		}
 		check_admin_referer( $action );
 	}
 
 	private static function not_connected() {
 		Sudemi_Admin::empty_state(
-			__( 'Not connected yet', 'sudemi' ),
-			__( 'This is available once this shop is connected to sudemi.', 'sudemi' ),
-			'<a class="button button-primary" href="' . esc_url( Sudemi_Admin::page_url() ) . '">' . esc_html__( 'Connect this shop', 'sudemi' ) . '</a>'
+			__( 'Not connected yet', 'sudemi-connector' ),
+			__( 'This is available once this shop is connected to sudemi.', 'sudemi-connector' ),
+			'<a class="button button-primary" href="' . esc_url( Sudemi_Admin::page_url() ) . '">' . esc_html__( 'Connect this shop', 'sudemi-connector' ) . '</a>'
 		);
 	}
 
@@ -243,7 +243,7 @@ final class Sudemi_Admin_Manage {
 		echo '<section class="sudemi-card sudemi-card-flush">';
 		echo '<ul class="subsubsub sudemi-subsub">';
 		echo '<li><a href="' . esc_url( self::url( self::filter_args( $f, array( 'status' => null, 'offset' => null ) ) ) ) . '"' . ( '' === $f['status'] ? ' class="current"' : '' ) . '>'
-			. esc_html__( 'All', 'sudemi' ) . ' <span class="count">(' . esc_html( number_format_i18n( $all ) ) . ')</span></a></li>';
+			. esc_html__( 'All', 'sudemi-connector' ) . ' <span class="count">(' . esc_html( number_format_i18n( $all ) ) . ')</span></a></li>';
 		foreach ( Sudemi_Manage::STATUSES as $status ) {
 			if ( empty( $counts[ $status ] ) ) {
 				continue;
@@ -257,8 +257,8 @@ final class Sudemi_Admin_Manage {
 		self::render_export_form( $f );
 
 		if ( empty( $orders ) ) {
-			echo '<div class="sudemi-empty-inline"><strong>' . esc_html__( 'No orders match.', 'sudemi' ) . '</strong><br />'
-				. esc_html__( 'Orders appear here as soon as a buyer orders one of your products through their AI assistant.', 'sudemi' ) . '</div>';
+			echo '<div class="sudemi-empty-inline"><strong>' . esc_html__( 'No orders match.', 'sudemi-connector' ) . '</strong><br />'
+				. esc_html__( 'Orders appear here as soon as a buyer orders one of your products through their AI assistant.', 'sudemi-connector' ) . '</div>';
 			echo '</section>';
 			return;
 		}
@@ -267,16 +267,16 @@ final class Sudemi_Admin_Manage {
 		wp_nonce_field( 'sudemi_orders_bulk' );
 		echo '<input type="hidden" name="action" value="sudemi_orders_bulk" />';
 		echo '<div class="sudemi-table-scroll"><table class="sudemi-table sudemi-orders"><thead><tr>'
-			. '<td class="check-column"><span class="screen-reader-text">' . esc_html__( 'Select', 'sudemi' ) . '</span></td>'
-			. '<th>' . esc_html__( 'Order', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'What sold', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Ship to', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Status', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Total', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'You receive', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Payout', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Tracking', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'WooCommerce order', 'sudemi' ) . '</th>'
+			. '<td class="check-column"><span class="screen-reader-text">' . esc_html__( 'Select', 'sudemi-connector' ) . '</span></td>'
+			. '<th>' . esc_html__( 'Order', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'What sold', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Ship to', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Status', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Total', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'You receive', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Payout', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Tracking', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'WooCommerce order', 'sudemi-connector' ) . '</th>'
 			. '</tr></thead><tbody>';
 		foreach ( $orders as $order ) {
 			if ( ! is_array( $order ) || ! Sudemi_Manage::is_order_id( self::str( $order, 'order_id' ) ) ) {
@@ -287,17 +287,17 @@ final class Sudemi_Admin_Manage {
 		echo '</tbody></table></div>';
 
 		echo '<p class="sudemi-bulk">';
-		echo '<label>' . esc_html__( 'With the selected orders', 'sudemi' ) . ' <select name="bulk_action">'
-			. '<option value="">' . esc_html__( 'Choose an action', 'sudemi' ) . '</option>'
-			. '<option value="accept">' . esc_html__( 'Accept', 'sudemi' ) . '</option>'
-			. '<option value="reject">' . esc_html__( 'Decline', 'sudemi' ) . '</option>'
-			. '<option value="shipped">' . esc_html__( 'Mark shipped', 'sudemi' ) . '</option>'
-			. '<option value="delivered">' . esc_html__( 'Mark delivered', 'sudemi' ) . '</option>'
+		echo '<label>' . esc_html__( 'With the selected orders', 'sudemi-connector' ) . ' <select name="bulk_action">'
+			. '<option value="">' . esc_html__( 'Choose an action', 'sudemi-connector' ) . '</option>'
+			. '<option value="accept">' . esc_html__( 'Accept', 'sudemi-connector' ) . '</option>'
+			. '<option value="reject">' . esc_html__( 'Decline', 'sudemi-connector' ) . '</option>'
+			. '<option value="shipped">' . esc_html__( 'Mark shipped', 'sudemi-connector' ) . '</option>'
+			. '<option value="delivered">' . esc_html__( 'Mark delivered', 'sudemi-connector' ) . '</option>'
 			. '</select></label> ';
-		echo '<label>' . esc_html__( 'Reason for declining (shown to the buyers)', 'sudemi' ) . ' <input type="text" name="reason" maxlength="500" class="regular-text" /></label> ';
-		echo '<label>' . esc_html__( 'Carrier', 'sudemi' ) . ' <input type="text" name="carrier" maxlength="100" /></label> ';
-		submit_button( __( 'Apply', 'sudemi' ), 'secondary', 'submit', false );
-		echo '</p><p class="description">' . esc_html__( 'Refunds and cancellations are made one order at a time, on the order\'s own page: each moves a different amount of money.', 'sudemi' ) . '</p>';
+		echo '<label>' . esc_html__( 'Reason for declining (shown to the buyers)', 'sudemi-connector' ) . ' <input type="text" name="reason" maxlength="500" class="regular-text" /></label> ';
+		echo '<label>' . esc_html__( 'Carrier', 'sudemi-connector' ) . ' <input type="text" name="carrier" maxlength="100" /></label> ';
+		submit_button( __( 'Apply', 'sudemi-connector' ), 'secondary', 'submit', false );
+		echo '</p><p class="description">' . esc_html__( 'Refunds and cancellations are made one order at a time, on the order\'s own page: each moves a different amount of money.', 'sudemi-connector' ) . '</p>';
 		echo '</form>';
 
 		// Paging.
@@ -306,17 +306,17 @@ final class Sudemi_Admin_Manage {
 		echo '<p class="sudemi-paging">' . esc_html(
 			sprintf(
 				/* translators: 1: first row shown, 2: last row shown, 3: number of orders. */
-				__( 'Orders %1$d to %2$d of %3$d', 'sudemi' ),
+				__( 'Orders %1$d to %2$d of %3$d', 'sudemi-connector' ),
 				$offset + 1,
 				$offset + count( $orders ),
 				$total
 			)
 		) . ' ';
 		if ( $offset > 0 ) {
-			echo '<a class="button" href="' . esc_url( self::url( self::filter_args( $f, array( 'offset' => max( 0, $offset - Sudemi_Manage::PAGE_SIZE ) ) ) ) ) . '">' . esc_html__( 'Previous', 'sudemi' ) . '</a> ';
+			echo '<a class="button" href="' . esc_url( self::url( self::filter_args( $f, array( 'offset' => max( 0, $offset - Sudemi_Manage::PAGE_SIZE ) ) ) ) ) . '">' . esc_html__( 'Previous', 'sudemi-connector' ) . '</a> ';
 		}
 		if ( null !== $next ) {
-			echo '<a class="button" href="' . esc_url( self::url( self::filter_args( $f, array( 'offset' => $next ) ) ) ) . '">' . esc_html__( 'Next', 'sudemi' ) . '</a>';
+			echo '<a class="button" href="' . esc_url( self::url( self::filter_args( $f, array( 'offset' => $next ) ) ) ) . '">' . esc_html__( 'Next', 'sudemi-connector' ) . '</a>';
 		}
 		echo '</p></section>';
 	}
@@ -350,12 +350,12 @@ final class Sudemi_Admin_Manage {
 		$extra = '';
 		if ( 'AWAITING_SELLER' === $status && '' !== self::str( $order, 'respond_by' ) ) {
 			/* translators: %s: date and time. */
-			$extra = sprintf( __( 'answer by %s', 'sudemi' ), self::date( self::str( $order, 'respond_by' ) ) );
+			$extra = sprintf( __( 'answer by %s', 'sudemi-connector' ), self::date( self::str( $order, 'respond_by' ) ) );
 		} elseif ( ! empty( $order['customer_request'] ) ) {
-			$extra = __( 'return requested', 'sudemi' );
+			$extra = __( 'return requested', 'sudemi-connector' );
 		} elseif ( isset( $order['refunded_minor'] ) && (int) $order['refunded_minor'] > 0 ) {
 			/* translators: %s: amount. */
-			$extra = sprintf( __( 'refunded %s', 'sudemi' ), self::money( $order['refunded_minor'], $currency ) );
+			$extra = sprintf( __( 'refunded %s', 'sudemi-connector' ), self::money( $order['refunded_minor'], $currency ) );
 		}
 		echo '<td><span class="sudemi-badge sudemi-status sudemi-status-' . esc_attr( strtolower( $status ) ) . '">' . esc_html( self::status_label( $status ) ) . '</span>'
 			. ( '' !== $extra ? '<br /><span class="description">' . esc_html( $extra ) . '</span>' : '' ) . '</td>';
@@ -368,7 +368,7 @@ final class Sudemi_Admin_Manage {
 		echo '</td><td>';
 		if ( 'PAID' === $status ) {
 			echo '<input type="text" name="tracking[' . esc_attr( $id ) . ']" maxlength="100" size="14" aria-label="'
-				. esc_attr__( 'Tracking code', 'sudemi' ) . '" placeholder="' . esc_attr__( 'Tracking code', 'sudemi' ) . '" />';
+				. esc_attr__( 'Tracking code', 'sudemi-connector' ) . '" placeholder="' . esc_attr__( 'Tracking code', 'sudemi-connector' ) . '" />';
 		} elseif ( ! empty( $tracking ) ) {
 			echo esc_html( trim( self::str( $tracking, 'carrier' ) . ' ' . self::str( $tracking, 'code' ) ) );
 		} else {
@@ -387,25 +387,25 @@ final class Sudemi_Admin_Manage {
 		echo '<form method="get" action="' . esc_url( admin_url( 'admin.php' ) ) . '" class="sudemi-filters">';
 		echo '<input type="hidden" name="page" value="' . esc_attr( Sudemi_Admin::SLUG ) . '" />';
 		echo '<input type="hidden" name="tab" value="orders" />';
-		echo '<label>' . esc_html__( 'Status', 'sudemi' ) . ' <select name="status"><option value="">' . esc_html__( 'All', 'sudemi' ) . '</option>';
+		echo '<label>' . esc_html__( 'Status', 'sudemi-connector' ) . ' <select name="status"><option value="">' . esc_html__( 'All', 'sudemi-connector' ) . '</option>';
 		foreach ( Sudemi_Manage::STATUSES as $status ) {
 			echo '<option value="' . esc_attr( $status ) . '"' . selected( $f['status'], $status, false ) . '>' . esc_html( self::status_label( $status ) ) . '</option>';
 		}
 		echo '</select></label> ';
-		echo '<label>' . esc_html__( 'From', 'sudemi' ) . ' <input type="date" name="from" value="' . esc_attr( $f['from'] ) . '" /></label> ';
-		echo '<label>' . esc_html__( 'To', 'sudemi' ) . ' <input type="date" name="to" value="' . esc_attr( $f['to'] ) . '" /></label> ';
-		echo '<label>' . esc_html__( 'Search', 'sudemi' ) . ' <input type="search" name="q" value="' . esc_attr( $f['q'] ) . '" maxlength="100" placeholder="'
-			. esc_attr__( 'Order number or product', 'sudemi' ) . '" /></label> ';
-		echo '<label>' . esc_html__( 'Sort by', 'sudemi' ) . ' <select name="sort">'
-			. '<option value="placed"' . selected( $f['sort'], 'placed', false ) . '>' . esc_html__( 'Date', 'sudemi' ) . '</option>'
-			. '<option value="total"' . selected( $f['sort'], 'total', false ) . '>' . esc_html__( 'Total', 'sudemi' ) . '</option>'
-			. '<option value="status"' . selected( $f['sort'], 'status', false ) . '>' . esc_html__( 'Status', 'sudemi' ) . '</option>'
+		echo '<label>' . esc_html__( 'From', 'sudemi-connector' ) . ' <input type="date" name="from" value="' . esc_attr( $f['from'] ) . '" /></label> ';
+		echo '<label>' . esc_html__( 'To', 'sudemi-connector' ) . ' <input type="date" name="to" value="' . esc_attr( $f['to'] ) . '" /></label> ';
+		echo '<label>' . esc_html__( 'Search', 'sudemi-connector' ) . ' <input type="search" name="q" value="' . esc_attr( $f['q'] ) . '" maxlength="100" placeholder="'
+			. esc_attr__( 'Order number or product', 'sudemi-connector' ) . '" /></label> ';
+		echo '<label>' . esc_html__( 'Sort by', 'sudemi-connector' ) . ' <select name="sort">'
+			. '<option value="placed"' . selected( $f['sort'], 'placed', false ) . '>' . esc_html__( 'Date', 'sudemi-connector' ) . '</option>'
+			. '<option value="total"' . selected( $f['sort'], 'total', false ) . '>' . esc_html__( 'Total', 'sudemi-connector' ) . '</option>'
+			. '<option value="status"' . selected( $f['sort'], 'status', false ) . '>' . esc_html__( 'Status', 'sudemi-connector' ) . '</option>'
 			. '</select></label> ';
-		echo '<select name="dir" aria-label="' . esc_attr__( 'Sort by', 'sudemi' ) . '">'
-			. '<option value="desc"' . selected( $f['dir'], 'desc', false ) . '>' . esc_html__( 'Newest or highest first', 'sudemi' ) . '</option>'
-			. '<option value="asc"' . selected( $f['dir'], 'asc', false ) . '>' . esc_html__( 'Oldest or lowest first', 'sudemi' ) . '</option>'
+		echo '<select name="dir" aria-label="' . esc_attr__( 'Sort by', 'sudemi-connector' ) . '">'
+			. '<option value="desc"' . selected( $f['dir'], 'desc', false ) . '>' . esc_html__( 'Newest or highest first', 'sudemi-connector' ) . '</option>'
+			. '<option value="asc"' . selected( $f['dir'], 'asc', false ) . '>' . esc_html__( 'Oldest or lowest first', 'sudemi-connector' ) . '</option>'
 			. '</select> ';
-		submit_button( __( 'Filter', 'sudemi' ), 'secondary', '', false );
+		submit_button( __( 'Filter', 'sudemi-connector' ), 'secondary', '', false );
 		echo '</form>';
 	}
 
@@ -419,17 +419,17 @@ final class Sudemi_Admin_Manage {
 		foreach ( array( 'status', 'from', 'to', 'q', 'sort', 'dir' ) as $key ) {
 			echo '<input type="hidden" name="' . esc_attr( $key ) . '" value="' . esc_attr( $f[ $key ] ) . '" />';
 		}
-		echo '<label>' . esc_html__( 'Language of the file', 'sudemi' ) . ' <select name="lang">';
+		echo '<label>' . esc_html__( 'Language of the file', 'sudemi-connector' ) . ' <select name="lang">';
 		foreach ( Sudemi_Support::LOCALES as $code ) {
 			echo '<option value="' . esc_attr( $code ) . '"' . selected( $lang, $code, false ) . '>' . esc_html( $code ) . '</option>';
 		}
 		echo '</select></label> ';
-		echo '<label>' . esc_html__( 'Numbers', 'sudemi' ) . ' <select name="decimal">'
-			. '<option value="point"' . selected( $comma, false, false ) . '>' . esc_html__( '1234.50, comma separated', 'sudemi' ) . '</option>'
-			. '<option value="comma"' . selected( $comma, true, false ) . '>' . esc_html__( '1234,50, semicolon separated', 'sudemi' ) . '</option>'
+		echo '<label>' . esc_html__( 'Numbers', 'sudemi-connector' ) . ' <select name="decimal">'
+			. '<option value="point"' . selected( $comma, false, false ) . '>' . esc_html__( '1234.50, comma separated', 'sudemi-connector' ) . '</option>'
+			. '<option value="comma"' . selected( $comma, true, false ) . '>' . esc_html__( '1234,50, semicolon separated', 'sudemi-connector' ) . '</option>'
 			. '</select></label> ';
-		submit_button( __( 'Download these orders (CSV)', 'sudemi' ), 'secondary', '', false );
-		echo '<p class="description">' . esc_html__( 'Every order that matches the filters, up to 10,000, without buyer names or addresses.', 'sudemi' ) . '</p>';
+		submit_button( __( 'Download these orders (CSV)', 'sudemi-connector' ), 'secondary', '', false );
+		echo '<p class="description">' . esc_html__( 'Every order that matches the filters, up to 10,000, without buyer names or addresses.', 'sudemi-connector' ) . '</p>';
 		echo '</form>';
 	}
 
@@ -440,12 +440,12 @@ final class Sudemi_Admin_Manage {
 		wp_nonce_field( 'sudemi_auto_confirm' );
 		echo '<input type="hidden" name="action" value="sudemi_auto_confirm" />';
 		echo '<label><input type="checkbox" name="auto_confirm" value="yes"' . checked( $auto, true, false ) . ' /> '
-			. esc_html__( 'Confirm orders automatically when the items are in stock', 'sudemi' ) . '</label> ';
-		submit_button( __( 'Save', 'sudemi' ), 'secondary', 'submit', false );
+			. esc_html__( 'Confirm orders automatically when the items are in stock', 'sudemi-connector' ) . '</label> ';
+		submit_button( __( 'Save', 'sudemi-connector' ), 'secondary', 'submit', false );
 		echo '<p class="description">' . esc_html(
 			$auto
-				? __( 'On: every five minutes this shop accepts orders whose items are in stock and declines the others.', 'sudemi' )
-				: __( 'Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing.', 'sudemi' )
+				? __( 'On: every five minutes this shop accepts orders whose items are in stock and declines the others.', 'sudemi-connector' )
+				: __( 'Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing.', 'sudemi-connector' )
 		) . '</p>';
 		echo '</form>';
 	}
@@ -453,7 +453,7 @@ final class Sudemi_Admin_Manage {
 	// ------------------------------------------------------------- order detail ----
 
 	private static function render_order( $id ) {
-		echo '<p><a class="sudemi-back" href="' . esc_url( self::url( array( 'tab' => 'orders' ) ) ) . '">&larr; ' . esc_html__( 'Back to the orders', 'sudemi' ) . '</a></p>';
+		echo '<p><a class="sudemi-back" href="' . esc_url( self::url( array( 'tab' => 'orders' ) ) ) . '">&larr; ' . esc_html__( 'Back to the orders', 'sudemi-connector' ) . '</a></p>';
 		$read = Sudemi_Manage::order( $id );
 		if ( ! $read['ok'] ) {
 			echo '<div class="notice notice-error inline"><p>' . esc_html( Sudemi_Manage::error_message( $read['error'], $read['message'] ) ) . '</p></div>';
@@ -472,7 +472,7 @@ final class Sudemi_Admin_Manage {
 		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html(
 			sprintf(
 				/* translators: 1: short order number, 2: status. */
-				__( 'Order %1$s: %2$s', 'sudemi' ),
+				__( 'Order %1$s: %2$s', 'sudemi-connector' ),
 				substr( $id, 0, 8 ),
 				self::status_label( $status )
 			)
@@ -482,7 +482,7 @@ final class Sudemi_Admin_Manage {
 			echo '<div class="notice notice-warning inline"><p>' . esc_html(
 				sprintf(
 					/* translators: %s: date and time. */
-					__( 'Waiting for your answer. The buyer is not charged until you accept. Answer by %s; without an answer the buyer is released.', 'sudemi' ),
+					__( 'Waiting for your answer. The buyer is not charged until you accept. Answer by %s; without an answer the buyer is released.', 'sudemi-connector' ),
 					self::date( self::str( $d, 'respond_by' ) )
 				)
 			) . '</p>';
@@ -491,7 +491,7 @@ final class Sudemi_Admin_Manage {
 				echo '<p><strong>' . esc_html(
 					sprintf(
 						/* translators: %s: what is missing, e.g. "Mug" is out of stock. */
-						__( 'Stock check: %s.', 'sudemi' ),
+						__( 'Stock check: %s.', 'sudemi-connector' ),
 						$short
 					)
 				) . '</strong></p>';
@@ -500,43 +500,43 @@ final class Sudemi_Admin_Manage {
 		}
 
 		echo '<table class="sudemi-table"><tbody>';
-		self::detail_row( __( 'sudemi order', 'sudemi' ), '<code>' . esc_html( $id ) . '</code>' );
-		self::detail_row( __( 'Placed', 'sudemi' ), esc_html( self::date( self::str( $d, 'placed_at' ) ) ) );
-		self::detail_row( __( 'Ship to', 'sudemi' ), esc_html( self::country( self::str( $d, 'destination_country' ) ) ) );
+		self::detail_row( __( 'sudemi order', 'sudemi-connector' ), '<code>' . esc_html( $id ) . '</code>' );
+		self::detail_row( __( 'Placed', 'sudemi-connector' ), esc_html( self::date( self::str( $d, 'placed_at' ) ) ) );
+		self::detail_row( __( 'Ship to', 'sudemi-connector' ), esc_html( self::country( self::str( $d, 'destination_country' ) ) ) );
 		if ( '' !== self::str( $d, 'customer_name' ) ) {
-			self::detail_row( __( 'Customer', 'sudemi' ), esc_html( self::str( $d, 'customer_name' ) ) );
+			self::detail_row( __( 'Customer', 'sudemi-connector' ), esc_html( self::str( $d, 'customer_name' ) ) );
 		}
 		self::detail_row(
-			__( 'WooCommerce order', 'sudemi' ),
+			__( 'WooCommerce order', 'sudemi-connector' ),
 			$local
 				? '<a href="' . esc_url( $local->get_edit_order_url() ) . '">#' . esc_html( $local->get_order_number() ) . '</a> (' . esc_html( wc_get_order_status_name( $local->get_status() ) ) . ')'
-				: esc_html__( 'none yet (it is created when the order is accepted)', 'sudemi' )
+				: esc_html__( 'none yet (it is created when the order is accepted)', 'sudemi-connector' )
 		);
 		$tracking = isset( $d['tracking'] ) && is_array( $d['tracking'] ) ? $d['tracking'] : array();
 		if ( ! empty( $tracking ) ) {
-			self::detail_row( __( 'Tracking', 'sudemi' ), esc_html( trim( self::str( $tracking, 'carrier' ) . ' ' . self::str( $tracking, 'code' ) ) ) );
+			self::detail_row( __( 'Tracking', 'sudemi-connector' ), esc_html( trim( self::str( $tracking, 'carrier' ) . ' ' . self::str( $tracking, 'code' ) ) ) );
 		}
 		foreach ( array(
-			'shipped_at'          => __( 'Shipped', 'sudemi' ),
-			'delivered_at'        => __( 'Delivered', 'sudemi' ),
-			'withdrawal_deadline' => __( 'Buyer may withdraw until', 'sudemi' ),
+			'shipped_at'          => __( 'Shipped', 'sudemi-connector' ),
+			'delivered_at'        => __( 'Delivered', 'sudemi-connector' ),
+			'withdrawal_deadline' => __( 'Buyer may withdraw until', 'sudemi-connector' ),
 		) as $key => $label ) {
 			if ( '' !== self::str( $d, $key ) ) {
 				self::detail_row( $label, esc_html( self::date( self::str( $d, $key ) ) ) );
 			}
 		}
 		if ( '' !== self::str( $d, 'declined_reason' ) ) {
-			self::detail_row( __( 'Reason declined', 'sudemi' ), esc_html( self::str( $d, 'declined_reason' ) ) );
+			self::detail_row( __( 'Reason declined', 'sudemi-connector' ), esc_html( self::str( $d, 'declined_reason' ) ) );
 		}
 		echo '</tbody></table>';
 
 		// Lines.
-		echo '<h3 class="sudemi-section-title">' . esc_html__( 'Items', 'sudemi' ) . '</h3>';
+		echo '<h3 class="sudemi-section-title">' . esc_html__( 'Items', 'sudemi-connector' ) . '</h3>';
 		echo '<table class="sudemi-table"><thead><tr>'
-			. '<th>' . esc_html__( 'Product', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Quantity', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Price', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Amount', 'sudemi' ) . '</th>'
+			. '<th>' . esc_html__( 'Product', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Quantity', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Price', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Amount', 'sudemi-connector' ) . '</th>'
 			. '</tr></thead><tbody>';
 		foreach ( isset( $d['lines'] ) && is_array( $d['lines'] ) ? $d['lines'] : array() as $line ) {
 			if ( ! is_array( $line ) ) {
@@ -550,7 +550,7 @@ final class Sudemi_Admin_Manage {
 				echo esc_html( self::str( $line, 'title' ) );
 			}
 			if ( '' !== self::str( $line, 'withdrawal_exclusion' ) ) {
-				echo '<br /><span class="description">' . esc_html__( 'No right of withdrawal', 'sudemi' ) . '</span>';
+				echo '<br /><span class="description">' . esc_html__( 'No right of withdrawal', 'sudemi-connector' ) . '</span>';
 			}
 			echo '</td><td>' . esc_html( self::str( $line, 'quantity' ) ) . '</td>';
 			echo '<td>' . esc_html( self::money( isset( $line['unit_price_minor'] ) ? $line['unit_price_minor'] : null, $currency ) ) . '</td>';
@@ -559,26 +559,26 @@ final class Sudemi_Admin_Manage {
 		echo '</tbody></table>';
 
 		// Money and payout.
-		echo '<h3 class="sudemi-section-title">' . esc_html__( 'Money', 'sudemi' ) . '</h3>';
+		echo '<h3 class="sudemi-section-title">' . esc_html__( 'Money', 'sudemi-connector' ) . '</h3>';
 		echo '<table class="sudemi-table"><tbody>';
 		foreach ( array(
-			'goods_minor'      => __( 'Goods', 'sudemi' ),
-			'shipping_minor'   => __( 'Shipping', 'sudemi' ),
-			'total_minor'      => __( 'Buyer paid', 'sudemi' ),
-			'commission_minor' => __( 'sudemi commission', 'sudemi' ),
-			'your_net_minor'   => __( 'You receive', 'sudemi' ),
-			'refunded_minor'   => __( 'Refunded to the buyer', 'sudemi' ),
+			'goods_minor'      => __( 'Goods', 'sudemi-connector' ),
+			'shipping_minor'   => __( 'Shipping', 'sudemi-connector' ),
+			'total_minor'      => __( 'Buyer paid', 'sudemi-connector' ),
+			'commission_minor' => __( 'sudemi commission', 'sudemi-connector' ),
+			'your_net_minor'   => __( 'You receive', 'sudemi-connector' ),
+			'refunded_minor'   => __( 'Refunded to the buyer', 'sudemi-connector' ),
 		) as $key => $label ) {
 			self::detail_row( $label, esc_html( self::money( isset( $money[ $key ] ) ? $money[ $key ] : null, $currency ) ) );
 		}
 		$payout = isset( $d['payout'] ) && is_array( $d['payout'] ) ? $d['payout'] : array();
 		if ( ! empty( $payout ) ) {
 			$pc = '' !== self::str( $payout, 'currency_code' ) ? self::str( $payout, 'currency_code' ) : $currency;
-			self::detail_row( __( 'Payout', 'sudemi' ), esc_html( self::payout_label( self::str( $payout, 'state' ) ) ) );
-			self::detail_row( __( 'Payout expected', 'sudemi' ), esc_html( self::money( isset( $payout['expected_minor'] ) ? $payout['expected_minor'] : null, $pc ) ) );
-			self::detail_row( __( 'Paid out', 'sudemi' ), esc_html( self::money( isset( $payout['paid_out_minor'] ) ? $payout['paid_out_minor'] : 0, $pc ) ) );
+			self::detail_row( __( 'Payout', 'sudemi-connector' ), esc_html( self::payout_label( self::str( $payout, 'state' ) ) ) );
+			self::detail_row( __( 'Payout expected', 'sudemi-connector' ), esc_html( self::money( isset( $payout['expected_minor'] ) ? $payout['expected_minor'] : null, $pc ) ) );
+			self::detail_row( __( 'Paid out', 'sudemi-connector' ), esc_html( self::money( isset( $payout['paid_out_minor'] ) ? $payout['paid_out_minor'] : 0, $pc ) ) );
 			if ( '' !== self::str( $payout, 'due_at' ) ) {
-				self::detail_row( __( 'Payout due', 'sudemi' ), esc_html( self::date( self::str( $payout, 'due_at' ) ) ) );
+				self::detail_row( __( 'Payout due', 'sudemi-connector' ), esc_html( self::date( self::str( $payout, 'due_at' ) ) ) );
 			}
 		}
 		echo '</tbody></table>';
@@ -586,9 +586,9 @@ final class Sudemi_Admin_Manage {
 		// The buyer's open request.
 		$request = isset( $d['customer_request'] ) && is_array( $d['customer_request'] ) ? $d['customer_request'] : null;
 		if ( $request ) {
-			echo '<h3 class="sudemi-section-title" id="sudemi-request">' . esc_html__( 'The buyer asked to return this order', 'sudemi' ) . '</h3>';
-			echo '<p>' . esc_html__( 'Buyer\'s reason', 'sudemi' ) . ': ' . esc_html( '' === self::str( $request, 'reason' ) ? __( 'none given', 'sudemi' ) : self::str( $request, 'reason' ) ) . '<br />'
-				. esc_html__( 'Answer by', 'sudemi' ) . ': ' . esc_html( self::date( self::str( $request, 'respond_by' ) ) ) . '</p>';
+			echo '<h3 class="sudemi-section-title" id="sudemi-request">' . esc_html__( 'The buyer asked to return this order', 'sudemi-connector' ) . '</h3>';
+			echo '<p>' . esc_html__( 'Buyer\'s reason', 'sudemi-connector' ) . ': ' . esc_html( '' === self::str( $request, 'reason' ) ? __( 'none given', 'sudemi-connector' ) : self::str( $request, 'reason' ) ) . '<br />'
+				. esc_html__( 'Answer by', 'sudemi-connector' ) . ': ' . esc_html( self::date( self::str( $request, 'respond_by' ) ) ) . '</p>';
 			if ( in_array( 'request_accept', $allowed, true ) || in_array( 'request_reject', $allowed, true ) ) {
 				Sudemi_Admin::render_request_forms( array( 'order_id' => $id ) );
 			}
@@ -597,7 +597,7 @@ final class Sudemi_Admin_Manage {
 		self::render_actions( $id, $allowed, $currency, $money, $tracking );
 
 		// Timeline.
-		echo '<h3 class="sudemi-section-title">' . esc_html__( 'History', 'sudemi' ) . '</h3><ol class="sudemi-timeline">';
+		echo '<h3 class="sudemi-section-title">' . esc_html__( 'History', 'sudemi-connector' ) . '</h3><ol class="sudemi-timeline">';
 		foreach ( isset( $d['timeline'] ) && is_array( $d['timeline'] ) ? $d['timeline'] : array() as $event ) {
 			if ( ! is_array( $event ) ) {
 				continue;
@@ -633,7 +633,7 @@ final class Sudemi_Admin_Manage {
 		if ( empty( $shown ) ) {
 			return;
 		}
-		echo '<h3 class="sudemi-section-title">' . esc_html__( 'Actions', 'sudemi' ) . '</h3><div class="sudemi-actions">';
+		echo '<h3 class="sudemi-section-title">' . esc_html__( 'Actions', 'sudemi-connector' ) . '</h3><div class="sudemi-actions">';
 		foreach ( $shown as $action ) {
 			echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="sudemi-action sudemi-action-' . esc_attr( $action ) . '">';
 			wp_nonce_field( 'sudemi_order_action' );
@@ -642,26 +642,26 @@ final class Sudemi_Admin_Manage {
 			echo '<input type="hidden" name="do" value="' . esc_attr( $action ) . '" />';
 			switch ( $action ) {
 				case 'accept':
-					echo '<p>' . esc_html__( 'Accept: the buyer is charged and you ship the order.', 'sudemi' ) . '</p>';
-					submit_button( __( 'Accept the order', 'sudemi' ), 'primary', 'submit', false );
+					echo '<p>' . esc_html__( 'Accept: the buyer is charged and you ship the order.', 'sudemi-connector' ) . '</p>';
+					submit_button( __( 'Accept the order', 'sudemi-connector' ), 'primary', 'submit', false );
 					break;
 				case 'reject':
-					echo '<p><label>' . esc_html__( 'Reason for declining (shown to the buyer)', 'sudemi' ) . '<br /><input type="text" name="reason" maxlength="500" class="regular-text" required="required" /></label></p>';
-					submit_button( __( 'Decline the order', 'sudemi' ), 'secondary', 'submit', false );
+					echo '<p><label>' . esc_html__( 'Reason for declining (shown to the buyer)', 'sudemi-connector' ) . '<br /><input type="text" name="reason" maxlength="500" class="regular-text" required="required" /></label></p>';
+					submit_button( __( 'Decline the order', 'sudemi-connector' ), 'secondary', 'submit', false );
 					break;
 				case 'shipped':
-					echo '<p><label>' . esc_html__( 'Carrier', 'sudemi' ) . ' <input type="text" name="carrier" maxlength="100" /></label> '
-						. '<label>' . esc_html__( 'Tracking code', 'sudemi' ) . ' <input type="text" name="tracking" maxlength="100" /></label></p>';
-					submit_button( __( 'Mark shipped', 'sudemi' ), 'primary', 'submit', false );
+					echo '<p><label>' . esc_html__( 'Carrier', 'sudemi-connector' ) . ' <input type="text" name="carrier" maxlength="100" /></label> '
+						. '<label>' . esc_html__( 'Tracking code', 'sudemi-connector' ) . ' <input type="text" name="tracking" maxlength="100" /></label></p>';
+					submit_button( __( 'Mark shipped', 'sudemi-connector' ), 'primary', 'submit', false );
 					break;
 				case 'update_tracking':
-					echo '<p>' . esc_html__( 'Shipped already. Wrong or missing tracking? Enter the right one: sudemi e-mails the buyer the new code.', 'sudemi' ) . '</p>';
-					echo '<p><label>' . esc_html__( 'Carrier', 'sudemi' ) . ' <input type="text" name="carrier" maxlength="100" value="' . esc_attr( self::str( $tracking, 'carrier' ) ) . '" /></label> '
-						. '<label>' . esc_html__( 'Tracking code', 'sudemi' ) . ' <input type="text" name="tracking" maxlength="100" required="required" value="' . esc_attr( self::str( $tracking, 'code' ) ) . '" /></label></p>';
-					submit_button( __( 'Change tracking', 'sudemi' ), 'secondary', 'submit', false );
+					echo '<p>' . esc_html__( 'Shipped already. Wrong or missing tracking? Enter the right one: sudemi e-mails the buyer the new code.', 'sudemi-connector' ) . '</p>';
+					echo '<p><label>' . esc_html__( 'Carrier', 'sudemi-connector' ) . ' <input type="text" name="carrier" maxlength="100" value="' . esc_attr( self::str( $tracking, 'carrier' ) ) . '" /></label> '
+						. '<label>' . esc_html__( 'Tracking code', 'sudemi-connector' ) . ' <input type="text" name="tracking" maxlength="100" required="required" value="' . esc_attr( self::str( $tracking, 'code' ) ) . '" /></label></p>';
+					submit_button( __( 'Change tracking', 'sudemi-connector' ), 'secondary', 'submit', false );
 					break;
 				case 'delivered':
-					submit_button( __( 'Mark delivered', 'sudemi' ), 'secondary', 'submit', false );
+					submit_button( __( 'Mark delivered', 'sudemi-connector' ), 'secondary', 'submit', false );
 					break;
 				case 'refund':
 					$left = isset( $money['total_minor'] ) ? (int) $money['total_minor'] - ( isset( $money['refunded_minor'] ) ? (int) $money['refunded_minor'] : 0 ) : null;
@@ -670,25 +670,25 @@ final class Sudemi_Admin_Manage {
 					echo '<p><label>' . esc_html(
 						sprintf(
 							/* translators: %s: currency code. */
-							__( 'Amount to refund (%s)', 'sudemi' ),
+							__( 'Amount to refund (%s)', 'sudemi-connector' ),
 							$currency
 						)
 					) . ' <input type="text" name="amount" inputmode="decimal" size="10" /></label> '
 						. '<span class="description">' . esc_html(
 							sprintf(
 								/* translators: %s: amount. */
-								__( 'Leave empty to refund everything not refunded yet (%s).', 'sudemi' ),
+								__( 'Leave empty to refund everything not refunded yet (%s).', 'sudemi-connector' ),
 								self::money( $left, $currency )
 							)
 						) . '</span></p>';
-					echo '<p><label>' . esc_html__( 'Reason', 'sudemi' ) . ' <input type="text" name="reason" maxlength="500" class="regular-text" /></label></p>';
-					submit_button( __( 'Refund through sudemi', 'sudemi' ), 'secondary', 'submit', false );
+					echo '<p><label>' . esc_html__( 'Reason', 'sudemi-connector' ) . ' <input type="text" name="reason" maxlength="500" class="regular-text" /></label></p>';
+					submit_button( __( 'Refund through sudemi', 'sudemi-connector' ), 'secondary', 'submit', false );
 					break;
 				case 'cancel':
 					echo '<input type="hidden" name="key" value="' . esc_attr( wp_generate_uuid4() ) . '" />';
-					echo '<p>' . esc_html__( 'Cancel: you cannot fulfil this paid order. The buyer is refunded in full.', 'sudemi' ) . '</p>';
-					echo '<p><label>' . esc_html__( 'Reason', 'sudemi' ) . ' <input type="text" name="reason" maxlength="500" class="regular-text" /></label></p>';
-					submit_button( __( 'Cancel and refund in full', 'sudemi' ), 'delete', 'submit', false );
+					echo '<p>' . esc_html__( 'Cancel: you cannot fulfil this paid order. The buyer is refunded in full.', 'sudemi-connector' ) . '</p>';
+					echo '<p><label>' . esc_html__( 'Reason', 'sudemi-connector' ) . ' <input type="text" name="reason" maxlength="500" class="regular-text" /></label></p>';
+					submit_button( __( 'Cancel and refund in full', 'sudemi-connector' ), 'delete', 'submit', false );
 					break;
 			}
 			echo '</form>';
@@ -770,7 +770,7 @@ final class Sudemi_Admin_Manage {
 			Sudemi_Logger::warn(
 				sprintf(
 					/* translators: %d: number of orders. */
-					__( 'The order export was cut off at 10,000 of %d orders. Narrow the dates to get the rest.', 'sudemi' ),
+					__( 'The order export was cut off at 10,000 of %d orders. Narrow the dates to get the rest.', 'sudemi-connector' ),
 					$out['total']
 				)
 			);
@@ -790,7 +790,7 @@ final class Sudemi_Admin_Manage {
 		update_option( Sudemi_Orders::OPTION_AUTO_CONFIRM, $on ? 'yes' : 'no', false );
 		self::put_flash(
 			true,
-			$on ? __( 'Orders are confirmed automatically.', 'sudemi' ) : __( 'Orders now wait for you to accept or decline them.', 'sudemi' )
+			$on ? __( 'Orders are confirmed automatically.', 'sudemi-connector' ) : __( 'Orders now wait for you to accept or decline them.', 'sudemi-connector' )
 		);
 		wp_safe_redirect( self::url( array( 'tab' => 'orders' ) ) );
 		exit;
@@ -825,33 +825,33 @@ final class Sudemi_Admin_Manage {
 		$mode    = $prefill ? 'custom' : ( 'custom' === self::str( $s, 'mode' ) ? 'custom' : 'shop' );
 
 		echo '<section class="sudemi-card">';
-		echo '<p>' . esc_html__( 'What sudemi buyers pay for shipping, per country. By default the prices this plugin sends from your WooCommerce shipping zones apply. You can instead set your own price per country on sudemi, and choose the countries you deliver to. One charge per parcel, never per item.', 'sudemi' ) . '</p>';
+		echo '<p>' . esc_html__( 'What sudemi buyers pay for shipping, per country. By default the prices this plugin sends from your WooCommerce shipping zones apply. You can instead set your own price per country on sudemi, and choose the countries you deliver to. One charge per parcel, never per item.', 'sudemi-connector' ) . '</p>';
 		if ( $prefill ) {
-			echo '<div class="notice notice-info inline"><p>' . esc_html__( 'Prices filled in from your WooCommerce shipping zones. Check them and save; nothing is changed on sudemi until you do.', 'sudemi' ) . '</p></div>';
+			echo '<div class="notice notice-info inline"><p>' . esc_html__( 'Prices filled in from your WooCommerce shipping zones. Check them and save; nothing is changed on sudemi until you do.', 'sudemi-connector' ) . '</p></div>';
 		}
 
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="sudemi-shipping">';
 		wp_nonce_field( 'sudemi_shipping_save' );
 		echo '<input type="hidden" name="action" value="sudemi_shipping_save" />';
 		echo '<input type="hidden" name="currency" value="' . esc_attr( $currency ) . '" />';
-		echo '<fieldset class="sudemi-fieldset"><legend class="screen-reader-text">' . esc_html__( 'Shipping prices', 'sudemi' ) . '</legend>';
+		echo '<fieldset class="sudemi-fieldset"><legend class="screen-reader-text">' . esc_html__( 'Shipping prices', 'sudemi-connector' ) . '</legend>';
 		echo '<label><input type="radio" name="mode" value="shop"' . checked( $mode, 'shop', false ) . ' /> '
-			. esc_html__( 'Use the prices from my WooCommerce shipping zones', 'sudemi' ) . '</label><br />';
+			. esc_html__( 'Use the prices from my WooCommerce shipping zones', 'sudemi-connector' ) . '</label><br />';
 		echo '<label><input type="radio" name="mode" value="custom"' . checked( $mode, 'custom', false ) . ' /> '
-			. esc_html__( 'Set my own countries and prices on sudemi', 'sudemi' ) . '</label></fieldset>';
+			. esc_html__( 'Set my own countries and prices on sudemi', 'sudemi-connector' ) . '</label></fieldset>';
 
 		echo '<div class="sudemi-table-scroll"><table class="sudemi-table"><thead><tr>'
-			. '<th>' . esc_html__( 'Country', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Deliver there', 'sudemi' ) . '</th>'
+			. '<th>' . esc_html__( 'Country', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Deliver there', 'sudemi-connector' ) . '</th>'
 			. '<th>' . esc_html(
 				sprintf(
 					/* translators: %s: currency code. */
-					__( 'Your price on sudemi (%s)', 'sudemi' ),
+					__( 'Your price on sudemi (%s)', 'sudemi-connector' ),
 					$currency
 				)
 			) . '</th>'
-			. '<th>' . esc_html__( 'Prices from your shipping zones', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Buyers pay now', 'sudemi' ) . '</th>'
+			. '<th>' . esc_html__( 'Prices from your shipping zones', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Buyers pay now', 'sudemi-connector' ) . '</th>'
 			. '</tr></thead><tbody>';
 		foreach ( $countries as $row ) {
 			$code = strtoupper( self::str( $row, 'country' ) );
@@ -869,10 +869,10 @@ final class Sudemi_Admin_Manage {
 				: '-';
 			$eff = isset( $effective[ $code ] ) ? $effective[ $code ] : array();
 			if ( empty( $eff['offered'] ) ) {
-				$now = __( 'not offered', 'sudemi' );
+				$now = __( 'not offered', 'sudemi-connector' );
 			} else {
 				$now = self::range( isset( $eff['min_minor'] ) ? $eff['min_minor'] : null, isset( $eff['max_minor'] ) ? $eff['max_minor'] : null, $currency )
-					. ' (' . ( 'sudemi_price' === self::str( $eff, 'source' ) ? __( 'your price on sudemi', 'sudemi' ) : __( 'from your shop', 'sudemi' ) ) . ')';
+					. ' (' . ( 'sudemi_price' === self::str( $eff, 'source' ) ? __( 'your price on sudemi', 'sudemi-connector' ) : __( 'from your shop', 'sudemi-connector' ) ) . ')';
 			}
 			echo '<tr><td>' . esc_html( self::country( $code ) ) . '</td>';
 			echo '<td><input type="checkbox" name="countries[' . esc_attr( $code ) . '][enabled]" value="1"' . checked( $enabled, true, false ) . ' aria-label="'
@@ -883,9 +883,9 @@ final class Sudemi_Admin_Manage {
 			echo '<td class="sudemi-effective-' . esc_attr( strtolower( $code ) ) . '">' . esc_html( $now ) . '</td></tr>';
 		}
 		echo '</tbody></table></div>';
-		echo '<p class="description">' . esc_html__( 'With your own countries and prices: only the ticked countries are offered. A country with an empty price uses the price from your shipping zones.', 'sudemi' ) . '</p>';
-		submit_button( __( 'Save shipping on sudemi', 'sudemi' ), 'primary', 'submit', false );
-		echo ' <a class="button" href="' . esc_url( self::url( array( 'tab' => 'shipping', 'prefill' => '1' ) ) ) . '">' . esc_html__( 'Fill in from my WooCommerce shipping zones', 'sudemi' ) . '</a>';
+		echo '<p class="description">' . esc_html__( 'With your own countries and prices: only the ticked countries are offered. A country with an empty price uses the price from your shipping zones.', 'sudemi-connector' ) . '</p>';
+		submit_button( __( 'Save shipping on sudemi', 'sudemi-connector' ), 'primary', 'submit', false );
+		echo ' <a class="button" href="' . esc_url( self::url( array( 'tab' => 'shipping', 'prefill' => '1' ) ) ) . '">' . esc_html__( 'Fill in from my WooCommerce shipping zones', 'sudemi-connector' ) . '</a>';
 		echo '</form></section>';
 	}
 
@@ -916,7 +916,7 @@ final class Sudemi_Admin_Manage {
 		$currency = isset( $_POST['currency'] ) ? Sudemi_Currency::normalise( sanitize_text_field( wp_unslash( $_POST['currency'] ) ) ) : '';
 		$rows     = array();
 		if ( isset( $_POST['countries'] ) && is_array( $_POST['countries'] ) ) {
-			foreach ( wp_unslash( $_POST['countries'] ) as $code => $row ) {
+			foreach ( wp_unslash( $_POST['countries'] ) as $code => $row ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- every field of a row is cleaned below.
 				$code = strtoupper( sanitize_key( (string) $code ) );
 				if ( ! is_array( $row ) ) {
 					continue;
@@ -946,8 +946,8 @@ final class Sudemi_Admin_Manage {
 		} else {
 			$saved = Sudemi_Manage::save_shipping( $body );
 			if ( $saved['ok'] ) {
-				Sudemi_Logger::info( __( 'Shipping settings saved on sudemi.', 'sudemi' ) );
-				self::put_flash( true, __( 'Saved on sudemi. Buyers see these shipping prices from now on.', 'sudemi' ) );
+				Sudemi_Logger::info( __( 'Shipping settings saved on sudemi.', 'sudemi-connector' ) );
+				self::put_flash( true, __( 'Saved on sudemi. Buyers see these shipping prices from now on.', 'sudemi-connector' ) );
 			} else {
 				self::put_flash( false, Sudemi_Manage::error_message( $saved['error'], $saved['message'] ) );
 			}
@@ -972,20 +972,20 @@ final class Sudemi_Admin_Manage {
 		$account = isset( $p['account'] ) && is_array( $p['account'] ) ? $p['account'] : array();
 		$state   = self::str( $account, 'state' );
 
-		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'Payout account', 'sudemi' ) . '</h2>';
+		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'Payout account', 'sudemi-connector' ) . '</h2>';
 		echo '<table class="sudemi-table"><tbody>';
-		self::detail_row( __( 'State', 'sudemi' ), esc_html( '' === $state ? '-' : self::account_label( $state ) ) );
+		self::detail_row( __( 'State', 'sudemi-connector' ), esc_html( '' === $state ? '-' : self::account_label( $state ) ) );
 		if ( '' !== self::str( $account, 'action_deadline' ) ) {
-			self::detail_row( __( 'Act before', 'sudemi' ), esc_html( self::date( self::str( $account, 'action_deadline' ) ) ) );
+			self::detail_row( __( 'Act before', 'sudemi-connector' ), esc_html( self::date( self::str( $account, 'action_deadline' ) ) ) );
 		}
 		// Core pays this many days after delivery, or 14 days more after shipping when delivery is never reported.
 		$delay = isset( $p['payout_delay_days'] ) ? (int) $p['payout_delay_days'] : 14;
 		self::detail_row(
-			__( 'When you are paid', 'sudemi' ),
+			__( 'When you are paid', 'sudemi-connector' ),
 			esc_html(
 				sprintf(
 					/* translators: 1: days after delivery, 2: days after shipping when delivery is never reported. */
-					__( '%1$d days after the buyer received the order, or %2$d days after shipping if delivery is never reported; never while a chargeback is open.', 'sudemi' ),
+					__( '%1$d days after the buyer received the order, or %2$d days after shipping if delivery is never reported; never while a chargeback is open.', 'sudemi-connector' ),
 					$delay,
 					$delay + 14
 				)
@@ -993,29 +993,29 @@ final class Sudemi_Admin_Manage {
 		);
 		echo '</tbody></table>';
 		if ( in_array( $state, array( 'NOT_STARTED', 'INCOMPLETE', 'ACTION_REQUIRED' ), true ) ) {
-			echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here.', 'sudemi' ) . '</p></div>';
+			echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here.', 'sudemi-connector' ) . '</p></div>';
 		} else {
-			echo '<p class="description">' . esc_html__( 'The payout account is managed on the sudemi seller portal (Payouts).', 'sudemi' ) . '</p>';
+			echo '<p class="description">' . esc_html__( 'The payout account is managed on the sudemi seller portal (Payouts).', 'sudemi-connector' ) . '</p>';
 		}
-		echo '<p><a class="button" href="' . esc_url( Sudemi_Admin::portal_url( '/seller/payouts' ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Open payouts on the seller portal', 'sudemi' ) . '</a></p>';
+		echo '<p><a class="button" href="' . esc_url( Sudemi_Admin::portal_url( '/seller/payouts' ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Open payouts on the seller portal', 'sudemi-connector' ) . '</a></p>';
 		echo '</section>';
 
-		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'This shop\'s payouts', 'sudemi' ) . '</h2>';
+		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'This shop\'s payouts', 'sudemi-connector' ) . '</h2>';
 		$currencies = isset( $p['currencies'] ) && is_array( $p['currencies'] ) ? $p['currencies'] : array();
 		if ( empty( $currencies ) ) {
-			echo '<p class="sudemi-muted">' . esc_html__( 'No payouts yet.', 'sudemi' ) . '</p></section>';
+			echo '<p class="sudemi-muted">' . esc_html__( 'No payouts yet.', 'sudemi-connector' ) . '</p></section>';
 			return;
 		}
 		echo '<div class="sudemi-table-scroll"><table class="sudemi-table sudemi-payouts"><thead><tr>'
-			. '<th>' . esc_html__( 'Currency', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Orders', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Paid out', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Still to come', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Due once shipped', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Scheduled', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'On its way to you', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Held (chargeback)', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Next payout', 'sudemi' ) . '</th>'
+			. '<th>' . esc_html__( 'Currency', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Orders', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Paid out', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Still to come', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Due once shipped', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Scheduled', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'On its way to you', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Held (chargeback)', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Next payout', 'sudemi-connector' ) . '</th>'
 			. '</tr></thead><tbody>';
 		foreach ( $currencies as $row ) {
 			if ( ! is_array( $row ) ) {

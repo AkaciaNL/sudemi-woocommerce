@@ -101,7 +101,7 @@ final class Sudemi_Heartbeat {
 				array(
 					'reachable' => true,
 					'connected' => false,
-					'message'   => __( 'sudemi no longer recognises this shop. Connect it again.', 'sudemi' ),
+					'message'   => __( 'sudemi no longer recognises this shop. Connect it again.', 'sudemi-connector' ),
 					'checked'   => time(),
 				)
 			);
@@ -130,7 +130,7 @@ final class Sudemi_Heartbeat {
 				array(
 					'reachable' => true,
 					/* translators: %d: HTTP status code. */
-					'message'   => sprintf( __( 'sudemi answered %d.', 'sudemi' ), $response['status'] ),
+					'message'   => sprintf( __( 'sudemi answered %d.', 'sudemi-connector' ), $response['status'] ),
 					'checked'   => time(),
 				)
 			);
@@ -206,7 +206,7 @@ final class Sudemi_Heartbeat {
 		// sudemi and this shop disagree about what the catalogue is, so something did not arrive.
 		// A full sync is the only answer that does not involve guessing which product it was.
 		if ( ! empty( $body['full_sync_requested'] ) ) {
-			Sudemi_Logger::info( __( 'sudemi asked for a full sync; scheduling one.', 'sudemi' ) );
+			Sudemi_Logger::info( __( 'sudemi asked for a full sync; scheduling one.', 'sudemi-connector' ) );
 			// Not run inline: a full sync walks the whole catalogue, and doing that inside a
 			// heartbeat would turn a 200-byte call into a multi-minute one holding a cron slot.
 			// WordPress ignores a duplicate single event within ten minutes, so repeated asks on
@@ -329,11 +329,11 @@ final class Sudemi_Heartbeat {
 		if ( is_string( $paired ) && '' !== $paired ) {
 			return sprintf(
 				/* translators: %s: the address the shop is connected to sudemi under, e.g. https://shop.example.com */
-				__( 'sudemi refused requests from this site: this shop is connected to sudemi under a different address (%s). If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again.', 'sudemi' ),
+				__( 'sudemi refused requests from this site: this shop is connected to sudemi under a different address (%s). If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again.', 'sudemi-connector' ),
 				$paired
 			);
 		}
-		return __( 'sudemi refused requests from this site: this shop is connected to sudemi under a different address. If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again.', 'sudemi' );
+		return __( 'sudemi refused requests from this site: this shop is connected to sudemi under a different address. If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again.', 'sudemi-connector' );
 	}
 
 	private static function product_count() {

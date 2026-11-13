@@ -12,6 +12,11 @@
 
 declare(strict_types=1);
 
+// Runs from the command line only; ABSPATH keeps the WordPress direct-access rule satisfied.
+defined( 'ABSPATH' ) || define( 'ABSPATH', __DIR__ );
+defined( 'ABSPATH' ) || exit;
+// phpcs:disable WordPress.Security.EscapeOutput,WordPress.NamingConventions.PrefixAllGlobals,WordPress.PHP.DevelopmentFunctions -- a command-line test (plain text output, test doubles of WordPress functions); left out of the release zip.
+
 $failures = 0;
 
 function check(string $what, bool $passed): void {

@@ -13,6 +13,8 @@
 declare(strict_types=1);
 
 define( 'ABSPATH', __DIR__ );
+defined( 'ABSPATH' ) || exit;
+// phpcs:disable WordPress.Security.EscapeOutput,WordPress.NamingConventions.PrefixAllGlobals,WordPress.PHP.DevelopmentFunctions -- a command-line test (plain text output, test doubles of WordPress functions); left out of the release zip.
 define( 'ARRAY_A', 'ARRAY_A' );
 
 /** The rows of wp_sudemi_order_claim, keyed by sudemi order id. */

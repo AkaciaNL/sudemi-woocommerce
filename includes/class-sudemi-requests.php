@@ -164,8 +164,8 @@ final class Sudemi_Requests {
 		$orders = wc_get_orders(
 			array(
 				'limit'      => 1,
-				'meta_key'   => Sudemi_Orders::META_ORDER_ID,
-				'meta_value' => (string) $sudemi_id,
+				'meta_key'   => Sudemi_Orders::META_ORDER_ID, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- the one link from a sudemi order to its WooCommerce order; limit 1.
+				'meta_value' => (string) $sudemi_id, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- see meta_key above.
 			)
 		);
 		return empty( $orders ) ? null : $orders[0];
@@ -179,8 +179,8 @@ final class Sudemi_Requests {
 		$order->add_order_note(
 			sprintf(
 				/* translators: 1: the buyer's reason, 2: the date the shop has to answer by. */
-				__( 'The buyer asked on sudemi to return this order. Reason: %1$s. Accept or reject (with a reason) by %2$s on this order or under WooCommerce > sudemi.', 'sudemi' ),
-				'' === $request['reason'] ? __( 'none given', 'sudemi' ) : esc_html( $request['reason'] ),
+				__( 'The buyer asked on sudemi to return this order. Reason: %1$s. Accept or reject (with a reason) by %2$s on this order or under WooCommerce > sudemi.', 'sudemi-connector' ),
+				'' === $request['reason'] ? __( 'none given', 'sudemi-connector' ) : esc_html( $request['reason'] ),
 				self::date( $request['respond_by'] )
 			)
 		);
@@ -207,8 +207,8 @@ final class Sudemi_Requests {
 			return array(
 				'outcome' => 'invalid',
 				'message' => 'reason' === $built['error']
-					? __( 'A rejection needs a reason. The buyer is shown it.', 'sudemi' )
-					: __( 'That is not a sudemi order.', 'sudemi' ),
+					? __( 'A rejection needs a reason. The buyer is shown it.', 'sudemi-connector' )
+					: __( 'That is not a sudemi order.', 'sudemi-connector' ),
 			);
 		}
 		$sudemi_id = strtolower( $sudemi_id );
@@ -224,10 +224,10 @@ final class Sudemi_Requests {
 		if ( 'ok' === $outcome && $order ) {
 			$order->add_order_note(
 				$accept
-					? __( 'Return request accepted on sudemi. Refund the buyer here (WooCommerce refund) once the item is back; the refund goes through sudemi and closes the request.', 'sudemi' )
+					? __( 'Return request accepted on sudemi. Refund the buyer here (WooCommerce refund) once the item is back; the refund goes through sudemi and closes the request.', 'sudemi-connector' )
 					: sprintf(
 						/* translators: %s: the reason the shop gave, shown to the buyer. */
-						__( 'Return request rejected on sudemi. Reason shown to the buyer: %s', 'sudemi' ),
+						__( 'Return request rejected on sudemi. Reason shown to the buyer: %s', 'sudemi-connector' ),
 						esc_html( (string) $built['body']['reason'] )
 					)
 			);
@@ -236,28 +236,28 @@ final class Sudemi_Requests {
 		switch ( $outcome ) {
 			case 'ok':
 				$message = $accept
-					? __( 'Return accepted. Refund the buyer once the item is back, with a WooCommerce refund on the order.', 'sudemi' )
-					: __( 'Return rejected. The buyer is shown your reason.', 'sudemi' );
+					? __( 'Return accepted. Refund the buyer once the item is back, with a WooCommerce refund on the order.', 'sudemi-connector' )
+					: __( 'Return rejected. The buyer is shown your reason.', 'sudemi-connector' );
 				break;
 			case 'already_resolved':
-				$message = __( 'This request was already answered.', 'sudemi' );
+				$message = __( 'This request was already answered.', 'sudemi-connector' );
 				break;
 			case 'not_found':
-				$message = __( 'This order has no open return request on sudemi any more.', 'sudemi' );
+				$message = __( 'This order has no open return request on sudemi any more.', 'sudemi-connector' );
 				break;
 			case 'invalid':
-				$message = __( 'A rejection needs a reason. The buyer is shown it.', 'sudemi' );
+				$message = __( 'A rejection needs a reason. The buyer is shown it.', 'sudemi-connector' );
 				break;
 			default:
 				$message = is_wp_error( $response )
 					? sprintf(
 						/* translators: %s: error message. */
-						__( 'Could not reach sudemi: %s. Nothing was sent; try again.', 'sudemi' ),
+						__( 'Could not reach sudemi: %s. Nothing was sent; try again.', 'sudemi-connector' ),
 						$response->get_error_message()
 					)
 					: sprintf(
 						/* translators: %d: HTTP status code. */
-						__( 'sudemi answered %d.', 'sudemi' ),
+						__( 'sudemi answered %d.', 'sudemi-connector' ),
 						(int) $response['status']
 					);
 		}

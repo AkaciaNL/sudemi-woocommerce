@@ -43,16 +43,16 @@ final class Sudemi_Admin_Insights {
 
 	private static function guard( $action ) {
 		if ( ! current_user_can( self::CAPABILITY ) ) {
-			wp_die( esc_html__( 'You do not have permission to do that.', 'sudemi' ), '', array( 'response' => 403 ) );
+			wp_die( esc_html__( 'You do not have permission to do that.', 'sudemi-connector' ), '', array( 'response' => 403 ) );
 		}
 		check_admin_referer( $action );
 	}
 
 	private static function not_connected() {
 		Sudemi_Admin::empty_state(
-			__( 'Not connected yet', 'sudemi' ),
-			__( 'This is available once this shop is connected to sudemi.', 'sudemi' ),
-			'<a class="button button-primary" href="' . esc_url( Sudemi_Admin::page_url() ) . '">' . esc_html__( 'Connect this shop', 'sudemi' ) . '</a>'
+			__( 'Not connected yet', 'sudemi-connector' ),
+			__( 'This is available once this shop is connected to sudemi.', 'sudemi-connector' ),
+			'<a class="button button-primary" href="' . esc_url( Sudemi_Admin::page_url() ) . '">' . esc_html__( 'Connect this shop', 'sudemi-connector' ) . '</a>'
 		);
 	}
 
@@ -95,23 +95,23 @@ final class Sudemi_Admin_Insights {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation only, nothing changes.
 		$days = Sudemi_Insights::period( isset( $_GET['period'] ) ? sanitize_text_field( wp_unslash( $_GET['period'] ) ) : '' );
 
-		$switch = '<div class="sudemi-segmented" role="group" aria-label="' . esc_attr__( 'Period', 'sudemi' ) . '">';
+		$switch = '<div class="sudemi-segmented" role="group" aria-label="' . esc_attr__( 'Period', 'sudemi-connector' ) . '">';
 		foreach ( Sudemi_Insights::PERIODS as $p ) {
 			$switch .= '<a class="' . ( $p === $days ? 'is-active' : '' ) . '" href="' . esc_url( Sudemi_Admin::page_url( 'dashboard', array( 'period' => $p ) ) ) . '"'
 				. ( $p === $days ? ' aria-current="true"' : '' ) . '>' . esc_html(
 					sprintf(
 						/* translators: %d: number of days. */
-						__( '%d days', 'sudemi' ),
+						__( '%d days', 'sudemi-connector' ),
 						$p
 					)
 				) . '</a>';
 		}
 		$switch .= '</div>';
 		Sudemi_Admin::page_title(
-			__( 'Dashboard', 'sudemi' ),
+			__( 'Dashboard', 'sudemi-connector' ),
 			sprintf(
 				/* translators: %d: number of days. */
-				__( 'How your products did on sudemi in the last %d days.', 'sudemi' ),
+				__( 'How your products did on sudemi in the last %d days.', 'sudemi-connector' ),
 				$days
 			),
 			$switch
@@ -132,14 +132,14 @@ final class Sudemi_Admin_Insights {
 
 		// Money first, then reach.
 		$cards = array(
-			array( __( 'Sales', 'sudemi' ), Sudemi_Insights::money( Sudemi_Insights::int( $totals, 'sales_minor' ), $currency ), __( 'What buyers paid, shipping and VAT included', 'sudemi' ), 'money' ),
-			array( __( 'Orders', 'sudemi' ), Sudemi_Insights::number( Sudemi_Insights::int( $totals, 'orders' ) ), sprintf( /* translators: %s: number of items. */ _n( '%s item sold', '%s items sold', Sudemi_Insights::int( $totals, 'units' ), 'sudemi' ), Sudemi_Insights::number( Sudemi_Insights::int( $totals, 'units' ) ) ), 'money' ),
-			array( __( 'You receive', 'sudemi' ), Sudemi_Insights::money( Sudemi_Insights::int( $totals, 'net_minor' ), $currency ), sprintf( /* translators: 1: refunds, 2: commission. */ __( 'After %1$s refunds and %2$s commission', 'sudemi' ), Sudemi_Insights::money( Sudemi_Insights::int( $totals, 'refunded_minor' ), $currency ), Sudemi_Insights::money( Sudemi_Insights::int( $totals, 'commission_minor' ), $currency ) ), 'money' ),
-			array( __( 'Average order', 'sudemi' ), Sudemi_Insights::money( Sudemi_Insights::int( $totals, 'average_order_minor' ), $currency ), __( 'Per order, shipping included', 'sudemi' ), 'money' ),
-			array( __( 'Shown in search results', 'sudemi' ), Sudemi_Insights::number( Sudemi_Insights::int( $totals, 'impressions' ) ), __( 'Times an AI assistant got one of your products back from a search', 'sudemi' ), 'reach' ),
-			array( __( 'Product views', 'sudemi' ), Sudemi_Insights::number( Sudemi_Insights::int( $totals, 'detail_views' ) ), __( 'Times an assistant opened a product\'s details for a buyer', 'sudemi' ), 'reach' ),
-			array( __( 'Added to a cart', 'sudemi' ), Sudemi_Insights::number( Sudemi_Insights::int( $totals, 'cart_adds' ) ), __( 'Times a buyer put one of your products in a cart', 'sudemi' ), 'reach' ),
-			array( __( 'Conversion', 'sudemi' ), Sudemi_Insights::percent( Sudemi_Insights::int( $totals, 'conversion_bps' ) ), __( 'Orders per product view', 'sudemi' ), 'reach' ),
+			array( __( 'Sales', 'sudemi-connector' ), Sudemi_Insights::money( Sudemi_Insights::int( $totals, 'sales_minor' ), $currency ), __( 'What buyers paid, shipping and VAT included', 'sudemi-connector' ), 'money' ),
+			array( __( 'Orders', 'sudemi-connector' ), Sudemi_Insights::number( Sudemi_Insights::int( $totals, 'orders' ) ), sprintf( /* translators: %s: number of items. */ _n( '%s item sold', '%s items sold', Sudemi_Insights::int( $totals, 'units' ), 'sudemi-connector' ), Sudemi_Insights::number( Sudemi_Insights::int( $totals, 'units' ) ) ), 'money' ),
+			array( __( 'You receive', 'sudemi-connector' ), Sudemi_Insights::money( Sudemi_Insights::int( $totals, 'net_minor' ), $currency ), sprintf( /* translators: 1: refunds, 2: commission. */ __( 'After %1$s refunds and %2$s commission', 'sudemi-connector' ), Sudemi_Insights::money( Sudemi_Insights::int( $totals, 'refunded_minor' ), $currency ), Sudemi_Insights::money( Sudemi_Insights::int( $totals, 'commission_minor' ), $currency ) ), 'money' ),
+			array( __( 'Average order', 'sudemi-connector' ), Sudemi_Insights::money( Sudemi_Insights::int( $totals, 'average_order_minor' ), $currency ), __( 'Per order, shipping included', 'sudemi-connector' ), 'money' ),
+			array( __( 'Shown in search results', 'sudemi-connector' ), Sudemi_Insights::number( Sudemi_Insights::int( $totals, 'impressions' ) ), __( 'Times an AI assistant got one of your products back from a search', 'sudemi-connector' ), 'reach' ),
+			array( __( 'Product views', 'sudemi-connector' ), Sudemi_Insights::number( Sudemi_Insights::int( $totals, 'detail_views' ) ), __( 'Times an assistant opened a product\'s details for a buyer', 'sudemi-connector' ), 'reach' ),
+			array( __( 'Added to a cart', 'sudemi-connector' ), Sudemi_Insights::number( Sudemi_Insights::int( $totals, 'cart_adds' ) ), __( 'Times a buyer put one of your products in a cart', 'sudemi-connector' ), 'reach' ),
+			array( __( 'Conversion', 'sudemi-connector' ), Sudemi_Insights::percent( Sudemi_Insights::int( $totals, 'conversion_bps' ) ), __( 'Orders per product view', 'sudemi-connector' ), 'reach' ),
 		);
 		echo '<div class="sudemi-kpis">';
 		foreach ( $cards as $card ) {
@@ -150,21 +150,22 @@ final class Sudemi_Admin_Insights {
 		echo '</div>';
 
 		echo '<div class="sudemi-grid sudemi-grid-2">';
-		echo '<section class="sudemi-card"><div class="sudemi-card-head"><h2 class="sudemi-card-title">' . esc_html__( 'Seen by buyers', 'sudemi' ) . '</h2>'
-			. '<ul class="sudemi-legend"><li><span class="sudemi-swatch sudemi-series-a"></span>' . esc_html__( 'Shown in search results', 'sudemi' ) . '</li>'
-			. '<li><span class="sudemi-swatch sudemi-series-b"></span>' . esc_html__( 'Product views', 'sudemi' ) . '</li></ul></div>';
-		echo Sudemi_Insights::chart_svg( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built escaped in Sudemi_Insights::chart_svg().
+		echo '<section class="sudemi-card"><div class="sudemi-card-head"><h2 class="sudemi-card-title">' . esc_html__( 'Seen by buyers', 'sudemi-connector' ) . '</h2>'
+			. '<ul class="sudemi-legend"><li><span class="sudemi-swatch sudemi-series-a"></span>' . esc_html__( 'Shown in search results', 'sudemi-connector' ) . '</li>'
+			. '<li><span class="sudemi-swatch sudemi-series-b"></span>' . esc_html__( 'Product views', 'sudemi-connector' ) . '</li></ul></div>';
+		$chart = Sudemi_Insights::chart_svg(
 			$daily,
 			array(
 				'impressions'  => array( 'class' => 'sudemi-series-a' ),
 				'detail_views' => array( 'class' => 'sudemi-series-b' ),
 			),
-			__( 'Searches and product views per day', 'sudemi' )
+			__( 'Searches and product views per day', 'sudemi-connector' )
 		);
+		echo $chart; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built escaped in Sudemi_Insights::chart_svg().
 		echo '</section>';
-		echo '<section class="sudemi-card"><div class="sudemi-card-head"><h2 class="sudemi-card-title">' . esc_html__( 'Sales per day', 'sudemi' ) . '</h2>'
+		echo '<section class="sudemi-card"><div class="sudemi-card-head"><h2 class="sudemi-card-title">' . esc_html__( 'Sales per day', 'sudemi-connector' ) . '</h2>'
 			. '<span class="sudemi-muted">' . esc_html( $currency ) . '</span></div>';
-		echo Sudemi_Insights::bars_svg( $daily, 'sales_minor', __( 'Sales per day', 'sudemi' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built escaped in Sudemi_Insights::bars_svg().
+		echo Sudemi_Insights::bars_svg( $daily, 'sales_minor', __( 'Sales per day', 'sudemi-connector' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built escaped in Sudemi_Insights::bars_svg().
 		echo '</section></div>';
 
 		echo '<div class="sudemi-grid sudemi-grid-main">';
@@ -188,44 +189,44 @@ final class Sudemi_Admin_Insights {
 			echo '<div class="sudemi-alert sudemi-alert-warning"><div><strong>' . esc_html(
 				sprintf(
 					/* translators: %d: number of orders. */
-					_n( '%d order is waiting for your answer', '%d orders are waiting for your answer', $waiting, 'sudemi' ),
+					_n( '%d order is waiting for your answer', '%d orders are waiting for your answer', $waiting, 'sudemi-connector' ),
 					$waiting
 				)
-			) . '</strong><br />' . esc_html__( 'The buyer is not charged until you accept. Without an answer by the deadline the order lapses.', 'sudemi' )
-				. '</div><a class="button button-primary" href="' . esc_url( Sudemi_Admin::page_url( 'orders', array( 'status' => 'AWAITING_SELLER' ) ) ) . '">' . esc_html__( 'Answer now', 'sudemi' ) . '</a></div>';
+			) . '</strong><br />' . esc_html__( 'The buyer is not charged until you accept. Without an answer by the deadline the order lapses.', 'sudemi-connector' )
+				. '</div><a class="button button-primary" href="' . esc_url( Sudemi_Admin::page_url( 'orders', array( 'status' => 'AWAITING_SELLER' ) ) ) . '">' . esc_html__( 'Answer now', 'sudemi-connector' ) . '</a></div>';
 		}
 		if ( ! empty( $requests ) ) {
 			echo '<div class="sudemi-alert sudemi-alert-info"><div><strong>' . esc_html(
 				sprintf(
 					/* translators: %d: number of return requests. */
-					_n( '%d return request is waiting for your answer', '%d return requests are waiting for your answer', count( $requests ), 'sudemi' ),
+					_n( '%d return request is waiting for your answer', '%d return requests are waiting for your answer', count( $requests ), 'sudemi-connector' ),
 					count( $requests )
 				)
-			) . '</strong></div><a class="button" href="' . esc_url( Sudemi_Admin::page_url( 'orders' ) ) . '#sudemi-requests">' . esc_html__( 'Answer now', 'sudemi' ) . '</a></div>';
+			) . '</strong></div><a class="button" href="' . esc_url( Sudemi_Admin::page_url( 'orders' ) ) . '#sudemi-requests">' . esc_html__( 'Answer now', 'sudemi-connector' ) . '</a></div>';
 		}
 		list( $state, $label ) = Sudemi_Admin::connection_state();
 		if ( in_array( $state, array( 'warning', 'error' ), true ) ) {
 			echo '<div class="sudemi-alert sudemi-alert-error"><div><strong>' . esc_html( $label ) . '</strong><br />'
-				. esc_html__( 'Buyers cannot see your products right now. The Settings page shows why and what to do.', 'sudemi' )
-				. '</div><a class="button" href="' . esc_url( Sudemi_Admin::page_url( 'settings' ) ) . '">' . esc_html__( 'Open settings', 'sudemi' ) . '</a></div>';
+				. esc_html__( 'Buyers cannot see your products right now. The Settings page shows why and what to do.', 'sudemi-connector' )
+				. '</div><a class="button" href="' . esc_url( Sudemi_Admin::page_url( 'settings' ) ) . '">' . esc_html__( 'Open settings', 'sudemi-connector' ) . '</a></div>';
 		}
 	}
 
 	private static function render_top_products( array $rows, $currency ) {
-		echo '<section class="sudemi-card sudemi-card-flush"><div class="sudemi-card-head sudemi-pad"><h2 class="sudemi-card-title">' . esc_html__( 'Top products', 'sudemi' ) . '</h2>'
-			. '<a href="' . esc_url( Sudemi_Admin::page_url( 'products' ) ) . '">' . esc_html__( 'All products on sudemi', 'sudemi' ) . ' &rarr;</a></div>';
+		echo '<section class="sudemi-card sudemi-card-flush"><div class="sudemi-card-head sudemi-pad"><h2 class="sudemi-card-title">' . esc_html__( 'Top products', 'sudemi-connector' ) . '</h2>'
+			. '<a href="' . esc_url( Sudemi_Admin::page_url( 'products' ) ) . '">' . esc_html__( 'All products on sudemi', 'sudemi-connector' ) . ' &rarr;</a></div>';
 		$rows = array_values( array_filter( $rows, 'is_array' ) );
 		if ( empty( $rows ) ) {
-			echo '<div class="sudemi-empty-inline">' . esc_html__( 'No activity in this period yet. Buyers find your products by asking their AI assistant; the numbers show up here day by day.', 'sudemi' ) . '</div></section>';
+			echo '<div class="sudemi-empty-inline">' . esc_html__( 'No activity in this period yet. Buyers find your products by asking their AI assistant; the numbers show up here day by day.', 'sudemi-connector' ) . '</div></section>';
 			return;
 		}
 		echo '<div class="sudemi-table-scroll"><table class="sudemi-table"><thead><tr>'
-			. '<th>' . esc_html__( 'Product', 'sudemi' ) . '</th>'
-			. '<th class="num">' . esc_html__( 'Shown', 'sudemi' ) . '</th>'
-			. '<th class="num">' . esc_html__( 'Views', 'sudemi' ) . '</th>'
-			. '<th class="num">' . esc_html__( 'In cart', 'sudemi' ) . '</th>'
-			. '<th class="num">' . esc_html__( 'Orders', 'sudemi' ) . '</th>'
-			. '<th class="num">' . esc_html__( 'Sales', 'sudemi' ) . '</th>'
+			. '<th>' . esc_html__( 'Product', 'sudemi-connector' ) . '</th>'
+			. '<th class="num">' . esc_html__( 'Shown', 'sudemi-connector' ) . '</th>'
+			. '<th class="num">' . esc_html__( 'Views', 'sudemi-connector' ) . '</th>'
+			. '<th class="num">' . esc_html__( 'In cart', 'sudemi-connector' ) . '</th>'
+			. '<th class="num">' . esc_html__( 'Orders', 'sudemi-connector' ) . '</th>'
+			. '<th class="num">' . esc_html__( 'Sales', 'sudemi-connector' ) . '</th>'
 			. '</tr></thead><tbody>';
 		foreach ( $rows as $row ) {
 			$product = self::local_product( Sudemi_Insights::str( $row, 'external_id' ) );
@@ -244,15 +245,15 @@ final class Sudemi_Admin_Insights {
 		$listed = Sudemi_Insights::int( $l, 'listed' );
 		$not    = Sudemi_Insights::int( $l, 'not_listed' );
 		$share  = $total > 0 ? round( 100 * $listed / $total ) : 0;
-		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'Your products on sudemi', 'sudemi' ) . '</h2>';
+		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'Your products on sudemi', 'sudemi-connector' ) . '</h2>';
 		echo '<div class="sudemi-big">' . esc_html( Sudemi_Insights::number( $listed ) ) . ' <span>/ ' . esc_html( Sudemi_Insights::number( $total ) ) . '</span></div>';
-		echo '<p class="sudemi-muted">' . esc_html__( 'shown to buyers', 'sudemi' ) . '</p>';
+		echo '<p class="sudemi-muted">' . esc_html__( 'shown to buyers', 'sudemi-connector' ) . '</p>';
 		echo '<div class="sudemi-meter" role="img" aria-label="' . esc_attr( $share . '%' ) . '"><span style="width:' . esc_attr( (string) $share ) . '%"></span></div>';
 		if ( $not > 0 ) {
 			echo '<p><a href="' . esc_url( Sudemi_Admin::page_url( 'products', array( 'status' => 'not_listed' ) ) ) . '">' . esc_html(
 				sprintf(
 					/* translators: %d: number of products. */
-					_n( '%d product is not shown: see why', '%d products are not shown: see why', $not, 'sudemi' ),
+					_n( '%d product is not shown: see why', '%d products are not shown: see why', $not, 'sudemi-connector' ),
 					$not
 				)
 			) . ' &rarr;</a></p>';
@@ -261,10 +262,10 @@ final class Sudemi_Admin_Insights {
 	}
 
 	private static function render_status_breakdown( array $by ) {
-		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'Orders by status', 'sudemi' ) . '</h2>';
+		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'Orders by status', 'sudemi-connector' ) . '</h2>';
 		$by = array_filter( array_map( 'intval', $by ) );
 		if ( empty( $by ) ) {
-			echo '<p class="sudemi-muted">' . esc_html__( 'No orders in this period.', 'sudemi' ) . '</p></section>';
+			echo '<p class="sudemi-muted">' . esc_html__( 'No orders in this period.', 'sudemi-connector' ) . '</p></section>';
 			return;
 		}
 		echo '<ul class="sudemi-list">';
@@ -276,10 +277,10 @@ final class Sudemi_Admin_Insights {
 	}
 
 	private static function render_countries( array $rows, $currency ) {
-		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'Where buyers are', 'sudemi' ) . '</h2>';
+		echo '<section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'Where buyers are', 'sudemi-connector' ) . '</h2>';
 		$rows = array_values( array_filter( $rows, 'is_array' ) );
 		if ( empty( $rows ) ) {
-			echo '<p class="sudemi-muted">' . esc_html__( 'No orders in this period.', 'sudemi' ) . '</p></section>';
+			echo '<p class="sudemi-muted">' . esc_html__( 'No orders in this period.', 'sudemi-connector' ) . '</p></section>';
 			return;
 		}
 		$max   = max( 1, max( array_map( function ( $r ) { return Sudemi_Insights::int( $r, 'orders' ); }, $rows ) ) );
@@ -299,8 +300,8 @@ final class Sudemi_Admin_Insights {
 
 	public static function render_products() {
 		Sudemi_Admin::page_title(
-			__( 'Products on sudemi', 'sudemi' ),
-			__( 'Your products as sudemi has them: whether buyers can see each one, why not, and how often it was found in the last 30 days.', 'sudemi' )
+			__( 'Products on sudemi', 'sudemi-connector' ),
+			__( 'Your products as sudemi has them: whether buyers can see each one, why not, and how often it was found in the last 30 days.', 'sudemi-connector' )
 		);
 		if ( ! Sudemi_Client::is_connected() ) {
 			self::not_connected();
@@ -333,9 +334,9 @@ final class Sudemi_Admin_Insights {
 		echo '<section class="sudemi-card sudemi-card-flush">';
 		echo '<div class="sudemi-toolbar"><ul class="subsubsub sudemi-subsub">';
 		$tabs = array(
-			'all'        => array( __( 'All', 'sudemi' ), 'total' ),
-			'listed'     => array( __( 'Shown to buyers', 'sudemi' ), 'listed' ),
-			'not_listed' => array( __( 'Not shown', 'sudemi' ), 'not_listed' ),
+			'all'        => array( __( 'All', 'sudemi-connector' ), 'total' ),
+			'listed'     => array( __( 'Shown to buyers', 'sudemi-connector' ), 'listed' ),
+			'not_listed' => array( __( 'Not shown', 'sudemi-connector' ), 'not_listed' ),
 		);
 		$sep = '';
 		foreach ( $tabs as $status => $tab ) {
@@ -349,26 +350,26 @@ final class Sudemi_Admin_Insights {
 			. '<input type="hidden" name="page" value="' . esc_attr( Sudemi_Admin::SLUG ) . '" />'
 			. '<input type="hidden" name="tab" value="products" />'
 			. ( 'all' !== $f['status'] ? '<input type="hidden" name="status" value="' . esc_attr( $f['status'] ) . '" />' : '' )
-			. '<label class="screen-reader-text" for="sudemi-product-search">' . esc_html__( 'Search products', 'sudemi' ) . '</label>'
-			. '<input type="search" id="sudemi-product-search" name="q" value="' . esc_attr( $f['q'] ) . '" maxlength="100" placeholder="' . esc_attr__( 'Name, SKU or ID', 'sudemi' ) . '" /> ';
-		submit_button( __( 'Search products', 'sudemi' ), 'secondary', '', false );
+			. '<label class="screen-reader-text" for="sudemi-product-search">' . esc_html__( 'Search products', 'sudemi-connector' ) . '</label>'
+			. '<input type="search" id="sudemi-product-search" name="q" value="' . esc_attr( $f['q'] ) . '" maxlength="100" placeholder="' . esc_attr__( 'Name, SKU or ID', 'sudemi-connector' ) . '" /> ';
+		submit_button( __( 'Search products', 'sudemi-connector' ), 'secondary', '', false );
 		echo '</form></div>';
 
 		if ( empty( $items ) ) {
-			echo '<div class="sudemi-empty-inline"><strong>' . esc_html__( 'No products match.', 'sudemi' ) . '</strong><br />'
-				. esc_html__( 'Products reach sudemi with the catalogue sync, a few minutes after you publish them.', 'sudemi' ) . '</div></section>';
+			echo '<div class="sudemi-empty-inline"><strong>' . esc_html__( 'No products match.', 'sudemi-connector' ) . '</strong><br />'
+				. esc_html__( 'Products reach sudemi with the catalogue sync, a few minutes after you publish them.', 'sudemi-connector' ) . '</div></section>';
 			return;
 		}
 
 		echo '<div class="sudemi-table-scroll"><table class="sudemi-table sudemi-products"><thead><tr>'
-			. '<th>' . esc_html__( 'Product', 'sudemi' ) . '</th>'
-			. '<th class="num">' . esc_html__( 'Price', 'sudemi' ) . '</th>'
-			. '<th class="num">' . esc_html__( 'Stock', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Buyers see it', 'sudemi' ) . '</th>'
-			. '<th class="num">' . esc_html__( 'Shown (30 days)', 'sudemi' ) . '</th>'
-			. '<th class="num">' . esc_html__( 'Views (30 days)', 'sudemi' ) . '</th>'
-			. '<th class="num">' . esc_html__( 'Orders (30 days)', 'sudemi' ) . '</th>'
-			. '<th>' . esc_html__( 'Show on sudemi', 'sudemi' ) . '</th>'
+			. '<th>' . esc_html__( 'Product', 'sudemi-connector' ) . '</th>'
+			. '<th class="num">' . esc_html__( 'Price', 'sudemi-connector' ) . '</th>'
+			. '<th class="num">' . esc_html__( 'Stock', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Buyers see it', 'sudemi-connector' ) . '</th>'
+			. '<th class="num">' . esc_html__( 'Shown (30 days)', 'sudemi-connector' ) . '</th>'
+			. '<th class="num">' . esc_html__( 'Views (30 days)', 'sudemi-connector' ) . '</th>'
+			. '<th class="num">' . esc_html__( 'Orders (30 days)', 'sudemi-connector' ) . '</th>'
+			. '<th>' . esc_html__( 'Show on sudemi', 'sudemi-connector' ) . '</th>'
 			. '</tr></thead><tbody>';
 		foreach ( $items as $item ) {
 			$id      = Sudemi_Insights::str( $item, 'external_id' );
@@ -379,25 +380,25 @@ final class Sudemi_Admin_Insights {
 			$meta    = array();
 			if ( '' !== Sudemi_Insights::str( $item, 'sku' ) ) {
 				/* translators: %s: SKU. */
-				$meta[] = sprintf( __( 'SKU %s', 'sudemi' ), Sudemi_Insights::str( $item, 'sku' ) );
+				$meta[] = sprintf( __( 'SKU %s', 'sudemi-connector' ), Sudemi_Insights::str( $item, 'sku' ) );
 			}
 			/* translators: %s: the product's id in this shop. */
-			$meta[] = sprintf( __( 'ID %s', 'sudemi' ), $id );
+			$meta[] = sprintf( __( 'ID %s', 'sudemi-connector' ), $id );
 			/* translators: %d: number of photos. */
-			$meta[] = sprintf( _n( '%d photo', '%d photos', Sudemi_Insights::int( $item, 'images' ), 'sudemi' ), Sudemi_Insights::int( $item, 'images' ) );
+			$meta[] = sprintf( _n( '%d photo', '%d photos', Sudemi_Insights::int( $item, 'images' ), 'sudemi-connector' ), Sudemi_Insights::int( $item, 'images' ) );
 			/* translators: %d: number of countries. */
-			$meta[] = sprintf( _n( 'ships to %d country', 'ships to %d countries', Sudemi_Insights::int( $item, 'shipping_countries' ), 'sudemi' ), Sudemi_Insights::int( $item, 'shipping_countries' ) );
+			$meta[] = sprintf( _n( 'ships to %d country', 'ships to %d countries', Sudemi_Insights::int( $item, 'shipping_countries' ), 'sudemi-connector' ), Sudemi_Insights::int( $item, 'shipping_countries' ) );
 
 			echo '<tr><td><div class="sudemi-product">' . self::thumb( $product ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in thumb().
 				. '<span><strong>' . self::edit_link( $product, Sudemi_Insights::str( $item, 'title' ) ) . '</strong>' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in edit_link().
 				. '<br /><span class="sudemi-muted">' . esc_html( implode( ' · ', $meta ) ) . '</span></span></div></td>';
 			echo '<td class="num">' . esc_html( Sudemi_Insights::money( isset( $item['price_minor'] ) ? $item['price_minor'] : null, Sudemi_Insights::str( $item, 'currency' ) ) ) . '</td>';
-			echo '<td class="num">' . esc_html( isset( $item['quantity'] ) && is_numeric( $item['quantity'] ) ? Sudemi_Insights::number( (int) $item['quantity'] ) : ( ! empty( $item['in_stock'] ) ? __( 'in stock', 'sudemi' ) : '0' ) ) . '</td>';
+			echo '<td class="num">' . esc_html( isset( $item['quantity'] ) && is_numeric( $item['quantity'] ) ? Sudemi_Insights::number( (int) $item['quantity'] ) : ( ! empty( $item['in_stock'] ) ? __( 'in stock', 'sudemi-connector' ) : '0' ) ) . '</td>';
 			echo '<td>';
 			if ( $listed ) {
-				echo '<span class="sudemi-badge sudemi-badge-success">' . esc_html__( 'Shown', 'sudemi' ) . '</span>';
+				echo '<span class="sudemi-badge sudemi-badge-success">' . esc_html__( 'Shown', 'sudemi-connector' ) . '</span>';
 			} else {
-				echo '<span class="sudemi-badge sudemi-badge-warning">' . esc_html__( 'Not shown', 'sudemi' ) . '</span>';
+				echo '<span class="sudemi-badge sudemi-badge-warning">' . esc_html__( 'Not shown', 'sudemi-connector' ) . '</span>';
 				$words = array();
 				foreach ( $reasons as $reason ) {
 					$words[] = Sudemi_Insights::reason_label( (string) $reason );
@@ -420,11 +421,11 @@ final class Sudemi_Admin_Insights {
 				. esc_attr(
 					sprintf(
 						/* translators: %s: product name. */
-						__( 'Show %s on sudemi', 'sudemi' ),
+						__( 'Show %s on sudemi', 'sudemi-connector' ),
 						Sudemi_Insights::str( $item, 'title' )
 					)
 				) . '"><span class="sudemi-switch-knob"></span></button>'
-				. '<span class="sudemi-switch-text">' . esc_html( $enabled ? __( 'On', 'sudemi' ) : __( 'Off', 'sudemi' ) ) . '</span></form></td></tr>';
+				. '<span class="sudemi-switch-text">' . esc_html( $enabled ? __( 'On', 'sudemi-connector' ) : __( 'Off', 'sudemi-connector' ) ) . '</span></form></td></tr>';
 		}
 		echo '</tbody></table></div>';
 
@@ -433,7 +434,7 @@ final class Sudemi_Admin_Insights {
 		echo '<div class="sudemi-paging"><span>' . esc_html(
 			sprintf(
 				/* translators: 1: first row shown, 2: last row shown, 3: number of products. */
-				__( 'Products %1$d to %2$d of %3$d', 'sudemi' ),
+				__( 'Products %1$d to %2$d of %3$d', 'sudemi-connector' ),
 				$page * Sudemi_Insights::LISTING_PAGE_SIZE + 1,
 				$page * Sudemi_Insights::LISTING_PAGE_SIZE + count( $items ),
 				$total
@@ -446,13 +447,13 @@ final class Sudemi_Admin_Insights {
 			)
 		);
 		if ( $page > 0 ) {
-			echo '<a class="button" href="' . esc_url( Sudemi_Admin::page_url( 'products', array_merge( $args, array( 'paged' => $page - 1 ) ) ) ) . '">' . esc_html__( 'Previous', 'sudemi' ) . '</a> ';
+			echo '<a class="button" href="' . esc_url( Sudemi_Admin::page_url( 'products', array_merge( $args, array( 'paged' => $page - 1 ) ) ) ) . '">' . esc_html__( 'Previous', 'sudemi-connector' ) . '</a> ';
 		}
 		if ( $page + 1 < $pages ) {
-			echo '<a class="button" href="' . esc_url( Sudemi_Admin::page_url( 'products', array_merge( $args, array( 'paged' => $page + 1 ) ) ) ) . '">' . esc_html__( 'Next', 'sudemi' ) . '</a>';
+			echo '<a class="button" href="' . esc_url( Sudemi_Admin::page_url( 'products', array_merge( $args, array( 'paged' => $page + 1 ) ) ) ) . '">' . esc_html__( 'Next', 'sudemi-connector' ) . '</a>';
 		}
 		echo '</div></section>';
-		echo '<p class="sudemi-muted">' . esc_html__( 'Prices, stock, photos and texts come from your WooCommerce products and are sent by themselves when you change them. The switch only decides whether sudemi shows a product; it does not change anything in your shop.', 'sudemi' ) . '</p>';
+		echo '<p class="sudemi-muted">' . esc_html__( 'Prices, stock, photos and texts come from your WooCommerce products and are sent by themselves when you change them. The switch only decides whether sudemi shows a product; it does not change anything in your shop.', 'sudemi-connector' ) . '</p>';
 	}
 
 	public static function handle_enabled() {
@@ -466,13 +467,13 @@ final class Sudemi_Admin_Insights {
 			Sudemi_Logger::info(
 				sprintf(
 					/* translators: %s: product id. */
-					$on ? __( 'Product %s switched on for sudemi.', 'sudemi' ) : __( 'Product %s switched off for sudemi.', 'sudemi' ),
+					$on ? __( 'Product %s switched on for sudemi.', 'sudemi-connector' ) : __( 'Product %s switched off for sudemi.', 'sudemi-connector' ),
 					$id
 				)
 			);
 			self::put_flash(
 				true,
-				$on ? __( 'Switched on. sudemi shows this product again (when it is in stock and can be shipped).', 'sudemi' ) : __( 'Switched off. sudemi no longer shows this product to buyers. Your shop is not changed.', 'sudemi' )
+				$on ? __( 'Switched on. sudemi shows this product again (when it is in stock and can be shipped).', 'sudemi-connector' ) : __( 'Switched off. sudemi no longer shows this product to buyers. Your shop is not changed.', 'sudemi-connector' )
 			);
 		} else {
 			self::put_flash( false, Sudemi_Insights::error_message( $read['error'], $read['message'] ) );
@@ -486,8 +487,8 @@ final class Sudemi_Admin_Insights {
 
 	public static function render_profile() {
 		Sudemi_Admin::page_title(
-			__( 'Shop profile', 'sudemi' ),
-			__( 'What buyers and their AI assistant are told about your shop.', 'sudemi' )
+			__( 'Shop profile', 'sudemi-connector' ),
+			__( 'What buyers and their AI assistant are told about your shop.', 'sudemi-connector' )
 		);
 		if ( ! Sudemi_Client::is_connected() ) {
 			self::not_connected();
@@ -511,48 +512,48 @@ final class Sudemi_Admin_Insights {
 		wp_nonce_field( 'sudemi_profile_save' );
 		echo '<input type="hidden" name="action" value="sudemi_profile_save" />';
 
-		echo '<div class="sudemi-field"><label>' . esc_html__( 'Shop name buyers see', 'sudemi' ) . '</label>'
+		echo '<div class="sudemi-field"><label>' . esc_html__( 'Shop name buyers see', 'sudemi-connector' ) . '</label>'
 			. '<div class="sudemi-readonly">' . esc_html( '' === $name ? get_bloginfo( 'name' ) : $name ) . '</div>'
-			. '<p class="description">' . esc_html__( 'The name is checked by sudemi, so it is changed through support.', 'sudemi' ) . ' '
+			. '<p class="description">' . esc_html__( 'The name is checked by sudemi, so it is changed through support.', 'sudemi-connector' ) . ' '
 			. '<a href="' . esc_url(
 				Sudemi_Admin::page_url(
 					'support',
 					array(
 						'category' => 'ACCOUNT',
-						'subject'  => __( 'Please change my shop name', 'sudemi' ),
+						'subject'  => __( 'Please change my shop name', 'sudemi-connector' ),
 					)
 				)
-			) . '">' . esc_html__( 'Ask for a new name', 'sudemi' ) . '</a></p></div>';
+			) . '">' . esc_html__( 'Ask for a new name', 'sudemi-connector' ) . '</a></p></div>';
 
-		echo '<div class="sudemi-field"><label for="sudemi-profile-description">' . esc_html__( 'About your shop', 'sudemi' ) . '</label>'
+		echo '<div class="sudemi-field"><label for="sudemi-profile-description">' . esc_html__( 'About your shop', 'sudemi-connector' ) . '</label>'
 			. '<textarea id="sudemi-profile-description" name="description" rows="5" class="large-text" maxlength="' . esc_attr( (string) Sudemi_Insights::DESCRIPTION_MAX ) . '">'
 			. esc_textarea( $desc ) . '</textarea>'
-			. '<p class="description">' . esc_html__( 'A few sentences: what you sell and what makes your shop worth buying from. AI assistants may quote it to buyers.', 'sudemi' ) . '</p></div>';
+			. '<p class="description">' . esc_html__( 'A few sentences: what you sell and what makes your shop worth buying from. AI assistants may quote it to buyers.', 'sudemi-connector' ) . '</p></div>';
 
-		echo '<div class="sudemi-field"><label for="sudemi-profile-email">' . esc_html__( 'E-mail for buyers\' questions', 'sudemi' ) . '</label>'
+		echo '<div class="sudemi-field"><label for="sudemi-profile-email">' . esc_html__( 'E-mail for buyers\' questions', 'sudemi-connector' ) . '</label>'
 			. '<input type="email" id="sudemi-profile-email" name="support_email" class="regular-text" required="required" value="' . esc_attr( $email ) . '" />'
-			. '<p class="description">' . esc_html__( 'Shown to buyers after they ordered, for questions about delivery and returns.', 'sudemi' ) . '</p></div>';
+			. '<p class="description">' . esc_html__( 'Shown to buyers after they ordered, for questions about delivery and returns.', 'sudemi-connector' ) . '</p></div>';
 
-		echo '<div class="sudemi-field"><label for="sudemi-profile-returns">' . esc_html__( 'Return period (days)', 'sudemi' ) . '</label>'
+		echo '<div class="sudemi-field"><label for="sudemi-profile-returns">' . esc_html__( 'Return period (days)', 'sudemi-connector' ) . '</label>'
 			. '<input type="number" id="sudemi-profile-returns" name="returns_days" class="small-text" min="' . esc_attr( (string) Sudemi_Insights::RETURNS_MIN ) . '" max="'
 			. esc_attr( (string) Sudemi_Insights::RETURNS_MAX ) . '" required="required" value="' . esc_attr( (string) $days ) . '" />'
-			. '<p class="description">' . esc_html__( 'How long after delivery a buyer may change their mind. The law gives at least 14 days; you may give more.', 'sudemi' ) . '</p></div>';
+			. '<p class="description">' . esc_html__( 'How long after delivery a buyer may change their mind. The law gives at least 14 days; you may give more.', 'sudemi-connector' ) . '</p></div>';
 
-		submit_button( __( 'Save on sudemi', 'sudemi' ), 'primary', 'submit', false );
+		submit_button( __( 'Save on sudemi', 'sudemi-connector' ), 'primary', 'submit', false );
 		echo '</form></section>';
 
-		echo '<div class="sudemi-stack"><section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'Fixed details', 'sudemi' ) . '</h2><table class="sudemi-kv"><tbody>';
+		echo '<div class="sudemi-stack"><section class="sudemi-card"><h2 class="sudemi-card-title">' . esc_html__( 'Fixed details', 'sudemi-connector' ) . '</h2><table class="sudemi-kv"><tbody>';
 		$fixed = array(
-			__( 'Shop address', 'sudemi' ) => '' !== Sudemi_Insights::str( $shop, 'shop_origin' ) ? Sudemi_Insights::str( $shop, 'shop_origin' ) : home_url( '/' ),
-			__( 'Currency', 'sudemi' )     => '' !== Sudemi_Insights::str( $shop, 'currency' ) ? Sudemi_Insights::str( $shop, 'currency' ) : Sudemi_Currency::shop_currency(),
-			__( 'Install', 'sudemi' )      => (string) Sudemi_Client::install_id(),
+			__( 'Shop address', 'sudemi-connector' ) => '' !== Sudemi_Insights::str( $shop, 'shop_origin' ) ? Sudemi_Insights::str( $shop, 'shop_origin' ) : home_url( '/' ),
+			__( 'Currency', 'sudemi-connector' )     => '' !== Sudemi_Insights::str( $shop, 'currency' ) ? Sudemi_Insights::str( $shop, 'currency' ) : Sudemi_Currency::shop_currency(),
+			__( 'Install', 'sudemi-connector' )      => (string) Sudemi_Client::install_id(),
 		);
 		foreach ( $fixed as $label => $value ) {
 			echo '<tr><th scope="row">' . esc_html( $label ) . '</th><td><span class="sudemi-kv-value">' . esc_html( $value ) . '</span></td></tr>';
 		}
 		echo '</tbody></table>';
-		echo '<p class="description">' . esc_html__( 'Your legal name, country, trader status and VAT number decide what a buyer is owed, so they are confirmed once on sudemi and changed there. This plugin cannot edit them.', 'sudemi' ) . '</p>';
-		echo '<p><a class="button" href="' . esc_url( Sudemi_Admin::portal_url( '/seller' ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Company details on the seller portal', 'sudemi' ) . '</a></p>';
+		echo '<p class="description">' . esc_html__( 'Your legal name, country, trader status and VAT number decide what a buyer is owed, so they are confirmed once on sudemi and changed there. This plugin cannot edit them.', 'sudemi-connector' ) . '</p>';
+		echo '<p><a class="button" href="' . esc_url( Sudemi_Admin::portal_url( '/seller' ) ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Company details on the seller portal', 'sudemi-connector' ) . '</a></p>';
 		echo '</section></div></div>';
 	}
 
@@ -565,8 +566,8 @@ final class Sudemi_Admin_Insights {
 		// phpcs:enable
 		$result = Sudemi_Insights::save_profile( $description, $email, $days );
 		if ( $result['ok'] ) {
-			Sudemi_Logger::info( __( 'Shop profile saved on sudemi.', 'sudemi' ) );
-			self::put_flash( true, __( 'Saved on sudemi. Buyers see the new details from now on.', 'sudemi' ) );
+			Sudemi_Logger::info( __( 'Shop profile saved on sudemi.', 'sudemi-connector' ) );
+			self::put_flash( true, __( 'Saved on sudemi. Buyers see the new details from now on.', 'sudemi-connector' ) );
 		} else {
 			self::put_flash( false, Sudemi_Insights::error_message( $result['error'], $result['message'] ) );
 		}

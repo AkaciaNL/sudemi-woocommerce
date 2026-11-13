@@ -89,6 +89,7 @@ final class Sudemi_Sync {
 	private static function inside_page_request() {
 		$inline = defined( 'ALTERNATE_WP_CRON' ) && ALTERNATE_WP_CRON
 			&& ! ( defined( 'WP_CLI' ) && WP_CLI )
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- only compared with a fixed name, never stored or shown; unslashing would break Windows paths.
 			&& ( empty( $_SERVER['SCRIPT_FILENAME'] ) || 'wp-cron.php' !== basename( (string) $_SERVER['SCRIPT_FILENAME'] ) );
 		/**
 		 * Whether the full sync is running inside a page request, and so sends only a step.
@@ -226,7 +227,7 @@ final class Sudemi_Sync {
 			Sudemi_Logger::warn(
 				sprintf(
 					/* translators: 1: products that would be removed, 2: products listed now. */
-					__( 'The catalogue sync is on hold: it would remove %1$d of %2$d listed products from sudemi, so nothing was changed. If those products really were removed from this shop, contact sudemi support (support@sudemi.com).', 'sudemi' ),
+					__( 'The catalogue sync is on hold: it would remove %1$d of %2$d listed products from sudemi, so nothing was changed. If those products really were removed from this shop, contact sudemi support (support@sudemi.com).', 'sudemi-connector' ),
 					isset( $committed['body']['would_delist'] ) ? (int) $committed['body']['would_delist'] : 0,
 					isset( $committed['body']['live_products'] ) ? (int) $committed['body']['live_products'] : 0
 				)
@@ -238,7 +239,7 @@ final class Sudemi_Sync {
 		}
 		Sudemi_Heartbeat::anchor( $anchor );
 		/* translators: %d: number of products. */
-		Sudemi_Logger::info( sprintf( __( 'Synced %d products.', 'sudemi' ), (int) $state['sent'] ) );
+		Sudemi_Logger::info( sprintf( __( 'Synced %d products.', 'sudemi-connector' ), (int) $state['sent'] ) );
 		return 'done';
 	}
 

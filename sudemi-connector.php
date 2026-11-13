@@ -3,14 +3,14 @@
  * Plugin Name:       sudemi Connector
  * Plugin URI:        https://sudemi.com/integrations/woocommerce
  * Description:       Lists this shop's products on sudemi, so an AI assistant can find them and send buyers to you. You stay the merchant of record.
- * Version:           1.4.1
+ * Version:           1.4.2
  * Requires at least: 6.2
  * Requires PHP:      8.0
  * Author:            Akacia
  * Author URI:        https://akacia.nl
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       sudemi
+ * Text Domain:       sudemi-connector
  * Domain Path:       /languages
  * WC requires at least: 8.0
  *
@@ -19,7 +19,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SUDEMI_VERSION', '1.4.1' );
+define( 'SUDEMI_VERSION', '1.4.2' );
 define( 'SUDEMI_PLUGIN_FILE', __FILE__ );
 define( 'SUDEMI_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
@@ -49,11 +49,22 @@ if ( is_admin() ) {
 	require_once SUDEMI_PLUGIN_DIR . 'admin/class-sudemi-admin-insights.php';
 }
 
-// The admin screens ship in twelve languages; the files live in languages/.
+// The admin screens ship in twelve languages; the files live in languages/ and WordPress loads
+// them just in time, the first time a text is translated. A language pack from WordPress.org
+// (wp-content/languages/plugins/) still wins over the bundled file. This is exactly what
+// load_plugin_textdomain() does since WordPress 6.7; Plugin Check discourages calling that
+// function for a plugin hosted on WordPress.org, so the bundled folder is registered directly.
 add_action(
 	'init',
 	function () {
-		load_plugin_textdomain( 'sudemi', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		global $wp_textdomain_registry, $l10n;
+		if ( $wp_textdomain_registry instanceof WP_Textdomain_Registry ) {
+			$wp_textdomain_registry->set_custom_path( 'sudemi-connector', SUDEMI_PLUGIN_DIR . 'languages' );
+			// A text translated before init found no file yet; let the next one try again.
+			if ( isset( $l10n['sudemi-connector'] ) && $l10n['sudemi-connector'] instanceof NOOP_Translations ) {
+				unset( $l10n['sudemi-connector'] );
+			}
+		}
 	}
 );
 
@@ -66,14 +77,14 @@ add_filter(
 	function ( $schedules ) {
 		$schedules['sudemi_minute'] = array(
 			'interval' => 60,
-			'display'  => __( 'Every minute (sudemi pairing)', 'sudemi' ),
+			'display'  => __( 'Every minute (sudemi pairing)', 'sudemi-connector' ),
 		);
 		// The heartbeat. sudemi stops listing this shop's products when the beats stop, because
 		// from its side a quiet shop and a dead one are the same thing and only one of them still
 		// has prices worth quoting. Five minutes is well inside the window it allows.
 		$schedules['sudemi_five_minutes'] = array(
 			'interval' => 300,
-			'display'  => __( 'Every five minutes (sudemi heartbeat)', 'sudemi' ),
+			'display'  => __( 'Every five minutes (sudemi heartbeat)', 'sudemi-connector' ),
 		);
 		return $schedules;
 	}
@@ -88,7 +99,7 @@ add_action(
 				'admin_notices',
 				function () {
 					echo '<div class="notice notice-error"><p>'
-						. esc_html__( 'sudemi Connector needs WooCommerce to be active.', 'sudemi' )
+						. esc_html__( 'sudemi Connector needs WooCommerce to be active.', 'sudemi-connector' )
 						. '</p></div>';
 				}
 			);

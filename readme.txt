@@ -2,9 +2,9 @@
 Contributors: akacia
 Tags: woocommerce, marketplace, ai, product feed
 Requires at least: 6.2
-Tested up to: 6.7
+Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,12 @@ The plugin tells you on its settings screen and refuses to connect, rather than 
 Ask your host to enable it; it ships with PHP 7.2 and later.
 
 == Changelog ==
+
+= 1.4.2 =
+* Ready for the WordPress.org plugin directory: the plugin passes WordPress.org's Plugin Check.
+* The text domain is now sudemi-connector, the plugin's slug. The translations in all twelve languages are the same and still come with the plugin; a language pack from WordPress.org, when there is one, is used first.
+* Tested up to WordPress 7.1.
+* Nothing changes in how the plugin works with sudemi, your orders, the statistics or the checkout banner.
 
 = 1.4.1 =
 * Every sudemi page says how buyers pay your shop. Red while Stripe is not connected: your products are listed on sudemi and buyers pay on your own website, with a Connect Stripe button (and a line when Stripe needs more information). Green when Connect Stripe is done and buyers pay through sudemi. Red with a link to support when your shop is paused over a payment provider restriction.

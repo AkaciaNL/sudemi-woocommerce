@@ -7,13 +7,13 @@ msgstr ""
 "POT-Creation-Date: 2026-11-05 00:00+0000\n"
 "PO-Revision-Date: 2026-11-06 00:00+0000\n"
 "Last-Translator: Akacia\n"
-"Language-Team: it_IT\n"
-"Language: it_IT\n"
+"Language-Team: de_DE\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Domain: sudemi\n"
+"X-Domain: sudemi-connector\n"
 
 #. Plugin Name of the plugin
 #: sudemi-connector.php
@@ -23,19 +23,19 @@ msgstr "sudemi Connector"
 #. Description of the plugin
 #: sudemi-connector.php
 msgid "Lists this shop's products on sudemi, so an AI assistant can find them and send buyers to you. You stay the merchant of record."
-msgstr "Pubblica i prodotti di questo negozio su sudemi, così un assistente IA può trovarli e inviarti acquirenti. Il venditore resti sempre tu."
+msgstr "Listet die Produkte dieses Shops auf sudemi, damit ein KI-Assistent sie finden und Käufer an Sie weiterleiten kann. Sie bleiben rechtlich der Verkäufer."
 
 #: sudemi-connector.php:49
 msgid "Every minute (sudemi pairing)"
-msgstr "Ogni minuto (abbinamento sudemi)"
+msgstr "Jede Minute (sudemi-Kopplung)"
 
 #: sudemi-connector.php:56
 msgid "Every five minutes (sudemi heartbeat)"
-msgstr "Ogni cinque minuti (heartbeat sudemi)"
+msgstr "Alle fünf Minuten (sudemi-Statusmeldung)"
 
 #: sudemi-connector.php:71
 msgid "sudemi Connector needs WooCommerce to be active."
-msgstr "sudemi Connector richiede che WooCommerce sia attivo."
+msgstr "sudemi Connector benötigt ein aktives WooCommerce."
 
 #: admin/class-sudemi-admin.php:31 admin/class-sudemi-admin.php:32
 #: admin/class-sudemi-admin.php:50
@@ -44,681 +44,681 @@ msgstr "sudemi"
 
 #: admin/class-sudemi-admin.php:43
 msgid "You do not have permission to manage this shop."
-msgstr "Non hai i permessi per gestire questo negozio."
+msgstr "Sie sind nicht berechtigt, diesen Shop zu verwalten."
 
 #: admin/class-sudemi-admin.php:54
 msgid "This server is missing the sodium extension. The connection needs it to sign requests, and will not work without it. Ask your host to enable it."
-msgstr "Su questo server manca l'estensione sodium. La connessione ne ha bisogno per firmare le richieste e senza di essa non funziona. Chiedi al tuo provider di hosting di attivarla."
+msgstr "Auf diesem Server fehlt die Sodium-Erweiterung. Die Verbindung benötigt sie zum Signieren von Anfragen und funktioniert ohne sie nicht. Bitten Sie Ihren Hoster, sie zu aktivieren."
 
 #: admin/class-sudemi-admin.php:71
 msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account - this plugin never asks for your sudemi password."
-msgstr "Collegando questo negozio, un assistente IA può trovare i tuoi prodotti e inviarti acquirenti. Confermi il collegamento su sudemi, dopo aver effettuato l'accesso al tuo account: questo plugin non ti chiede mai la password di sudemi."
+msgstr "Wenn Sie diesen Shop verbinden, kann ein KI-Assistent Ihre Produkte finden und Käufer an Sie weiterleiten. Sie bestätigen die Verbindung auf sudemi, angemeldet mit Ihrem eigenen Konto - dieses Plugin fragt nie nach Ihrem sudemi-Passwort."
 
 #: admin/class-sudemi-admin.php:75
 msgid "Connect this shop"
-msgstr "Collega questo negozio"
+msgstr "Diesen Shop verbinden"
 
 #: admin/class-sudemi-admin.php:81
 msgid "Almost there. Open the link below, sign in to sudemi and confirm that this shop is yours. This page will pick it up by itself."
-msgstr "Ci siamo quasi. Apri il link qui sotto, accedi a sudemi e conferma che questo negozio è tuo. Questa pagina lo rileverà da sola."
+msgstr "Fast geschafft. Öffnen Sie den Link unten, melden Sie sich bei sudemi an und bestätigen Sie, dass dieser Shop Ihnen gehört. Diese Seite erkennt das automatisch."
 
 #: admin/class-sudemi-admin.php:84
 msgid "Confirm this shop on sudemi"
-msgstr "Conferma questo negozio su sudemi"
+msgstr "Diesen Shop auf sudemi bestätigen"
 
 #. translators: %s: the public path the token is served at.
 #: admin/class-sudemi-admin.php:88
 #, php-format
 msgid "While this is open, the shop answers at %s with a one-time token so sudemi can confirm the request came from here. It stops being served the moment the connection completes."
-msgstr "Finché questa pagina è aperta, il negozio risponde su %s con un token monouso, così sudemi può verificare che la richiesta provenga da qui. Il token non viene più fornito non appena il collegamento è completato."
+msgstr "Solange dies geöffnet ist, antwortet der Shop unter %s mit einem Einmal-Token, damit sudemi bestätigen kann, dass die Anfrage von hier kam. Es wird nicht mehr ausgeliefert, sobald die Verbindung hergestellt ist."
 
 #: admin/class-sudemi-admin.php:95
 msgid "This shop is connected to sudemi."
-msgstr "Questo negozio è collegato a sudemi."
+msgstr "Dieser Shop ist mit sudemi verbunden."
 
 #: admin/class-sudemi-admin.php:98
 msgid "Shop address"
-msgstr "Indirizzo del negozio"
+msgstr "Shop-Adresse"
 
 #: admin/class-sudemi-admin.php:98
 msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from - so changing it means connecting again from the new address."
-msgstr "Fisso. sudemi ha verificato che questo negozio rispondesse da questo indirizzo e ogni inserzione indica all'acquirente da dove proviene, quindi per cambiarlo devi ricollegare il negozio dal nuovo indirizzo."
+msgstr "Unveränderlich. sudemi hat geprüft, dass dieser Shop unter dieser Adresse geantwortet hat, und ein Eintrag zeigt dem Käufer, woher er stammt - eine Änderung bedeutet daher, sich von der neuen Adresse aus erneut zu verbinden."
 
 #: admin/class-sudemi-admin.php:99
 msgid "Install"
-msgstr "Installazione"
+msgstr "Installation"
 
 #: admin/class-sudemi-admin.php:99
 msgid "Which installation this is. Revoke it on sudemi to cut this shop off immediately."
-msgstr "Indica di quale installazione si tratta. Revocala su sudemi per scollegare subito questo negozio."
+msgstr "Welche Installation dies ist. Widerrufen Sie sie auf sudemi, um diesen Shop sofort zu trennen."
 
 #: admin/class-sudemi-admin.php:100
 msgid "Signing key"
-msgstr "Chiave di firma"
+msgstr "Signaturschlüssel"
 
 #: admin/class-sudemi-admin.php:100
 msgid "held on this server"
-msgstr "conservata su questo server"
+msgstr "auf diesem Server gespeichert"
 
 #: admin/class-sudemi-admin.php:100
 msgid "The private half never leaves this server and is never sent to sudemi. It cannot be shown here either."
-msgstr "La parte privata non lascia mai questo server e non viene mai inviata a sudemi. Non può nemmeno essere mostrata qui."
+msgstr "Der private Teil verlässt diesen Server nie und wird nie an sudemi gesendet. Er kann auch hier nicht angezeigt werden."
 
 #: admin/class-sudemi-admin.php:107
 msgid "Set on sudemi, not here"
-msgstr "Si imposta su sudemi, non qui"
+msgstr "Wird auf sudemi festgelegt, nicht hier"
 
 #: admin/class-sudemi-admin.php:108
 msgid "Your legal name, country, trader status and VAT number decide what a buyer is owed, so they are confirmed once on sudemi and changed there. This plugin cannot edit them."
-msgstr "Ragione sociale, paese, qualifica di professionista e partita IVA determinano i diritti dell'acquirente, per questo vengono confermati una sola volta su sudemi e si modificano lì. Questo plugin non può modificarli."
+msgstr "Ihr rechtlicher Name, Ihr Land, Ihr Unternehmerstatus und Ihre USt-IdNr. bestimmen, welche Rechte ein Käufer hat. Deshalb werden sie einmalig auf sudemi bestätigt und dort geändert. Dieses Plugin kann sie nicht bearbeiten."
 
 #: admin/class-sudemi-admin.php:113
 msgid "Sync the catalogue now"
-msgstr "Sincronizza ora il catalogo"
+msgstr "Katalog jetzt synchronisieren"
 
 #: admin/class-sudemi-admin.php:119
 msgid "Disconnect"
-msgstr "Scollega"
+msgstr "Trennen"
 
 #: admin/class-sudemi-admin.php:137
 msgid "Listing status"
-msgstr "Stato delle inserzioni"
+msgstr "Listungsstatus"
 
 #: admin/class-sudemi-admin.php:141
 msgid "This shop has not reported in to sudemi yet. That happens within a few minutes of connecting, and needs WP-Cron to be running on this site."
-msgstr "Questo negozio non ha ancora inviato segnalazioni a sudemi. Succede entro pochi minuti dal collegamento e richiede che WP-Cron sia attivo su questo sito."
+msgstr "Dieser Shop hat sich noch nicht bei sudemi gemeldet. Das geschieht innerhalb weniger Minuten nach dem Verbinden und setzt voraus, dass WP-Cron auf dieser Website läuft."
 
 #: admin/class-sudemi-admin.php:149
 #, php-format
 msgid "%s ago"
-msgstr "%s fa"
+msgstr "vor %s"
 
 #: admin/class-sudemi-admin.php:150
 msgid "never"
-msgstr "mai"
+msgstr "nie"
 
 #: admin/class-sudemi-admin.php:154
 msgid "This shop could not reach sudemi. Its products stay listed for a short while and are then paused, because sudemi will not quote a price it cannot confirm."
-msgstr "Questo negozio non è riuscito a raggiungere sudemi. I suoi prodotti restano pubblicati per un breve periodo e poi vengono sospesi, perché sudemi non propone un prezzo che non può confermare."
+msgstr "Dieser Shop konnte sudemi nicht erreichen. Seine Produkte bleiben noch kurz gelistet und werden dann pausiert, weil sudemi keinen Preis nennt, den es nicht bestätigen kann."
 
 #: admin/class-sudemi-admin.php:158
 msgid "sudemi refused this shop."
-msgstr "sudemi ha rifiutato questo negozio."
+msgstr "sudemi hat diesen Shop abgelehnt."
 
 #: admin/class-sudemi-admin.php:162
 msgid "This shop is connected but its products are not being shown."
-msgstr "Questo negozio è collegato, ma i suoi prodotti non vengono mostrati."
+msgstr "Dieser Shop ist verbunden, aber seine Produkte werden nicht angezeigt."
 
 #: admin/class-sudemi-admin.php:166
 msgid "Products are being shown on sudemi."
-msgstr "I prodotti vengono mostrati su sudemi."
+msgstr "Die Produkte werden auf sudemi angezeigt."
 
 #: admin/class-sudemi-admin.php:171
 msgid "Last reported in"
-msgstr "Ultima segnalazione"
+msgstr "Letzte Meldung"
 
 #: admin/class-sudemi-admin.php:171
 msgid "This shop tells sudemi every five minutes that it is still here and that its prices still stand. When that stops, the listings are paused rather than left at prices nobody is confirming."
-msgstr "Ogni cinque minuti questo negozio comunica a sudemi di essere ancora attivo e che i suoi prezzi sono ancora validi. Se le segnalazioni si interrompono, le inserzioni vengono sospese anziché restare online con prezzi che nessuno conferma."
+msgstr "Dieser Shop teilt sudemi alle fünf Minuten mit, dass er noch da ist und seine Preise weiterhin gelten. Bleibt das aus, werden die Einträge pausiert, statt mit Preisen stehen zu bleiben, die niemand bestätigt."
 
 #: admin/class-sudemi-admin.php:173
 msgid "Prices confirmed until"
-msgstr "Prezzi confermati fino al"
+msgstr "Preise bestätigt bis"
 
 #: admin/class-sudemi-admin.php:173
 msgid "After this, sudemi stops showing this shop until it reports in again. Nothing is deleted."
-msgstr "Dopo questo momento, sudemi smette di mostrare questo negozio finché non invia una nuova segnalazione. Non viene eliminato nulla."
+msgstr "Danach zeigt sudemi diesen Shop nicht mehr an, bis er sich wieder meldet. Es wird nichts gelöscht."
 
 #: admin/class-sudemi-admin.php:177
 msgid "Price changes waiting"
-msgstr "Variazioni di prezzo in attesa"
+msgstr "Ausstehende Preisänderungen"
 
 #: admin/class-sudemi-admin.php:180
 msgid "Price or stock changes that could not be sent yet. They are retried on the next report and are not lost."
-msgstr "Variazioni di prezzo o di disponibilità che non è stato ancora possibile inviare. Verranno ritentate alla prossima segnalazione e non vanno perse."
+msgstr "Preis- oder Bestandsänderungen, die noch nicht gesendet werden konnten. Sie werden bei der nächsten Meldung erneut versucht und gehen nicht verloren."
 
 #: admin/class-sudemi-admin.php:181
 msgid "Every price change has reached sudemi."
-msgstr "Tutte le variazioni di prezzo sono arrivate a sudemi."
+msgstr "Alle Preisänderungen sind bei sudemi angekommen."
 
 #: admin/class-sudemi-admin.php:184
 msgid "Confirming orders"
-msgstr "Conferma degli ordini"
+msgstr "Bestellungen bestätigen"
 
 #: admin/class-sudemi-admin.php:186
 msgid "automatically"
-msgstr "automatica"
+msgstr "automatisch"
 
 #: admin/class-sudemi-admin.php:187
 msgid "by hand"
-msgstr "manuale"
+msgstr "manuell"
 
 #: admin/class-sudemi-admin.php:189
 msgid "A buyer on sudemi is authorised but not charged until this shop confirms it has the item. That check runs against this shop's live stock every five minutes: in stock means the order is accepted and the money taken, out of stock means it is declined and the buyer's money released. Nothing is ever charged without this shop agreeing to it."
-msgstr "Su sudemi il pagamento dell'acquirente viene autorizzato ma non addebitato finché questo negozio non conferma di avere l'articolo. Il controllo viene eseguito ogni cinque minuti sulle giacenze effettive del negozio: se l'articolo è disponibile l'ordine viene accettato e l'importo incassato, se non è disponibile l'ordine viene rifiutato e il denaro dell'acquirente sbloccato. Non viene mai addebitato nulla senza il consenso di questo negozio."
+msgstr "Bei einem Käufer auf sudemi wird der Betrag autorisiert, aber erst belastet, wenn dieser Shop bestätigt, dass der Artikel vorrätig ist. Diese Prüfung läuft alle fünf Minuten gegen den aktuellen Bestand dieses Shops: Ist der Artikel vorrätig, wird die Bestellung angenommen und das Geld eingezogen; ist er nicht vorrätig, wird sie abgelehnt und das Geld des Käufers freigegeben. Ohne die Zustimmung dieses Shops wird nie etwas belastet."
 
 #: admin/class-sudemi-admin.php:190
 msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted."
-msgstr "Gli ordini attendono che qualcuno qui risponda. Se nessuno risponde entro la scadenza indicata da sudemi, l'acquirente viene svincolato e non gli viene addebitato nulla: un ordine senza risposta non viene mai considerato accettato."
+msgstr "Bestellungen warten, bis jemand hier sie beantwortet. Geschieht das nicht vor der Frist, die sudemi anzeigt, wird die Zahlung des Käufers freigegeben und nichts berechnet - eine unbeantwortete Bestellung gilt nie als angenommen."
 
 #: admin/class-sudemi-admin.php:213
 msgid "Orders through sudemi"
-msgstr "Ordini tramite sudemi"
+msgstr "Bestellungen über sudemi"
 
 #: admin/class-sudemi-admin.php:218
 msgid "Could not reach sudemi to load the order history just now. Nothing is wrong with the orders themselves; try again shortly."
-msgstr "Al momento non è possibile raggiungere sudemi per caricare lo storico degli ordini. Gli ordini in sé non hanno alcun problema; riprova tra poco."
+msgstr "Der Bestellverlauf konnte gerade nicht von sudemi geladen werden. Mit den Bestellungen selbst ist alles in Ordnung; versuchen Sie es gleich noch einmal."
 
 #: admin/class-sudemi-admin.php:231
 #, php-format
 msgid "%d order is waiting to be confirmed. The buyer has not been charged for it yet."
 msgid_plural "%d orders are waiting to be confirmed. Those buyers have not been charged yet."
-msgstr[0] "%d ordine è in attesa di conferma. All'acquirente non è stato ancora addebitato nulla."
-msgstr[1] "%d ordini sono in attesa di conferma. A questi acquirenti non è stato ancora addebitato nulla."
+msgstr[0] "%d Bestellung wartet auf Bestätigung. Der Käufer wurde dafür noch nicht belastet."
+msgstr[1] "%d Bestellungen warten auf Bestätigung. Diese Käufer wurden noch nicht belastet."
 
 #: admin/class-sudemi-admin.php:245
 msgid "No orders through sudemi yet."
-msgstr "Ancora nessun ordine tramite sudemi."
+msgstr "Noch keine Bestellungen über sudemi."
 
 #: admin/class-sudemi-admin.php:251
 msgid "Order"
-msgstr "Ordine"
+msgstr "Bestellung"
 
 #: admin/class-sudemi-admin.php:252
 msgid "What sold"
-msgstr "Articoli venduti"
+msgstr "Verkauft"
 
 #: admin/class-sudemi-admin.php:253
 msgid "Status"
-msgstr "Stato"
+msgstr "Status"
 
 #: admin/class-sudemi-admin.php:254
 msgid "You receive"
-msgstr "Ricevi"
+msgstr "Sie erhalten"
 
 #: admin/class-sudemi-admin.php:255
 msgid "Customer"
-msgstr "Acquirente"
+msgstr "Kunde"
 
 #: admin/class-sudemi-admin.php:289
 msgid "Waiting for you - buyer not charged"
-msgstr "In attesa della tua risposta: nessun addebito all'acquirente"
+msgstr "Wartet auf Sie - Käufer nicht belastet"
 
 #: admin/class-sudemi-admin.php:291
 msgid "Accepted - waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
-msgstr "Accettato: in attesa degli altri negozi compresi nel pagamento dell'acquirente; nessun addebito ancora, non spedire"
+msgstr "Angenommen - wartet auf die anderen Shops in der Zahlung des Käufers; Käufer noch nicht belastet, nicht versenden"
 
 #: admin/class-sudemi-admin.php:293
 msgid "Confirmed and charged"
-msgstr "Confermato e addebitato"
+msgstr "Bestätigt und belastet"
 
 #. translators: %s: the reason the order was declined.
 #: admin/class-sudemi-admin.php:298
 #, php-format
 msgid "Declined (%s) - nothing charged"
-msgstr "Rifiutato (%s): nessun addebito"
+msgstr "Abgelehnt (%s) - nichts belastet"
 
 #: admin/class-sudemi-admin.php:301
 msgid "Declined - nothing charged"
-msgstr "Rifiutato: nessun addebito"
+msgstr "Abgelehnt - nichts belastet"
 
 #: admin/class-sudemi-admin.php:303
 msgid "Shipped"
-msgstr "Spedito"
+msgstr "Versandt"
 
 #: admin/class-sudemi-admin.php:305
 msgid "Delivered"
-msgstr "Consegnato"
+msgstr "Zugestellt"
 
 #: admin/class-sudemi-admin.php:316
 msgid "Recent activity"
-msgstr "Attività recenti"
+msgstr "Letzte Aktivitäten"
 
 #: admin/class-sudemi-admin.php:350
 msgid "Disconnected from sudemi."
-msgstr "Scollegato da sudemi."
+msgstr "Von sudemi getrennt."
 
 #: admin/class-sudemi-admin.php:361
 msgid "Delivery to sudemi buyers"
-msgstr "Consegna agli acquirenti sudemi"
+msgstr "Lieferung an sudemi-Käufer"
 
 #: admin/class-sudemi-admin.php:365
 msgid "No shipping price could be read from your WooCommerce shipping zones, so sudemi buyers cannot order. Add a zone with a flat rate (a fixed amount) or unconditional free shipping for the countries you ship to."
-msgstr "Non è stato possibile leggere alcun costo di spedizione dalle tue zone di spedizione WooCommerce, quindi gli acquirenti sudemi non possono ordinare. Aggiungi una zona con una tariffa fissa (un importo fisso) o con la spedizione gratuita senza condizioni per i paesi in cui spedisci."
+msgstr "Aus Ihren WooCommerce-Versandzonen konnte kein Versandpreis gelesen werden, daher können sudemi-Käufer nicht bestellen. Legen Sie eine Zone mit Pauschalpreis (fester Betrag) oder bedingungslos kostenlosem Versand für die Länder an, in die Sie liefern."
 
 #: admin/class-sudemi-admin.php:371
 msgid "Shipping prices sent to sudemi (from your shipping zones; one item, your first product):"
-msgstr "Costi di spedizione inviati a sudemi (dalle tue zone di spedizione; un articolo, il tuo primo prodotto):"
+msgstr "An sudemi gesendete Versandpreise (aus Ihren Versandzonen; ein Artikel, Ihr erstes Produkt):"
 
 #: admin/class-sudemi-admin.php:372
 msgid "Countries without a fixed price (cost formulas, free shipping with a minimum, postcode-only zones) are left out rather than guessed."
-msgstr "I paesi senza un prezzo fisso (formule di calcolo dei costi, spedizione gratuita con importo minimo, zone basate solo sul CAP) vengono esclusi anziché stimati."
+msgstr "Länder ohne festen Preis (Kostenformeln, kostenloser Versand ab Mindestbestellwert, Zonen nur nach Postleitzahl) werden ausgelassen statt geschätzt."
 
 #: admin/class-sudemi-admin.php:377
 msgid "Days until you dispatch an order (at most)"
-msgstr "Giorni prima della spedizione di un ordine (al massimo)"
+msgstr "Tage bis zum Versand einer Bestellung (höchstens)"
 
 #: admin/class-sudemi-admin.php:378
 msgid "Days the carrier takes (at most)"
-msgstr "Giorni di trasporto del corriere (al massimo)"
+msgstr "Laufzeit beim Versanddienstleister in Tagen (höchstens)"
 
 #: admin/class-sudemi-admin.php:379
 msgid "Buyers see the sum as the latest delivery estimate. Set your real times; the defaults are deliberately cautious."
-msgstr "Gli acquirenti vedono la somma come data di consegna più tardiva prevista. Inserisci i tuoi tempi reali; i valori predefiniti sono volutamente prudenti."
+msgstr "Käufer sehen die Summe als spätesten voraussichtlichen Liefertermin. Tragen Sie Ihre tatsächlichen Zeiten ein; die Standardwerte sind bewusst vorsichtig."
 
 #: admin/class-sudemi-admin.php:380
 msgid "Save delivery times"
-msgstr "Salva i tempi di consegna"
+msgstr "Lieferzeiten speichern"
 
 #: admin/class-sudemi-admin.php:401
 msgid "A catalogue sync was queued."
-msgstr "Una sincronizzazione del catalogo è stata messa in coda."
+msgstr "Eine Katalogsynchronisierung wurde eingeplant."
 
 #: admin/class-sudemi-admin.php:408
 msgid "You do not have permission to do that."
-msgstr "Non hai i permessi per eseguire questa operazione."
+msgstr "Sie sind dazu nicht berechtigt."
 
 #: includes/class-sudemi-client.php:99
 msgid "sudemi is still asking this shop to slow down. Stopping for now; this will continue on the next scheduled run and nothing has been lost."
-msgstr "sudemi chiede ancora a questo negozio di rallentare. Per ora l'operazione si ferma; riprenderà alla prossima esecuzione programmata e non è andato perso nulla."
+msgstr "sudemi bittet diesen Shop weiterhin, langsamer zu machen. Vorerst angehalten; es geht beim nächsten geplanten Lauf weiter, und es ist nichts verloren gegangen."
 
 #. translators: %d: seconds to wait.
 #: includes/class-sudemi-client.php:110
 #, php-format
 msgid "sudemi asked this shop to slow down; waiting %d seconds before continuing."
-msgstr "sudemi ha chiesto a questo negozio di rallentare; attesa di %d secondi prima di continuare."
+msgstr "sudemi hat diesen Shop gebeten, langsamer zu machen; es wird %d Sekunden gewartet, bevor es weitergeht."
 
 #: includes/class-sudemi-client.php:126
 msgid "The payload could not be encoded."
-msgstr "Non è stato possibile codificare i dati da inviare."
+msgstr "Die Nutzdaten konnten nicht kodiert werden."
 
 #: includes/class-sudemi-client.php:135
 msgid "This shop is not connected to sudemi."
-msgstr "Questo negozio non è collegato a sudemi."
+msgstr "Dieser Shop ist nicht mit sudemi verbunden."
 
 #: includes/class-sudemi-client.php:145
 msgid "This site has no signing key."
-msgstr "Questo sito non ha una chiave di firma."
+msgstr "Diese Website hat keinen Signaturschlüssel."
 
 #. translators: %d: HTTP status code.
 #: includes/class-sudemi-client.php:181
 #, php-format
 msgid "sudemi answered %d with something that was not JSON."
-msgstr "sudemi ha risposto %d con un contenuto che non era JSON."
+msgstr "sudemi hat mit %d geantwortet, aber die Antwort war kein JSON."
 
 #: includes/class-sudemi-heartbeat.php:105
 msgid "sudemi no longer recognises this shop. Connect it again."
-msgstr "sudemi non riconosce più questo negozio. Collegalo di nuovo."
+msgstr "sudemi erkennt diesen Shop nicht mehr. Verbinden Sie ihn erneut."
 
 #. translators: %d: HTTP status code.
 #: includes/class-sudemi-heartbeat.php:117
 #, php-format
 msgid "sudemi answered %d."
-msgstr "sudemi ha risposto %d."
+msgstr "sudemi hat mit %d geantwortet."
 
 #: includes/class-sudemi-heartbeat.php:166
 msgid "sudemi asked for a full sync; scheduling one."
-msgstr "sudemi ha richiesto una sincronizzazione completa; programmazione in corso."
+msgstr "sudemi hat eine vollständige Synchronisierung angefordert; sie wird eingeplant."
 
 #. translators: %d: number of orders waiting.
 #: includes/class-sudemi-orders.php:46
 #, php-format
 msgid "%d order(s) are waiting for confirmation. Automatic confirmation is off, so they must be answered by hand before their window closes."
-msgstr "%d ordine/i in attesa di conferma. La conferma automatica è disattivata, quindi bisogna rispondere manualmente prima della scadenza."
+msgstr "%d Bestellung(en) warten auf Bestätigung. Die automatische Bestätigung ist deaktiviert, daher müssen sie manuell beantwortet werden, bevor ihre Frist abläuft."
 
 #. translators: 1: sudemi order id, 2: error message.
 #: includes/class-sudemi-orders.php:63
 #, php-format
 msgid "Could not answer sudemi order %1$s: %2$s"
-msgstr "Impossibile rispondere all'ordine sudemi %1$s: %2$s"
+msgstr "sudemi-Bestellung %1$s konnte nicht beantwortet werden: %2$s"
 
 #. translators: 1: sudemi order id, 2: reason.
 #: includes/class-sudemi-orders.php:104
 #, php-format
 msgid "Declined sudemi order %1$s: %2$s. Nothing was charged."
-msgstr "Ordine sudemi %1$s rifiutato: %2$s. Non è stato addebitato nulla."
+msgstr "sudemi-Bestellung %1$s abgelehnt: %2$s. Es wurde nichts belastet."
 
 #: includes/class-sudemi-orders.php:116
 msgid "this shop could not record the order"
-msgstr "questo negozio non è riuscito a registrare l'ordine"
+msgstr "dieser Shop konnte die Bestellung nicht erfassen"
 
 #. translators: 1: sudemi order id, 2: error message.
 #: includes/class-sudemi-orders.php:142
 #, php-format
 msgid "Could not reach sudemi to confirm order %1$s (%2$s). Will try again on the next heartbeat."
-msgstr "Impossibile raggiungere sudemi per confermare l'ordine %1$s (%2$s). Nuovo tentativo al prossimo heartbeat."
+msgstr "sudemi war nicht erreichbar, um Bestellung %1$s zu bestätigen (%2$s). Erneuter Versuch bei der nächsten Statusmeldung."
 
 #: includes/class-sudemi-orders.php:171
 msgid "Confirmed with sudemi; the buyer has been charged."
-msgstr "Confermato con sudemi; l'importo è stato addebitato all'acquirente."
+msgstr "Mit sudemi bestätigt; der Käufer wurde belastet."
 
 #. translators: 1: sudemi order id, 2: local order number.
 #: includes/class-sudemi-orders.php:176
 #, php-format
 msgid "Confirmed sudemi order %1$s as order #%2$s."
-msgstr "Ordine sudemi %1$s confermato come ordine #%2$s."
+msgstr "sudemi-Bestellung %1$s als Bestellung #%2$s bestätigt."
 
 #. translators: %s: the reason sudemi gave.
 #: includes/class-sudemi-orders.php:194
 #, php-format
 msgid "sudemi did not accept the confirmation: %s. Nothing was charged and the stock has been restored."
-msgstr "sudemi non ha accettato la conferma: %s. Non è stato addebitato nulla e le giacenze sono state ripristinate."
+msgstr "sudemi hat die Bestätigung nicht akzeptiert: %s. Es wurde nichts belastet und der Bestand wurde wiederhergestellt."
 
 #. translators: 1: sudemi order id, 2: reason.
 #: includes/class-sudemi-orders.php:201
 #, php-format
 msgid "sudemi refused the confirmation of order %1$s: %2$s. The local order was cancelled and stock restored."
-msgstr "sudemi ha rifiutato la conferma dell'ordine %1$s: %2$s. L'ordine locale è stato annullato e le giacenze ripristinate."
+msgstr "sudemi hat die Bestätigung von Bestellung %1$s abgelehnt: %2$s. Die lokale Bestellung wurde storniert und der Bestand wiederhergestellt."
 
 #: includes/class-sudemi-orders.php:221
 msgid "Accepted on sudemi. The buyer paid several shops in one payment; sudemi takes the money once every shop has answered. Do NOT ship until this order moves to Processing."
-msgstr "Accettato su sudemi. L'acquirente ha pagato più negozi con un unico pagamento; sudemi incassa l'importo quando tutti i negozi hanno risposto. NON spedire finché questo ordine non passa a In lavorazione."
+msgstr "Auf sudemi angenommen. Der Käufer hat mehrere Shops in einer Zahlung bezahlt; sudemi zieht das Geld ein, sobald alle Shops geantwortet haben. NICHT versenden, bevor diese Bestellung auf „In Bearbeitung“ wechselt."
 
 #. translators: 1: sudemi order id, 2: local order number.
 #: includes/class-sudemi-orders.php:226
 #, php-format
 msgid "Accepted sudemi order %1$s (order #%2$s). Not paid yet: waiting for the other shops in the same payment."
-msgstr "Ordine sudemi %1$s accettato (ordine #%2$s). Non ancora pagato: in attesa degli altri negozi compresi nello stesso pagamento."
+msgstr "sudemi-Bestellung %1$s angenommen (Bestellung #%2$s). Noch nicht bezahlt: wartet auf die anderen Shops in derselben Zahlung."
 
 #. translators: 1: sudemi order id, 2: error message.
 #: includes/class-sudemi-orders.php:256
 #, php-format
 msgid "Could not apply the outcome of sudemi order %1$s: %2$s"
-msgstr "Impossibile applicare l'esito dell'ordine sudemi %1$s: %2$s"
+msgstr "Das Ergebnis der sudemi-Bestellung %1$s konnte nicht übernommen werden: %2$s"
 
 #: includes/class-sudemi-orders.php:293 includes/class-sudemi-orders.php:365
 msgid "reason not given"
-msgstr "motivo non indicato"
+msgstr "kein Grund angegeben"
 
 #. translators: %s: the reason sudemi gave.
 #: includes/class-sudemi-orders.php:299
 #, php-format
 msgid "sudemi released the buyer's payment: %s. Nothing was charged and the stock has been restored."
-msgstr "sudemi ha sbloccato il pagamento dell'acquirente: %s. Non è stato addebitato nulla e le giacenze sono state ripristinate."
+msgstr "sudemi hat die Zahlung des Käufers freigegeben: %s. Es wurde nichts belastet und der Bestand wurde wiederhergestellt."
 
 #. translators: 1: sudemi order id, 2: reason.
 #: includes/class-sudemi-orders.php:306
 #, php-format
 msgid "sudemi order %1$s was released after all: %2$s. The local order was cancelled and stock restored."
-msgstr "L'ordine sudemi %1$s è stato comunque sbloccato: %2$s. L'ordine locale è stato annullato e le giacenze ripristinate."
+msgstr "sudemi-Bestellung %1$s wurde doch freigegeben: %2$s. Die lokale Bestellung wurde storniert und der Bestand wiederhergestellt."
 
 #: includes/class-sudemi-orders.php:319
 msgid "Paid on sudemi: every shop in the buyer's payment has answered and the buyer has been charged. This order can be shipped."
-msgstr "Pagato su sudemi: tutti i negozi compresi nel pagamento dell'acquirente hanno risposto e l'importo è stato addebitato. Questo ordine può essere spedito."
+msgstr "Auf sudemi bezahlt: Alle Shops in der Zahlung des Käufers haben geantwortet und der Käufer wurde belastet. Diese Bestellung kann versandt werden."
 
 #. translators: 1: sudemi order id, 2: local order number.
 #: includes/class-sudemi-orders.php:324
 #, php-format
 msgid "sudemi order %1$s is paid; order #%2$s moved to Processing."
-msgstr "L'ordine sudemi %1$s è pagato; l'ordine #%2$s è passato a In lavorazione."
+msgstr "sudemi-Bestellung %1$s ist bezahlt; Bestellung #%2$s wurde auf „In Bearbeitung“ gesetzt."
 
 #: includes/class-sudemi-orders.php:354
 msgid "Could not fetch the delivery address from sudemi yet. The order is paid; open it again shortly or contact support before shipping."
-msgstr "Non è stato ancora possibile recuperare l'indirizzo di consegna da sudemi. L'ordine è pagato; riaprilo tra poco o contatta l'assistenza prima di spedire."
+msgstr "Die Lieferadresse konnte noch nicht von sudemi abgerufen werden. Die Bestellung ist bezahlt; öffnen Sie sie gleich erneut oder wenden Sie sich vor dem Versand an den Support."
 
 #. translators: %s: the explanation sudemi gave.
 #: includes/class-sudemi-orders.php:364
 #, php-format
 msgid "sudemi has no delivery address for this order: %s"
-msgstr "sudemi non ha un indirizzo di consegna per questo ordine: %s"
+msgstr "sudemi hat keine Lieferadresse für diese Bestellung: %s"
 
 #: includes/class-sudemi-orders.php:403
 msgid "the order had no recognisable items"
-msgstr "l'ordine non conteneva articoli riconoscibili"
+msgstr "die Bestellung enthielt keine erkennbaren Artikel"
 
 #. translators: %s: the product title as sudemi knows it.
 #: includes/class-sudemi-orders.php:411
 #, php-format
 msgid "\"%s\" is no longer sold here"
-msgstr "\"%s\" non è più in vendita qui"
+msgstr "\"%s\" wird hier nicht mehr verkauft"
 
 #: includes/class-sudemi-orders.php:412
 msgid "an item"
-msgstr "un articolo"
+msgstr "ein Artikel"
 
 #. translators: %s: the product name.
 #: includes/class-sudemi-orders.php:419
 #, php-format
 msgid "\"%s\" is out of stock"
-msgstr "\"%s\" non è disponibile"
+msgstr "\"%s\" ist nicht vorrätig"
 
 #. translators: %s: the product name.
 #: includes/class-sudemi-orders.php:426
 #, php-format
 msgid "\"%s\" cannot currently be bought"
-msgstr "\"%s\" al momento non può essere acquistato"
+msgstr "\"%s\" kann derzeit nicht gekauft werden"
 
 #. translators: %s: the sudemi order id.
 #: includes/class-sudemi-orders.php:471
 #, php-format
 msgid "Placed through sudemi (order %s). The buyer has been authorised but not yet charged."
-msgstr "Effettuato tramite sudemi (ordine %s). Il pagamento dell'acquirente è stato autorizzato ma non ancora addebitato."
+msgstr "Über sudemi aufgegeben (Bestellung %s). Der Betrag wurde beim Käufer autorisiert, aber noch nicht belastet."
 
 #: includes/class-sudemi-orders.php:478
 msgid "Awaiting confirmation with sudemi."
-msgstr "In attesa di conferma con sudemi."
+msgstr "Wartet auf Bestätigung durch sudemi."
 
 #. translators: 1: event name, 2: sudemi order id, 3: error message.
 #: includes/class-sudemi-orders.php:610
 #, php-format
 msgid "Could not report %1$s for sudemi order %2$s: %3$s"
-msgstr "Impossibile segnalare %1$s per l'ordine sudemi %2$s: %3$s"
+msgstr "%1$s für sudemi-Bestellung %2$s konnte nicht gemeldet werden: %3$s"
 
 #. translators: 1: event name, 2: sudemi order id.
 #: includes/class-sudemi-orders.php:621
 #, php-format
 msgid "Reported %1$s for sudemi order %2$s."
-msgstr "Segnalato %1$s per l'ordine sudemi %2$s."
+msgstr "%1$s für sudemi-Bestellung %2$s gemeldet."
 
 #: includes/class-sudemi-pairing.php:36
 msgid "This server is missing the sodium extension, which the connection needs in order to sign requests. Ask your host to enable it."
-msgstr "Su questo server manca l'estensione sodium, necessaria alla connessione per firmare le richieste. Chiedi al tuo provider di hosting di attivarla."
+msgstr "Auf diesem Server fehlt die Sodium-Erweiterung, die die Verbindung zum Signieren von Anfragen benötigt. Bitten Sie Ihren Hoster, sie zu aktivieren."
 
 #: includes/class-sudemi-pairing.php:40
 msgid "A signing key could not be created on this server."
-msgstr "Non è stato possibile creare una chiave di firma su questo server."
+msgstr "Auf diesem Server konnte kein Signaturschlüssel erstellt werden."
 
 #: includes/class-sudemi-pairing.php:60
 msgid "sudemi refused to start the connection."
-msgstr "sudemi ha rifiutato di avviare il collegamento."
+msgstr "sudemi hat das Herstellen der Verbindung abgelehnt."
 
 #. translators: %d: number of products.
 #: includes/class-sudemi-sync.php:108
 #, php-format
 msgid "Synced %d products."
-msgstr "%d prodotti sincronizzati."
+msgstr "%d Produkte synchronisiert."
 
 msgid "the full amount"
-msgstr "l'importo totale"
+msgstr "den vollen Betrag"
 
 #, php-format
 msgid "Refunded %s to the buyer through sudemi."
-msgstr "%s rimborsato all'acquirente tramite sudemi."
+msgstr "%s über sudemi an den Käufer erstattet."
 
 #, php-format
 msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com)."
-msgstr "sudemi non ha eseguito questo rimborso: %s. L'acquirente NON è stato rimborsato; contatta l'assistenza sudemi (support@sudemi.com)."
+msgstr "sudemi hat dies nicht erstattet: %s. Der Käufer hat sein Geld NICHT zurückerhalten; wenden Sie sich an den sudemi-Support (support@sudemi.com)."
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Right of withdrawal"
-msgstr "Diritto di recesso"
+msgstr "Widerrufsrecht"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "None - normal right of withdrawal applies"
-msgstr "Nessuna: si applica il normale diritto di recesso"
+msgstr "Keine - es gilt das normale Widerrufsrecht"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed."
-msgstr "Solo per prodotti che rientrano per legge in un’eccezione. Gli acquirenti lo vedono prima di pagare; l’uso improprio non è consentito."
+msgstr "Nur für Produkte, die gesetzlich unter eine Ausnahme fallen. Käufer sehen dies vor dem Bezahlen; Missbrauch ist nicht erlaubt."
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Sealed for health or hygiene reasons (not returnable once unsealed)"
-msgstr "Sigillato per motivi igienici o connessi alla protezione della salute (non restituibile se aperto)"
+msgstr "Aus Gesundheits- oder Hygienegründen versiegelt (nach Entsiegelung keine Rückgabe)"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Made to the buyer’s specifications or personalised"
-msgstr "Confezionato su misura per l’acquirente o personalizzato"
+msgstr "Nach Kundenspezifikation angefertigt oder personalisiert"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Perishable or quickly expiring"
-msgstr "Deperibile o a rapida scadenza"
+msgstr "Schnell verderblich oder mit kurzem Verfallsdatum"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Sealed audio, video or software (not returnable once unsealed)"
-msgstr "Registrazioni audio, video o software sigillati (non restituibili se aperti)"
+msgstr "Versiegelte Audio-, Video- oder Software-Datenträger (nach Entsiegelung keine Rückgabe)"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Newspaper, periodical or magazine"
-msgstr "Giornale, periodico o rivista"
+msgstr "Zeitung, Zeitschrift oder Illustrierte"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Inseparably mixed with other items after delivery"
-msgstr "Mescolato inscindibilmente con altri beni dopo la consegna"
+msgstr "Nach der Lieferung untrennbar mit anderen Gütern vermischt"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Alcohol with a market-dependent price, delivered after 30+ days"
-msgstr "Bevande alcoliche con prezzo legato al mercato, consegnate dopo oltre 30 giorni"
+msgstr "Alkoholische Getränke mit marktabhängigem Preis, Lieferung frühestens nach 30 Tagen"
 
 #: includes/class-sudemi-support.php
 msgid "Choose a category."
-msgstr "Scegli una categoria."
+msgstr "Wählen Sie eine Kategorie."
 
 #: includes/class-sudemi-support.php
 msgid "The subject must be between 3 and 200 characters."
-msgstr "L’oggetto deve avere tra 3 e 200 caratteri."
+msgstr "Der Betreff muss zwischen 3 und 200 Zeichen lang sein."
 
 #: includes/class-sudemi-support.php
 msgid "The message cannot be empty or longer than 10,000 characters."
-msgstr "Il messaggio non può essere vuoto né superare i 10.000 caratteri."
+msgstr "Die Nachricht darf nicht leer und nicht länger als 10.000 Zeichen sein."
 
 #: includes/class-sudemi-support.php
 msgid "That does not look like a sudemi order ID. Copy the full ID, or leave the field empty."
-msgstr "Non sembra un ID ordine sudemi. Copia l’ID completo oppure lascia vuoto il campo."
+msgstr "Das sieht nicht nach einer sudemi-Bestell-ID aus. Kopieren Sie die vollständige ID oder lassen Sie das Feld leer."
 
 #: includes/class-sudemi-support.php
 msgid "sudemi could not accept this. Check the subject and the message, and that the order ID belongs to an order of this shop."
-msgstr "sudemi non ha potuto accettare la richiesta. Controlla oggetto e messaggio, e che l’ID ordine appartenga a un ordine di questo negozio."
+msgstr "sudemi konnte das nicht annehmen. Prüfen Sie Betreff und Nachricht und ob die Bestell-ID zu einer Bestellung dieses Shops gehört."
 
 #: includes/class-sudemi-support.php
 msgid "This ticket was not found. It may belong to another shop or to an earlier connection."
-msgstr "Ticket non trovato. Potrebbe appartenere a un altro negozio o a un collegamento precedente."
+msgstr "Dieses Ticket wurde nicht gefunden. Es gehört möglicherweise zu einem anderen Shop oder zu einer früheren Verbindung."
 
 #: includes/class-sudemi-support.php
 msgid "This shop has too many open tickets, or opened several in the last hour. Please wait a while, or reply to an existing ticket instead."
-msgstr "Questo negozio ha troppi ticket aperti, oppure ne ha aperti diversi nell’ultima ora. Attendi un po’, oppure rispondi a un ticket esistente."
+msgstr "Dieser Shop hat zu viele offene Tickets oder hat in der letzten Stunde bereits mehrere eröffnet. Bitte warten Sie etwas oder antworten Sie auf ein bestehendes Ticket."
 
 #: includes/class-sudemi-support.php
 msgid "sudemi refused this shop. Check the connection on the overview tab."
-msgstr "sudemi ha rifiutato questo negozio. Controlla il collegamento nella scheda Panoramica."
+msgstr "sudemi hat diesen Shop abgelehnt. Prüfen Sie die Verbindung auf dem Tab „Übersicht“."
 
 #: includes/class-sudemi-support.php
 msgid "Could not reach sudemi just now. Please try again shortly."
-msgstr "Impossibile raggiungere sudemi in questo momento. Riprova tra poco."
+msgstr "sudemi ist gerade nicht erreichbar. Bitte versuchen Sie es gleich noch einmal."
 
 #: includes/class-sudemi-support.php
 msgid "Payment"
-msgstr "Pagamento"
+msgstr "Zahlung"
 
 #: includes/class-sudemi-support.php
 msgid "Refund or return"
-msgstr "Rimborso o reso"
+msgstr "Erstattung oder Rücksendung"
 
 #: includes/class-sudemi-support.php
 msgid "Account"
-msgstr "Account"
+msgstr "Konto"
 
 #: includes/class-sudemi-support.php
 msgid "Shop plugin or connection"
-msgstr "Plugin del negozio o collegamento"
+msgstr "Shop-Plugin oder Verbindung"
 
 #: includes/class-sudemi-support.php
 msgid "Payouts"
-msgstr "Accrediti"
+msgstr "Auszahlungen"
 
 #: includes/class-sudemi-support.php
 msgid "Other"
-msgstr "Altro"
+msgstr "Sonstiges"
 
 #: includes/class-sudemi-support.php
 msgctxt "support ticket status"
 msgid "Open"
-msgstr "Aperto"
+msgstr "Offen"
 
 #: includes/class-sudemi-support.php
 msgid "Waiting for your reply"
-msgstr "In attesa della tua risposta"
+msgstr "Wartet auf Ihre Antwort"
 
 #: includes/class-sudemi-support.php
 msgid "Answered"
-msgstr "Risposto"
+msgstr "Beantwortet"
 
 #: includes/class-sudemi-support.php
 msgid "Closed"
-msgstr "Chiuso"
+msgstr "Geschlossen"
 
 #: admin/class-sudemi-admin.php
 msgid "Overview"
-msgstr "Panoramica"
+msgstr "Übersicht"
 
 #: admin/class-sudemi-admin.php
 msgid "Support"
-msgstr "Assistenza"
+msgstr "Support"
 
 #: admin/class-sudemi-admin.php
 msgid "Support is available once this shop is connected to sudemi."
-msgstr "L’assistenza è disponibile non appena questo negozio è collegato a sudemi."
+msgstr "Der Support ist verfügbar, sobald dieser Shop mit sudemi verbunden ist."
 
 #: admin/class-sudemi-admin.php
 msgid "Questions about an order, a payment, payouts or this plugin? Open a ticket and sudemi support answers here. You also get an e-mail when they reply."
-msgstr "Domande su un ordine, un pagamento, gli accrediti o questo plugin? Apri un ticket: l’assistenza sudemi risponde qui. Riceverai anche un’e-mail quando arriva una risposta."
+msgstr "Fragen zu einer Bestellung, einer Zahlung, Auszahlungen oder diesem Plugin? Eröffnen Sie ein Ticket; der sudemi-Support antwortet hier. Bei einer Antwort erhalten Sie außerdem eine E-Mail."
 
 #: admin/class-sudemi-admin.php
 msgid "Your tickets"
-msgstr "I tuoi ticket"
+msgstr "Ihre Tickets"
 
 #: admin/class-sudemi-admin.php
 msgid "No tickets yet."
-msgstr "Ancora nessun ticket."
+msgstr "Noch keine Tickets."
 
 #: admin/class-sudemi-admin.php
 msgid "Number"
-msgstr "Numero"
+msgstr "Nummer"
 
 #: admin/class-sudemi-admin.php
 msgid "Subject"
-msgstr "Oggetto"
+msgstr "Betreff"
 
 #: admin/class-sudemi-admin.php
 msgid "Last updated"
-msgstr "Ultimo aggiornamento"
+msgstr "Zuletzt aktualisiert"
 
 #: admin/class-sudemi-admin.php
 msgid "Open a ticket"
-msgstr "Apri un ticket"
+msgstr "Ticket eröffnen"
 
 #: admin/class-sudemi-admin.php
 msgid "Category"
-msgstr "Categoria"
+msgstr "Kategorie"
 
 #: admin/class-sudemi-admin.php
 msgid "Message"
-msgstr "Messaggio"
+msgstr "Nachricht"
 
 #: admin/class-sudemi-admin.php
 msgid "sudemi order ID (optional)"
-msgstr "ID ordine sudemi (facoltativo)"
+msgstr "sudemi-Bestell-ID (optional)"
 
 #: admin/class-sudemi-admin.php
 msgid "The full order ID as sudemi shows it, if your question is about one order."
-msgstr "L’ID completo dell’ordine come lo mostra sudemi, se la tua domanda riguarda un ordine."
+msgstr "Die vollständige Bestell-ID, wie sudemi sie anzeigt, falls sich Ihre Frage auf eine Bestellung bezieht."
 
 #: admin/class-sudemi-admin.php
 msgid "Send ticket"
-msgstr "Invia ticket"
+msgstr "Ticket senden"
 
 #: admin/class-sudemi-admin.php
 msgid "Back to your tickets"
-msgstr "Torna ai tuoi ticket"
+msgstr "Zurück zu Ihren Tickets"
 
 #. translators: 1: ticket number, e.g. S-000123; 2: ticket subject.
 #: admin/class-sudemi-admin.php
@@ -728,1317 +728,1317 @@ msgstr "Ticket %1$s: %2$s"
 
 #: admin/class-sudemi-admin.php
 msgid "sudemi support"
-msgstr "Assistenza sudemi"
+msgstr "sudemi-Support"
 
 #: admin/class-sudemi-admin.php
 msgid "You"
-msgstr "Tu"
+msgstr "Sie"
 
 #: admin/class-sudemi-admin.php
 msgid "Reply"
-msgstr "Rispondi"
+msgstr "Antworten"
 
 #: admin/class-sudemi-admin.php
 msgid "This ticket is closed. Replying opens it again."
-msgstr "Questo ticket è chiuso. Rispondendo verrà riaperto."
+msgstr "Dieses Ticket ist geschlossen. Mit einer Antwort wird es wieder geöffnet."
 
 #: admin/class-sudemi-admin.php
 msgid "Send reply"
-msgstr "Invia risposta"
+msgstr "Antwort senden"
 
 #: admin/class-sudemi-admin.php
 msgid "Your ticket was sent. sudemi support answers here, and by e-mail."
-msgstr "Il tuo ticket è stato inviato. L’assistenza sudemi risponderà qui e via e-mail."
+msgstr "Ihr Ticket wurde gesendet. Der sudemi-Support antwortet hier und per E-Mail."
 
 #: admin/class-sudemi-admin.php
 msgid "Your reply was sent."
-msgstr "La tua risposta è stata inviata."
+msgstr "Ihre Antwort wurde gesendet."
 
 #. translators: %s: the address the shop is connected to sudemi under, e.g. https://shop.example.com
 #: includes/class-sudemi-heartbeat.php
 #, php-format
 msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address (%s). If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
-msgstr "sudemi ha rifiutato le richieste da questo sito: questo negozio è collegato a sudemi con un altro indirizzo (%s). Se questo sito è una copia di staging o un backup ripristinato, scollega sudemi qui. Se il negozio si è trasferito a questo indirizzo, collegalo di nuovo."
+msgstr "sudemi hat Anfragen von dieser Website abgelehnt: Dieser Shop ist unter einer anderen Adresse mit sudemi verbunden (%s). Ist diese Website eine Staging-Kopie oder ein wiederhergestelltes Backup, trennen Sie sudemi hier. Ist der Shop an diese Adresse umgezogen, verbinden Sie ihn erneut."
 
 #: includes/class-sudemi-heartbeat.php
 msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address. If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
-msgstr "sudemi ha rifiutato le richieste da questo sito: questo negozio è collegato a sudemi con un altro indirizzo. Se questo sito è una copia di staging o un backup ripristinato, scollega sudemi qui. Se il negozio si è trasferito a questo indirizzo, collegalo di nuovo."
+msgstr "sudemi hat Anfragen von dieser Website abgelehnt: Dieser Shop ist unter einer anderen Adresse mit sudemi verbunden. Ist diese Website eine Staging-Kopie oder ein wiederhergestelltes Backup, trennen Sie sudemi hier. Ist der Shop an diese Adresse umgezogen, verbinden Sie ihn erneut."
 
 #. translators: 1: the buyer's reason, 2: the date the shop has to answer by.
 #: includes/class-sudemi-requests.php
 #, php-format
 msgid "The buyer asked on sudemi to return this order. Reason: %1$s. Accept or reject (with a reason) by %2$s on this order or under WooCommerce > sudemi."
-msgstr "L'acquirente ha chiesto su sudemi di restituire questo ordine. Motivo: %1$s. Accetta o rifiuta (con un motivo) entro il %2$s su questo ordine o in WooCommerce > sudemi."
+msgstr "Der Käufer hat auf sudemi die Rücksendung dieser Bestellung beantragt. Grund: %1$s. Nehmen Sie bis %2$s an oder lehnen Sie (mit Begründung) ab, auf dieser Bestellung oder unter WooCommerce > sudemi."
 
 #: includes/class-sudemi-requests.php
 msgid "none given"
-msgstr "non indicato"
+msgstr "keine Angabe"
 
 #: includes/class-sudemi-requests.php
 msgid "A rejection needs a reason. The buyer is shown it."
-msgstr "Un rifiuto richiede un motivo. L'acquirente lo vedrà."
+msgstr "Eine Ablehnung braucht eine Begründung. Der Käufer bekommt sie zu sehen."
 
 #: includes/class-sudemi-requests.php
 msgid "That is not a sudemi order."
-msgstr "Questo non è un ordine sudemi."
+msgstr "Das ist keine sudemi-Bestellung."
 
 #: includes/class-sudemi-requests.php
 msgid "Return request accepted on sudemi. Refund the buyer here (WooCommerce refund) once the item is back; the refund goes through sudemi and closes the request."
-msgstr "Richiesta di reso accettata su sudemi. Rimborsa l'acquirente qui (rimborso WooCommerce) quando l'articolo è tornato; il rimborso passa da sudemi e chiude la richiesta."
+msgstr "Rücksendeanfrage auf sudemi angenommen. Erstatten Sie dem Käufer hier (WooCommerce-Erstattung), sobald der Artikel zurück ist; die Erstattung läuft über sudemi und schließt die Anfrage."
 
 #. translators: %s: the reason the shop gave, shown to the buyer.
 #: includes/class-sudemi-requests.php
 #, php-format
 msgid "Return request rejected on sudemi. Reason shown to the buyer: %s"
-msgstr "Richiesta di reso rifiutata su sudemi. Motivo mostrato all'acquirente: %s"
+msgstr "Rücksendeanfrage auf sudemi abgelehnt. Dem Käufer angezeigte Begründung: %s"
 
 #: includes/class-sudemi-requests.php
 msgid "Return accepted. Refund the buyer once the item is back, with a WooCommerce refund on the order."
-msgstr "Reso accettato. Rimborsa l'acquirente quando l'articolo è tornato, con un rimborso WooCommerce sull'ordine."
+msgstr "Rücksendung angenommen. Erstatten Sie dem Käufer, sobald der Artikel zurück ist, mit einer WooCommerce-Erstattung auf der Bestellung."
 
 #: includes/class-sudemi-requests.php
 msgid "Return rejected. The buyer is shown your reason."
-msgstr "Reso rifiutato. L'acquirente vede il tuo motivo."
+msgstr "Rücksendung abgelehnt. Der Käufer sieht Ihre Begründung."
 
 #: includes/class-sudemi-requests.php
 msgid "This request was already answered."
-msgstr "A questa richiesta è già stata data una risposta."
+msgstr "Diese Anfrage wurde bereits beantwortet."
 
 #: includes/class-sudemi-requests.php
 msgid "This order has no open return request on sudemi any more."
-msgstr "Questo ordine non ha più una richiesta di reso aperta su sudemi."
+msgstr "Diese Bestellung hat auf sudemi keine offene Rücksendeanfrage mehr."
 
 #. translators: %s: error message.
 #: includes/class-sudemi-requests.php
 #, php-format
 msgid "Could not reach sudemi: %s. Nothing was sent; try again."
-msgstr "Impossibile raggiungere sudemi: %s. Non è stato inviato nulla; riprova."
+msgstr "sudemi nicht erreichbar: %s. Es wurde nichts gesendet; versuchen Sie es erneut."
 
 #: includes/class-sudemi-orders.php
 msgid "Cancelled by the buyer on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
-msgstr "Annullato dall'acquirente su sudemi prima della spedizione; l'acquirente è stato rimborsato per intero. Non spedire questo ordine."
+msgstr "Vom Käufer auf sudemi vor dem Versand storniert; der Käufer hat den vollen Betrag zurückerhalten. Versenden Sie diese Bestellung nicht."
 
 #. translators: 1: sudemi order id, 2: local order number.
 #: includes/class-sudemi-orders.php
 #, php-format
 msgid "sudemi order %1$s was cancelled by the buyer before shipping; order #%2$s was cancelled here and the stock restored."
-msgstr "L'ordine sudemi %1$s è stato annullato dall'acquirente prima della spedizione; l'ordine n. %2$s è stato annullato qui e la giacenza ripristinata."
+msgstr "sudemi-Bestellung %1$s wurde vom Käufer vor dem Versand storniert; Bestellung #%2$s wurde hier storniert und der Bestand wiederhergestellt."
 
 #: admin/class-sudemi-admin.php
 msgid "return requested"
-msgstr "reso richiesto"
+msgstr "Rücksendung beantragt"
 
 #: admin/class-sudemi-admin.php
 msgid "Return requests"
-msgstr "Richieste di reso"
+msgstr "Rücksendeanfragen"
 
 #: admin/class-sudemi-admin.php
 msgid "No return requests waiting for an answer."
-msgstr "Nessuna richiesta di reso in attesa di risposta."
+msgstr "Keine Rücksendeanfragen, die auf eine Antwort warten."
 
 #: admin/class-sudemi-admin.php
 msgid "Buyers asked to return these delivered orders. Answer each by the date shown: accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on the order."
-msgstr "Alcuni acquirenti hanno chiesto di restituire questi ordini consegnati. Rispondi a ciascuno entro la data indicata: accetta, oppure rifiuta con un motivo (l'acquirente lo vedrà). Senza risposta decide sudemi. Dopo aver accettato, rimborsa l'acquirente quando l'articolo è tornato, con un rimborso WooCommerce sull'ordine."
+msgstr "Käufer haben die Rücksendung dieser gelieferten Bestellungen beantragt. Beantworten Sie jede bis zum angezeigten Datum: annehmen oder mit Begründung ablehnen (der Käufer bekommt sie zu sehen). Ohne Antwort entscheidet sudemi. Nach der Annahme erstatten Sie dem Käufer, sobald der Artikel zurück ist, mit einer WooCommerce-Erstattung auf der Bestellung."
 
 #: admin/class-sudemi-admin.php
 msgid "Buyer's reason"
-msgstr "Motivo dell'acquirente"
+msgstr "Grund des Käufers"
 
 #: admin/class-sudemi-admin.php
 msgid "Answer by"
-msgstr "Rispondere entro"
+msgstr "Antworten bis"
 
 #: admin/class-sudemi-admin.php
 msgid "Your answer"
-msgstr "La tua risposta"
+msgstr "Ihre Antwort"
 
 #: admin/class-sudemi-admin.php
 msgid "Accept the return"
-msgstr "Accetta il reso"
+msgstr "Rücksendung annehmen"
 
 #: admin/class-sudemi-admin.php
 msgid "Reject the return"
-msgstr "Rifiuta il reso"
+msgstr "Rücksendung ablehnen"
 
 #: admin/class-sudemi-admin.php
 msgid "Reason for rejecting (shown to the buyer)"
-msgstr "Motivo del rifiuto (mostrato all'acquirente)"
+msgstr "Grund der Ablehnung (wird dem Käufer angezeigt)"
 
 #: admin/class-sudemi-admin.php
 msgid "sudemi: the buyer asked to return this order"
-msgstr "sudemi: l'acquirente chiede di restituire questo ordine"
+msgstr "sudemi: Der Käufer möchte diese Bestellung zurücksenden"
 
 #: admin/class-sudemi-admin.php
 msgid "Accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on this order."
-msgstr "Accetta, oppure rifiuta con un motivo (l'acquirente lo vedrà). Senza risposta decide sudemi. Dopo aver accettato, rimborsa l'acquirente quando l'articolo è tornato, con un rimborso WooCommerce su questo ordine."
+msgstr "Nehmen Sie an oder lehnen Sie mit Begründung ab (der Käufer bekommt sie zu sehen). Ohne Antwort entscheidet sudemi. Nach der Annahme erstatten Sie dem Käufer, sobald der Artikel zurück ist, mit einer WooCommerce-Erstattung auf dieser Bestellung."
 
 msgid "1. Add this line to the server's crontab (crontab -e), or as a cron job in your hosting panel:"
-msgstr "1. Aggiungi questa riga al crontab del server (crontab -e) oppure come cron job nel pannello del tuo hosting:"
+msgstr "1. Fügen Sie diese Zeile in die Crontab des Servers ein (crontab -e) oder legen Sie sie als Cronjob in Ihrem Hosting-Panel an:"
 
 msgid "2. Then switch off the visit-driven WP-Cron by adding this line to wp-config.php, above the line that says to stop editing:"
-msgstr "2. Poi disattiva il WP-Cron basato sulle visite aggiungendo questa riga a wp-config.php, sopra la riga che dice di smettere di modificare:"
+msgstr "2. Schalten Sie danach das besuchergesteuerte WP-Cron ab, indem Sie diese Zeile in die wp-config.php einfügen, oberhalb der Zeile, die sagt, dass nicht weiter bearbeitet werden soll:"
 
 msgid "Cancelled on sudemi as well: the buyer was not charged for this order."
-msgstr "Annullato anche su sudemi: all'acquirente non è stato addebitato nulla per questo ordine."
+msgstr "Auch auf sudemi storniert: Dem Käufer wurde für diese Bestellung nichts berechnet."
 
 msgid "Could not report %1$s for sudemi order %2$s yet (%3$s). It is sent again on the next heartbeat."
-msgstr "Non è stato ancora possibile segnalare %1$s per l'ordine sudemi %2$s (%3$s). Verrà inviato di nuovo al prossimo heartbeat."
+msgstr "%1$s für die sudemi-Bestellung %2$s konnte noch nicht gemeldet werden (%3$s). Es wird bei der nächsten Statusmeldung erneut gesendet."
 
 msgid "Could not tell sudemi about this cancellation yet. It is retried on the next heartbeat; the buyer is not charged for it."
-msgstr "Non è stato ancora possibile informare sudemi di questo annullamento. Si riprova al prossimo heartbeat; all'acquirente non viene addebitato nulla."
+msgstr "sudemi konnte über diese Stornierung noch nicht informiert werden. Es wird bei der nächsten Statusmeldung erneut versucht; dem Käufer wird nichts berechnet."
 
 msgid "Keep this shop reporting in (cron)"
-msgstr "Mantieni attivo questo negozio (cron)"
+msgstr "Regelmäßige Meldungen dieses Shops sicherstellen (Cron)"
 
 msgid "Last successful report"
-msgstr "Ultima segnalazione riuscita"
+msgstr "Letzte erfolgreiche Meldung"
 
 msgid "More than 15 minutes ago: sudemi pauses this shop's products until it reports in again. Set up the cron job below."
-msgstr "Più di 15 minuti fa: sudemi sospende i prodotti di questo negozio finché non si segnala di nuovo. Configura qui sotto il cron job."
+msgstr "Mehr als 15 Minuten her: sudemi pausiert die Produkte dieses Shops, bis er sich wieder meldet. Richten Sie unten den Cronjob ein."
 
 msgid "Order updates waiting"
-msgstr "Aggiornamenti ordini in attesa"
+msgstr "Wartende Bestellaktualisierungen"
 
 msgid "Shipped, delivered or cancelled orders that sudemi has not heard about yet. They are sent again on every report until sudemi answers."
-msgstr "Ordini spediti, consegnati o annullati di cui sudemi non sa ancora nulla. Vengono inviati di nuovo a ogni segnalazione finché sudemi non risponde."
+msgstr "Versendete, zugestellte oder stornierte Bestellungen, von denen sudemi noch nichts weiß. Sie werden bei jeder Meldung erneut gesendet, bis sudemi antwortet."
 
 msgid "The catalogue sync is on hold: it would remove %1$d of %2$d listed products from sudemi, so nothing was changed. If those products really were removed from this shop, contact sudemi support (support@sudemi.com)."
-msgstr "La sincronizzazione del catalogo è in attesa: rimuoverebbe da sudemi %1$d dei %2$d prodotti pubblicati, quindi non è stato cambiato nulla. Se quei prodotti sono stati davvero rimossi da questo negozio, contatta l'assistenza sudemi (support@sudemi.com)."
+msgstr "Die Katalogsynchronisierung ist angehalten: Sie würde %1$d von %2$d gelisteten Produkten von sudemi entfernen, daher wurde nichts geändert. Wenn diese Produkte wirklich aus diesem Shop entfernt wurden, wenden Sie sich an den sudemi-Support (support@sudemi.com)."
 
 msgid "WP-Cron is still visit-driven on this site. It works on busy shops, but a real cron job is more reliable."
-msgstr "Su questo sito WP-Cron dipende ancora dalle visite. Funziona per i negozi molto visitati, ma un vero cron job è più affidabile."
+msgstr "WP-Cron läuft auf dieser Website noch über Besuche. Das funktioniert bei gut besuchten Shops, ein echter Cronjob ist aber zuverlässiger."
 
 msgid "WP-Cron is switched off on this site (DISABLE_WP_CRON), so the cron job in step 1 is required: without it this shop never reports in."
-msgstr "WP-Cron è disattivato su questo sito (DISABLE_WP_CRON), quindi il cron job del passo 1 è obbligatorio: senza di esso questo negozio non si segnala mai."
+msgstr "WP-Cron ist auf dieser Website abgeschaltet (DISABLE_WP_CRON), daher ist der Cronjob aus Schritt 1 erforderlich: Ohne ihn meldet sich dieser Shop nie."
 
 msgid "WordPress runs its scheduled tasks (WP-Cron) only when someone visits the site. In a quiet hour nobody does, this shop stops reporting in, and sudemi pauses its products and cannot ask it about new orders. Let the server call WP-Cron every 5 minutes instead."
-msgstr "WordPress esegue le attività pianificate (WP-Cron) solo quando qualcuno visita il sito. In un'ora tranquilla nessuno lo fa, questo negozio smette di segnalarsi e sudemi sospende i suoi prodotti e non può sottoporgli nuovi ordini. Fai invece chiamare WP-Cron dal server ogni 5 minuti."
+msgstr "WordPress führt geplante Aufgaben (WP-Cron) nur aus, wenn jemand die Website besucht. In einer ruhigen Stunde tut das niemand, dieser Shop meldet sich nicht mehr, und sudemi pausiert seine Produkte und kann ihn nicht nach neuen Bestellungen fragen. Lassen Sie stattdessen den Server WP-Cron alle 5 Minuten aufrufen."
 
 msgid "no answer"
-msgstr "nessuna risposta"
+msgstr "keine Antwort"
 
 msgid "sudemi answered the last report in time."
-msgstr "sudemi ha risposto in tempo all'ultima segnalazione."
+msgstr "sudemi hat die letzte Meldung rechtzeitig beantwortet."
 
 msgid "sudemi has not answered the confirmation yet. The order stays on hold with its stock reserved and is asked about again on the next heartbeat. Do not ship it until it moves to Processing."
-msgstr "sudemi non ha ancora risposto alla conferma. L'ordine resta in sospeso con le scorte riservate e verrà verificato di nuovo al prossimo heartbeat. Non spedirlo finché non passa a In lavorazione."
+msgstr "sudemi hat die Bestätigung noch nicht beantwortet. Die Bestellung bleibt in Wartestellung, der Bestand bleibt reserviert, und bei der nächsten Statusmeldung wird erneut nachgefragt. Nicht versenden, bevor sie auf In Bearbeitung steht."
 
 msgid "sudemi says this order is PAID, but it is cancelled here. Either ship it, or refund it to the buyer (set it to Processing and then Cancelled, or contact support@sudemi.com)."
-msgstr "sudemi indica questo ordine come PAGATO, ma qui è annullato. Spediscilo oppure rimborsa l'acquirente (impostalo su In lavorazione e poi su Annullato, oppure scrivi a support@sudemi.com)."
+msgstr "sudemi meldet diese Bestellung als BEZAHLT, hier ist sie aber storniert. Versenden Sie sie oder erstatten Sie dem Käufer den Betrag (auf In Bearbeitung und dann auf Storniert setzen oder support@sudemi.com kontaktieren)."
 
 msgid "the order was cancelled in this shop"
-msgstr "l'ordine è stato annullato in questo negozio"
+msgstr "die Bestellung wurde in diesem Shop storniert"
 
 msgid "sudemi shipping"
-msgstr "Spedizione sudemi"
+msgstr "Versand über sudemi"
 
 #, php-format
 msgid "sudemi order %1$s could not be booked: %2$s. Check the shop currency on the sudemi settings page."
-msgstr "Non è stato possibile registrare l'ordine sudemi %1$s: %2$s. Controlla la valuta del negozio nella pagina delle impostazioni di sudemi."
+msgstr "sudemi-Bestellung %1$s konnte nicht gebucht werden: %2$s. Prüfen Sie die Shop-Währung auf der sudemi-Einstellungsseite."
 
 msgid "the order did not say which currency it was paid in"
-msgstr "l'ordine non indicava in quale valuta è stato pagato"
+msgstr "die Bestellung hat nicht angegeben, in welcher Währung bezahlt wurde"
 
 #, php-format
 msgid "the order was paid in %1$s but this shop sells in %2$s, so it cannot be booked here"
-msgstr "l'ordine è stato pagato in %1$s ma questo negozio vende in %2$s, quindi non può essere registrato qui"
+msgstr "die Bestellung wurde in %1$s bezahlt, aber dieser Shop verkauft in %2$s, daher kann sie hier nicht gebucht werden"
 
 #, php-format
 msgid "this refund is in %1$s but the buyer paid in %2$s; change the order back to %2$s and refund again"
-msgstr "questo rimborso è in %1$s ma l'acquirente ha pagato in %2$s; riporta l'ordine in %2$s e rimborsa di nuovo"
+msgstr "diese Erstattung ist in %1$s, aber der Käufer hat in %2$s bezahlt; stellen Sie die Bestellung wieder auf %2$s um und erstatten Sie erneut"
 
 #, php-format
 msgid "This refund was NOT sent to sudemi: %s. The buyer has not been paid back."
-msgstr "Questo rimborso NON è stato inviato a sudemi: %s. L'acquirente non è stato rimborsato."
+msgstr "Diese Erstattung wurde NICHT an sudemi gesendet: %s. Der Käufer hat kein Geld zurückbekommen."
 
 msgid "Currency"
-msgstr "Valuta"
+msgstr "Währung"
 
 msgid "Your shop currency"
-msgstr "Valuta del tuo negozio"
+msgstr "Währung Ihres Shops"
 
 msgid "From your WooCommerce settings. Your prices are sent to sudemi in it, buyers pay in it, and orders arrive in it."
-msgstr "Dalle tue impostazioni WooCommerce. I tuoi prezzi vengono inviati a sudemi in questa valuta, gli acquirenti pagano in questa valuta e gli ordini arrivano in questa valuta."
+msgstr "Aus Ihren WooCommerce-Einstellungen. Ihre Preise gehen in dieser Währung an sudemi, Käufer zahlen darin und Bestellungen kommen darin an."
 
 msgid "Currency sudemi has for your shop"
-msgstr "Valuta che sudemi ha per il tuo negozio"
+msgstr "Währung, die sudemi für Ihren Shop hat"
 
 msgid "not confirmed yet"
-msgstr "non ancora confermata"
+msgstr "noch nicht bestätigt"
 
 msgid "What sudemi answered the last time this shop sent its details. It updates after the next sync."
-msgstr "Ciò che sudemi ha risposto l'ultima volta che questo negozio ha inviato i suoi dati. Si aggiorna dopo la prossima sincronizzazione."
+msgstr "Was sudemi geantwortet hat, als dieser Shop zuletzt seine Daten gesendet hat. Wird nach der nächsten Synchronisierung aktualisiert."
 
 #, php-format
 msgid "sudemi cannot sell in %1$s yet, so your products are not shown to buyers and no orders can come in. Currencies sudemi supports: %2$s."
-msgstr "sudemi non può ancora vendere in %1$s, quindi i tuoi prodotti non vengono mostrati agli acquirenti e non possono arrivare ordini. Valute supportate da sudemi: %2$s."
+msgstr "sudemi kann noch nicht in %1$s verkaufen, daher sehen Käufer Ihre Produkte nicht und es können keine Bestellungen eingehen. Von sudemi unterstützte Währungen: %2$s."
 
 #, php-format
 msgid "sudemi still has %1$s for your shop, but your shop sells in %2$s. Orders in %1$s are declined until this matches. Click \"Sync the catalogue now\" to send the new currency."
-msgstr "sudemi ha ancora %1$s per il tuo negozio, ma il tuo negozio vende in %2$s. Gli ordini in %1$s vengono rifiutati finché non corrispondono. Fai clic su \"Sincronizza ora il catalogo\" per inviare la nuova valuta."
+msgstr "sudemi hat für Ihren Shop noch %1$s, aber Ihr Shop verkauft in %2$s. Bestellungen in %1$s werden abgelehnt, bis das übereinstimmt. Klicken Sie auf \"Katalog jetzt synchronisieren\", um die neue Währung zu senden."
 
 msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
-msgstr "Gli acquirenti pagano nella tua valuta. Gli accrediti di sudemi sono in euro: la commissione di conversione del fornitore di pagamento (circa il 2%) viene trattenuta dal tuo accredito, come previsto dalle condizioni."
+msgstr "Käufer zahlen in Ihrer Währung. sudemi zahlt Ihnen in Euro aus: Die Umrechnungsgebühr des Zahlungsanbieters (etwa 2 %) wird von Ihrer Auszahlung abgezogen, wie in den Bedingungen steht."
 
 msgid "Waiting for you"
-msgstr "In attesa della tua risposta"
+msgstr "Wartet auf Sie"
 
 msgid "Accepted, waiting for payment"
-msgstr "Accettato, in attesa di pagamento"
+msgstr "Angenommen, wartet auf Zahlung"
 
 msgid "Paid, ready to ship"
-msgstr "Pagato, pronto per la spedizione"
+msgstr "Bezahlt, versandbereit"
 
 msgid "Declined"
-msgstr "Rifiutato"
+msgstr "Abgelehnt"
 
 msgid "Cancelled"
-msgstr "Annullato"
+msgstr "Storniert"
 
 msgid "Refunded"
-msgstr "Rimborsato"
+msgstr "Erstattet"
 
 msgid "Nothing charged"
-msgstr "Nessun addebito"
+msgstr "Nichts belastet"
 
 msgid "Due once shipped"
-msgstr "Dovuto dopo la spedizione"
+msgstr "Fällig nach dem Versand"
 
 msgid "Scheduled"
-msgstr "Programmato"
+msgstr "Geplant"
 
 msgid "On its way to you"
-msgstr "In arrivo"
+msgstr "Unterwegs zu Ihnen"
 
 msgid "Held (chargeback)"
-msgstr "Trattenuto (chargeback)"
+msgstr "Zurückgehalten (Rückbuchung)"
 
 msgid "Partly paid out"
-msgstr "Versato in parte"
+msgstr "Teilweise ausgezahlt"
 
 msgid "Paid out"
-msgstr "Versato"
+msgstr "Ausgezahlt"
 
 msgid "Nothing due (refunded)"
-msgstr "Nulla da versare (rimborsato)"
+msgstr "Nichts fällig (erstattet)"
 
 msgid "Placed by the buyer"
-msgstr "Effettuato dall'acquirente"
+msgstr "Vom Käufer aufgegeben"
 
 msgid "Accepted"
-msgstr "Accettato"
+msgstr "Angenommen"
 
 msgid "Paid"
-msgstr "Pagato"
+msgstr "Bezahlt"
 
 msgid "Refund"
-msgstr "Rimborso"
+msgstr "Erstattung"
 
 msgid "Buyer asked to return or cancel"
-msgstr "L'acquirente ha chiesto di restituire o annullare"
+msgstr "Käufer möchte zurücksenden oder stornieren"
 
 msgid "Request answered"
-msgstr "Richiesta gestita"
+msgstr "Anfrage beantwortet"
 
 msgid "Not set up yet"
-msgstr "Non ancora configurato"
+msgstr "Noch nicht eingerichtet"
 
 msgid "Details missing"
-msgstr "Dati mancanti"
+msgstr "Angaben fehlen"
 
 msgid "Under review"
-msgstr "In verifica"
+msgstr "In Prüfung"
 
 msgid "Active"
-msgstr "Attivo"
+msgstr "Aktiv"
 
 msgid "Action required"
-msgstr "Intervento richiesto"
+msgstr "Handlung erforderlich"
 
 msgid "This is available once this shop is connected to sudemi."
-msgstr "Disponibile quando questo negozio è collegato a sudemi."
+msgstr "Dies ist verfügbar, sobald dieser Shop mit sudemi verbunden ist."
 
 msgid "All"
-msgstr "Tutti"
+msgstr "Alle"
 
 msgid "No orders match."
-msgstr "Nessun ordine corrispondente."
+msgstr "Keine passenden Bestellungen."
 
 msgid "Select"
-msgstr "Seleziona"
+msgstr "Auswählen"
 
 msgid "Ship to"
-msgstr "Spedire a"
+msgstr "Lieferung an"
 
 msgid "Total"
-msgstr "Totale"
+msgstr "Summe"
 
 msgid "Payout"
-msgstr "Accredito"
+msgstr "Auszahlung"
 
 msgid "Tracking"
-msgstr "Tracciamento"
+msgstr "Sendungsverfolgung"
 
 msgid "WooCommerce order"
-msgstr "Ordine WooCommerce"
+msgstr "WooCommerce-Bestellung"
 
 msgid "With the selected orders"
-msgstr "Con gli ordini selezionati"
+msgstr "Mit den ausgewählten Bestellungen"
 
 msgid "Choose an action"
-msgstr "Scegli un'azione"
+msgstr "Aktion wählen"
 
 msgid "Accept"
-msgstr "Accetta"
+msgstr "Annehmen"
 
 msgid "Decline"
-msgstr "Rifiuta"
+msgstr "Ablehnen"
 
 msgid "Mark shipped"
-msgstr "Segna come spedito"
+msgstr "Als versandt markieren"
 
 msgid "Mark delivered"
-msgstr "Segna come consegnato"
+msgstr "Als zugestellt markieren"
 
 msgid "Reason for declining (shown to the buyers)"
-msgstr "Motivo del rifiuto (mostrato agli acquirenti)"
+msgstr "Grund der Ablehnung (wird den Käufern angezeigt)"
 
 msgid "Carrier"
-msgstr "Corriere"
+msgstr "Versanddienstleister"
 
 msgid "Apply"
-msgstr "Applica"
+msgstr "Anwenden"
 
 msgid "Refunds and cancellations are made one order at a time, on the order's own page: each moves a different amount of money."
-msgstr "Rimborsi e annullamenti si fanno un ordine alla volta, nella pagina dell'ordine: ognuno sposta un importo diverso."
+msgstr "Erstattungen und Stornierungen erfolgen einzeln, auf der Seite der jeweiligen Bestellung: Bei jeder geht es um einen anderen Betrag."
 
 #, php-format
 msgid "Orders %1$d to %2$d of %3$d"
-msgstr "Ordini da %1$d a %2$d di %3$d"
+msgstr "Bestellungen %1$d bis %2$d von %3$d"
 
 msgid "Previous"
-msgstr "Precedente"
+msgstr "Zurück"
 
 msgid "Next"
-msgstr "Successivo"
+msgstr "Weiter"
 
 #, php-format
 msgid "answer by %s"
-msgstr "rispondi entro il %s"
+msgstr "antworten bis %s"
 
 #, php-format
 msgid "refunded %s"
-msgstr "rimborsato %s"
+msgstr "%s erstattet"
 
 msgid "Tracking code"
-msgstr "Codice di tracciamento"
+msgstr "Sendungsnummer"
 
 msgid "From"
-msgstr "Dal"
+msgstr "Von"
 
 msgid "To"
-msgstr "Al"
+msgstr "Bis"
 
 msgid "Search"
-msgstr "Cerca"
+msgstr "Suchen"
 
 msgid "Order number or product"
-msgstr "Numero d'ordine o prodotto"
+msgstr "Bestellnummer oder Produkt"
 
 msgid "Sort by"
-msgstr "Ordina per"
+msgstr "Sortieren nach"
 
 msgid "Date"
-msgstr "Data"
+msgstr "Datum"
 
 msgid "Newest or highest first"
-msgstr "Prima i più recenti o i più alti"
+msgstr "Neueste oder höchste zuerst"
 
 msgid "Oldest or lowest first"
-msgstr "Prima i meno recenti o i più bassi"
+msgstr "Älteste oder niedrigste zuerst"
 
 msgid "Filter"
-msgstr "Filtra"
+msgstr "Filtern"
 
 msgid "Language of the file"
-msgstr "Lingua del file"
+msgstr "Sprache der Datei"
 
 msgid "Numbers"
-msgstr "Numeri"
+msgstr "Zahlen"
 
 msgid "1234.50, comma separated"
-msgstr "1234.50, separati da virgola"
+msgstr "1234.50, durch Komma getrennt"
 
 msgid "1234,50, semicolon separated"
-msgstr "1234,50, separati da punto e virgola"
+msgstr "1234,50, durch Semikolon getrennt"
 
 msgid "Download these orders (CSV)"
-msgstr "Scarica questi ordini (CSV)"
+msgstr "Diese Bestellungen herunterladen (CSV)"
 
 msgid "Every order that matches the filters, up to 10,000, without buyer names or addresses."
-msgstr "Tutti gli ordini che corrispondono ai filtri, fino a 10.000, senza nomi o indirizzi degli acquirenti."
+msgstr "Alle Bestellungen, die zu den Filtern passen, bis zu 10.000, ohne Namen oder Adressen der Käufer."
 
 msgid "Confirm orders automatically when the items are in stock"
-msgstr "Conferma automaticamente gli ordini quando gli articoli sono disponibili"
+msgstr "Bestellungen automatisch bestätigen, wenn die Artikel vorrätig sind"
 
 msgid "Save"
-msgstr "Salva"
+msgstr "Speichern"
 
 msgid "On: every five minutes this shop accepts orders whose items are in stock and declines the others."
-msgstr "Attivo: ogni cinque minuti questo negozio accetta gli ordini con articoli disponibili e rifiuta gli altri."
+msgstr "Ein: Alle fünf Minuten nimmt dieser Shop Bestellungen an, deren Artikel vorrätig sind, und lehnt die anderen ab."
 
 msgid "Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing."
-msgstr "Disattivato: gli ordini attendono la tua risposta. Accetta o rifiuta ciascuno qui entro la data indicata; senza risposta l'acquirente viene svincolato e non gli viene addebitato nulla."
+msgstr "Aus: Bestellungen warten auf Sie. Nehmen Sie jede hier vor dem angezeigten Datum an oder lehnen Sie sie ab; ohne Antwort wird die Zahlung des Käufers freigegeben und nichts berechnet."
 
 msgid "Back to the orders"
-msgstr "Torna agli ordini"
+msgstr "Zurück zu den Bestellungen"
 
 #, php-format
 msgid "Order %1$s: %2$s"
-msgstr "Ordine %1$s: %2$s"
+msgstr "Bestellung %1$s: %2$s"
 
 #, php-format
 msgid "Waiting for your answer. The buyer is not charged until you accept. Answer by %s; without an answer the buyer is released."
-msgstr "In attesa della tua risposta. All'acquirente non viene addebitato nulla finché non accetti. Rispondi entro il %s; senza risposta l'acquirente viene svincolato."
+msgstr "Wartet auf Ihre Antwort. Der Käufer wird erst belastet, wenn Sie annehmen. Antworten Sie bis %s; ohne Antwort wird die Zahlung des Käufers freigegeben."
 
 #, php-format
 msgid "Stock check: %s."
-msgstr "Controllo giacenze: %s."
+msgstr "Bestandsprüfung: %s."
 
 msgid "sudemi order"
-msgstr "Ordine sudemi"
+msgstr "sudemi-Bestellung"
 
 msgid "Placed"
-msgstr "Effettuato"
+msgstr "Aufgegeben"
 
 msgid "none yet (it is created when the order is accepted)"
-msgstr "non ancora (viene creato quando l'ordine è accettato)"
+msgstr "noch keine (sie wird angelegt, wenn die Bestellung angenommen wird)"
 
 msgid "Buyer may withdraw until"
-msgstr "L'acquirente può recedere fino al"
+msgstr "Käufer kann widerrufen bis"
 
 msgid "Reason declined"
-msgstr "Motivo del rifiuto"
+msgstr "Grund der Ablehnung"
 
 msgid "Items"
-msgstr "Articoli"
+msgstr "Artikel"
 
 msgid "Product"
-msgstr "Prodotto"
+msgstr "Produkt"
 
 msgid "Quantity"
-msgstr "Quantità"
+msgstr "Menge"
 
 msgid "Price"
-msgstr "Prezzo"
+msgstr "Preis"
 
 msgid "Amount"
-msgstr "Importo"
+msgstr "Betrag"
 
 msgid "No right of withdrawal"
-msgstr "Nessun diritto di recesso"
+msgstr "Kein Widerrufsrecht"
 
 msgid "Money"
-msgstr "Denaro"
+msgstr "Beträge"
 
 msgid "Goods"
-msgstr "Merce"
+msgstr "Waren"
 
 msgid "Shipping"
-msgstr "Spedizione"
+msgstr "Versand"
 
 msgid "Buyer paid"
-msgstr "Pagato dall'acquirente"
+msgstr "Vom Käufer bezahlt"
 
 msgid "sudemi commission"
-msgstr "Commissione sudemi"
+msgstr "sudemi-Provision"
 
 msgid "Refunded to the buyer"
-msgstr "Rimborsato all'acquirente"
+msgstr "An den Käufer erstattet"
 
 msgid "Payout expected"
-msgstr "Accredito previsto"
+msgstr "Erwartete Auszahlung"
 
 msgid "Payout due"
-msgstr "Accredito dovuto"
+msgstr "Fällige Auszahlung"
 
 msgid "The buyer asked to return this order"
-msgstr "L'acquirente ha chiesto di restituire questo ordine"
+msgstr "Der Käufer möchte diese Bestellung zurücksenden"
 
 msgid "History"
-msgstr "Cronologia"
+msgstr "Verlauf"
 
 msgid "Actions"
-msgstr "Azioni"
+msgstr "Aktionen"
 
 msgid "Accept: the buyer is charged and you ship the order."
-msgstr "Accetta: l'importo viene addebitato all'acquirente e tu spedisci l'ordine."
+msgstr "Annehmen: Der Käufer wird belastet, und Sie versenden die Bestellung."
 
 msgid "Accept the order"
-msgstr "Accetta l'ordine"
+msgstr "Bestellung annehmen"
 
 msgid "Reason for declining (shown to the buyer)"
-msgstr "Motivo del rifiuto (mostrato all'acquirente)"
+msgstr "Grund der Ablehnung (wird dem Käufer angezeigt)"
 
 msgid "Decline the order"
-msgstr "Rifiuta l'ordine"
+msgstr "Bestellung ablehnen"
 
 #, php-format
 msgid "Amount to refund (%s)"
-msgstr "Importo da rimborsare (%s)"
+msgstr "Zu erstattender Betrag (%s)"
 
 #, php-format
 msgid "Leave empty to refund everything not refunded yet (%s)."
-msgstr "Lascia vuoto per rimborsare tutto ciò che non è ancora stato rimborsato (%s)."
+msgstr "Leer lassen, um alles noch nicht Erstattete zu erstatten (%s)."
 
 msgid "Reason"
-msgstr "Motivo"
+msgstr "Grund"
 
 msgid "Refund through sudemi"
-msgstr "Rimborsa tramite sudemi"
+msgstr "Über sudemi erstatten"
 
 msgid "Cancel: you cannot fulfil this paid order. The buyer is refunded in full."
-msgstr "Annulla: non puoi evadere questo ordine pagato. L'acquirente viene rimborsato per intero."
+msgstr "Stornieren: Sie können diese bezahlte Bestellung nicht ausführen. Der Käufer erhält den vollen Betrag zurück."
 
 msgid "Cancel and refund in full"
-msgstr "Annulla e rimborsa per intero"
+msgstr "Stornieren und voll erstatten"
 
 #, php-format
 msgid "The order export was cut off at 10,000 of %d orders. Narrow the dates to get the rest."
-msgstr "L'esportazione degli ordini si è fermata a 10.000 su %d ordini. Restringi le date per ottenere il resto."
+msgstr "Der Bestellexport wurde bei 10.000 von %d Bestellungen abgeschnitten. Grenzen Sie den Zeitraum ein, um den Rest zu erhalten."
 
 msgid "Orders are confirmed automatically."
-msgstr "Gli ordini vengono confermati automaticamente."
+msgstr "Bestellungen werden automatisch bestätigt."
 
 msgid "Orders now wait for you to accept or decline them."
-msgstr "Ora gli ordini attendono che tu li accetti o li rifiuti."
+msgstr "Bestellungen warten jetzt darauf, dass Sie sie annehmen oder ablehnen."
 
 msgid "What sudemi buyers pay for shipping, per country. By default the prices this plugin sends from your WooCommerce shipping zones apply. You can instead set your own price per country on sudemi, and choose the countries you deliver to. One charge per parcel, never per item."
-msgstr "Quanto pagano gli acquirenti sudemi per la spedizione, per paese. Per impostazione predefinita valgono i prezzi che questo plugin invia dalle tue zone di spedizione WooCommerce. In alternativa puoi impostare un tuo prezzo per paese su sudemi e scegliere i paesi in cui consegni. Un addebito per pacco, mai per articolo."
+msgstr "Was sudemi-Käufer für den Versand zahlen, pro Land. Standardmäßig gelten die Preise, die dieses Plugin aus Ihren WooCommerce-Versandzonen sendet. Sie können stattdessen auf sudemi einen eigenen Preis pro Land festlegen und die Länder wählen, in die Sie liefern. Ein Betrag pro Paket, nie pro Artikel."
 
 msgid "Prices filled in from your WooCommerce shipping zones. Check them and save; nothing is changed on sudemi until you do."
-msgstr "Prezzi compilati dalle tue zone di spedizione WooCommerce. Controllali e salva; su sudemi non cambia nulla finché non salvi."
+msgstr "Preise aus Ihren WooCommerce-Versandzonen übernommen. Prüfen und speichern Sie sie; auf sudemi ändert sich nichts, bis Sie das tun."
 
 msgid "Shipping prices"
-msgstr "Costi di spedizione"
+msgstr "Versandpreise"
 
 msgid "Use the prices from my WooCommerce shipping zones"
-msgstr "Usa i prezzi delle mie zone di spedizione WooCommerce"
+msgstr "Die Preise aus meinen WooCommerce-Versandzonen verwenden"
 
 msgid "Set my own countries and prices on sudemi"
-msgstr "Imposta paesi e prezzi miei su sudemi"
+msgstr "Eigene Länder und Preise auf sudemi festlegen"
 
 msgid "Country"
-msgstr "Paese"
+msgstr "Land"
 
 msgid "Deliver there"
-msgstr "Consegna lì"
+msgstr "Dorthin liefern"
 
 #, php-format
 msgid "Your price on sudemi (%s)"
-msgstr "Il tuo prezzo su sudemi (%s)"
+msgstr "Ihr Preis auf sudemi (%s)"
 
 msgid "Prices from your shipping zones"
-msgstr "Prezzi dalle tue zone di spedizione"
+msgstr "Preise aus Ihren Versandzonen"
 
 msgid "Buyers pay now"
-msgstr "Gli acquirenti pagano ora"
+msgstr "Käufer zahlen jetzt"
 
 msgid "not offered"
-msgstr "non offerto"
+msgstr "nicht angeboten"
 
 msgid "your price on sudemi"
-msgstr "il tuo prezzo su sudemi"
+msgstr "Ihr Preis auf sudemi"
 
 msgid "from your shop"
-msgstr "dal tuo negozio"
+msgstr "aus Ihrem Shop"
 
 msgid "With your own countries and prices: only the ticked countries are offered. A country with an empty price uses the price from your shipping zones."
-msgstr "Con paesi e prezzi tuoi: vengono offerti solo i paesi spuntati. Un paese senza prezzo usa il prezzo delle tue zone di spedizione."
+msgstr "Mit eigenen Ländern und Preisen: Nur die angehakten Länder werden angeboten. Ein Land ohne Preis verwendet den Preis aus Ihren Versandzonen."
 
 msgid "Save shipping on sudemi"
-msgstr "Salva la spedizione su sudemi"
+msgstr "Versand auf sudemi speichern"
 
 msgid "Fill in from my WooCommerce shipping zones"
-msgstr "Compila dalle mie zone di spedizione WooCommerce"
+msgstr "Aus meinen WooCommerce-Versandzonen übernehmen"
 
 msgid "Shipping settings saved on sudemi."
-msgstr "Impostazioni di spedizione salvate su sudemi."
+msgstr "Versandeinstellungen auf sudemi gespeichert."
 
 msgid "Saved on sudemi. Buyers see these shipping prices from now on."
-msgstr "Salvato su sudemi. Da ora gli acquirenti vedono questi costi di spedizione."
+msgstr "Auf sudemi gespeichert. Käufer sehen ab jetzt diese Versandpreise."
 
 msgid "Payout account"
-msgstr "Conto per gli accrediti"
+msgstr "Auszahlungskonto"
 
 msgid "State"
-msgstr "Stato"
+msgstr "Status"
 
 msgid "Act before"
-msgstr "Intervieni entro"
+msgstr "Handeln vor"
 
 msgid "When you are paid"
-msgstr "Quando ricevi l'accredito"
+msgstr "Wann Sie bezahlt werden"
 
 #, php-format
 msgid "%1$d days after the buyer received the order, or %2$d days after shipping if delivery is never reported; never while a chargeback is open."
-msgstr "%1$d giorni dopo che l'acquirente ha ricevuto l'ordine, oppure %2$d giorni dopo la spedizione se la consegna non viene mai segnalata; mai mentre è aperto un chargeback."
+msgstr "%1$d Tage, nachdem der Käufer die Bestellung erhalten hat, oder %2$d Tage nach dem Versand, wenn die Zustellung nie gemeldet wird; nie, solange eine Rückbuchung offen ist."
 
 msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."
-msgstr "Il tuo conto per gli accrediti richiede attenzione. Si gestisce sul portale venditori di sudemi (Accrediti), non qui."
+msgstr "Ihr Auszahlungskonto braucht Ihre Aufmerksamkeit. Es wird im sudemi-Verkäuferportal (Auszahlungen) verwaltet, nicht hier."
 
 msgid "The payout account is managed on the sudemi seller portal (Payouts)."
-msgstr "Il conto per gli accrediti si gestisce sul portale venditori di sudemi (Accrediti)."
+msgstr "Das Auszahlungskonto wird im sudemi-Verkäuferportal (Auszahlungen) verwaltet."
 
 msgid "This shop's payouts"
-msgstr "Accrediti a questo negozio"
+msgstr "Auszahlungen dieses Shops"
 
 msgid "No payouts yet."
-msgstr "Ancora nessun accredito."
+msgstr "Noch keine Auszahlungen."
 
 msgid "Orders"
-msgstr "Ordini"
+msgstr "Bestellungen"
 
 msgid "Still to come"
-msgstr "Ancora da ricevere"
+msgstr "Noch ausstehend"
 
 msgid "Next payout"
-msgstr "Prossimo accredito"
+msgstr "Nächste Auszahlung"
 
 msgid "Manage orders: filters, export, accept, ship, refund"
-msgstr "Gestisci gli ordini: filtri, esportazione, accettazione, spedizione, rimborso"
+msgstr "Bestellungen verwalten: Filter, Export, Annehmen, Versenden, Erstatten"
 
 msgid "sudemi started the order change list over (last 7 days); orders are checked again, nothing is applied twice."
-msgstr "sudemi ha ricominciato da capo l'elenco delle modifiche agli ordini (ultimi 7 giorni); gli ordini vengono ricontrollati, nulla viene applicato due volte."
+msgstr "sudemi hat die Liste der Bestelländerungen neu begonnen (letzte 7 Tage); Bestellungen werden erneut geprüft, nichts wird doppelt angewendet."
 
 #, php-format
 msgid "%d WooCommerce order(s) updated from sudemi."
-msgstr "%d ordine/i WooCommerce aggiornato/i da sudemi."
+msgstr "%d WooCommerce-Bestellung(en) von sudemi aktualisiert."
 
 msgid "An order change from sudemi could not be applied yet; it is read again on the next heartbeat."
-msgstr "Una modifica a un ordine da sudemi non è ancora stata applicata; viene riletta al prossimo heartbeat."
+msgstr "Eine Bestelländerung von sudemi konnte noch nicht übernommen werden; sie wird bei der nächsten Statusmeldung erneut gelesen."
 
 msgid "Paid on sudemi; the buyer has been charged. This order can be shipped."
-msgstr "Pagato su sudemi; l'importo è stato addebitato all'acquirente. Questo ordine può essere spedito."
+msgstr "Auf sudemi bezahlt; der Käufer wurde belastet. Diese Bestellung kann versandt werden."
 
 msgid "Marked shipped on sudemi."
-msgstr "Segnato come spedito su sudemi."
+msgstr "Auf sudemi als versandt markiert."
 
 msgid "Declined on sudemi: the buyer was not charged. The stock has been restored."
-msgstr "Rifiutato su sudemi: all'acquirente non è stato addebitato nulla. Le giacenze sono state ripristinate."
+msgstr "Auf sudemi abgelehnt: Dem Käufer wurde nichts berechnet. Der Bestand wurde wiederhergestellt."
 
 msgid "Cancelled on sudemi; the buyer has been refunded in full. Do not ship this order. The stock has been restored."
-msgstr "Annullato su sudemi; l'acquirente è stato rimborsato per intero. Non spedire questo ordine. Le giacenze sono state ripristinate."
+msgstr "Auf sudemi storniert; der Käufer hat den vollen Betrag zurückerhalten. Versenden Sie diese Bestellung nicht. Der Bestand wurde wiederhergestellt."
 
 #, php-format
 msgid "Delivered (recorded on sudemi, %s)."
-msgstr "Consegnato (registrato su sudemi, %s)."
+msgstr "Zugestellt (auf sudemi erfasst, %s)."
 
 #, php-format
 msgid "Tracking on sudemi: %1$s %2$s"
-msgstr "Tracciamento su sudemi: %1$s %2$s"
+msgstr "Sendungsverfolgung auf sudemi: %1$s %2$s"
 
 msgid "Refund made on sudemi"
-msgstr "Rimborso effettuato su sudemi"
+msgstr "Erstattung auf sudemi vorgenommen"
 
 #, php-format
 msgid "A refund of %s made on sudemi is recorded here. The buyer was paid back by sudemi."
-msgstr "Qui è registrato un rimborso di %s effettuato su sudemi. L'acquirente è stato rimborsato da sudemi."
+msgstr "Eine auf sudemi vorgenommene Erstattung von %s ist hier erfasst. Der Käufer hat das Geld von sudemi zurückerhalten."
 
 msgid "Booked from sudemi: this order was accepted on sudemi (on the portal or in a bulk action)."
-msgstr "Registrato da sudemi: questo ordine è stato accettato su sudemi (sul portale o con un'azione di gruppo)."
+msgstr "Von sudemi gebucht: Diese Bestellung wurde auf sudemi angenommen (im Portal oder per Sammelaktion)."
 
 #, php-format
 msgid "sudemi order %1$s was accepted on sudemi; booked here as order #%2$s."
-msgstr "L'ordine sudemi %1$s è stato accettato su sudemi; registrato qui come ordine #%2$s."
+msgstr "sudemi-Bestellung %1$s wurde auf sudemi angenommen; hier als Bestellung #%2$s gebucht."
 
 msgid "sudemi has no such order for this shop."
-msgstr "sudemi non ha questo ordine per questo negozio."
+msgstr "sudemi hat keine solche Bestellung für diesen Shop."
 
 msgid "This order belongs to an earlier sudemi connection of this shop. Leave it as it is; sudemi support can help."
-msgstr "Questo ordine appartiene a un collegamento sudemi precedente di questo negozio. Lascialo com'è; l'assistenza sudemi può aiutarti."
+msgstr "Diese Bestellung gehört zu einer früheren sudemi-Verbindung dieses Shops. Lassen Sie sie, wie sie ist; der sudemi-Support kann helfen."
 
 msgid "This order was already answered."
-msgstr "A questo ordine è già stata data risposta."
+msgstr "Diese Bestellung wurde bereits beantwortet."
 
 msgid "The buyer's payment authorisation ran out, so the order can no longer be accepted."
-msgstr "L'autorizzazione di pagamento dell'acquirente è scaduta, quindi l'ordine non può più essere accettato."
+msgstr "Die Zahlungsautorisierung des Käufers ist abgelaufen, daher kann die Bestellung nicht mehr angenommen werden."
 
 msgid "The order is not in a state that allows this (it may have changed in the meantime). Reload the order."
-msgstr "L'ordine non è in uno stato che lo consente (potrebbe essere cambiato nel frattempo). Ricarica l'ordine."
+msgstr "Die Bestellung ist in keinem Zustand, der dies erlaubt (sie hat sich eventuell inzwischen geändert). Laden Sie die Bestellung neu."
 
 msgid "The payment provider refused this. Nothing changed; try again later or contact sudemi support."
-msgstr "Il fornitore di pagamento ha rifiutato l'operazione. Non è cambiato nulla; riprova più tardi o contatta l'assistenza sudemi."
+msgstr "Der Zahlungsanbieter hat dies abgelehnt. Es wurde nichts geändert; versuchen Sie es später erneut oder wenden Sie sich an den sudemi-Support."
 
 msgid "The amount is not in the currency the buyer paid in."
-msgstr "L'importo non è nella valuta in cui ha pagato l'acquirente."
+msgstr "Der Betrag ist nicht in der Währung, in der der Käufer bezahlt hat."
 
 msgid "This shop is suspended on sudemi: it cannot accept orders. Paid orders can still be shipped and refunded. Contact sudemi support."
-msgstr "Questo negozio è sospeso su sudemi: non può accettare ordini. Gli ordini pagati possono ancora essere spediti e rimborsati. Contatta l'assistenza sudemi."
+msgstr "Dieser Shop ist auf sudemi gesperrt: Er kann keine Bestellungen annehmen. Bezahlte Bestellungen können weiterhin versandt und erstattet werden. Wenden Sie sich an den sudemi-Support."
 
 msgid "Dates must be in the form YYYY-MM-DD."
-msgstr "Le date devono essere nel formato YYYY-MM-DD."
+msgstr "Datumsangaben müssen im Format JJJJ-MM-TT sein."
 
 msgid "sudemi asked this shop to slow down. Wait a minute and try again."
-msgstr "sudemi ha chiesto a questo negozio di rallentare. Attendi un minuto e riprova."
+msgstr "sudemi hat diesen Shop gebeten, langsamer zu machen. Warten Sie eine Minute und versuchen Sie es erneut."
 
 msgid "Give a reason. The buyer is shown it."
-msgstr "Indica un motivo. L'acquirente lo vedrà."
+msgstr "Geben Sie einen Grund an. Der Käufer bekommt ihn zu sehen."
 
 msgid "Select at least one order."
-msgstr "Seleziona almeno un ordine."
+msgstr "Wählen Sie mindestens eine Bestellung aus."
 
 msgid "Select at most 100 orders at once."
-msgstr "Seleziona al massimo 100 ordini alla volta."
+msgstr "Wählen Sie höchstens 100 Bestellungen auf einmal aus."
 
 msgid "That action is not available."
-msgstr "Questa azione non è disponibile."
+msgstr "Diese Aktion ist nicht verfügbar."
 
 msgid "Prices must be numbers of 0 or more."
-msgstr "I prezzi devono essere numeri uguali o maggiori di 0."
+msgstr "Preise müssen Zahlen von 0 oder mehr sein."
 
 msgid "Enter an amount greater than 0, or leave it empty to refund the rest."
-msgstr "Inserisci un importo maggiore di 0, oppure lascia vuoto per rimborsare il resto."
+msgstr "Geben Sie einen Betrag größer als 0 ein oder lassen Sie das Feld leer, um den Rest zu erstatten."
 
 msgid "Could not reach sudemi. Nothing was changed; try again shortly."
-msgstr "Impossibile raggiungere sudemi. Non è cambiato nulla; riprova tra poco."
+msgstr "sudemi war nicht erreichbar. Es wurde nichts geändert; versuchen Sie es gleich noch einmal."
 
 msgid "sudemi refused this."
-msgstr "sudemi ha rifiutato l'operazione."
+msgstr "sudemi hat dies abgelehnt."
 
 msgid "Declined on sudemi. The buyer is not charged."
-msgstr "Rifiutato su sudemi. All'acquirente non viene addebitato nulla."
+msgstr "Auf sudemi abgelehnt. Dem Käufer wird nichts berechnet."
 
 msgid "Marked shipped on sudemi. The buyer is told."
-msgstr "Segnato come spedito su sudemi. L'acquirente viene avvisato."
+msgstr "Auf sudemi als versandt markiert. Der Käufer wird informiert."
 
 msgid "Marked delivered on sudemi."
-msgstr "Segnato come consegnato su sudemi."
+msgstr "Auf sudemi als zugestellt markiert."
 
 msgid "Refunded through sudemi. The refund is recorded on the WooCommerce order."
-msgstr "Rimborsato tramite sudemi. Il rimborso è registrato sull'ordine WooCommerce."
+msgstr "Über sudemi erstattet. Die Erstattung ist in der WooCommerce-Bestellung erfasst."
 
 msgid "Cancelled on sudemi and refunded in full. The WooCommerce order is cancelled and the stock restored."
-msgstr "Annullato su sudemi e rimborsato per intero. L'ordine WooCommerce è annullato e le giacenze ripristinate."
+msgstr "Auf sudemi storniert und voll erstattet. Die WooCommerce-Bestellung ist storniert und der Bestand wiederhergestellt."
 
 msgid "The WooCommerce order for this sudemi order is cancelled. Decline it instead."
-msgstr "L'ordine WooCommerce di questo ordine sudemi è annullato. Rifiutalo invece."
+msgstr "Die WooCommerce-Bestellung zu dieser sudemi-Bestellung ist storniert. Lehnen Sie sie stattdessen ab."
 
 msgid "The order could not be recorded in WooCommerce (a product in it is no longer in this shop). Decline it instead."
-msgstr "Non è stato possibile registrare l'ordine in WooCommerce (un prodotto non è più in questo negozio). Rifiutalo invece."
+msgstr "Die Bestellung konnte nicht in WooCommerce erfasst werden (ein Produkt darin gibt es in diesem Shop nicht mehr). Lehnen Sie sie stattdessen ab."
 
 msgid "Accepted. The buyer has been charged; the WooCommerce order is ready to ship."
-msgstr "Accettato. L'importo è stato addebitato all'acquirente; l'ordine WooCommerce è pronto per la spedizione."
+msgstr "Angenommen. Der Käufer wurde belastet; die WooCommerce-Bestellung ist versandbereit."
 
 msgid "Accepted. sudemi takes the money once the other shops in the buyer's payment have answered; do not ship until the order moves to Processing."
-msgstr "Accettato. sudemi incassa l'importo quando gli altri negozi compresi nel pagamento dell'acquirente hanno risposto; non spedire finché l'ordine non passa a In lavorazione."
+msgstr "Angenommen. sudemi zieht das Geld ein, sobald die anderen Shops in der Zahlung des Käufers geantwortet haben; versenden Sie nicht, bevor die Bestellung auf „In Bearbeitung“ wechselt."
 
 msgid "sudemi did not answer. The WooCommerce order stays on hold and the acceptance is sent again on the next heartbeat."
-msgstr "sudemi non ha risposto. L'ordine WooCommerce resta in sospeso e l'accettazione viene inviata di nuovo al prossimo heartbeat."
+msgstr "sudemi hat nicht geantwortet. Die WooCommerce-Bestellung bleibt in Wartestellung, und die Annahme wird bei der nächsten Statusmeldung erneut gesendet."
 
 #, php-format
 msgid "%1$d done, %2$d refused."
-msgstr "%1$d completati, %2$d rifiutati."
+msgstr "%1$d erledigt, %2$d abgewiesen."
 
 msgid "Mark delivered on sudemi"
-msgstr "Segna come consegnato su sudemi"
+msgstr "Auf sudemi als zugestellt markieren"
 
 msgid "sudemi did not record the delivery (the order may not be shipped there yet). Check the order under WooCommerce > sudemi > Orders."
-msgstr "sudemi non ha registrato la consegna (forse lì l'ordine non risulta ancora spedito). Controlla l'ordine in WooCommerce > sudemi > Ordini."
+msgstr "sudemi hat die Zustellung nicht erfasst (die Bestellung ist dort eventuell noch nicht versandt). Prüfen Sie die Bestellung unter WooCommerce > sudemi > Bestellungen."
 
 msgid "Could not reach sudemi to report the delivery. It is sent again on the next heartbeat."
-msgstr "Impossibile raggiungere sudemi per segnalare la consegna. Verrà inviata di nuovo al prossimo heartbeat."
+msgstr "sudemi war nicht erreichbar, um die Zustellung zu melden. Sie wird bei der nächsten Statusmeldung erneut gesendet."
 
 #, php-format
 msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
-msgstr "%d ordine/i in attesa della tua risposta in WooCommerce > sudemi > Ordini. La conferma automatica è disattivata, quindi bisogna rispondere manualmente prima della scadenza."
+msgstr "%d Bestellung(en) warten unter WooCommerce > sudemi > Bestellungen auf Ihre Antwort. Die automatische Bestätigung ist deaktiviert, daher müssen sie manuell beantwortet werden, bevor ihre Frist abläuft."
 
 msgid "Cancelled by your shop on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
-msgstr "Annullato dal tuo negozio su sudemi prima della spedizione; l'acquirente è stato rimborsato per intero. Non spedire questo ordine."
+msgstr "Von Ihrem Shop auf sudemi vor dem Versand storniert; der Käufer hat den vollen Betrag zurückerhalten. Versenden Sie diese Bestellung nicht."
 
 msgid "Cancelled by sudemi before shipping (for example because the order was not answered in time); the buyer has been refunded in full. Do not ship this order."
-msgstr "Annullato da sudemi prima della spedizione (per esempio perché l'ordine non ha ricevuto risposta in tempo); l'acquirente è stato rimborsato per intero. Non spedire questo ordine."
+msgstr "Von sudemi vor dem Versand storniert (zum Beispiel, weil die Bestellung nicht rechtzeitig beantwortet wurde); der Käufer hat den vollen Betrag zurückerhalten. Versenden Sie diese Bestellung nicht."
 
 msgid "Cancelled on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
-msgstr "Annullato su sudemi prima della spedizione; l'acquirente è stato rimborsato per intero. Non spedire questo ordine."
+msgstr "Auf sudemi vor dem Versand storniert; der Käufer hat den vollen Betrag zurückerhalten. Versenden Sie diese Bestellung nicht."
 
 #, php-format
 msgid "sudemi order %1$s was cancelled by your shop on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
-msgstr "L'ordine sudemi %1$s è stato annullato dal tuo negozio su sudemi prima della spedizione; l'ordine n. %2$s è stato annullato qui e le giacenze ripristinate."
+msgstr "sudemi-Bestellung %1$s wurde vor dem Versand von Ihrem Shop auf sudemi storniert; Bestellung #%2$s wurde hier storniert und der Bestand wiederhergestellt."
 
 #, php-format
 msgid "sudemi order %1$s was cancelled by sudemi before shipping; order #%2$s was cancelled here and the stock restored."
-msgstr "L'ordine sudemi %1$s è stato annullato da sudemi prima della spedizione; l'ordine n. %2$s è stato annullato qui e le giacenze ripristinate."
+msgstr "sudemi-Bestellung %1$s wurde vor dem Versand von sudemi storniert; Bestellung #%2$s wurde hier storniert und der Bestand wiederhergestellt."
 
 #, php-format
 msgid "sudemi order %1$s was cancelled on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
-msgstr "L'ordine sudemi %1$s è stato annullato su sudemi prima della spedizione; l'ordine n. %2$s è stato annullato qui e le giacenze ripristinate."
+msgstr "sudemi-Bestellung %1$s wurde vor dem Versand auf sudemi storniert; Bestellung #%2$s wurde hier storniert und der Bestand wiederhergestellt."
 
 msgid "The stock has been restored."
-msgstr "Le giacenze sono state ripristinate."
+msgstr "Der Bestand wurde wiederhergestellt."
 
 #, php-format
 msgid "New tracking sent to sudemi: %s. sudemi e-mails the buyer the new code."
-msgstr "Nuovo tracciamento inviato a sudemi: %s. sudemi invia il nuovo codice all'acquirente via e-mail."
+msgstr "Neue Sendungsnummer an sudemi gesendet: %s. sudemi schickt dem Käufer die neue Nummer per E-Mail."
 
 #, php-format
 msgid "Could not send the new tracking (%s) to sudemi yet. It is sent again on the next heartbeat."
-msgstr "Non è stato ancora possibile inviare il nuovo tracciamento (%s) a sudemi. Verrà inviato di nuovo al prossimo heartbeat."
+msgstr "Die neue Sendungsnummer (%s) konnte noch nicht an sudemi gesendet werden. Sie wird bei der nächsten Statusmeldung erneut gesendet."
 
 #, php-format
 msgid "The new tracking (%s) was not sent: on sudemi this order is already delivered, cancelled or refunded, so its tracking can no longer change."
-msgstr "Il nuovo tracciamento (%s) non è stato inviato: su sudemi questo ordine è già consegnato, annullato o rimborsato, quindi il tracciamento non può più cambiare."
+msgstr "Die neue Sendungsnummer (%s) wurde nicht gesendet: Auf sudemi ist diese Bestellung bereits zugestellt, storniert oder erstattet, daher kann sich die Sendungsnummer nicht mehr ändern."
 
 #, php-format
 msgid "sudemi did not take the new tracking (%s). Check the order under WooCommerce > sudemi > Orders."
-msgstr "sudemi non ha accettato il nuovo tracciamento (%s). Controlla l'ordine in WooCommerce > sudemi > Ordini."
+msgstr "sudemi hat die neue Sendungsnummer (%s) nicht angenommen. Prüfen Sie die Bestellung unter WooCommerce > sudemi > Bestellungen."
 
 #, php-format
 msgid "Could not send the new tracking for sudemi order %1$s yet. It is sent again on the next heartbeat."
-msgstr "Non è stato ancora possibile inviare il nuovo tracciamento dell'ordine sudemi %1$s. Verrà inviato di nuovo al prossimo heartbeat."
+msgstr "Die neue Sendungsnummer für die sudemi-Bestellung %1$s konnte noch nicht gesendet werden. Sie wird bei der nächsten Statusmeldung erneut gesendet."
 
 #, php-format
 msgid "Sent the new tracking for sudemi order %1$s."
-msgstr "Nuovo tracciamento inviato per l'ordine sudemi %1$s."
+msgstr "Neue Sendungsnummer für die sudemi-Bestellung %1$s gesendet."
 
 #, php-format
 msgid "The new tracking for sudemi order %1$s was not sent: the order is already delivered, cancelled or refunded on sudemi."
-msgstr "Il nuovo tracciamento dell'ordine sudemi %1$s non è stato inviato: l'ordine è già consegnato, annullato o rimborsato su sudemi."
+msgstr "Die neue Sendungsnummer für die sudemi-Bestellung %1$s wurde nicht gesendet: Die Bestellung ist auf sudemi bereits zugestellt, storniert oder erstattet."
 
 msgid "The tracking can no longer be changed: on sudemi this order is already delivered, cancelled or refunded."
-msgstr "Il tracciamento non può più essere cambiato: su sudemi questo ordine è già consegnato, annullato o rimborsato."
+msgstr "Die Sendungsnummer kann nicht mehr geändert werden: Auf sudemi ist diese Bestellung bereits zugestellt, storniert oder erstattet."
 
 msgid "Enter a tracking code."
-msgstr "Inserisci un codice di tracciamento."
+msgstr "Geben Sie eine Sendungsnummer ein."
 
 msgid "Tracking changed on sudemi. sudemi e-mails the buyer the new code."
-msgstr "Tracciamento cambiato su sudemi. sudemi invia il nuovo codice all'acquirente via e-mail."
+msgstr "Sendungsnummer auf sudemi geändert. sudemi schickt dem Käufer die neue Nummer per E-Mail."
 
 msgid "sudemi already has this tracking. Nothing was changed."
-msgstr "sudemi ha già questo tracciamento. Non è cambiato nulla."
+msgstr "sudemi hat diese Sendungsnummer bereits. Es wurde nichts geändert."
 
 msgid "Shipped already. Wrong or missing tracking? Enter the right one: sudemi e-mails the buyer the new code."
-msgstr "Già spedito. Tracciamento sbagliato o mancante? Inserisci quello giusto: sudemi invia il nuovo codice all'acquirente via e-mail."
+msgstr "Bereits versandt. Falsche oder fehlende Sendungsnummer? Geben Sie die richtige ein: sudemi schickt dem Käufer die neue Nummer per E-Mail."
 
 msgid "Change tracking"
-msgstr "Cambia tracciamento"
+msgstr "Sendungsnummer ändern"
 
 msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
-msgstr "Rifiutato dal tuo negozio su sudemi; all'acquirente non è stato addebitato nulla. Le giacenze sono state ripristinate."
+msgstr "Von Ihrem Shop auf sudemi abgelehnt; dem Käufer wurde nichts berechnet. Der Bestand wurde wiederhergestellt."
 
 msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
-msgstr "Rifiutato automaticamente da sudemi (ad esempio perché all'ordine non è stata data risposta in tempo); all'acquirente non è stato addebitato nulla. Le giacenze sono state ripristinate."
+msgstr "Automatisch von sudemi abgelehnt (zum Beispiel, weil die Bestellung nicht rechtzeitig beantwortet wurde); dem Käufer wurde nichts berechnet. Der Bestand wurde wiederhergestellt."
 
 msgid "Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored."
-msgstr "Annullato dall'acquirente su sudemi prima che l'ordine fosse confermato; all'acquirente non è stato addebitato nulla. Le giacenze sono state ripristinate."
+msgstr "Vom Käufer auf sudemi storniert, bevor die Bestellung bestätigt war; dem Käufer wurde nichts berechnet. Der Bestand wurde wiederhergestellt."
 
 #, php-format
 msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
-msgstr "L'ordine sudemi %1$s è stato rifiutato dal tuo negozio su sudemi; l'ordine n. %2$s è stato annullato qui e le giacenze ripristinate."
+msgstr "sudemi-Bestellung %1$s wurde von Ihrem Shop auf sudemi abgelehnt; Bestellung #%2$s wurde hier storniert und der Bestand wiederhergestellt."
 
 #, php-format
 msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."
-msgstr "L'ordine sudemi %1$s è stato rifiutato automaticamente da sudemi; l'ordine n. %2$s è stato annullato qui e le giacenze ripristinate."
+msgstr "sudemi-Bestellung %1$s wurde automatisch von sudemi abgelehnt; Bestellung #%2$s wurde hier storniert und der Bestand wiederhergestellt."
 
 #, php-format
 msgid "sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored."
-msgstr "L'ordine sudemi %1$s è stato annullato dall'acquirente prima di essere confermato; l'ordine n. %2$s è stato annullato qui e le giacenze ripristinate."
+msgstr "sudemi-Bestellung %1$s wurde vom Käufer storniert, bevor sie bestätigt war; Bestellung #%2$s wurde hier storniert und der Bestand wiederhergestellt."
 
 #, php-format
 msgid "sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored."
-msgstr "L'ordine sudemi %1$s è stato rifiutato su sudemi; l'ordine n. %2$s è stato annullato qui e le giacenze ripristinate."
+msgstr "sudemi-Bestellung %1$s wurde auf sudemi abgelehnt; Bestellung #%2$s wurde hier storniert und der Bestand wiederhergestellt."
 
 #, php-format
 msgid "Reason: %s."
-msgstr "Motivo: %s."
+msgstr "Grund: %s."
 
 #, php-format
 msgid "sudemi order %1$s could not be applied here yet (%2$s); it is read from sudemi again on the next heartbeats."
-msgstr "L'ordine sudemi %1$s non è ancora stato applicato qui (%2$s); verrà riletto da sudemi ai prossimi heartbeat."
+msgstr "sudemi-Bestellung %1$s konnte hier noch nicht übernommen werden (%2$s); sie wird bei den nächsten Statusmeldungen erneut von sudemi gelesen."
 
 #, php-format
 msgid "sudemi order %1$s is not applied here: sudemi no longer has it for this shop (%2$s). Check the WooCommerce order by hand."
-msgstr "L'ordine sudemi %1$s non viene applicato qui: sudemi non lo ha più per questo negozio (%2$s). Controlla l'ordine WooCommerce a mano."
+msgstr "sudemi-Bestellung %1$s wird hier nicht übernommen: sudemi führt sie für diesen Shop nicht mehr (%2$s). Prüfen Sie die WooCommerce-Bestellung von Hand."
 
 #, php-format
 msgid "Gave up applying sudemi order %1$s here after %2$d tries (%3$s). Check this order under WooCommerce > sudemi > Orders and update the WooCommerce order by hand."
-msgstr "Applicazione dell'ordine sudemi %1$s abbandonata dopo %2$d tentativi (%3$s). Controlla l'ordine in WooCommerce > sudemi > Ordini e aggiorna l'ordine WooCommerce a mano."
+msgstr "Übernahme der sudemi-Bestellung %1$s nach %2$d Versuchen aufgegeben (%3$s). Prüfen Sie die Bestellung unter WooCommerce > sudemi > Bestellungen und passen Sie die WooCommerce-Bestellung von Hand an."
 
 #: includes/class-sudemi-insights.php
 msgid "Switched off by you"
-msgstr "Disattivato da te"
+msgstr "Von Ihnen ausgeschaltet"
 
 #: includes/class-sudemi-insights.php
 msgid "No longer in your shop (deleted, hidden or not published)"
-msgstr "Non è più nel tuo negozio (eliminato, nascosto o non pubblicato)"
+msgstr "Nicht mehr in Ihrem Shop (gelöscht, ausgeblendet oder nicht veröffentlicht)"
 
 #: includes/class-sudemi-insights.php
 msgid "Out of stock"
-msgstr "Esaurito"
+msgstr "Nicht auf Lager"
 
 #: includes/class-sudemi-insights.php
 msgid "No shipping price for any country"
-msgstr "Nessun costo di spedizione per alcun paese"
+msgstr "Für kein Land ein Versandpreis"
 
 #: includes/class-sudemi-insights.php
 msgid "Taken down by sudemi (see your e-mail or contact support)"
-msgstr "Rimosso da sudemi (controlla la tua e-mail o contatta l'assistenza)"
+msgstr "Von sudemi gesperrt (siehe Ihre E-Mail oder wenden Sie sich an den Support)"
 
 #: includes/class-sudemi-insights.php
 msgid "Your payout account is not active yet"
-msgstr "Il tuo conto per gli accrediti non è ancora attivo"
+msgstr "Ihr Auszahlungskonto ist noch nicht aktiv"
 
 #: includes/class-sudemi-insights.php
 msgid "This shop stopped reporting in to sudemi"
-msgstr "Questo negozio ha smesso di segnalarsi a sudemi"
+msgstr "Dieser Shop meldet sich nicht mehr bei sudemi"
 
 #: includes/class-sudemi-insights.php
 msgid "Not listed"
-msgstr "Non mostrato"
+msgstr "Nicht angezeigt"
 
 #: includes/class-sudemi-insights.php
 msgid "The description can be at most %d characters."
-msgstr "La descrizione può avere al massimo %d caratteri."
+msgstr "Die Beschreibung darf höchstens %d Zeichen lang sein."
 
 #: includes/class-sudemi-insights.php
 msgid "Enter a valid e-mail address for buyers' questions."
-msgstr "Inserisci un indirizzo e-mail valido per le domande degli acquirenti."
+msgstr "Geben Sie eine gültige E-Mail-Adresse für Fragen von Käufern ein."
 
 #: includes/class-sudemi-insights.php
 msgid "The return period must be a whole number of days from %1$d to %2$d."
-msgstr "Il periodo di reso deve essere un numero intero di giorni da %1$d a %2$d."
+msgstr "Die Rückgabefrist muss eine ganze Zahl von Tagen zwischen %1$d und %2$d sein."
 
 #: includes/class-sudemi-insights.php
 msgid "That period cannot be shown."
-msgstr "Quel periodo non può essere mostrato."
+msgstr "Dieser Zeitraum kann nicht angezeigt werden."
 
 #: includes/class-sudemi-insights.php
 msgid "sudemi does not have this product for this shop (yet). It arrives with the next sync."
-msgstr "sudemi non ha (ancora) questo prodotto per questo negozio. Arriverà con la prossima sincronizzazione."
+msgstr "sudemi hat dieses Produkt für diesen Shop (noch) nicht. Es kommt mit der nächsten Synchronisierung."
 
 #: admin/class-sudemi-admin-manage.php
 msgid "Not connected yet"
-msgstr "Non ancora collegato"
+msgstr "Noch nicht verbunden"
 
 #: admin/class-sudemi-admin-manage.php
 msgid "Orders appear here as soon as a buyer orders one of your products through their AI assistant."
-msgstr "Gli ordini compaiono qui non appena un acquirente ordina uno dei tuoi prodotti tramite il suo assistente IA."
+msgstr "Bestellungen erscheinen hier, sobald ein Käufer eines Ihrer Produkte über seinen KI-Assistenten bestellt."
 
 #: admin/class-sudemi-admin-manage.php
 msgid "Open payouts on the seller portal"
-msgstr "Apri gli accrediti nel portale venditori"
+msgstr "Auszahlungen im Verkäuferportal öffnen"
 
 #: admin/class-sudemi-admin.php
 msgid "Dashboard"
-msgstr "Bacheca"
+msgstr "Übersicht"
 
 #: admin/class-sudemi-admin.php
 msgid "Products on sudemi"
-msgstr "Prodotti su sudemi"
+msgstr "Produkte auf sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "Shop profile"
-msgstr "Profilo del negozio"
+msgstr "Shop-Profil"
 
 #: admin/class-sudemi-admin.php
 msgid "Settings"
-msgstr "Impostazioni"
+msgstr "Einstellungen"
 
 #: admin/class-sudemi-admin.php
 msgid "Waiting for your confirmation"
-msgstr "In attesa della tua conferma"
+msgstr "Wartet auf Ihre Bestätigung"
 
 #: admin/class-sudemi-admin.php
 msgid "Not connected"
-msgstr "Non collegato"
+msgstr "Nicht verbunden"
 
 #: admin/class-sudemi-admin.php
 msgid "Connected, first report pending"
-msgstr "Collegato, primo segnale in arrivo"
+msgstr "Verbunden, erste Meldung folgt"
 
 #: admin/class-sudemi-admin.php
 msgid "Cannot reach sudemi"
-msgstr "sudemi non raggiungibile"
+msgstr "sudemi nicht erreichbar"
 
 #: admin/class-sudemi-admin.php
 msgid "Refused by sudemi"
-msgstr "Rifiutato da sudemi"
+msgstr "Von sudemi abgelehnt"
 
 #: admin/class-sudemi-admin.php
 msgid "Connected, products not shown"
-msgstr "Collegato, prodotti non mostrati"
+msgstr "Verbunden, Produkte nicht angezeigt"
 
 #: admin/class-sudemi-admin.php
 msgid "Live on sudemi"
-msgstr "Attivo su sudemi"
+msgstr "Live auf sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "Seller portal"
-msgstr "Portale venditori"
+msgstr "Verkäuferportal"
 
 #: admin/class-sudemi-admin.php
 msgid "Orders buyers placed through their AI assistant. Accept, ship, refund and export them here."
-msgstr "Ordini fatti dagli acquirenti tramite il loro assistente IA. Accettali, spediscili, rimborsali ed esportali qui."
+msgstr "Bestellungen, die Käufer über ihren KI-Assistenten aufgegeben haben. Hier annehmen, versenden, erstatten und exportieren."
 
 #: admin/class-sudemi-admin.php
 msgid "What sudemi buyers pay for delivery, per country."
-msgstr "Quanto pagano per la consegna gli acquirenti di sudemi, per paese."
+msgstr "Was Käufer auf sudemi pro Land für die Lieferung zahlen."
 
 #: admin/class-sudemi-admin.php
 msgid "What sudemi has paid you and what is still to come."
-msgstr "Quanto ti ha accreditato sudemi e quanto deve ancora arrivare."
+msgstr "Was sudemi Ihnen ausgezahlt hat und was noch kommt."
 
 #: admin/class-sudemi-admin.php
 msgid "Questions about an order, a payment, payouts or this plugin? sudemi support answers here."
-msgstr "Domande su un ordine, un pagamento, gli accrediti o questo plugin? L'assistenza sudemi risponde qui."
+msgstr "Fragen zu einer Bestellung, einer Zahlung, Auszahlungen oder diesem Plugin? Der sudemi-Support antwortet hier."
 
 #: admin/class-sudemi-admin.php
 msgid "The connection with sudemi, delivery times, currency and the shop's reporting."
-msgstr "Il collegamento con sudemi, i tempi di consegna, la valuta e i segnali del negozio."
+msgstr "Die Verbindung mit sudemi, Lieferzeiten, Währung und die Meldungen des Shops."
 
 #: admin/class-sudemi-admin.php
 msgid "Sell through AI assistants"
-msgstr "Vendi tramite gli assistenti IA"
+msgstr "Über KI-Assistenten verkaufen"
 
 #: admin/class-sudemi-admin.php
 msgid "Let ChatGPT, Claude and other AI assistants sell your products"
-msgstr "Fai vendere i tuoi prodotti a ChatGPT, Claude e altri assistenti IA"
+msgstr "Lassen Sie ChatGPT, Claude und andere KI-Assistenten Ihre Produkte verkaufen"
 
 #: admin/class-sudemi-admin.php
 msgid "Buyers ask their AI assistant for a product. sudemi shows them your products with the price and delivery to their country, and the order arrives here as a normal WooCommerce order. You stay the seller; sudemi takes a commission only on what sells."
-msgstr "Gli acquirenti chiedono un prodotto al loro assistente IA. sudemi mostra loro i tuoi prodotti con il prezzo e la consegna nel loro paese, e l'ordine arriva qui come un normale ordine WooCommerce. Il venditore resti tu; sudemi prende una commissione solo su ciò che si vende."
+msgstr "Käufer fragen ihren KI-Assistenten nach einem Produkt. sudemi zeigt ihnen Ihre Produkte mit Preis und Lieferung in ihr Land, und die Bestellung kommt hier als normale WooCommerce-Bestellung an. Sie bleiben der Verkäufer; sudemi berechnet nur eine Provision auf das, was verkauft wird."
 
 #: admin/class-sudemi-admin.php
 msgid "Connect"
-msgstr "Collega"
+msgstr "Verbinden"
 
 #: admin/class-sudemi-admin.php
 msgid "Click the button and confirm on sudemi that this shop is yours."
-msgstr "Fai clic sul pulsante e conferma su sudemi che questo negozio è tuo."
+msgstr "Klicken Sie auf die Schaltfläche und bestätigen Sie auf sudemi, dass dieser Shop Ihnen gehört."
 
 #: admin/class-sudemi-admin.php
 msgid "Your products go live"
-msgstr "I tuoi prodotti vanno online"
+msgstr "Ihre Produkte gehen live"
 
 #: admin/class-sudemi-admin.php
 msgid "Your catalogue, prices, stock and shipping are sent and kept up to date by themselves."
-msgstr "Catalogo, prezzi, disponibilità e spedizioni vengono inviati e tenuti aggiornati da soli."
+msgstr "Katalog, Preise, Bestand und Versand werden von selbst übertragen und aktuell gehalten."
 
 #: admin/class-sudemi-admin.php
 msgid "Orders come in"
-msgstr "Arrivano gli ordini"
+msgstr "Bestellungen kommen herein"
 
 #: admin/class-sudemi-admin.php
 msgid "You confirm, ship, and are paid out by sudemi."
-msgstr "Tu confermi e spedisci, sudemi ti accredita i soldi."
+msgstr "Sie bestätigen und versenden, sudemi zahlt Sie aus."
 
 #: admin/class-sudemi-admin.php
 msgid "You confirm the connection on sudemi, signed in to your own account. This plugin never asks for your sudemi password."
-msgstr "Confermi il collegamento su sudemi, con il tuo account. Questo plugin non chiede mai la tua password di sudemi."
+msgstr "Sie bestätigen die Verbindung auf sudemi, angemeldet mit Ihrem eigenen Konto. Dieses Plugin fragt nie nach Ihrem sudemi-Passwort."
 
 #: admin/class-sudemi-admin.php
 msgid "Connection"
-msgstr "Collegamento"
+msgstr "Verbindung"
 
 #: admin/class-sudemi-admin.php
 msgid "Disconnect this shop from sudemi? Its products stop being shown to buyers right away."
-msgstr "Scollegare questo negozio da sudemi? I suoi prodotti non saranno più mostrati agli acquirenti da subito."
+msgstr "Diesen Shop von sudemi trennen? Seine Produkte werden Käufern dann sofort nicht mehr angezeigt."
 
 #: admin/class-sudemi-admin.php
 msgid "sudemi support answers here, and by e-mail."
-msgstr "L'assistenza sudemi risponde qui e via e-mail."
+msgstr "Der sudemi-Support antwortet hier und per E-Mail."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Period"
-msgstr "Periodo"
+msgstr "Zeitraum"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%d days"
-msgstr "%d giorni"
+msgstr "%d Tage"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "How your products did on sudemi in the last %d days."
-msgstr "Come sono andati i tuoi prodotti su sudemi negli ultimi %d giorni."
+msgstr "Wie Ihre Produkte in den letzten %d Tagen auf sudemi abgeschnitten haben."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Sales"
-msgstr "Vendite"
+msgstr "Umsatz"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "What buyers paid, shipping and VAT included"
-msgstr "Quanto hanno pagato gli acquirenti, spedizione e IVA incluse"
+msgstr "Was Käufer bezahlt haben, inklusive Versand und MwSt."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "After %1$s refunds and %2$s commission"
-msgstr "Dopo %1$s di rimborsi e %2$s di commissione"
+msgstr "Nach %1$s Erstattungen und %2$s Provision"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Average order"
-msgstr "Ordine medio"
+msgstr "Durchschnittliche Bestellung"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Per order, shipping included"
-msgstr "Per ordine, spedizione inclusa"
+msgstr "Pro Bestellung, inklusive Versand"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shown in search results"
-msgstr "Mostrato nei risultati di ricerca"
+msgstr "In Suchergebnissen angezeigt"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Times an AI assistant got one of your products back from a search"
-msgstr "Volte in cui un assistente IA ha ricevuto uno dei tuoi prodotti da una ricerca"
+msgstr "So oft hat ein KI-Assistent bei einer Suche eines Ihrer Produkte erhalten"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Product views"
-msgstr "Visualizzazioni prodotto"
+msgstr "Produktaufrufe"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Times an assistant opened a product's details for a buyer"
-msgstr "Volte in cui un assistente ha aperto la scheda di un prodotto per un acquirente"
+msgstr "So oft hat ein Assistent für einen Käufer die Details eines Produkts geöffnet"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Added to a cart"
-msgstr "Aggiunto a un carrello"
+msgstr "In einen Warenkorb gelegt"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Times a buyer put one of your products in a cart"
-msgstr "Volte in cui un acquirente ha messo uno dei tuoi prodotti nel carrello"
+msgstr "So oft hat ein Käufer eines Ihrer Produkte in einen Warenkorb gelegt"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Conversion"
-msgstr "Conversione"
+msgstr "Konversion"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Orders per product view"
-msgstr "Ordini per visualizzazione prodotto"
+msgstr "Bestellungen pro Produktaufruf"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Seen by buyers"
-msgstr "Visto dagli acquirenti"
+msgstr "Von Käufern gesehen"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Searches and product views per day"
-msgstr "Risultati di ricerca e visualizzazioni prodotto al giorno"
+msgstr "Suchergebnisse und Produktaufrufe pro Tag"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Sales per day"
-msgstr "Vendite al giorno"
+msgstr "Umsatz pro Tag"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "The buyer is not charged until you accept. Without an answer by the deadline the order lapses."
-msgstr "All'acquirente non viene addebitato nulla finché non accetti. Senza risposta entro la scadenza l'ordine decade."
+msgstr "Der Käufer zahlt erst, wenn Sie annehmen. Ohne Antwort bis zur Frist verfällt die Bestellung."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Answer now"
-msgstr "Rispondi ora"
+msgstr "Jetzt beantworten"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Buyers cannot see your products right now. The Settings page shows why and what to do."
-msgstr "In questo momento gli acquirenti non vedono i tuoi prodotti. La pagina Impostazioni spiega perché e cosa fare."
+msgstr "Käufer sehen Ihre Produkte gerade nicht. Die Seite Einstellungen zeigt, warum, und was zu tun ist."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Open settings"
-msgstr "Apri impostazioni"
+msgstr "Einstellungen öffnen"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Top products"
-msgstr "Prodotti migliori"
+msgstr "Top-Produkte"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "All products on sudemi"
-msgstr "Tutti i prodotti su sudemi"
+msgstr "Alle Produkte auf sudemi"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "No activity in this period yet. Buyers find your products by asking their AI assistant; the numbers show up here day by day."
-msgstr "Ancora nessuna attività in questo periodo. Gli acquirenti trovano i tuoi prodotti chiedendo al loro assistente IA; i numeri compaiono qui giorno per giorno."
+msgstr "In diesem Zeitraum noch keine Aktivität. Käufer finden Ihre Produkte, indem sie ihren KI-Assistenten fragen; die Zahlen erscheinen hier Tag für Tag."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shown"
-msgstr "Mostrato"
+msgstr "Angezeigt"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Views"
-msgstr "Visualizzazioni"
+msgstr "Aufrufe"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "In cart"
-msgstr "Nel carrello"
+msgstr "Im Warenkorb"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Your products on sudemi"
-msgstr "I tuoi prodotti su sudemi"
+msgstr "Ihre Produkte auf sudemi"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "shown to buyers"
-msgstr "mostrati agli acquirenti"
+msgstr "Käufern angezeigt"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Orders by status"
-msgstr "Ordini per stato"
+msgstr "Bestellungen nach Status"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "No orders in this period."
-msgstr "Nessun ordine in questo periodo."
+msgstr "Keine Bestellungen in diesem Zeitraum."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Where buyers are"
-msgstr "Dove sono gli acquirenti"
+msgstr "Wo die Käufer sind"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Your products as sudemi has them: whether buyers can see each one, why not, and how often it was found in the last 30 days."
-msgstr "I tuoi prodotti come li ha sudemi: se gli acquirenti li vedono, perché no, e quante volte sono stati trovati negli ultimi 30 giorni."
+msgstr "Ihre Produkte, wie sudemi sie hat: ob Käufer jedes sehen, warum nicht, und wie oft es in den letzten 30 Tagen gefunden wurde."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shown to buyers"
-msgstr "Mostrati agli acquirenti"
+msgstr "Käufern angezeigt"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Not shown"
-msgstr "Non mostrato"
+msgstr "Nicht angezeigt"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Search products"
-msgstr "Cerca prodotti"
+msgstr "Produkte suchen"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Name, SKU or ID"
-msgstr "Nome, SKU o ID"
+msgstr "Name, Artikelnummer oder ID"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "No products match."
-msgstr "Nessun prodotto corrisponde."
+msgstr "Keine passenden Produkte."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Products reach sudemi with the catalogue sync, a few minutes after you publish them."
-msgstr "I prodotti arrivano su sudemi con la sincronizzazione del catalogo, pochi minuti dopo la pubblicazione."
+msgstr "Produkte kommen mit der Katalog-Synchronisierung auf sudemi, wenige Minuten nachdem Sie sie veröffentlichen."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Stock"
-msgstr "Disponibilità"
+msgstr "Bestand"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Buyers see it"
-msgstr "Visibile agli acquirenti"
+msgstr "Für Käufer sichtbar"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shown (30 days)"
-msgstr "Mostrato (30 giorni)"
+msgstr "Angezeigt (30 Tage)"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Views (30 days)"
-msgstr "Visualizzazioni (30 giorni)"
+msgstr "Aufrufe (30 Tage)"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Orders (30 days)"
-msgstr "Ordini (30 giorni)"
+msgstr "Bestellungen (30 Tage)"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Show on sudemi"
-msgstr "Mostra su sudemi"
+msgstr "Auf sudemi anzeigen"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "SKU %s"
-msgstr "SKU %s"
+msgstr "Art.-Nr. %s"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "ID %s"
@@ -2046,184 +2046,184 @@ msgstr "ID %s"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "in stock"
-msgstr "disponibile"
+msgstr "auf Lager"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Show %s on sudemi"
-msgstr "Mostra %s su sudemi"
+msgstr "%s auf sudemi anzeigen"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "On"
-msgstr "Sì"
+msgstr "An"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Off"
-msgstr "No"
+msgstr "Aus"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Products %1$d to %2$d of %3$d"
-msgstr "Prodotti da %1$d a %2$d di %3$d"
+msgstr "Produkte %1$d bis %2$d von %3$d"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Prices, stock, photos and texts come from your WooCommerce products and are sent by themselves when you change them. The switch only decides whether sudemi shows a product; it does not change anything in your shop."
-msgstr "Prezzi, disponibilità, foto e testi vengono dai tuoi prodotti WooCommerce e sono inviati da soli quando li modifichi. L'interruttore decide solo se sudemi mostra un prodotto; non cambia nulla nel tuo negozio."
+msgstr "Preise, Bestand, Fotos und Texte stammen aus Ihren WooCommerce-Produkten und werden von selbst übertragen, wenn Sie sie ändern. Der Schalter entscheidet nur, ob sudemi ein Produkt anzeigt; in Ihrem Shop ändert sich nichts."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Product %s switched on for sudemi."
-msgstr "Prodotto %s attivato per sudemi."
+msgstr "Produkt %s für sudemi eingeschaltet."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Product %s switched off for sudemi."
-msgstr "Prodotto %s disattivato per sudemi."
+msgstr "Produkt %s für sudemi ausgeschaltet."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Switched on. sudemi shows this product again (when it is in stock and can be shipped)."
-msgstr "Attivato. sudemi mostra di nuovo questo prodotto (quando è disponibile e spedibile)."
+msgstr "Eingeschaltet. sudemi zeigt dieses Produkt wieder an (wenn es auf Lager ist und versendet werden kann)."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Switched off. sudemi no longer shows this product to buyers. Your shop is not changed."
-msgstr "Disattivato. sudemi non mostra più questo prodotto agli acquirenti. Il tuo negozio non cambia."
+msgstr "Ausgeschaltet. sudemi zeigt dieses Produkt Käufern nicht mehr an. Ihr Shop bleibt unverändert."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "What buyers and their AI assistant are told about your shop."
-msgstr "Cosa viene detto del tuo negozio agli acquirenti e al loro assistente IA."
+msgstr "Was Käufer und ihr KI-Assistent über Ihren Shop erfahren."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shop name buyers see"
-msgstr "Nome del negozio visto dagli acquirenti"
+msgstr "Shop-Name, den Käufer sehen"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "The name is checked by sudemi, so it is changed through support."
-msgstr "Il nome è verificato da sudemi, per questo si cambia tramite l'assistenza."
+msgstr "Der Name wird von sudemi geprüft und deshalb über den Support geändert."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Please change my shop name"
-msgstr "Vorrei cambiare il nome del mio negozio"
+msgstr "Bitte meinen Shop-Namen ändern"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Ask for a new name"
-msgstr "Chiedi un nuovo nome"
+msgstr "Neuen Namen beantragen"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "About your shop"
-msgstr "Il tuo negozio"
+msgstr "Über Ihren Shop"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "A few sentences: what you sell and what makes your shop worth buying from. AI assistants may quote it to buyers."
-msgstr "Qualche frase: cosa vendi e perché vale la pena comprare da te. Gli assistenti IA possono citarla agli acquirenti."
+msgstr "Ein paar Sätze: was Sie verkaufen und warum sich der Kauf bei Ihnen lohnt. KI-Assistenten können das Käufern zitieren."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "E-mail for buyers' questions"
-msgstr "E-mail per le domande degli acquirenti"
+msgstr "E-Mail für Fragen von Käufern"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shown to buyers after they ordered, for questions about delivery and returns."
-msgstr "Mostrata agli acquirenti dopo l'ordine, per domande su consegna e resi."
+msgstr "Wird Käufern nach der Bestellung angezeigt, für Fragen zu Lieferung und Rückgabe."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Return period (days)"
-msgstr "Periodo di reso (giorni)"
+msgstr "Rückgabefrist (Tage)"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "How long after delivery a buyer may change their mind. The law gives at least 14 days; you may give more."
-msgstr "Per quanto tempo dopo la consegna un acquirente può ripensarci. La legge dà almeno 14 giorni; puoi darne di più."
+msgstr "Wie lange ein Käufer nach der Lieferung vom Kauf zurücktreten kann. Gesetzlich sind es mindestens 14 Tage; Sie dürfen mehr gewähren."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Save on sudemi"
-msgstr "Salva su sudemi"
+msgstr "Auf sudemi speichern"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Fixed details"
-msgstr "Dati fissi"
+msgstr "Feste Angaben"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Company details on the seller portal"
-msgstr "Dati aziendali nel portale venditori"
+msgstr "Firmendaten im Verkäuferportal"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shop profile saved on sudemi."
-msgstr "Profilo del negozio salvato su sudemi."
+msgstr "Shop-Profil auf sudemi gespeichert."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Saved on sudemi. Buyers see the new details from now on."
-msgstr "Salvato su sudemi. Da ora gli acquirenti vedono i nuovi dati."
+msgstr "Auf sudemi gespeichert. Käufer sehen ab sofort die neuen Angaben."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%s item sold"
 msgid_plural "%s items sold"
-msgstr[0] "%s articolo venduto"
-msgstr[1] "%s articoli venduti"
+msgstr[0] "%s Artikel verkauft"
+msgstr[1] "%s Artikel verkauft"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%d order is waiting for your answer"
 msgid_plural "%d orders are waiting for your answer"
-msgstr[0] "%d ordine attende la tua risposta"
-msgstr[1] "%d ordini attendono la tua risposta"
+msgstr[0] "%d Bestellung wartet auf Ihre Antwort"
+msgstr[1] "%d Bestellungen warten auf Ihre Antwort"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%d return request is waiting for your answer"
 msgid_plural "%d return requests are waiting for your answer"
-msgstr[0] "%d richiesta di reso attende la tua risposta"
-msgstr[1] "%d richieste di reso attendono la tua risposta"
+msgstr[0] "%d Rückgabeanfrage wartet auf Ihre Antwort"
+msgstr[1] "%d Rückgabeanfragen warten auf Ihre Antwort"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%d product is not shown: see why"
 msgid_plural "%d products are not shown: see why"
-msgstr[0] "%d prodotto non è mostrato: scopri perché"
-msgstr[1] "%d prodotti non sono mostrati: scopri perché"
+msgstr[0] "%d Produkt wird nicht angezeigt: Gründe ansehen"
+msgstr[1] "%d Produkte werden nicht angezeigt: Gründe ansehen"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%d photo"
 msgid_plural "%d photos"
-msgstr[0] "%d foto"
-msgstr[1] "%d foto"
+msgstr[0] "%d Foto"
+msgstr[1] "%d Fotos"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "ships to %d country"
 msgid_plural "ships to %d countries"
-msgstr[0] "spedisce in %d paese"
-msgstr[1] "spedisce in %d paesi"
+msgstr[0] "Versand in %d Land"
+msgstr[1] "Versand in %d Länder"
 
 #: admin/class-sudemi-admin.php
 msgid "Not reporting in to sudemi"
-msgstr "Non si segnala a sudemi"
+msgstr "Meldet sich nicht bei sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "This shop has not reported in to sudemi for more than 15 minutes, so its products are paused. Set up the cron job below."
-msgstr "Questo negozio non si segnala a sudemi da più di 15 minuti, quindi i suoi prodotti sono in pausa. Imposta il cron job qui sotto."
+msgstr "Dieser Shop hat sich seit mehr als 15 Minuten nicht bei sudemi gemeldet, daher sind seine Produkte pausiert. Richten Sie unten den Cronjob ein."
 
 #: admin/class-sudemi-admin.php
 msgid "Stripe is not connected. Your products are listed on sudemi, Connect Stripe"
-msgstr "Stripe non è collegato. I tuoi prodotti sono in elenco su sudemi, collega Stripe"
+msgstr "Stripe ist nicht verbunden. Ihre Produkte sind auf sudemi gelistet, verbinden Sie Stripe"
 
 #: admin/class-sudemi-admin.php
 msgid "Until then buyers pay on your own website: free listing, no commission."
-msgstr "Fino ad allora gli acquirenti pagano sul tuo sito: elenco gratuito, nessuna commissione."
+msgstr "Bis dahin bezahlen Käufer auf Ihrer eigenen Website: kostenloser Eintrag, keine Provision."
 
 #: admin/class-sudemi-admin.php
 msgid "Stripe needs more information from you."
-msgstr "Stripe ha bisogno di altre informazioni."
+msgstr "Stripe braucht weitere Angaben von Ihnen."
 
 #: admin/class-sudemi-admin.php
 msgid "Connect Stripe"
-msgstr "Collega Stripe"
+msgstr "Stripe verbinden"
 
 #: admin/class-sudemi-admin.php
 msgid "Connect Stripe is done"
-msgstr "Stripe è collegato"
+msgstr "Stripe ist verbunden"
 
 #: admin/class-sudemi-admin.php
 msgid "Buyers pay through sudemi, and you get your orders and payouts here."
-msgstr "Gli acquirenti pagano tramite sudemi, e qui trovi ordini e bonifici."
+msgstr "Käufer bezahlen über sudemi, und Ihre Bestellungen und Auszahlungen finden Sie hier."
 
 #: admin/class-sudemi-admin.php
 msgid "Your shop is paused on sudemi while we review a payment provider restriction"
-msgstr "Il tuo negozio è in pausa su sudemi mentre verifichiamo una limitazione del fornitore di pagamenti"
+msgstr "Ihr Shop ist auf sudemi pausiert, während wir eine Einschränkung des Zahlungsdienstleisters prüfen"
 
 #: admin/class-sudemi-admin.php
 msgid "Your products are not shown for now. We e-mail you what is needed."
-msgstr "Per ora i tuoi prodotti non vengono mostrati. Ti scriviamo cosa serve."
+msgstr "Ihre Produkte werden vorerst nicht gezeigt. Wir schreiben Ihnen per E-Mail, was nötig ist."
 
 #: admin/class-sudemi-admin.php
 msgid "Contact support"
-msgstr "Contatta l'assistenza"
+msgstr "Support kontaktieren"

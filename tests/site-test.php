@@ -14,6 +14,8 @@
 declare(strict_types=1);
 
 define( 'ABSPATH', __DIR__ );
+defined( 'ABSPATH' ) || exit;
+// phpcs:disable WordPress.Security.EscapeOutput,WordPress.NamingConventions.PrefixAllGlobals,WordPress.PHP.DevelopmentFunctions -- a command-line test (plain text output, test doubles of WordPress functions); left out of the release zip.
 define( 'SUDEMI_VERSION', 'test' );
 
 $options   = array( 'sudemi_install_id' => 'inst-1', 'sudemi_api_base' => 'https://api.example.test' );

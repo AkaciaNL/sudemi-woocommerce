@@ -67,20 +67,20 @@ final class Sudemi_Withdrawal {
 	/** reason => label, translated. */
 	public static function labels() {
 		return array(
-			''           => __( 'None - normal right of withdrawal applies', 'sudemi' ),
-			'hygiene'    => __( 'Sealed for health or hygiene reasons (not returnable once unsealed)', 'sudemi' ),
-			'custom'     => __( 'Made to the buyer’s specifications or personalised', 'sudemi' ),
-			'perishable' => __( 'Perishable or quickly expiring', 'sudemi' ),
-			'media'      => __( 'Sealed audio, video or software (not returnable once unsealed)', 'sudemi' ),
-			'press'      => __( 'Newspaper, periodical or magazine', 'sudemi' ),
-			'mixed'      => __( 'Inseparably mixed with other items after delivery', 'sudemi' ),
-			'alcohol'    => __( 'Alcohol with a market-dependent price, delivered after 30+ days', 'sudemi' ),
+			''           => __( 'None - normal right of withdrawal applies', 'sudemi-connector' ),
+			'hygiene'    => __( 'Sealed for health or hygiene reasons (not returnable once unsealed)', 'sudemi-connector' ),
+			'custom'     => __( 'Made to the buyer’s specifications or personalised', 'sudemi-connector' ),
+			'perishable' => __( 'Perishable or quickly expiring', 'sudemi-connector' ),
+			'media'      => __( 'Sealed audio, video or software (not returnable once unsealed)', 'sudemi-connector' ),
+			'press'      => __( 'Newspaper, periodical or magazine', 'sudemi-connector' ),
+			'mixed'      => __( 'Inseparably mixed with other items after delivery', 'sudemi-connector' ),
+			'alcohol'    => __( 'Alcohol with a market-dependent price, delivered after 30+ days', 'sudemi-connector' ),
 		);
 	}
 
 	public static function add_tab( $tabs ) {
 		$tabs['sudemi'] = array(
-			'label'    => __( 'sudemi', 'sudemi' ),
+			'label'    => __( 'sudemi', 'sudemi-connector' ),
 			'target'   => 'sudemi_product_data',
 			// Grouped and external products are never sent to sudemi.
 			'class'    => array( 'hide_if_grouped', 'hide_if_external' ),
@@ -96,10 +96,10 @@ final class Sudemi_Withdrawal {
 		woocommerce_wp_select(
 			array(
 				'id'          => self::FIELD,
-				'label'       => __( 'Right of withdrawal', 'sudemi' ),
+				'label'       => __( 'Right of withdrawal', 'sudemi-connector' ),
 				'options'     => self::labels(),
 				'value'       => $current,
-				'description' => __( 'Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed.', 'sudemi' ),
+				'description' => __( 'Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed.', 'sudemi-connector' ),
 				'desc_tip'    => false,
 			)
 		);

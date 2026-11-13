@@ -7,35 +7,35 @@ msgstr ""
 "POT-Creation-Date: 2026-11-05 00:00+0000\n"
 "PO-Revision-Date: 2026-11-06 00:00+0000\n"
 "Last-Translator: Akacia\n"
-"Language-Team: tr_TR\n"
-"Language: tr_TR\n"
+"Language-Team: pl_PL\n"
+"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Domain: sudemi\n"
+"Plural-Forms: nplurals=3; plural=(n == 1 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2);\n"
+"X-Domain: sudemi-connector\n"
 
 #. Plugin Name of the plugin
 #: sudemi-connector.php
 msgid "sudemi Connector"
-msgstr "sudemi Bağlayıcı"
+msgstr "sudemi Connector"
 
 #. Description of the plugin
 #: sudemi-connector.php
 msgid "Lists this shop's products on sudemi, so an AI assistant can find them and send buyers to you. You stay the merchant of record."
-msgstr "Bu mağazanın ürünlerini sudemi'de listeler; böylece bir yapay zekâ asistanı onları bulup alıcıları size yönlendirebilir. Satıcı olarak siz kalırsınız."
+msgstr "Publikuje produkty tego sklepu w sudemi, aby asystent AI mógł je znaleźć i kierować do Ciebie kupujących. Sprzedawcą pozostajesz Ty."
 
 #: sudemi-connector.php:49
 msgid "Every minute (sudemi pairing)"
-msgstr "Her dakika (sudemi eşleştirmesi)"
+msgstr "Co minutę (parowanie z sudemi)"
 
 #: sudemi-connector.php:56
 msgid "Every five minutes (sudemi heartbeat)"
-msgstr "Her beş dakikada bir (sudemi durum sinyali)"
+msgstr "Co pięć minut (heartbeat sudemi)"
 
 #: sudemi-connector.php:71
 msgid "sudemi Connector needs WooCommerce to be active."
-msgstr "sudemi Bağlayıcı'nın çalışması için WooCommerce'in etkin olması gerekir."
+msgstr "sudemi Connector wymaga aktywnego WooCommerce."
 
 #: admin/class-sudemi-admin.php:31 admin/class-sudemi-admin.php:32
 #: admin/class-sudemi-admin.php:50
@@ -44,2186 +44,2193 @@ msgstr "sudemi"
 
 #: admin/class-sudemi-admin.php:43
 msgid "You do not have permission to manage this shop."
-msgstr "Bu mağazayı yönetme yetkiniz yok."
+msgstr "Nie masz uprawnień do zarządzania tym sklepem."
 
 #: admin/class-sudemi-admin.php:54
 msgid "This server is missing the sodium extension. The connection needs it to sign requests, and will not work without it. Ask your host to enable it."
-msgstr "Bu sunucuda sodium eklentisi eksik. Bağlantı, istekleri imzalamak için buna ihtiyaç duyar ve onsuz çalışmaz. Barındırma sağlayıcınızdan bunu etkinleştirmesini isteyin."
+msgstr "Na tym serwerze brakuje rozszerzenia sodium. Połączenie potrzebuje go do podpisywania żądań i bez niego nie zadziała. Poproś dostawcę hostingu o jego włączenie."
 
 #: admin/class-sudemi-admin.php:71
 msgid "Connecting this shop lets an AI assistant find your products and send buyers to you. You confirm the connection on sudemi, signed in to your own account - this plugin never asks for your sudemi password."
-msgstr "Bu mağazayı bağladığınızda bir yapay zekâ asistanı ürünlerinizi bulabilir ve alıcıları size yönlendirebilir. Bağlantıyı, kendi hesabınızla giriş yaparak sudemi'de onaylarsınız - bu eklenti sudemi şifrenizi asla sormaz."
+msgstr "Połączenie tego sklepu pozwala asystentowi AI znajdować Twoje produkty i kierować do Ciebie kupujących. Połączenie potwierdzasz w sudemi, zalogowany na własne konto - ta wtyczka nigdy nie prosi o Twoje hasło do sudemi."
 
 #: admin/class-sudemi-admin.php:75
 msgid "Connect this shop"
-msgstr "Bu mağazayı bağla"
+msgstr "Połącz ten sklep"
 
 #: admin/class-sudemi-admin.php:81
 msgid "Almost there. Open the link below, sign in to sudemi and confirm that this shop is yours. This page will pick it up by itself."
-msgstr "Neredeyse bitti. Aşağıdaki bağlantıyı açın, sudemi'ye giriş yapın ve bu mağazanın size ait olduğunu onaylayın. Bu sayfa durumu kendiliğinden algılayacaktır."
+msgstr "Prawie gotowe. Otwórz poniższy link, zaloguj się w sudemi i potwierdź, że ten sklep należy do Ciebie. Ta strona sama to wykryje."
 
 #: admin/class-sudemi-admin.php:84
 msgid "Confirm this shop on sudemi"
-msgstr "Bu mağazayı sudemi'de onayla"
+msgstr "Potwierdź ten sklep w sudemi"
 
 #. translators: %s: the public path the token is served at.
 #: admin/class-sudemi-admin.php:88
 #, php-format
 msgid "While this is open, the shop answers at %s with a one-time token so sudemi can confirm the request came from here. It stops being served the moment the connection completes."
-msgstr "Bu sayfa açıkken mağaza, sudemi'nin isteğin buradan geldiğini doğrulayabilmesi için %s adresinde tek kullanımlık bir belirteçle yanıt verir. Bağlantı tamamlandığı anda bu belirteç artık sunulmaz."
+msgstr "Dopóki ta strona jest otwarta, sklep odpowiada pod adresem %s jednorazowym tokenem, aby sudemi mogło potwierdzić, że żądanie pochodzi stąd. Token przestaje być udostępniany w chwili zakończenia łączenia."
 
 #: admin/class-sudemi-admin.php:95
 msgid "This shop is connected to sudemi."
-msgstr "Bu mağaza sudemi'ye bağlı."
+msgstr "Ten sklep jest połączony z sudemi."
 
 #: admin/class-sudemi-admin.php:98
 msgid "Shop address"
-msgstr "Mağaza adresi"
+msgstr "Adres sklepu"
 
 #: admin/class-sudemi-admin.php:98
 msgid "Fixed. sudemi checked that this shop answered from this address, and a listing tells a buyer where it came from - so changing it means connecting again from the new address."
-msgstr "Sabittir. sudemi bu mağazanın bu adresten yanıt verdiğini doğruladı ve her ilan, alıcıya nereden geldiğini gösterir - bu yüzden adresi değiştirmek, yeni adresten yeniden bağlanmak anlamına gelir."
+msgstr "Stały. sudemi sprawdziło, że ten sklep odpowiadał spod tego adresu, a oferta informuje kupującego, skąd pochodzi - dlatego zmiana adresu oznacza ponowne połączenie z nowego adresu."
 
 #: admin/class-sudemi-admin.php:99
 msgid "Install"
-msgstr "Kurulum"
+msgstr "Instalacja"
 
 #: admin/class-sudemi-admin.php:99
 msgid "Which installation this is. Revoke it on sudemi to cut this shop off immediately."
-msgstr "Bunun hangi kurulum olduğu. Bu mağazanın erişimini hemen kesmek için kurulumu sudemi'de iptal edin."
+msgstr "Identyfikator tej instalacji. Unieważnij ją w sudemi, aby natychmiast odciąć ten sklep."
 
 #: admin/class-sudemi-admin.php:100
 msgid "Signing key"
-msgstr "İmzalama anahtarı"
+msgstr "Klucz podpisu"
 
 #: admin/class-sudemi-admin.php:100
 msgid "held on this server"
-msgstr "bu sunucuda saklanıyor"
+msgstr "przechowywany na tym serwerze"
 
 #: admin/class-sudemi-admin.php:100
 msgid "The private half never leaves this server and is never sent to sudemi. It cannot be shown here either."
-msgstr "Özel kısım bu sunucudan asla çıkmaz ve sudemi'ye asla gönderilmez. Burada da gösterilemez."
+msgstr "Część prywatna nigdy nie opuszcza tego serwera i nigdy nie jest wysyłana do sudemi. Nie można jej też wyświetlić w tym miejscu."
 
 #: admin/class-sudemi-admin.php:107
 msgid "Set on sudemi, not here"
-msgstr "Burada değil, sudemi'de ayarlanır"
+msgstr "Ustawiane w sudemi, nie tutaj"
 
 #: admin/class-sudemi-admin.php:108
 msgid "Your legal name, country, trader status and VAT number decide what a buyer is owed, so they are confirmed once on sudemi and changed there. This plugin cannot edit them."
-msgstr "Yasal adınız, ülkeniz, tacir statünüz ve KDV numaranız, alıcının hangi haklara sahip olduğunu belirler; bu nedenle sudemi'de bir kez onaylanır ve orada değiştirilir. Bu eklenti bunları düzenleyemez."
+msgstr "Twoja nazwa prawna, kraj, status przedsiębiorcy i numer VAT decydują o tym, co przysługuje kupującemu, dlatego są potwierdzane jednorazowo w sudemi i tam się je zmienia. Ta wtyczka nie może ich edytować."
 
 #: admin/class-sudemi-admin.php:113
 msgid "Sync the catalogue now"
-msgstr "Kataloğu şimdi eşitle"
+msgstr "Synchronizuj katalog teraz"
 
 #: admin/class-sudemi-admin.php:119
 msgid "Disconnect"
-msgstr "Bağlantıyı kes"
+msgstr "Odłącz"
 
 #: admin/class-sudemi-admin.php:137
 msgid "Listing status"
-msgstr "Listeleme durumu"
+msgstr "Status ofert"
 
 #: admin/class-sudemi-admin.php:141
 msgid "This shop has not reported in to sudemi yet. That happens within a few minutes of connecting, and needs WP-Cron to be running on this site."
-msgstr "Bu mağaza henüz sudemi'ye durum bildirmedi. Bu, bağlandıktan sonraki birkaç dakika içinde gerçekleşir ve bu sitede WP-Cron'un çalışıyor olmasını gerektirir."
+msgstr "Ten sklep nie zgłosił się jeszcze do sudemi. Nastąpi to w ciągu kilku minut od połączenia i wymaga działającego WP-Cron w tej witrynie."
 
 #: admin/class-sudemi-admin.php:149
 #, php-format
 msgid "%s ago"
-msgstr "%s önce"
+msgstr "%s temu"
 
 #: admin/class-sudemi-admin.php:150
 msgid "never"
-msgstr "hiçbir zaman"
+msgstr "nigdy"
 
 #: admin/class-sudemi-admin.php:154
 msgid "This shop could not reach sudemi. Its products stay listed for a short while and are then paused, because sudemi will not quote a price it cannot confirm."
-msgstr "Bu mağaza sudemi'ye ulaşamadı. Ürünleri kısa bir süre daha listede kalır, ardından duraklatılır; çünkü sudemi doğrulayamadığı bir fiyatı sunmaz."
+msgstr "Ten sklep nie mógł połączyć się z sudemi. Jego produkty pozostają widoczne jeszcze przez krótki czas, a potem zostają wstrzymane, ponieważ sudemi nie podaje ceny, której nie może potwierdzić."
 
 #: admin/class-sudemi-admin.php:158
 msgid "sudemi refused this shop."
-msgstr "sudemi bu mağazayı reddetti."
+msgstr "sudemi odrzuciło ten sklep."
 
 #: admin/class-sudemi-admin.php:162
 msgid "This shop is connected but its products are not being shown."
-msgstr "Bu mağaza bağlı, ancak ürünleri gösterilmiyor."
+msgstr "Ten sklep jest połączony, ale jego produkty nie są wyświetlane."
 
 #: admin/class-sudemi-admin.php:166
 msgid "Products are being shown on sudemi."
-msgstr "Ürünler sudemi'de gösteriliyor."
+msgstr "Produkty są wyświetlane w sudemi."
 
 #: admin/class-sudemi-admin.php:171
 msgid "Last reported in"
-msgstr "Son durum bildirimi"
+msgstr "Ostatnie zgłoszenie"
 
 #: admin/class-sudemi-admin.php:171
 msgid "This shop tells sudemi every five minutes that it is still here and that its prices still stand. When that stops, the listings are paused rather than left at prices nobody is confirming."
-msgstr "Bu mağaza her beş dakikada bir sudemi'ye hâlâ burada olduğunu ve fiyatlarının hâlâ geçerli olduğunu bildirir. Bu durursa ilanlar, kimsenin onaylamadığı fiyatlarla bırakılmak yerine duraklatılır."
+msgstr "Co pięć minut ten sklep informuje sudemi, że nadal działa i że jego ceny są aktualne. Gdy to ustaje, oferty zostają wstrzymane, zamiast pozostawać z cenami, których nikt nie potwierdza."
 
 #: admin/class-sudemi-admin.php:173
 msgid "Prices confirmed until"
-msgstr "Fiyatların onaylı olduğu son tarih"
+msgstr "Ceny potwierdzone do"
 
 #: admin/class-sudemi-admin.php:173
 msgid "After this, sudemi stops showing this shop until it reports in again. Nothing is deleted."
-msgstr "Bu tarihten sonra sudemi, mağaza yeniden durum bildirene kadar bu mağazayı göstermez. Hiçbir şey silinmez."
+msgstr "Po tym czasie sudemi przestaje wyświetlać ten sklep, dopóki ponownie się nie zgłosi. Nic nie zostaje usunięte."
 
 #: admin/class-sudemi-admin.php:177
 msgid "Price changes waiting"
-msgstr "Bekleyen fiyat değişiklikleri"
+msgstr "Oczekujące zmiany cen"
 
 #: admin/class-sudemi-admin.php:180
 msgid "Price or stock changes that could not be sent yet. They are retried on the next report and are not lost."
-msgstr "Henüz gönderilemeyen fiyat veya stok değişiklikleri. Bir sonraki bildirimde yeniden denenir ve kaybolmaz."
+msgstr "Zmiany cen lub stanów magazynowych, których nie udało się jeszcze wysłać. Zostaną ponowione przy następnym zgłoszeniu i nie przepadną."
 
 #: admin/class-sudemi-admin.php:181
 msgid "Every price change has reached sudemi."
-msgstr "Tüm fiyat değişiklikleri sudemi'ye ulaştı."
+msgstr "Wszystkie zmiany cen dotarły do sudemi."
 
 #: admin/class-sudemi-admin.php:184
 msgid "Confirming orders"
-msgstr "Siparişlerin onaylanması"
+msgstr "Potwierdzanie zamówień"
 
 #: admin/class-sudemi-admin.php:186
 msgid "automatically"
-msgstr "otomatik"
+msgstr "automatycznie"
 
 #: admin/class-sudemi-admin.php:187
 msgid "by hand"
-msgstr "elle"
+msgstr "ręcznie"
 
 #: admin/class-sudemi-admin.php:189
 msgid "A buyer on sudemi is authorised but not charged until this shop confirms it has the item. That check runs against this shop's live stock every five minutes: in stock means the order is accepted and the money taken, out of stock means it is declined and the buyer's money released. Nothing is ever charged without this shop agreeing to it."
-msgstr "sudemi'deki bir alıcının ödemesi onaylanır (provizyon alınır), ancak bu mağaza ürünün elinde olduğunu doğrulayana kadar tahsil edilmez. Bu kontrol her beş dakikada bir mağazanın güncel stoğuna göre yapılır: stokta varsa sipariş kabul edilir ve para tahsil edilir, stokta yoksa sipariş reddedilir ve alıcının parası serbest bırakılır. Bu mağazanın onayı olmadan asla tahsilat yapılmaz."
+msgstr "Płatność kupującego w sudemi jest autoryzowana, ale nie zostaje pobrana, dopóki ten sklep nie potwierdzi, że ma dany produkt. Sprawdzenie odbywa się co pięć minut na podstawie bieżących stanów magazynowych sklepu: jeśli produkt jest dostępny, zamówienie zostaje przyjęte i środki pobrane; jeśli go brak, zamówienie zostaje odrzucone, a środki kupującego zwolnione. Nic nie zostanie pobrane bez zgody tego sklepu."
 
 #: admin/class-sudemi-admin.php:190
 msgid "Orders wait for someone here to answer them. If nobody does before the deadline sudemi shows, the buyer is released and charged nothing - an unanswered order is never treated as accepted."
-msgstr "Siparişler, buradan birinin yanıtlamasını bekler. sudemi'nin gösterdiği süre dolmadan kimse yanıt vermezse alıcının ödemesi serbest bırakılır ve hiçbir ücret alınmaz - yanıtlanmamış bir sipariş asla kabul edilmiş sayılmaz."
+msgstr "Zamówienia czekają, aż ktoś tutaj na nie odpowie. Jeśli nikt tego nie zrobi przed terminem podanym w sudemi, kupujący zostaje zwolniony i nic nie jest pobierane - zamówienie bez odpowiedzi nigdy nie jest traktowane jako przyjęte."
 
 #: admin/class-sudemi-admin.php:213
 msgid "Orders through sudemi"
-msgstr "sudemi üzerinden gelen siparişler"
+msgstr "Zamówienia przez sudemi"
 
 #: admin/class-sudemi-admin.php:218
 msgid "Could not reach sudemi to load the order history just now. Nothing is wrong with the orders themselves; try again shortly."
-msgstr "Sipariş geçmişini yüklemek için şu anda sudemi'ye ulaşılamadı. Siparişlerin kendisinde bir sorun yok; kısa bir süre sonra tekrar deneyin."
+msgstr "Nie udało się teraz połączyć z sudemi, aby wczytać historię zamówień. Z samymi zamówieniami wszystko jest w porządku; spróbuj ponownie za chwilę."
 
 #: admin/class-sudemi-admin.php:231
 #, php-format
 msgid "%d order is waiting to be confirmed. The buyer has not been charged for it yet."
 msgid_plural "%d orders are waiting to be confirmed. Those buyers have not been charged yet."
-msgstr[0] "%d sipariş onay bekliyor. Alıcıdan henüz ücret alınmadı."
-msgstr[1] "%d sipariş onay bekliyor. Bu alıcılardan henüz ücret alınmadı."
+msgstr[0] "%d zamówienie czeka na potwierdzenie. Kupujący nie został jeszcze obciążony."
+msgstr[1] "%d zamówienia czekają na potwierdzenie. Ci kupujący nie zostali jeszcze obciążeni."
+msgstr[2] "%d zamówień czeka na potwierdzenie. Ci kupujący nie zostali jeszcze obciążeni."
 
 #: admin/class-sudemi-admin.php:245
 msgid "No orders through sudemi yet."
-msgstr "Henüz sudemi üzerinden gelen sipariş yok."
+msgstr "Brak jeszcze zamówień przez sudemi."
 
 #: admin/class-sudemi-admin.php:251
 msgid "Order"
-msgstr "Sipariş"
+msgstr "Zamówienie"
 
 #: admin/class-sudemi-admin.php:252
 msgid "What sold"
-msgstr "Satılanlar"
+msgstr "Co sprzedano"
 
 #: admin/class-sudemi-admin.php:253
 msgid "Status"
-msgstr "Durum"
+msgstr "Status"
 
 #: admin/class-sudemi-admin.php:254
 msgid "You receive"
-msgstr "Size kalan"
+msgstr "Otrzymujesz"
 
 #: admin/class-sudemi-admin.php:255
 msgid "Customer"
-msgstr "Müşteri"
+msgstr "Klient"
 
 #: admin/class-sudemi-admin.php:289
 msgid "Waiting for you - buyer not charged"
-msgstr "Sizi bekliyor - alıcıdan ücret alınmadı"
+msgstr "Czeka na Ciebie - kupujący nie został obciążony"
 
 #: admin/class-sudemi-admin.php:291
 msgid "Accepted - waiting for the other shops in the buyer's payment; buyer not charged yet, do not ship"
-msgstr "Kabul edildi - alıcının ödemesindeki diğer mağazalar bekleniyor; alıcıdan henüz ücret alınmadı, kargolamayın"
+msgstr "Przyjęte - oczekiwanie na pozostałe sklepy objęte płatnością kupującego; kupujący nie został jeszcze obciążony, nie wysyłaj"
 
 #: admin/class-sudemi-admin.php:293
 msgid "Confirmed and charged"
-msgstr "Onaylandı ve tahsil edildi"
+msgstr "Potwierdzone i opłacone"
 
 #. translators: %s: the reason the order was declined.
 #: admin/class-sudemi-admin.php:298
 #, php-format
 msgid "Declined (%s) - nothing charged"
-msgstr "Reddedildi (%s) - ücret alınmadı"
+msgstr "Odrzucone (%s) - nic nie pobrano"
 
 #: admin/class-sudemi-admin.php:301
 msgid "Declined - nothing charged"
-msgstr "Reddedildi - ücret alınmadı"
+msgstr "Odrzucone - nic nie pobrano"
 
 #: admin/class-sudemi-admin.php:303
 msgid "Shipped"
-msgstr "Kargoya verildi"
+msgstr "Wysłane"
 
 #: admin/class-sudemi-admin.php:305
 msgid "Delivered"
-msgstr "Teslim edildi"
+msgstr "Dostarczone"
 
 #: admin/class-sudemi-admin.php:316
 msgid "Recent activity"
-msgstr "Son etkinlikler"
+msgstr "Ostatnia aktywność"
 
 #: admin/class-sudemi-admin.php:350
 msgid "Disconnected from sudemi."
-msgstr "sudemi bağlantısı kesildi."
+msgstr "Odłączono od sudemi."
 
 #: admin/class-sudemi-admin.php:361
 msgid "Delivery to sudemi buyers"
-msgstr "sudemi alıcılarına teslimat"
+msgstr "Dostawa do kupujących z sudemi"
 
 #: admin/class-sudemi-admin.php:365
 msgid "No shipping price could be read from your WooCommerce shipping zones, so sudemi buyers cannot order. Add a zone with a flat rate (a fixed amount) or unconditional free shipping for the countries you ship to."
-msgstr "WooCommerce kargo bölgelerinizden hiçbir kargo ücreti okunamadı, bu yüzden sudemi alıcıları sipariş veremiyor. Gönderim yaptığınız ülkeler için sabit ücretli (belirli bir tutar) ya da koşulsuz ücretsiz kargolu bir bölge ekleyin."
+msgstr "Nie udało się odczytać żadnej ceny wysyłki z Twoich stref wysyłki WooCommerce, więc kupujący z sudemi nie mogą składać zamówień. Dodaj strefę ze stawką ryczałtową (stałą kwotą) lub bezwarunkową darmową wysyłką dla krajów, do których wysyłasz."
 
 #: admin/class-sudemi-admin.php:371
 msgid "Shipping prices sent to sudemi (from your shipping zones; one item, your first product):"
-msgstr "sudemi'ye gönderilen kargo ücretleri (kargo bölgelerinize göre; tek ürün, ilk ürününüz):"
+msgstr "Ceny wysyłki przesłane do sudemi (z Twoich stref wysyłki; jedna sztuka, Twój pierwszy produkt):"
 
 #: admin/class-sudemi-admin.php:372
 msgid "Countries without a fixed price (cost formulas, free shipping with a minimum, postcode-only zones) are left out rather than guessed."
-msgstr "Sabit fiyatı olmayan ülkeler (maliyet formülleri, minimum tutarlı ücretsiz kargo, yalnızca posta koduna dayalı bölgeler) tahmin edilmek yerine dışarıda bırakılır."
+msgstr "Kraje bez stałej ceny (formuły kosztów, darmowa wysyłka od minimalnej kwoty, strefy oparte wyłącznie na kodach pocztowych) są pomijane, a nie szacowane."
 
 #: admin/class-sudemi-admin.php:377
 msgid "Days until you dispatch an order (at most)"
-msgstr "Siparişi kargoya verene kadar geçen gün sayısı (en fazla)"
+msgstr "Liczba dni do nadania zamówienia (maksymalnie)"
 
 #: admin/class-sudemi-admin.php:378
 msgid "Days the carrier takes (at most)"
-msgstr "Kargo firmasının teslimat süresi, gün (en fazla)"
+msgstr "Liczba dni transportu przez przewoźnika (maksymalnie)"
 
 #: admin/class-sudemi-admin.php:379
 msgid "Buyers see the sum as the latest delivery estimate. Set your real times; the defaults are deliberately cautious."
-msgstr "Alıcılar bu iki sürenin toplamını en geç teslimat tahmini olarak görür. Gerçek sürelerinizi girin; varsayılan değerler bilerek temkinli tutulmuştur."
+msgstr "Kupujący widzą sumę jako najpóźniejszy przewidywany termin dostawy. Ustaw swoje rzeczywiste czasy; wartości domyślne są celowo ostrożne."
 
 #: admin/class-sudemi-admin.php:380
 msgid "Save delivery times"
-msgstr "Teslimat sürelerini kaydet"
+msgstr "Zapisz czasy dostawy"
 
 #: admin/class-sudemi-admin.php:401
 msgid "A catalogue sync was queued."
-msgstr "Katalog eşitlemesi sıraya alındı."
+msgstr "Synchronizacja katalogu została dodana do kolejki."
 
 #: admin/class-sudemi-admin.php:408
 msgid "You do not have permission to do that."
-msgstr "Bunu yapma yetkiniz yok."
+msgstr "Nie masz uprawnień do wykonania tej czynności."
 
 #: includes/class-sudemi-client.php:99
 msgid "sudemi is still asking this shop to slow down. Stopping for now; this will continue on the next scheduled run and nothing has been lost."
-msgstr "sudemi bu mağazadan hâlâ yavaşlamasını istiyor. Şimdilik duruluyor; işlem bir sonraki planlı çalışmada devam edecek ve hiçbir şey kaybolmadı."
+msgstr "sudemi nadal prosi ten sklep o spowolnienie. Na razie przerywam; praca zostanie wznowiona przy następnym zaplanowanym uruchomieniu i nic nie zostało utracone."
 
 #. translators: %d: seconds to wait.
 #: includes/class-sudemi-client.php:110
 #, php-format
 msgid "sudemi asked this shop to slow down; waiting %d seconds before continuing."
-msgstr "sudemi bu mağazadan yavaşlamasını istedi; devam etmeden önce %d saniye bekleniyor."
+msgstr "sudemi poprosiło ten sklep o spowolnienie; oczekiwanie %d s przed kontynuacją."
 
 #: includes/class-sudemi-client.php:126
 msgid "The payload could not be encoded."
-msgstr "Gönderilecek veri kodlanamadı."
+msgstr "Nie udało się zakodować przesyłanych danych."
 
 #: includes/class-sudemi-client.php:135
 msgid "This shop is not connected to sudemi."
-msgstr "Bu mağaza sudemi'ye bağlı değil."
+msgstr "Ten sklep nie jest połączony z sudemi."
 
 #: includes/class-sudemi-client.php:145
 msgid "This site has no signing key."
-msgstr "Bu sitenin imzalama anahtarı yok."
+msgstr "Ta witryna nie ma klucza podpisu."
 
 #. translators: %d: HTTP status code.
 #: includes/class-sudemi-client.php:181
 #, php-format
 msgid "sudemi answered %d with something that was not JSON."
-msgstr "sudemi %d koduyla JSON olmayan bir yanıt verdi."
+msgstr "sudemi odpowiedziało kodem %d, ale odpowiedź nie była w formacie JSON."
 
 #: includes/class-sudemi-heartbeat.php:105
 msgid "sudemi no longer recognises this shop. Connect it again."
-msgstr "sudemi bu mağazayı artık tanımıyor. Mağazayı yeniden bağlayın."
+msgstr "sudemi nie rozpoznaje już tego sklepu. Połącz go ponownie."
 
 #. translators: %d: HTTP status code.
 #: includes/class-sudemi-heartbeat.php:117
 #, php-format
 msgid "sudemi answered %d."
-msgstr "sudemi %d koduyla yanıt verdi."
+msgstr "sudemi odpowiedziało kodem %d."
 
 #: includes/class-sudemi-heartbeat.php:166
 msgid "sudemi asked for a full sync; scheduling one."
-msgstr "sudemi tam eşitleme istedi; bir tane planlanıyor."
+msgstr "sudemi poprosiło o pełną synchronizację; planowanie."
 
 #. translators: %d: number of orders waiting.
 #: includes/class-sudemi-orders.php:46
 #, php-format
 msgid "%d order(s) are waiting for confirmation. Automatic confirmation is off, so they must be answered by hand before their window closes."
-msgstr "%d sipariş onay bekliyor. Otomatik onay kapalı olduğundan, süreleri dolmadan elle yanıtlanmaları gerekiyor."
+msgstr "Zamówienia oczekujące na potwierdzenie: %d. Automatyczne potwierdzanie jest wyłączone, więc trzeba na nie odpowiedzieć ręcznie przed upływem terminu."
 
 #. translators: 1: sudemi order id, 2: error message.
 #: includes/class-sudemi-orders.php:63
 #, php-format
 msgid "Could not answer sudemi order %1$s: %2$s"
-msgstr "%1$s numaralı sudemi siparişi yanıtlanamadı: %2$s"
+msgstr "Nie udało się odpowiedzieć na zamówienie sudemi %1$s: %2$s"
 
 #. translators: 1: sudemi order id, 2: reason.
 #: includes/class-sudemi-orders.php:104
 #, php-format
 msgid "Declined sudemi order %1$s: %2$s. Nothing was charged."
-msgstr "%1$s numaralı sudemi siparişi reddedildi: %2$s. Hiçbir ücret alınmadı."
+msgstr "Odrzucono zamówienie sudemi %1$s: %2$s. Nic nie zostało pobrane."
 
 #: includes/class-sudemi-orders.php:116
 msgid "this shop could not record the order"
-msgstr "bu mağaza siparişi kaydedemedi"
+msgstr "ten sklep nie mógł zarejestrować zamówienia"
 
 #. translators: 1: sudemi order id, 2: error message.
 #: includes/class-sudemi-orders.php:142
 #, php-format
 msgid "Could not reach sudemi to confirm order %1$s (%2$s). Will try again on the next heartbeat."
-msgstr "%1$s numaralı siparişi onaylamak için sudemi'ye ulaşılamadı (%2$s). Bir sonraki durum sinyalinde yeniden denenecek."
+msgstr "Nie udało się połączyć z sudemi, aby potwierdzić zamówienie %1$s (%2$s). Kolejna próba przy następnym heartbeacie."
 
 #: includes/class-sudemi-orders.php:171
 msgid "Confirmed with sudemi; the buyer has been charged."
-msgstr "sudemi ile onaylandı; alıcıdan ücret tahsil edildi."
+msgstr "Potwierdzono w sudemi; kupujący został obciążony."
 
 #. translators: 1: sudemi order id, 2: local order number.
 #: includes/class-sudemi-orders.php:176
 #, php-format
 msgid "Confirmed sudemi order %1$s as order #%2$s."
-msgstr "%1$s numaralı sudemi siparişi #%2$s numaralı sipariş olarak onaylandı."
+msgstr "Potwierdzono zamówienie sudemi %1$s jako zamówienie #%2$s."
 
 #. translators: %s: the reason sudemi gave.
 #: includes/class-sudemi-orders.php:194
 #, php-format
 msgid "sudemi did not accept the confirmation: %s. Nothing was charged and the stock has been restored."
-msgstr "sudemi onayı kabul etmedi: %s. Hiçbir ücret alınmadı ve stok geri yüklendi."
+msgstr "sudemi nie przyjęło potwierdzenia: %s. Nic nie zostało pobrane, a stany magazynowe zostały przywrócone."
 
 #. translators: 1: sudemi order id, 2: reason.
 #: includes/class-sudemi-orders.php:201
 #, php-format
 msgid "sudemi refused the confirmation of order %1$s: %2$s. The local order was cancelled and stock restored."
-msgstr "sudemi %1$s numaralı siparişin onayını reddetti: %2$s. Yerel sipariş iptal edildi ve stok geri yüklendi."
+msgstr "sudemi odrzuciło potwierdzenie zamówienia %1$s: %2$s. Lokalne zamówienie zostało anulowane, a stany magazynowe przywrócone."
 
 #: includes/class-sudemi-orders.php:221
 msgid "Accepted on sudemi. The buyer paid several shops in one payment; sudemi takes the money once every shop has answered. Do NOT ship until this order moves to Processing."
-msgstr "sudemi'de kabul edildi. Alıcı birden fazla mağazaya tek bir ödemeyle ödeme yaptı; sudemi, tüm mağazalar yanıt verdiğinde parayı tahsil eder. Bu sipariş \"İşleniyor\" durumuna geçene kadar KARGOYA VERMEYİN."
+msgstr "Przyjęte w sudemi. Kupujący zapłacił kilku sklepom jedną płatnością; sudemi pobiera środki, gdy odpowiedzą wszystkie sklepy. NIE wysyłaj, dopóki to zamówienie nie przejdzie do statusu W trakcie realizacji."
 
 #. translators: 1: sudemi order id, 2: local order number.
 #: includes/class-sudemi-orders.php:226
 #, php-format
 msgid "Accepted sudemi order %1$s (order #%2$s). Not paid yet: waiting for the other shops in the same payment."
-msgstr "%1$s numaralı sudemi siparişi kabul edildi (sipariş #%2$s). Henüz ödenmedi: aynı ödemedeki diğer mağazalar bekleniyor."
+msgstr "Przyjęto zamówienie sudemi %1$s (zamówienie #%2$s). Jeszcze nieopłacone: oczekiwanie na pozostałe sklepy objęte tą samą płatnością."
 
 #. translators: 1: sudemi order id, 2: error message.
 #: includes/class-sudemi-orders.php:256
 #, php-format
 msgid "Could not apply the outcome of sudemi order %1$s: %2$s"
-msgstr "%1$s numaralı sudemi siparişinin sonucu uygulanamadı: %2$s"
+msgstr "Nie udało się zastosować wyniku zamówienia sudemi %1$s: %2$s"
 
 #: includes/class-sudemi-orders.php:293 includes/class-sudemi-orders.php:365
 msgid "reason not given"
-msgstr "neden belirtilmedi"
+msgstr "nie podano powodu"
 
 #. translators: %s: the reason sudemi gave.
 #: includes/class-sudemi-orders.php:299
 #, php-format
 msgid "sudemi released the buyer's payment: %s. Nothing was charged and the stock has been restored."
-msgstr "sudemi alıcının ödemesini serbest bıraktı: %s. Hiçbir ücret alınmadı ve stok geri yüklendi."
+msgstr "sudemi zwolniło płatność kupującego: %s. Nic nie zostało pobrane, a stany magazynowe zostały przywrócone."
 
 #. translators: 1: sudemi order id, 2: reason.
 #: includes/class-sudemi-orders.php:306
 #, php-format
 msgid "sudemi order %1$s was released after all: %2$s. The local order was cancelled and stock restored."
-msgstr "%1$s numaralı sudemi siparişi sonradan serbest bırakıldı: %2$s. Yerel sipariş iptal edildi ve stok geri yüklendi."
+msgstr "Zamówienie sudemi %1$s zostało jednak zwolnione: %2$s. Lokalne zamówienie zostało anulowane, a stany magazynowe przywrócone."
 
 #: includes/class-sudemi-orders.php:319
 msgid "Paid on sudemi: every shop in the buyer's payment has answered and the buyer has been charged. This order can be shipped."
-msgstr "sudemi'de ödendi: alıcının ödemesindeki tüm mağazalar yanıt verdi ve alıcıdan ücret tahsil edildi. Bu sipariş kargolanabilir."
+msgstr "Opłacone w sudemi: wszystkie sklepy objęte płatnością kupującego odpowiedziały, a kupujący został obciążony. To zamówienie można wysłać."
 
 #. translators: 1: sudemi order id, 2: local order number.
 #: includes/class-sudemi-orders.php:324
 #, php-format
 msgid "sudemi order %1$s is paid; order #%2$s moved to Processing."
-msgstr "%1$s numaralı sudemi siparişi ödendi; #%2$s numaralı sipariş \"İşleniyor\" durumuna geçti."
+msgstr "Zamówienie sudemi %1$s jest opłacone; zamówienie #%2$s przeszło do statusu W trakcie realizacji."
 
 #: includes/class-sudemi-orders.php:354
 msgid "Could not fetch the delivery address from sudemi yet. The order is paid; open it again shortly or contact support before shipping."
-msgstr "Teslimat adresi henüz sudemi'den alınamadı. Sipariş ödendi; kargolamadan önce siparişi kısa süre sonra yeniden açın veya destek ekibiyle iletişime geçin."
+msgstr "Nie udało się jeszcze pobrać adresu dostawy z sudemi. Zamówienie jest opłacone; otwórz je ponownie za chwilę lub skontaktuj się ze wsparciem sudemi przed wysyłką."
 
 #. translators: %s: the explanation sudemi gave.
 #: includes/class-sudemi-orders.php:364
 #, php-format
 msgid "sudemi has no delivery address for this order: %s"
-msgstr "sudemi'de bu sipariş için teslimat adresi yok: %s"
+msgstr "sudemi nie ma adresu dostawy dla tego zamówienia: %s"
 
 #: includes/class-sudemi-orders.php:403
 msgid "the order had no recognisable items"
-msgstr "siparişte tanınabilir ürün yoktu"
+msgstr "zamówienie nie zawierało rozpoznawalnych pozycji"
 
 #. translators: %s: the product title as sudemi knows it.
 #: includes/class-sudemi-orders.php:411
 #, php-format
 msgid "\"%s\" is no longer sold here"
-msgstr "\"%s\" artık burada satılmıyor"
+msgstr "\"%s\" nie jest już tutaj sprzedawany"
 
 #: includes/class-sudemi-orders.php:412
 msgid "an item"
-msgstr "bir ürün"
+msgstr "pewien produkt"
 
 #. translators: %s: the product name.
 #: includes/class-sudemi-orders.php:419
 #, php-format
 msgid "\"%s\" is out of stock"
-msgstr "\"%s\" stokta yok"
+msgstr "\"%s\" jest niedostępny"
 
 #. translators: %s: the product name.
 #: includes/class-sudemi-orders.php:426
 #, php-format
 msgid "\"%s\" cannot currently be bought"
-msgstr "\"%s\" şu anda satın alınamıyor"
+msgstr "\"%s\" nie może być obecnie kupiony"
 
 #. translators: %s: the sudemi order id.
 #: includes/class-sudemi-orders.php:471
 #, php-format
 msgid "Placed through sudemi (order %s). The buyer has been authorised but not yet charged."
-msgstr "sudemi üzerinden verildi (sipariş %s). Alıcının ödemesi onaylandı, ancak henüz tahsil edilmedi."
+msgstr "Złożone przez sudemi (zamówienie %s). Płatność kupującego została autoryzowana, ale jeszcze nie pobrana."
 
 #: includes/class-sudemi-orders.php:478
 msgid "Awaiting confirmation with sudemi."
-msgstr "sudemi ile onay bekleniyor."
+msgstr "Oczekuje na potwierdzenie w sudemi."
 
 #. translators: 1: event name, 2: sudemi order id, 3: error message.
 #: includes/class-sudemi-orders.php:610
 #, php-format
 msgid "Could not report %1$s for sudemi order %2$s: %3$s"
-msgstr "%2$s numaralı sudemi siparişi için %1$s bildirilemedi: %3$s"
+msgstr "Nie udało się zgłosić %1$s dla zamówienia sudemi %2$s: %3$s"
 
 #. translators: 1: event name, 2: sudemi order id.
 #: includes/class-sudemi-orders.php:621
 #, php-format
 msgid "Reported %1$s for sudemi order %2$s."
-msgstr "%2$s numaralı sudemi siparişi için %1$s bildirildi."
+msgstr "Zgłoszono %1$s dla zamówienia sudemi %2$s."
 
 #: includes/class-sudemi-pairing.php:36
 msgid "This server is missing the sodium extension, which the connection needs in order to sign requests. Ask your host to enable it."
-msgstr "Bu sunucuda, bağlantının istekleri imzalamak için ihtiyaç duyduğu sodium eklentisi eksik. Barındırma sağlayıcınızdan bunu etkinleştirmesini isteyin."
+msgstr "Na tym serwerze brakuje rozszerzenia sodium, którego połączenie potrzebuje do podpisywania żądań. Poproś dostawcę hostingu o jego włączenie."
 
 #: includes/class-sudemi-pairing.php:40
 msgid "A signing key could not be created on this server."
-msgstr "Bu sunucuda imzalama anahtarı oluşturulamadı."
+msgstr "Nie udało się utworzyć klucza podpisu na tym serwerze."
 
 #: includes/class-sudemi-pairing.php:60
 msgid "sudemi refused to start the connection."
-msgstr "sudemi bağlantıyı başlatmayı reddetti."
+msgstr "sudemi odmówiło rozpoczęcia połączenia."
 
 #. translators: %d: number of products.
 #: includes/class-sudemi-sync.php:108
 #, php-format
 msgid "Synced %d products."
-msgstr "%d ürün eşitlendi."
+msgstr "Zsynchronizowane produkty: %d."
 
 msgid "the full amount"
-msgstr "tutarın tamamını"
+msgstr "pełną kwotę"
 
 #, php-format
 msgid "Refunded %s to the buyer through sudemi."
-msgstr "%s sudemi üzerinden alıcıya iade edildi."
+msgstr "Zwrócono kupującemu %s przez sudemi."
 
 #, php-format
 msgid "sudemi did not refund this: %s. The buyer has NOT been paid back; contact sudemi support (support@sudemi.com)."
-msgstr "sudemi bunu iade etmedi: %s. Alıcıya para iadesi YAPILMADI; sudemi destek ile iletişime geçin (support@sudemi.com)."
+msgstr "sudemi nie zwróciło tej kwoty: %s. Kupujący NIE otrzymał zwrotu; skontaktuj się ze wsparciem sudemi (support@sudemi.com)."
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Right of withdrawal"
-msgstr "Cayma hakkı"
+msgstr "Prawo odstąpienia od umowy"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "None - normal right of withdrawal applies"
-msgstr "Yok - normal cayma hakkı geçerlidir"
+msgstr "Brak - obowiązuje zwykłe prawo odstąpienia od umowy"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Only for products that legally fall under an exception. Buyers see it before paying; misuse is not allowed."
-msgstr "Yalnızca yasal olarak bir istisnaya giren ürünler için. Alıcılar bunu ödemeden önce görür; kötüye kullanılması yasaktır."
+msgstr "Tylko dla produktów, które zgodnie z prawem są objęte wyjątkiem. Kupujący widzą to przed zapłatą; nadużycia są niedozwolone."
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Sealed for health or hygiene reasons (not returnable once unsealed)"
-msgstr "Sağlık veya hijyen nedeniyle mühürlü (ambalajı açıldıktan sonra iade edilemez)"
+msgstr "Zapieczętowany ze względu na ochronę zdrowia lub higienę (bez zwrotu po otwarciu)"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Made to the buyer’s specifications or personalised"
-msgstr "Alıcının isteğine göre üretilmiş veya kişiselleştirilmiş"
+msgstr "Wyprodukowany według specyfikacji kupującego lub spersonalizowany"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Perishable or quickly expiring"
-msgstr "Çabuk bozulabilen veya son kullanma tarihi yakın"
+msgstr "Szybko psujący się lub o krótkim terminie przydatności"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Sealed audio, video or software (not returnable once unsealed)"
-msgstr "Ambalajı mühürlü ses, görüntü kaydı veya yazılım (ambalajı açıldıktan sonra iade edilemez)"
+msgstr "Zapieczętowane nagrania audio, wideo lub oprogramowanie (bez zwrotu po otwarciu)"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Newspaper, periodical or magazine"
-msgstr "Gazete, süreli yayın veya dergi"
+msgstr "Dziennik, periodyk lub czasopismo"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Inseparably mixed with other items after delivery"
-msgstr "Teslimattan sonra başka ürünlerle ayrılmaz biçimde karışan"
+msgstr "Po dostarczeniu nierozłącznie połączony z innymi rzeczami"
 
 #: includes/class-sudemi-withdrawal.php
 msgid "Alcohol with a market-dependent price, delivered after 30+ days"
-msgstr "Fiyatı piyasaya bağlı olup 30 günden sonra teslim edilen alkollü içecekler"
+msgstr "Napoje alkoholowe o cenie zależnej od rynku, dostarczane po ponad 30 dniach"
 
 #: includes/class-sudemi-support.php
 msgid "Choose a category."
-msgstr "Bir kategori seçin."
+msgstr "Wybierz kategorię."
 
 #: includes/class-sudemi-support.php
 msgid "The subject must be between 3 and 200 characters."
-msgstr "Konu 3 ile 200 karakter arasında olmalıdır."
+msgstr "Temat musi mieć od 3 do 200 znaków."
 
 #: includes/class-sudemi-support.php
 msgid "The message cannot be empty or longer than 10,000 characters."
-msgstr "Mesaj boş olamaz ve 10.000 karakterden uzun olamaz."
+msgstr "Wiadomość nie może być pusta ani dłuższa niż 10 000 znaków."
 
 #: includes/class-sudemi-support.php
 msgid "That does not look like a sudemi order ID. Copy the full ID, or leave the field empty."
-msgstr "Bu bir sudemi sipariş kimliğine benzemiyor. Kimliğin tamamını kopyalayın veya alanı boş bırakın."
+msgstr "To nie wygląda na identyfikator zamówienia sudemi. Skopiuj pełny identyfikator lub zostaw pole puste."
 
 #: includes/class-sudemi-support.php
 msgid "sudemi could not accept this. Check the subject and the message, and that the order ID belongs to an order of this shop."
-msgstr "sudemi bunu kabul edemedi. Konuyu ve mesajı kontrol edin; sipariş kimliğinin bu mağazaya ait bir siparişe ait olduğundan emin olun."
+msgstr "sudemi nie mogło tego przyjąć. Sprawdź temat i wiadomość oraz czy identyfikator zamówienia należy do zamówienia tego sklepu."
 
 #: includes/class-sudemi-support.php
 msgid "This ticket was not found. It may belong to another shop or to an earlier connection."
-msgstr "Bu talep bulunamadı. Başka bir mağazaya veya önceki bir bağlantıya ait olabilir."
+msgstr "Nie znaleziono tego zgłoszenia. Może należeć do innego sklepu lub do wcześniejszego połączenia."
 
 #: includes/class-sudemi-support.php
 msgid "This shop has too many open tickets, or opened several in the last hour. Please wait a while, or reply to an existing ticket instead."
-msgstr "Bu mağazanın çok fazla açık talebi var ya da son bir saatte birkaç talep açtı. Lütfen biraz bekleyin veya mevcut bir talebe yanıt verin."
+msgstr "Ten sklep ma zbyt wiele otwartych zgłoszeń lub otworzył kilka w ciągu ostatniej godziny. Odczekaj chwilę albo odpowiedz w istniejącym zgłoszeniu."
 
 #: includes/class-sudemi-support.php
 msgid "sudemi refused this shop. Check the connection on the overview tab."
-msgstr "sudemi bu mağazayı reddetti. Genel Bakış sekmesinden bağlantıyı kontrol edin."
+msgstr "sudemi odrzuciło ten sklep. Sprawdź połączenie na karcie Przegląd."
 
 #: includes/class-sudemi-support.php
 msgid "Could not reach sudemi just now. Please try again shortly."
-msgstr "Şu anda sudemi'ye ulaşılamıyor. Lütfen birazdan tekrar deneyin."
+msgstr "Nie udało się teraz połączyć z sudemi. Spróbuj ponownie za chwilę."
 
 #: includes/class-sudemi-support.php
 msgid "Payment"
-msgstr "Ödeme"
+msgstr "Płatność"
 
 #: includes/class-sudemi-support.php
 msgid "Refund or return"
-msgstr "Para iadesi veya ürün iadesi"
+msgstr "Zwrot pieniędzy lub towaru"
 
 #: includes/class-sudemi-support.php
 msgid "Account"
-msgstr "Hesap"
+msgstr "Konto"
 
 #: includes/class-sudemi-support.php
 msgid "Shop plugin or connection"
-msgstr "Mağaza eklentisi veya bağlantı"
+msgstr "Wtyczka sklepu lub połączenie"
 
 #: includes/class-sudemi-support.php
 msgid "Payouts"
-msgstr "Ödemeler (satıcıya)"
+msgstr "Wypłaty"
 
 #: includes/class-sudemi-support.php
 msgid "Other"
-msgstr "Diğer"
+msgstr "Inne"
 
 #: includes/class-sudemi-support.php
 msgctxt "support ticket status"
 msgid "Open"
-msgstr "Açık"
+msgstr "Otwarte"
 
 #: includes/class-sudemi-support.php
 msgid "Waiting for your reply"
-msgstr "Yanıtınız bekleniyor"
+msgstr "Czeka na Twoją odpowiedź"
 
 #: includes/class-sudemi-support.php
 msgid "Answered"
-msgstr "Yanıtlandı"
+msgstr "Udzielono odpowiedzi"
 
 #: includes/class-sudemi-support.php
 msgid "Closed"
-msgstr "Kapalı"
+msgstr "Zamknięte"
 
 #: admin/class-sudemi-admin.php
 msgid "Overview"
-msgstr "Genel Bakış"
+msgstr "Przegląd"
 
 #: admin/class-sudemi-admin.php
 msgid "Support"
-msgstr "Destek"
+msgstr "Wsparcie"
 
 #: admin/class-sudemi-admin.php
 msgid "Support is available once this shop is connected to sudemi."
-msgstr "Destek, bu mağaza sudemi'ye bağlandığında kullanılabilir."
+msgstr "Wsparcie jest dostępne, gdy tylko ten sklep zostanie połączony z sudemi."
 
 #: admin/class-sudemi-admin.php
 msgid "Questions about an order, a payment, payouts or this plugin? Open a ticket and sudemi support answers here. You also get an e-mail when they reply."
-msgstr "Bir sipariş, ödeme, satıcı ödemeleri veya bu eklenti hakkında sorunuz mu var? Bir talep açın; sudemi destek ekibi burada yanıt verir. Yanıt geldiğinde ayrıca e-posta alırsınız."
+msgstr "Masz pytanie o zamówienie, płatność, wypłaty lub tę wtyczkę? Otwórz zgłoszenie, a wsparcie sudemi odpowie tutaj. Gdy pojawi się odpowiedź, dostaniesz też e-mail."
 
 #: admin/class-sudemi-admin.php
 msgid "Your tickets"
-msgstr "Talepleriniz"
+msgstr "Twoje zgłoszenia"
 
 #: admin/class-sudemi-admin.php
 msgid "No tickets yet."
-msgstr "Henüz talep yok."
+msgstr "Brak zgłoszeń."
 
 #: admin/class-sudemi-admin.php
 msgid "Number"
-msgstr "Numara"
+msgstr "Numer"
 
 #: admin/class-sudemi-admin.php
 msgid "Subject"
-msgstr "Konu"
+msgstr "Temat"
 
 #: admin/class-sudemi-admin.php
 msgid "Last updated"
-msgstr "Son güncelleme"
+msgstr "Ostatnia aktualizacja"
 
 #: admin/class-sudemi-admin.php
 msgid "Open a ticket"
-msgstr "Talep aç"
+msgstr "Otwórz zgłoszenie"
 
 #: admin/class-sudemi-admin.php
 msgid "Category"
-msgstr "Kategori"
+msgstr "Kategoria"
 
 #: admin/class-sudemi-admin.php
 msgid "Message"
-msgstr "Mesaj"
+msgstr "Wiadomość"
 
 #: admin/class-sudemi-admin.php
 msgid "sudemi order ID (optional)"
-msgstr "sudemi sipariş kimliği (isteğe bağlı)"
+msgstr "Identyfikator zamówienia sudemi (opcjonalnie)"
 
 #: admin/class-sudemi-admin.php
 msgid "The full order ID as sudemi shows it, if your question is about one order."
-msgstr "Sorunuz tek bir siparişle ilgiliyse, sudemi'nin gösterdiği tam sipariş kimliği."
+msgstr "Pełny identyfikator zamówienia widoczny w sudemi, jeśli pytanie dotyczy jednego zamówienia."
 
 #: admin/class-sudemi-admin.php
 msgid "Send ticket"
-msgstr "Talebi gönder"
+msgstr "Wyślij zgłoszenie"
 
 #: admin/class-sudemi-admin.php
 msgid "Back to your tickets"
-msgstr "Taleplerinize dön"
+msgstr "Wróć do zgłoszeń"
 
 #. translators: 1: ticket number, e.g. S-000123; 2: ticket subject.
 #: admin/class-sudemi-admin.php
 #, php-format
 msgid "Ticket %1$s: %2$s"
-msgstr "Talep %1$s: %2$s"
+msgstr "Zgłoszenie %1$s: %2$s"
 
 #: admin/class-sudemi-admin.php
 msgid "sudemi support"
-msgstr "sudemi destek"
+msgstr "Wsparcie sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "You"
-msgstr "Siz"
+msgstr "Ty"
 
 #: admin/class-sudemi-admin.php
 msgid "Reply"
-msgstr "Yanıtla"
+msgstr "Odpowiedz"
 
 #: admin/class-sudemi-admin.php
 msgid "This ticket is closed. Replying opens it again."
-msgstr "Bu talep kapatıldı. Yanıt verirseniz yeniden açılır."
+msgstr "To zgłoszenie jest zamknięte. Odpowiedź otworzy je ponownie."
 
 #: admin/class-sudemi-admin.php
 msgid "Send reply"
-msgstr "Yanıtı gönder"
+msgstr "Wyślij odpowiedź"
 
 #: admin/class-sudemi-admin.php
 msgid "Your ticket was sent. sudemi support answers here, and by e-mail."
-msgstr "Talebiniz gönderildi. sudemi destek ekibi burada ve e-posta ile yanıt verecek."
+msgstr "Zgłoszenie zostało wysłane. Wsparcie sudemi odpowie tutaj i e-mailem."
 
 #: admin/class-sudemi-admin.php
 msgid "Your reply was sent."
-msgstr "Yanıtınız gönderildi."
+msgstr "Odpowiedź została wysłana."
 
 #. translators: %s: the address the shop is connected to sudemi under, e.g. https://shop.example.com
 #: includes/class-sudemi-heartbeat.php
 #, php-format
 msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address (%s). If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
-msgstr "sudemi bu siteden gelen istekleri reddetti: bu mağaza sudemi'ye farklı bir adresle bağlı (%s). Bu site bir test (staging) kopyası veya geri yüklenmiş bir yedekse, sudemi bağlantısını burada kesin. Mağaza bu adrese taşındıysa yeniden bağlayın."
+msgstr "sudemi odrzuciło żądania z tej witryny: ten sklep jest połączony z sudemi pod innym adresem (%s). Jeśli ta witryna jest kopią testową (staging) lub przywróconą kopią zapasową, odłącz tutaj sudemi. Jeśli sklep przeniósł się pod ten adres, połącz go ponownie."
 
 #: includes/class-sudemi-heartbeat.php
 msgid "sudemi refused requests from this site: this shop is connected to sudemi under a different address. If this site is a staging copy or a restored backup, disconnect sudemi here. If the shop has moved to this address, connect it again."
-msgstr "sudemi bu siteden gelen istekleri reddetti: bu mağaza sudemi'ye farklı bir adresle bağlı. Bu site bir test (staging) kopyası veya geri yüklenmiş bir yedekse, sudemi bağlantısını burada kesin. Mağaza bu adrese taşındıysa yeniden bağlayın."
+msgstr "sudemi odrzuciło żądania z tej witryny: ten sklep jest połączony z sudemi pod innym adresem. Jeśli ta witryna jest kopią testową (staging) lub przywróconą kopią zapasową, odłącz tutaj sudemi. Jeśli sklep przeniósł się pod ten adres, połącz go ponownie."
 
 #. translators: 1: the buyer's reason, 2: the date the shop has to answer by.
 #: includes/class-sudemi-requests.php
 #, php-format
 msgid "The buyer asked on sudemi to return this order. Reason: %1$s. Accept or reject (with a reason) by %2$s on this order or under WooCommerce > sudemi."
-msgstr "Alıcı sudemi üzerinden bu siparişi iade etmek istedi. Neden: %1$s. %2$s tarihine kadar bu siparişte veya WooCommerce > sudemi altında kabul edin ya da (bir nedenle) reddedin."
+msgstr "Kupujący poprosił na sudemi o zwrot tego zamówienia. Powód: %1$s. Zaakceptuj lub odrzuć (z podaniem powodu) do %2$s na tym zamówieniu lub w WooCommerce > sudemi."
 
 #: includes/class-sudemi-requests.php
 msgid "none given"
-msgstr "belirtilmedi"
+msgstr "nie podano"
 
 #: includes/class-sudemi-requests.php
 msgid "A rejection needs a reason. The buyer is shown it."
-msgstr "Ret için bir neden gerekir. Alıcı bu nedeni görür."
+msgstr "Odrzucenie wymaga podania powodu. Kupujący go zobaczy."
 
 #: includes/class-sudemi-requests.php
 msgid "That is not a sudemi order."
-msgstr "Bu bir sudemi siparişi değil."
+msgstr "To nie jest zamówienie sudemi."
 
 #: includes/class-sudemi-requests.php
 msgid "Return request accepted on sudemi. Refund the buyer here (WooCommerce refund) once the item is back; the refund goes through sudemi and closes the request."
-msgstr "İade talebi sudemi'de kabul edildi. Ürün geri geldiğinde alıcıya buradan iade yapın (WooCommerce iadesi); iade sudemi üzerinden gider ve talebi kapatır."
+msgstr "Prośba o zwrot zaakceptowana na sudemi. Zwróć pieniądze kupującemu tutaj (zwrot WooCommerce), gdy towar wróci; zwrot przechodzi przez sudemi i zamyka prośbę."
 
 #. translators: %s: the reason the shop gave, shown to the buyer.
 #: includes/class-sudemi-requests.php
 #, php-format
 msgid "Return request rejected on sudemi. Reason shown to the buyer: %s"
-msgstr "İade talebi sudemi'de reddedildi. Alıcıya gösterilen neden: %s"
+msgstr "Prośba o zwrot odrzucona na sudemi. Powód pokazany kupującemu: %s"
 
 #: includes/class-sudemi-requests.php
 msgid "Return accepted. Refund the buyer once the item is back, with a WooCommerce refund on the order."
-msgstr "İade kabul edildi. Ürün geri geldiğinde siparişte bir WooCommerce iadesiyle alıcıya ödeme iadesi yapın."
+msgstr "Zwrot zaakceptowany. Zwróć pieniądze kupującemu, gdy towar wróci, zwrotem WooCommerce na zamówieniu."
 
 #: includes/class-sudemi-requests.php
 msgid "Return rejected. The buyer is shown your reason."
-msgstr "İade reddedildi. Alıcı nedeninizi görür."
+msgstr "Zwrot odrzucony. Kupujący widzi Twój powód."
 
 #: includes/class-sudemi-requests.php
 msgid "This request was already answered."
-msgstr "Bu talep zaten yanıtlandı."
+msgstr "Na tę prośbę już odpowiedziano."
 
 #: includes/class-sudemi-requests.php
 msgid "This order has no open return request on sudemi any more."
-msgstr "Bu siparişin sudemi'de artık açık bir iade talebi yok."
+msgstr "To zamówienie nie ma już otwartej prośby o zwrot na sudemi."
 
 #. translators: %s: error message.
 #: includes/class-sudemi-requests.php
 #, php-format
 msgid "Could not reach sudemi: %s. Nothing was sent; try again."
-msgstr "sudemi'ye ulaşılamadı: %s. Hiçbir şey gönderilmedi; tekrar deneyin."
+msgstr "Nie można połączyć się z sudemi: %s. Nic nie zostało wysłane; spróbuj ponownie."
 
 #: includes/class-sudemi-orders.php
 msgid "Cancelled by the buyer on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
-msgstr "Alıcı tarafından sudemi'de kargodan önce iptal edildi; alıcıya tutarın tamamı iade edildi. Bu siparişi göndermeyin."
+msgstr "Anulowane przez kupującego na sudemi przed wysyłką; kupujący otrzymał pełny zwrot pieniędzy. Nie wysyłaj tego zamówienia."
 
 #. translators: 1: sudemi order id, 2: local order number.
 #: includes/class-sudemi-orders.php
 #, php-format
 msgid "sudemi order %1$s was cancelled by the buyer before shipping; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi siparişi %1$s alıcı tarafından kargodan önce iptal edildi; #%2$s numaralı sipariş burada iptal edildi ve stok geri yüklendi."
+msgstr "Zamówienie sudemi %1$s zostało anulowane przez kupującego przed wysyłką; zamówienie nr %2$s zostało tu anulowane, a stan magazynowy przywrócony."
 
 #: admin/class-sudemi-admin.php
 msgid "return requested"
-msgstr "iade istendi"
+msgstr "poproszono o zwrot"
 
 #: admin/class-sudemi-admin.php
 msgid "Return requests"
-msgstr "İade talepleri"
+msgstr "Prośby o zwrot"
 
 #: admin/class-sudemi-admin.php
 msgid "No return requests waiting for an answer."
-msgstr "Yanıt bekleyen iade talebi yok."
+msgstr "Brak próśb o zwrot oczekujących na odpowiedź."
 
 #: admin/class-sudemi-admin.php
 msgid "Buyers asked to return these delivered orders. Answer each by the date shown: accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on the order."
-msgstr "Alıcılar teslim edilen bu siparişleri iade etmek istedi. Her birini gösterilen tarihe kadar yanıtlayın: kabul edin ya da bir nedenle reddedin (alıcı nedeni görür). Yanıt verilmezse sudemi karar verir. Kabul ettikten sonra ürün geri geldiğinde siparişte bir WooCommerce iadesiyle alıcıya ödeme iadesi yapın."
+msgstr "Kupujący poprosili o zwrot tych dostarczonych zamówień. Odpowiedz na każdą prośbę do podanej daty: zaakceptuj lub odrzuć z podaniem powodu (kupujący go zobaczy). Bez odpowiedzi decyduje sudemi. Po akceptacji zwróć pieniądze kupującemu, gdy towar wróci, zwrotem WooCommerce na zamówieniu."
 
 #: admin/class-sudemi-admin.php
 msgid "Buyer's reason"
-msgstr "Alıcının nedeni"
+msgstr "Powód kupującego"
 
 #: admin/class-sudemi-admin.php
 msgid "Answer by"
-msgstr "Son yanıt tarihi"
+msgstr "Odpowiedz do"
 
 #: admin/class-sudemi-admin.php
 msgid "Your answer"
-msgstr "Yanıtınız"
+msgstr "Twoja odpowiedź"
 
 #: admin/class-sudemi-admin.php
 msgid "Accept the return"
-msgstr "İadeyi kabul et"
+msgstr "Zaakceptuj zwrot"
 
 #: admin/class-sudemi-admin.php
 msgid "Reject the return"
-msgstr "İadeyi reddet"
+msgstr "Odrzuć zwrot"
 
 #: admin/class-sudemi-admin.php
 msgid "Reason for rejecting (shown to the buyer)"
-msgstr "Ret nedeni (alıcıya gösterilir)"
+msgstr "Powód odrzucenia (pokazany kupującemu)"
 
 #: admin/class-sudemi-admin.php
 msgid "sudemi: the buyer asked to return this order"
-msgstr "sudemi: alıcı bu siparişi iade etmek istiyor"
+msgstr "sudemi: kupujący prosi o zwrot tego zamówienia"
 
 #: admin/class-sudemi-admin.php
 msgid "Accept, or reject with a reason (the buyer is shown it). Without an answer, sudemi decides. After accepting, refund the buyer once the item is back, with a WooCommerce refund on this order."
-msgstr "Kabul edin ya da bir nedenle reddedin (alıcı nedeni görür). Yanıt verilmezse sudemi karar verir. Kabul ettikten sonra ürün geri geldiğinde bu siparişte bir WooCommerce iadesiyle alıcıya ödeme iadesi yapın."
+msgstr "Zaakceptuj lub odrzuć z podaniem powodu (kupujący go zobaczy). Bez odpowiedzi decyduje sudemi. Po akceptacji zwróć pieniądze kupującemu, gdy towar wróci, zwrotem WooCommerce na tym zamówieniu."
 
 msgid "1. Add this line to the server's crontab (crontab -e), or as a cron job in your hosting panel:"
-msgstr "1. Bu satırı sunucunun crontab dosyasına (crontab -e) veya hosting panelinizde bir cron görevi olarak ekleyin:"
+msgstr "1. Dodaj ten wiersz do crontaba serwera (crontab -e) lub jako zadanie cron w panelu hostingu:"
 
 msgid "2. Then switch off the visit-driven WP-Cron by adding this line to wp-config.php, above the line that says to stop editing:"
-msgstr "2. Ardından ziyaretlerle çalışan WP-Cron'u kapatmak için bu satırı wp-config.php dosyasına, düzenlemeyi bırakmanızı söyleyen satırın üstüne ekleyin:"
+msgstr "2. Następnie wyłącz WP-Cron uruchamiany przez odwiedziny, dodając ten wiersz do wp-config.php, nad wierszem, który mówi, aby zakończyć edycję:"
 
 msgid "Cancelled on sudemi as well: the buyer was not charged for this order."
-msgstr "sudemi'de de iptal edildi: alıcıdan bu sipariş için hiçbir ücret alınmadı."
+msgstr "Anulowano także w sudemi: kupujący nie został obciążony za to zamówienie."
 
 msgid "Could not report %1$s for sudemi order %2$s yet (%3$s). It is sent again on the next heartbeat."
-msgstr "sudemi siparişi %2$s için %1$s henüz bildirilemedi (%3$s). Bir sonraki durum sinyalinde yeniden gönderilecek."
+msgstr "Nie udało się jeszcze zgłosić %1$s dla zamówienia sudemi %2$s (%3$s). Zostanie wysłane ponownie przy następnym heartbeacie."
 
 msgid "Could not tell sudemi about this cancellation yet. It is retried on the next heartbeat; the buyer is not charged for it."
-msgstr "Bu iptal sudemi'ye henüz bildirilemedi. Bir sonraki durum sinyalinde yeniden denenecek; alıcıdan ücret alınmaz."
+msgstr "Nie udało się jeszcze powiadomić sudemi o tym anulowaniu. Ponowna próba przy następnym heartbeacie; kupujący nie zostanie obciążony."
 
 msgid "Keep this shop reporting in (cron)"
-msgstr "Bu mağazanın bildirimini sürdürün (cron)"
+msgstr "Utrzymuj kontakt sklepu z sudemi (cron)"
 
 msgid "Last successful report"
-msgstr "Son başarılı bildirim"
+msgstr "Ostatnie udane zgłoszenie"
 
 msgid "More than 15 minutes ago: sudemi pauses this shop's products until it reports in again. Set up the cron job below."
-msgstr "15 dakikadan uzun süre önce: sudemi, bu mağaza yeniden bildirim yapana kadar ürünlerini duraklatır. Aşağıdaki cron görevini kurun."
+msgstr "Ponad 15 minut temu: sudemi wstrzymuje produkty tego sklepu, dopóki znów się nie zgłosi. Skonfiguruj poniżej zadanie cron."
 
 msgid "Order updates waiting"
-msgstr "Bekleyen sipariş güncellemeleri"
+msgstr "Oczekujące aktualizacje zamówień"
 
 msgid "Shipped, delivered or cancelled orders that sudemi has not heard about yet. They are sent again on every report until sudemi answers."
-msgstr "sudemi'nin henüz haberi olmayan gönderilmiş, teslim edilmiş veya iptal edilmiş siparişler. sudemi yanıt verene kadar her bildirimde yeniden gönderilirler."
+msgstr "Wysłane, doręczone lub anulowane zamówienia, o których sudemi jeszcze nie wie. Są wysyłane ponownie przy każdym zgłoszeniu, aż sudemi odpowie."
 
 msgid "The catalogue sync is on hold: it would remove %1$d of %2$d listed products from sudemi, so nothing was changed. If those products really were removed from this shop, contact sudemi support (support@sudemi.com)."
-msgstr "Katalog eşitlemesi beklemede: sudemi'de listelenen %2$d üründen %1$d tanesini kaldıracaktı, bu yüzden hiçbir şey değiştirilmedi. Bu ürünler gerçekten bu mağazadan kaldırıldıysa sudemi destek ile iletişime geçin (support@sudemi.com)."
+msgstr "Synchronizacja katalogu jest wstrzymana: usunęłaby z sudemi %1$d z %2$d wystawionych produktów, więc niczego nie zmieniono. Jeśli te produkty naprawdę usunięto z tego sklepu, skontaktuj się ze wsparciem sudemi (support@sudemi.com)."
 
 msgid "WP-Cron is still visit-driven on this site. It works on busy shops, but a real cron job is more reliable."
-msgstr "Bu sitede WP-Cron hâlâ ziyaretlere bağlı çalışıyor. Yoğun mağazalarda işe yarar, ancak gerçek bir cron görevi daha güvenilirdir."
+msgstr "WP-Cron na tej stronie nadal zależy od odwiedzin. Działa to w ruchliwych sklepach, ale prawdziwe zadanie cron jest bardziej niezawodne."
 
 msgid "WP-Cron is switched off on this site (DISABLE_WP_CRON), so the cron job in step 1 is required: without it this shop never reports in."
-msgstr "Bu sitede WP-Cron kapalı (DISABLE_WP_CRON), bu yüzden 1. adımdaki cron görevi zorunludur: o olmadan bu mağaza hiç bildirim yapmaz."
+msgstr "WP-Cron jest na tej stronie wyłączony (DISABLE_WP_CRON), więc zadanie cron z kroku 1 jest wymagane: bez niego ten sklep nigdy się nie zgłasza."
 
 msgid "WordPress runs its scheduled tasks (WP-Cron) only when someone visits the site. In a quiet hour nobody does, this shop stops reporting in, and sudemi pauses its products and cannot ask it about new orders. Let the server call WP-Cron every 5 minutes instead."
-msgstr "WordPress zamanlanmış görevlerini (WP-Cron) yalnızca biri siteyi ziyaret ettiğinde çalıştırır. Sakin bir saatte kimse ziyaret etmez, bu mağaza bildirim yapmayı bırakır, sudemi de ürünlerini duraklatır ve ona yeni siparişleri soramaz. Bunun yerine sunucunun WP-Cron'u her 5 dakikada bir çağırmasını sağlayın."
+msgstr "WordPress wykonuje zaplanowane zadania (WP-Cron) tylko wtedy, gdy ktoś odwiedza stronę. W spokojnej godzinie nikt tego nie robi, sklep przestaje się zgłaszać, a sudemi wstrzymuje jego produkty i nie może pytać go o nowe zamówienia. Niech zamiast tego serwer wywołuje WP-Cron co 5 minut."
 
 msgid "no answer"
-msgstr "yanıt yok"
+msgstr "brak odpowiedzi"
 
 msgid "sudemi answered the last report in time."
-msgstr "sudemi son bildirime zamanında yanıt verdi."
+msgstr "sudemi odpowiedziało na ostatnie zgłoszenie na czas."
 
 msgid "sudemi has not answered the confirmation yet. The order stays on hold with its stock reserved and is asked about again on the next heartbeat. Do not ship it until it moves to Processing."
-msgstr "sudemi onaya henüz yanıt vermedi. Sipariş, stoğu ayrılmış olarak beklemede kalır ve bir sonraki durum sinyalinde yeniden sorulur. Durumu \"İşleniyor\" olana kadar kargoya vermeyin."
+msgstr "sudemi nie odpowiedziało jeszcze na potwierdzenie. Zamówienie pozostaje wstrzymane z zarezerwowanym stanem magazynowym i zostanie sprawdzone ponownie przy następnym heartbeacie. Nie wysyłaj go, dopóki nie zmieni statusu na W trakcie realizacji."
 
 msgid "sudemi says this order is PAID, but it is cancelled here. Either ship it, or refund it to the buyer (set it to Processing and then Cancelled, or contact support@sudemi.com)."
-msgstr "sudemi bu siparişin ÖDENDİĞİNİ söylüyor, ancak burada iptal edilmiş. Ya gönderin ya da alıcıya iade yapın (önce İşleniyor, sonra İptal edildi durumuna getirin veya support@sudemi.com ile iletişime geçin)."
+msgstr "sudemi podaje, że to zamówienie jest OPŁACONE, ale tutaj jest anulowane. Wyślij je albo zwróć pieniądze kupującemu (ustaw W trakcie realizacji, a potem Anulowane, lub napisz na support@sudemi.com)."
 
 msgid "the order was cancelled in this shop"
-msgstr "sipariş bu mağazada iptal edildi"
+msgstr "zamówienie zostało anulowane w tym sklepie"
 
 msgid "sudemi shipping"
-msgstr "sudemi kargo"
+msgstr "Wysyłka sudemi"
 
 #, php-format
 msgid "sudemi order %1$s could not be booked: %2$s. Check the shop currency on the sudemi settings page."
-msgstr "sudemi siparişi %1$s kaydedilemedi: %2$s. sudemi ayarlar sayfasında mağaza para birimini kontrol edin."
+msgstr "Nie udało się zaksięgować zamówienia sudemi %1$s: %2$s. Sprawdź walutę sklepu na stronie ustawień sudemi."
 
 msgid "the order did not say which currency it was paid in"
-msgstr "sipariş hangi para biriminde ödendiğini belirtmedi"
+msgstr "zamówienie nie podało, w jakiej walucie zostało opłacone"
 
 #, php-format
 msgid "the order was paid in %1$s but this shop sells in %2$s, so it cannot be booked here"
-msgstr "sipariş %1$s ile ödendi ama bu mağaza %2$s ile satıyor, bu yüzden burada kaydedilemez"
+msgstr "zamówienie zostało opłacone w %1$s, ale ten sklep sprzedaje w %2$s, więc nie można go tu zaksięgować"
 
 #, php-format
 msgid "this refund is in %1$s but the buyer paid in %2$s; change the order back to %2$s and refund again"
-msgstr "bu iade %1$s cinsinden ama alıcı %2$s ile ödedi; siparişi tekrar %2$s yapın ve yeniden iade edin"
+msgstr "ten zwrot jest w %1$s, ale kupujący zapłacił w %2$s; przywróć zamówieniu walutę %2$s i zwróć ponownie"
 
 #, php-format
 msgid "This refund was NOT sent to sudemi: %s. The buyer has not been paid back."
-msgstr "Bu iade sudemi'ye GÖNDERİLMEDİ: %s. Alıcıya para geri ödenmedi."
+msgstr "Ten zwrot NIE został wysłany do sudemi: %s. Kupujący nie otrzymał zwrotu pieniędzy."
 
 msgid "Currency"
-msgstr "Para birimi"
+msgstr "Waluta"
 
 msgid "Your shop currency"
-msgstr "Mağazanızın para birimi"
+msgstr "Waluta Twojego sklepu"
 
 msgid "From your WooCommerce settings. Your prices are sent to sudemi in it, buyers pay in it, and orders arrive in it."
-msgstr "WooCommerce ayarlarınızdan. Fiyatlarınız sudemi'ye bu para biriminde gönderilir, alıcılar bununla öder ve siparişler bununla gelir."
+msgstr "Z ustawień WooCommerce. Twoje ceny trafiają do sudemi w tej walucie, kupujący w niej płacą i w niej przychodzą zamówienia."
 
 msgid "Currency sudemi has for your shop"
-msgstr "sudemi'nin mağazanız için kayıtlı para birimi"
+msgstr "Waluta, którą sudemi ma dla Twojego sklepu"
 
 msgid "not confirmed yet"
-msgstr "henüz onaylanmadı"
+msgstr "jeszcze niepotwierdzona"
 
 msgid "What sudemi answered the last time this shop sent its details. It updates after the next sync."
-msgstr "Bu mağaza bilgilerini en son gönderdiğinde sudemi'nin verdiği yanıt. Bir sonraki eşitlemeden sonra güncellenir."
+msgstr "Co sudemi odpowiedziało, gdy ten sklep ostatnio wysłał swoje dane. Aktualizuje się po następnej synchronizacji."
 
 #, php-format
 msgid "sudemi cannot sell in %1$s yet, so your products are not shown to buyers and no orders can come in. Currencies sudemi supports: %2$s."
-msgstr "sudemi henüz %1$s ile satış yapamıyor, bu yüzden ürünleriniz alıcılara gösterilmiyor ve sipariş gelemiyor. sudemi'nin desteklediği para birimleri: %2$s."
+msgstr "sudemi nie może jeszcze sprzedawać w %1$s, więc kupujący nie widzą Twoich produktów i nie mogą przychodzić zamówienia. Waluty obsługiwane przez sudemi: %2$s."
 
 #, php-format
 msgid "sudemi still has %1$s for your shop, but your shop sells in %2$s. Orders in %1$s are declined until this matches. Click \"Sync the catalogue now\" to send the new currency."
-msgstr "sudemi'de mağazanız için hâlâ %1$s kayıtlı, ama mağazanız %2$s ile satıyor. Bu eşleşene kadar %1$s cinsinden siparişler reddedilir. Yeni para birimini göndermek için \"Kataloğu şimdi eşitle\" düğmesine tıklayın."
+msgstr "sudemi ma nadal %1$s dla Twojego sklepu, ale Twój sklep sprzedaje w %2$s. Zamówienia w %1$s są odrzucane, dopóki to się nie zgadza. Kliknij \"Synchronizuj katalog teraz\", aby wysłać nową walutę."
 
 msgid "Buyers pay in your currency. sudemi's payouts to you are in euros: the payment provider's currency conversion fee (about 2%) is taken from your payout, as the terms say."
-msgstr "Alıcılar sizin para biriminizle öder. sudemi size euro olarak ödeme yapar: ödeme sağlayıcısının döviz çevirme ücreti (yaklaşık %2) koşullarda yazdığı gibi ödemenizden düşülür."
+msgstr "Kupujący płacą w Twojej walucie. sudemi wypłaca Ci pieniądze w euro: opłata operatora płatności za przewalutowanie (około 2%) jest potrącana z Twojej wypłaty, zgodnie z regulaminem."
 
 msgid "Waiting for you"
-msgstr "Sizi bekliyor"
+msgstr "Czeka na Ciebie"
 
 msgid "Accepted, waiting for payment"
-msgstr "Kabul edildi, ödeme bekleniyor"
+msgstr "Przyjęte, oczekuje na płatność"
 
 msgid "Paid, ready to ship"
-msgstr "Ödendi, kargoya hazır"
+msgstr "Opłacone, gotowe do wysyłki"
 
 msgid "Declined"
-msgstr "Reddedildi"
+msgstr "Odrzucone"
 
 msgid "Cancelled"
-msgstr "İptal edildi"
+msgstr "Anulowane"
 
 msgid "Refunded"
-msgstr "İade edildi"
+msgstr "Zwrócone"
 
 msgid "Nothing charged"
-msgstr "Ücret alınmadı"
+msgstr "Nic nie pobrano"
 
 msgid "Due once shipped"
-msgstr "Kargoya verildikten sonra ödenecek"
+msgstr "Należne po wysyłce"
 
 msgid "Scheduled"
-msgstr "Planlandı"
+msgstr "Zaplanowana"
 
 msgid "On its way to you"
-msgstr "Size gönderiliyor"
+msgstr "W drodze do Ciebie"
 
 msgid "Held (chargeback)"
-msgstr "Bekletiliyor (ters ibraz)"
+msgstr "Wstrzymana (chargeback)"
 
 msgid "Partly paid out"
-msgstr "Kısmen size ödendi"
+msgstr "Częściowo wypłacona"
 
 msgid "Paid out"
-msgstr "Size ödendi"
+msgstr "Wypłacona"
 
 msgid "Nothing due (refunded)"
-msgstr "Ödenecek tutar yok (iade edildi)"
+msgstr "Nic do wypłaty (zwrot)"
 
 msgid "Placed by the buyer"
-msgstr "Alıcı tarafından verildi"
+msgstr "Złożone przez kupującego"
 
 msgid "Accepted"
-msgstr "Kabul edildi"
+msgstr "Przyjęte"
 
 msgid "Paid"
-msgstr "Ödendi"
+msgstr "Opłacone"
 
 msgid "Refund"
-msgstr "İade"
+msgstr "Zwrot"
 
 msgid "Buyer asked to return or cancel"
-msgstr "Alıcı iade veya iptal istedi"
+msgstr "Kupujący poprosił o zwrot lub anulowanie"
 
 msgid "Request answered"
-msgstr "Talep yanıtlandı"
+msgstr "Prośba rozpatrzona"
 
 msgid "Not set up yet"
-msgstr "Henüz kurulmadı"
+msgstr "Jeszcze nieskonfigurowane"
 
 msgid "Details missing"
-msgstr "Bilgiler eksik"
+msgstr "Brak danych"
 
 msgid "Under review"
-msgstr "İnceleniyor"
+msgstr "W weryfikacji"
 
 msgid "Active"
-msgstr "Etkin"
+msgstr "Aktywne"
 
 msgid "Action required"
-msgstr "İşlem gerekli"
+msgstr "Wymagane działanie"
 
 msgid "This is available once this shop is connected to sudemi."
-msgstr "Bu, mağaza sudemi'ye bağlandığında kullanılabilir."
+msgstr "Dostępne, gdy ten sklep zostanie połączony z sudemi."
 
 msgid "All"
-msgstr "Tümü"
+msgstr "Wszystkie"
 
 msgid "No orders match."
-msgstr "Eşleşen sipariş yok."
+msgstr "Brak pasujących zamówień."
 
 msgid "Select"
-msgstr "Seç"
+msgstr "Zaznacz"
 
 msgid "Ship to"
-msgstr "Teslimat yeri"
+msgstr "Wysyłka do"
 
 msgid "Total"
-msgstr "Toplam"
+msgstr "Suma"
 
 msgid "Payout"
-msgstr "Satıcı ödemesi"
+msgstr "Wypłata"
 
 msgid "Tracking"
-msgstr "Kargo takibi"
+msgstr "Śledzenie"
 
 msgid "WooCommerce order"
-msgstr "WooCommerce siparişi"
+msgstr "Zamówienie WooCommerce"
 
 msgid "With the selected orders"
-msgstr "Seçili siparişlerle"
+msgstr "Z zaznaczonymi zamówieniami"
 
 msgid "Choose an action"
-msgstr "Bir işlem seçin"
+msgstr "Wybierz działanie"
 
 msgid "Accept"
-msgstr "Kabul et"
+msgstr "Przyjmij"
 
 msgid "Decline"
-msgstr "Reddet"
+msgstr "Odrzuć"
 
 msgid "Mark shipped"
-msgstr "Kargoya verildi olarak işaretle"
+msgstr "Oznacz jako wysłane"
 
 msgid "Mark delivered"
-msgstr "Teslim edildi olarak işaretle"
+msgstr "Oznacz jako doręczone"
 
 msgid "Reason for declining (shown to the buyers)"
-msgstr "Ret nedeni (alıcılara gösterilir)"
+msgstr "Powód odrzucenia (pokazany kupującym)"
 
 msgid "Carrier"
-msgstr "Kargo firması"
+msgstr "Przewoźnik"
 
 msgid "Apply"
-msgstr "Uygula"
+msgstr "Zastosuj"
 
 msgid "Refunds and cancellations are made one order at a time, on the order's own page: each moves a different amount of money."
-msgstr "İadeler ve iptaller, siparişin kendi sayfasında tek tek yapılır: her biri farklı bir tutarı etkiler."
+msgstr "Zwroty i anulowania wykonuje się dla jednego zamówienia naraz, na stronie tego zamówienia: każde dotyczy innej kwoty."
 
 #, php-format
 msgid "Orders %1$d to %2$d of %3$d"
-msgstr "%3$d siparişten %1$d - %2$d arası"
+msgstr "Zamówienia od %1$d do %2$d z %3$d"
 
 msgid "Previous"
-msgstr "Önceki"
+msgstr "Poprzednie"
 
 msgid "Next"
-msgstr "Sonraki"
+msgstr "Następne"
 
 #, php-format
 msgid "answer by %s"
-msgstr "son yanıt: %s"
+msgstr "odpowiedz do %s"
 
 #, php-format
 msgid "refunded %s"
-msgstr "iade edilen: %s"
+msgstr "zwrócono %s"
 
 msgid "Tracking code"
-msgstr "Takip kodu"
+msgstr "Numer przesyłki"
 
 msgid "From"
-msgstr "Başlangıç"
+msgstr "Od"
 
 msgid "To"
-msgstr "Bitiş"
+msgstr "Do"
 
 msgid "Search"
-msgstr "Ara"
+msgstr "Szukaj"
 
 msgid "Order number or product"
-msgstr "Sipariş numarası veya ürün"
+msgstr "Numer zamówienia lub produkt"
 
 msgid "Sort by"
-msgstr "Sırala"
+msgstr "Sortuj według"
 
 msgid "Date"
-msgstr "Tarih"
+msgstr "Data"
 
 msgid "Newest or highest first"
-msgstr "Önce en yeni veya en yüksek"
+msgstr "Najpierw najnowsze lub najwyższe"
 
 msgid "Oldest or lowest first"
-msgstr "Önce en eski veya en düşük"
+msgstr "Najpierw najstarsze lub najniższe"
 
 msgid "Filter"
-msgstr "Filtrele"
+msgstr "Filtruj"
 
 msgid "Language of the file"
-msgstr "Dosyanın dili"
+msgstr "Język pliku"
 
 msgid "Numbers"
-msgstr "Sayılar"
+msgstr "Liczby"
 
 msgid "1234.50, comma separated"
-msgstr "1234.50, virgülle ayrılmış"
+msgstr "1234.50, rozdzielane przecinkiem"
 
 msgid "1234,50, semicolon separated"
-msgstr "1234,50, noktalı virgülle ayrılmış"
+msgstr "1234,50, rozdzielane średnikiem"
 
 msgid "Download these orders (CSV)"
-msgstr "Bu siparişleri indir (CSV)"
+msgstr "Pobierz te zamówienia (CSV)"
 
 msgid "Every order that matches the filters, up to 10,000, without buyer names or addresses."
-msgstr "Filtrelere uyan tüm siparişler, en fazla 10.000 adet, alıcı adları ve adresleri olmadan."
+msgstr "Wszystkie zamówienia pasujące do filtrów, do 10 000, bez nazwisk i adresów kupujących."
 
 msgid "Confirm orders automatically when the items are in stock"
-msgstr "Ürünler stoktayken siparişleri otomatik onayla"
+msgstr "Potwierdzaj zamówienia automatycznie, gdy produkty są dostępne"
 
 msgid "Save"
-msgstr "Kaydet"
+msgstr "Zapisz"
 
 msgid "On: every five minutes this shop accepts orders whose items are in stock and declines the others."
-msgstr "Açık: bu mağaza her beş dakikada bir, ürünleri stokta olan siparişleri kabul eder, diğerlerini reddeder."
+msgstr "Włączone: co pięć minut ten sklep przyjmuje zamówienia, których produkty są dostępne, a pozostałe odrzuca."
 
 msgid "Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing."
-msgstr "Kapalı: siparişler sizi bekler. Her birini gösterilen tarihten önce burada kabul edin veya reddedin; yanıt verilmezse alıcının ödemesi serbest bırakılır ve hiçbir ücret alınmaz."
+msgstr "Wyłączone: zamówienia czekają na Ciebie. Przyjmij lub odrzuć każde z nich tutaj przed podaną datą; bez odpowiedzi kupujący zostaje zwolniony i nic nie jest pobierane."
 
 msgid "Back to the orders"
-msgstr "Siparişlere dön"
+msgstr "Wróć do zamówień"
 
 #, php-format
 msgid "Order %1$s: %2$s"
-msgstr "Sipariş %1$s: %2$s"
+msgstr "Zamówienie %1$s: %2$s"
 
 #, php-format
 msgid "Waiting for your answer. The buyer is not charged until you accept. Answer by %s; without an answer the buyer is released."
-msgstr "Yanıtınız bekleniyor. Siz kabul edene kadar alıcıdan ücret alınmaz. %s tarihine kadar yanıt verin; yanıt verilmezse alıcının ödemesi serbest bırakılır."
+msgstr "Czeka na Twoją odpowiedź. Kupujący nie zostanie obciążony, dopóki nie przyjmiesz zamówienia. Odpowiedz do %s; bez odpowiedzi kupujący zostaje zwolniony."
 
 #, php-format
 msgid "Stock check: %s."
-msgstr "Stok kontrolü: %s."
+msgstr "Sprawdzenie stanu magazynowego: %s."
 
 msgid "sudemi order"
-msgstr "sudemi siparişi"
+msgstr "Zamówienie sudemi"
 
 msgid "Placed"
-msgstr "Sipariş tarihi"
+msgstr "Złożone"
 
 msgid "none yet (it is created when the order is accepted)"
-msgstr "henüz yok (sipariş kabul edildiğinde oluşturulur)"
+msgstr "jeszcze brak (powstaje po przyjęciu zamówienia)"
 
 msgid "Buyer may withdraw until"
-msgstr "Alıcının cayabileceği son tarih"
+msgstr "Kupujący może odstąpić od umowy do"
 
 msgid "Reason declined"
-msgstr "Ret nedeni"
+msgstr "Powód odrzucenia"
 
 msgid "Items"
-msgstr "Ürünler"
+msgstr "Pozycje"
 
 msgid "Product"
-msgstr "Ürün"
+msgstr "Produkt"
 
 msgid "Quantity"
-msgstr "Adet"
+msgstr "Ilość"
 
 msgid "Price"
-msgstr "Fiyat"
+msgstr "Cena"
 
 msgid "Amount"
-msgstr "Tutar"
+msgstr "Kwota"
 
 msgid "No right of withdrawal"
-msgstr "Cayma hakkı yok"
+msgstr "Brak prawa odstąpienia od umowy"
 
 msgid "Money"
-msgstr "Para"
+msgstr "Pieniądze"
 
 msgid "Goods"
-msgstr "Ürünler"
+msgstr "Towar"
 
 msgid "Shipping"
-msgstr "Kargo"
+msgstr "Wysyłka"
 
 msgid "Buyer paid"
-msgstr "Alıcının ödediği"
+msgstr "Kupujący zapłacił"
 
 msgid "sudemi commission"
-msgstr "sudemi komisyonu"
+msgstr "Prowizja sudemi"
 
 msgid "Refunded to the buyer"
-msgstr "Alıcıya iade edilen"
+msgstr "Zwrócono kupującemu"
 
 msgid "Payout expected"
-msgstr "Beklenen satıcı ödemesi"
+msgstr "Oczekiwana wypłata"
 
 msgid "Payout due"
-msgstr "Satıcı ödemesi vadesi"
+msgstr "Należna wypłata"
 
 msgid "The buyer asked to return this order"
-msgstr "Alıcı bu siparişi iade etmek istedi"
+msgstr "Kupujący poprosił o zwrot tego zamówienia"
 
 msgid "History"
-msgstr "Geçmiş"
+msgstr "Historia"
 
 msgid "Actions"
-msgstr "İşlemler"
+msgstr "Działania"
 
 msgid "Accept: the buyer is charged and you ship the order."
-msgstr "Kabul et: alıcıdan ücret alınır ve siparişi siz kargolarsınız."
+msgstr "Przyjmij: kupujący zostaje obciążony, a Ty wysyłasz zamówienie."
 
 msgid "Accept the order"
-msgstr "Siparişi kabul et"
+msgstr "Przyjmij zamówienie"
 
 msgid "Reason for declining (shown to the buyer)"
-msgstr "Ret nedeni (alıcıya gösterilir)"
+msgstr "Powód odrzucenia (pokazany kupującemu)"
 
 msgid "Decline the order"
-msgstr "Siparişi reddet"
+msgstr "Odrzuć zamówienie"
 
 #, php-format
 msgid "Amount to refund (%s)"
-msgstr "İade edilecek tutar (%s)"
+msgstr "Kwota zwrotu (%s)"
 
 #, php-format
 msgid "Leave empty to refund everything not refunded yet (%s)."
-msgstr "Henüz iade edilmemiş tutarın tamamını iade etmek için boş bırakın (%s)."
+msgstr "Zostaw puste, aby zwrócić wszystko, czego jeszcze nie zwrócono (%s)."
 
 msgid "Reason"
-msgstr "Neden"
+msgstr "Powód"
 
 msgid "Refund through sudemi"
-msgstr "sudemi üzerinden iade et"
+msgstr "Zwróć pieniądze przez sudemi"
 
 msgid "Cancel: you cannot fulfil this paid order. The buyer is refunded in full."
-msgstr "İptal: bu ödenmiş siparişi yerine getiremiyorsunuz. Alıcıya tutarın tamamı iade edilir."
+msgstr "Anuluj: nie możesz zrealizować tego opłaconego zamówienia. Kupujący otrzymuje pełny zwrot pieniędzy."
 
 msgid "Cancel and refund in full"
-msgstr "İptal et ve tamamını iade et"
+msgstr "Anuluj i zwróć całą kwotę"
 
 #, php-format
 msgid "The order export was cut off at 10,000 of %d orders. Narrow the dates to get the rest."
-msgstr "Sipariş dışa aktarımı %d siparişin 10.000'inde kesildi. Geri kalanı için tarih aralığını daraltın."
+msgstr "Eksport zamówień został ucięty na 10 000 z %d zamówień. Zawęź daty, aby pobrać resztę."
 
 msgid "Orders are confirmed automatically."
-msgstr "Siparişler otomatik onaylanıyor."
+msgstr "Zamówienia są potwierdzane automatycznie."
 
 msgid "Orders now wait for you to accept or decline them."
-msgstr "Siparişler artık kabul etmenizi veya reddetmenizi bekliyor."
+msgstr "Zamówienia czekają teraz, aż je przyjmiesz lub odrzucisz."
 
 msgid "What sudemi buyers pay for shipping, per country. By default the prices this plugin sends from your WooCommerce shipping zones apply. You can instead set your own price per country on sudemi, and choose the countries you deliver to. One charge per parcel, never per item."
-msgstr "sudemi alıcılarının ülkeye göre ödediği kargo ücreti. Varsayılan olarak bu eklentinin WooCommerce kargo bölgelerinizden gönderdiği fiyatlar geçerlidir. Bunun yerine sudemi'de her ülke için kendi fiyatınızı belirleyebilir ve teslimat yaptığınız ülkeleri seçebilirsiniz. Ücret ürün başına değil, her zaman paket başına bir kez alınır."
+msgstr "Ile kupujący z sudemi płacą za wysyłkę, w podziale na kraje. Domyślnie obowiązują ceny, które ta wtyczka przesyła z Twoich stref wysyłki WooCommerce. Możesz zamiast tego ustawić w sudemi własną cenę dla każdego kraju i wybrać kraje, do których dostarczasz. Jedna opłata za paczkę, nigdy za sztukę."
 
 msgid "Prices filled in from your WooCommerce shipping zones. Check them and save; nothing is changed on sudemi until you do."
-msgstr "Fiyatlar WooCommerce kargo bölgelerinizden dolduruldu. Kontrol edip kaydedin; siz kaydedene kadar sudemi'de hiçbir şey değişmez."
+msgstr "Ceny uzupełnione z Twoich stref wysyłki WooCommerce. Sprawdź je i zapisz; w sudemi nic się nie zmieni, dopóki tego nie zrobisz."
 
 msgid "Shipping prices"
-msgstr "Kargo ücretleri"
+msgstr "Ceny wysyłki"
 
 msgid "Use the prices from my WooCommerce shipping zones"
-msgstr "WooCommerce kargo bölgelerimdeki fiyatları kullan"
+msgstr "Użyj cen z moich stref wysyłki WooCommerce"
 
 msgid "Set my own countries and prices on sudemi"
-msgstr "Kendi ülkelerimi ve fiyatlarımı sudemi'de belirle"
+msgstr "Ustaw własne kraje i ceny w sudemi"
 
 msgid "Country"
-msgstr "Ülke"
+msgstr "Kraj"
 
 msgid "Deliver there"
-msgstr "Teslimat yap"
+msgstr "Dostarczaj tam"
 
 #, php-format
 msgid "Your price on sudemi (%s)"
-msgstr "sudemi'deki fiyatınız (%s)"
+msgstr "Twoja cena w sudemi (%s)"
 
 msgid "Prices from your shipping zones"
-msgstr "Kargo bölgelerinizdeki fiyatlar"
+msgstr "Ceny z Twoich stref wysyłki"
 
 msgid "Buyers pay now"
-msgstr "Alıcıların şu an ödediği"
+msgstr "Kupujący płacą teraz"
 
 msgid "not offered"
-msgstr "sunulmuyor"
+msgstr "nieoferowane"
 
 msgid "your price on sudemi"
-msgstr "sudemi'deki fiyatınız"
+msgstr "Twoja cena w sudemi"
 
 msgid "from your shop"
-msgstr "mağazanızdan"
+msgstr "z Twojego sklepu"
 
 msgid "With your own countries and prices: only the ticked countries are offered. A country with an empty price uses the price from your shipping zones."
-msgstr "Kendi ülke ve fiyatlarınızla: yalnızca işaretli ülkeler sunulur. Fiyatı boş bırakılan bir ülke, kargo bölgelerinizdeki fiyatı kullanır."
+msgstr "Przy własnych krajach i cenach oferowane są tylko zaznaczone kraje. Kraj z pustą ceną używa ceny z Twoich stref wysyłki."
 
 msgid "Save shipping on sudemi"
-msgstr "Kargo ayarlarını sudemi'de kaydet"
+msgstr "Zapisz wysyłkę w sudemi"
 
 msgid "Fill in from my WooCommerce shipping zones"
-msgstr "WooCommerce kargo bölgelerimden doldur"
+msgstr "Uzupełnij z moich stref wysyłki WooCommerce"
 
 msgid "Shipping settings saved on sudemi."
-msgstr "Kargo ayarları sudemi'de kaydedildi."
+msgstr "Ustawienia wysyłki zapisane w sudemi."
 
 msgid "Saved on sudemi. Buyers see these shipping prices from now on."
-msgstr "sudemi'de kaydedildi. Alıcılar bundan sonra bu kargo ücretlerini görür."
+msgstr "Zapisano w sudemi. Od teraz kupujący widzą te ceny wysyłki."
 
 msgid "Payout account"
-msgstr "Satıcı ödeme hesabı"
+msgstr "Konto do wypłat"
 
 msgid "State"
-msgstr "Durum"
+msgstr "Stan"
 
 msgid "Act before"
-msgstr "Son işlem tarihi"
+msgstr "Działaj przed"
 
 msgid "When you are paid"
-msgstr "Ne zaman ödeme alırsınız"
+msgstr "Kiedy otrzymujesz pieniądze"
 
 #, php-format
 msgid "%1$d days after the buyer received the order, or %2$d days after shipping if delivery is never reported; never while a chargeback is open."
-msgstr "Alıcı siparişi teslim aldıktan %1$d gün sonra ya da teslimat hiç bildirilmezse kargolamadan %2$d gün sonra; açık bir ters ibraz varken asla."
+msgstr "%1$d dni po otrzymaniu zamówienia przez kupującego lub %2$d dni od wysyłki, gdy doręczenie nigdy nie zostanie zgłoszone; nigdy w trakcie otwartego chargebacku."
 
 msgid "Your payout account needs attention. It is managed on the sudemi seller portal (Payouts), not here."
-msgstr "Satıcı ödeme hesabınızla ilgilenmeniz gerekiyor. Bu hesap burada değil, sudemi satıcı portalında (Ödemeler) yönetilir."
+msgstr "Twoje konto do wypłat wymaga uwagi. Zarządza się nim w portalu sprzedawcy sudemi (Wypłaty), nie tutaj."
 
 msgid "The payout account is managed on the sudemi seller portal (Payouts)."
-msgstr "Satıcı ödeme hesabı sudemi satıcı portalında (Ödemeler) yönetilir."
+msgstr "Kontem do wypłat zarządza się w portalu sprzedawcy sudemi (Wypłaty)."
 
 msgid "This shop's payouts"
-msgstr "Bu mağazanın satıcı ödemeleri"
+msgstr "Wypłaty tego sklepu"
 
 msgid "No payouts yet."
-msgstr "Henüz satıcı ödemesi yok."
+msgstr "Brak jeszcze wypłat."
 
 msgid "Orders"
-msgstr "Siparişler"
+msgstr "Zamówienia"
 
 msgid "Still to come"
-msgstr "Henüz ödenmeyen"
+msgstr "Jeszcze do wypłaty"
 
 msgid "Next payout"
-msgstr "Sonraki satıcı ödemesi"
+msgstr "Następna wypłata"
 
 msgid "Manage orders: filters, export, accept, ship, refund"
-msgstr "Siparişleri yönet: filtreler, dışa aktarma, kabul, kargo, iade"
+msgstr "Zarządzaj zamówieniami: filtry, eksport, przyjmowanie, wysyłka, zwroty"
 
 msgid "sudemi started the order change list over (last 7 days); orders are checked again, nothing is applied twice."
-msgstr "sudemi sipariş değişiklik listesini baştan başlattı (son 7 gün); siparişler yeniden kontrol edilir, hiçbir şey iki kez uygulanmaz."
+msgstr "sudemi rozpoczęło listę zmian zamówień od nowa (ostatnie 7 dni); zamówienia są sprawdzane ponownie, nic nie zostanie zastosowane dwa razy."
 
 #, php-format
 msgid "%d WooCommerce order(s) updated from sudemi."
-msgstr "%d WooCommerce siparişi sudemi'den güncellendi."
+msgstr "Zamówienia WooCommerce zaktualizowane z sudemi: %d."
 
 msgid "An order change from sudemi could not be applied yet; it is read again on the next heartbeat."
-msgstr "sudemi'den gelen bir sipariş değişikliği henüz uygulanamadı; bir sonraki durum sinyalinde yeniden okunur."
+msgstr "Zmiany zamówienia z sudemi nie udało się jeszcze zastosować; zostanie odczytana ponownie przy następnym heartbeacie."
 
 msgid "Paid on sudemi; the buyer has been charged. This order can be shipped."
-msgstr "sudemi'de ödendi; alıcıdan ücret tahsil edildi. Bu sipariş kargolanabilir."
+msgstr "Opłacone w sudemi; kupujący został obciążony. To zamówienie można wysłać."
 
 msgid "Marked shipped on sudemi."
-msgstr "sudemi'de kargoya verildi olarak işaretlendi."
+msgstr "Oznaczono jako wysłane w sudemi."
 
 msgid "Declined on sudemi: the buyer was not charged. The stock has been restored."
-msgstr "sudemi'de reddedildi: alıcıdan ücret alınmadı. Stok geri yüklendi."
+msgstr "Odrzucone w sudemi: kupujący nie został obciążony. Stan magazynowy został przywrócony."
 
 msgid "Cancelled on sudemi; the buyer has been refunded in full. Do not ship this order. The stock has been restored."
-msgstr "sudemi'de iptal edildi; alıcıya tutarın tamamı iade edildi. Bu siparişi kargolamayın. Stok geri yüklendi."
+msgstr "Anulowane w sudemi; kupujący otrzymał pełny zwrot pieniędzy. Nie wysyłaj tego zamówienia. Stan magazynowy został przywrócony."
 
 #, php-format
 msgid "Delivered (recorded on sudemi, %s)."
-msgstr "Teslim edildi (sudemi'de kaydedildi, %s)."
+msgstr "Doręczone (zarejestrowane w sudemi, %s)."
 
 #, php-format
 msgid "Tracking on sudemi: %1$s %2$s"
-msgstr "sudemi'de kargo takibi: %1$s %2$s"
+msgstr "Śledzenie w sudemi: %1$s %2$s"
 
 msgid "Refund made on sudemi"
-msgstr "sudemi'de yapılan iade"
+msgstr "Zwrot wykonany w sudemi"
 
 #, php-format
 msgid "A refund of %s made on sudemi is recorded here. The buyer was paid back by sudemi."
-msgstr "sudemi'de yapılan %s tutarındaki iade burada kaydedildi. Alıcıya parası sudemi tarafından iade edildi."
+msgstr "Zwrot %s wykonany w sudemi jest tu zarejestrowany. Pieniądze zwróciło kupującemu sudemi."
 
 msgid "Booked from sudemi: this order was accepted on sudemi (on the portal or in a bulk action)."
-msgstr "sudemi'den kaydedildi: bu sipariş sudemi'de kabul edildi (portalda veya toplu bir işlemle)."
+msgstr "Zarejestrowane z sudemi: to zamówienie zostało przyjęte w sudemi (w portalu lub działaniem zbiorczym)."
 
 #, php-format
 msgid "sudemi order %1$s was accepted on sudemi; booked here as order #%2$s."
-msgstr "%1$s numaralı sudemi siparişi sudemi'de kabul edildi; burada #%2$s numaralı sipariş olarak kaydedildi."
+msgstr "Zamówienie sudemi %1$s zostało przyjęte w sudemi; zarejestrowane tutaj jako zamówienie #%2$s."
 
 msgid "sudemi has no such order for this shop."
-msgstr "sudemi'de bu mağaza için böyle bir sipariş yok."
+msgstr "sudemi nie ma takiego zamówienia dla tego sklepu."
 
 msgid "This order belongs to an earlier sudemi connection of this shop. Leave it as it is; sudemi support can help."
-msgstr "Bu sipariş, bu mağazanın önceki bir sudemi bağlantısına ait. Olduğu gibi bırakın; sudemi destek yardımcı olabilir."
+msgstr "To zamówienie należy do wcześniejszego połączenia tego sklepu z sudemi. Zostaw je bez zmian; wsparcie sudemi może pomóc."
 
 msgid "This order was already answered."
-msgstr "Bu sipariş zaten yanıtlandı."
+msgstr "Na to zamówienie już odpowiedziano."
 
 msgid "The buyer's payment authorisation ran out, so the order can no longer be accepted."
-msgstr "Alıcının ödeme provizyonunun süresi doldu, bu yüzden sipariş artık kabul edilemez."
+msgstr "Autoryzacja płatności kupującego wygasła, więc zamówienia nie można już przyjąć."
 
 msgid "The order is not in a state that allows this (it may have changed in the meantime). Reload the order."
-msgstr "Sipariş bu işleme izin veren bir durumda değil (bu arada değişmiş olabilir). Siparişi yeniden yükleyin."
+msgstr "Zamówienie nie jest w stanie, który na to pozwala (mogło się w międzyczasie zmienić). Wczytaj zamówienie ponownie."
 
 msgid "The payment provider refused this. Nothing changed; try again later or contact sudemi support."
-msgstr "Ödeme sağlayıcısı bunu reddetti. Hiçbir şey değişmedi; daha sonra tekrar deneyin veya sudemi destek ile iletişime geçin."
+msgstr "Operator płatności odmówił. Nic się nie zmieniło; spróbuj ponownie później lub skontaktuj się ze wsparciem sudemi."
 
 msgid "The amount is not in the currency the buyer paid in."
-msgstr "Tutar, alıcının ödeme yaptığı para biriminde değil."
+msgstr "Kwota nie jest w walucie, w której zapłacił kupujący."
 
 msgid "This shop is suspended on sudemi: it cannot accept orders. Paid orders can still be shipped and refunded. Contact sudemi support."
-msgstr "Bu mağaza sudemi'de askıya alındı: sipariş kabul edemez. Ödenmiş siparişler yine de kargolanabilir ve iade edilebilir. sudemi destek ile iletişime geçin."
+msgstr "Ten sklep jest zawieszony w sudemi: nie może przyjmować zamówień. Opłacone zamówienia nadal można wysłać i zwrócić za nie pieniądze. Skontaktuj się ze wsparciem sudemi."
 
 msgid "Dates must be in the form YYYY-MM-DD."
-msgstr "Tarihler YYYY-MM-DD biçiminde olmalıdır."
+msgstr "Daty muszą mieć format YYYY-MM-DD."
 
 msgid "sudemi asked this shop to slow down. Wait a minute and try again."
-msgstr "sudemi bu mağazadan yavaşlamasını istedi. Bir dakika bekleyip tekrar deneyin."
+msgstr "sudemi poprosiło ten sklep o zwolnienie tempa. Odczekaj minutę i spróbuj ponownie."
 
 msgid "Give a reason. The buyer is shown it."
-msgstr "Bir neden belirtin. Alıcı bu nedeni görür."
+msgstr "Podaj powód. Kupujący go zobaczy."
 
 msgid "Select at least one order."
-msgstr "En az bir sipariş seçin."
+msgstr "Zaznacz co najmniej jedno zamówienie."
 
 msgid "Select at most 100 orders at once."
-msgstr "Tek seferde en fazla 100 sipariş seçin."
+msgstr "Zaznacz naraz najwyżej 100 zamówień."
 
 msgid "That action is not available."
-msgstr "Bu işlem kullanılamıyor."
+msgstr "To działanie jest niedostępne."
 
 msgid "Prices must be numbers of 0 or more."
-msgstr "Fiyatlar 0 veya daha büyük sayılar olmalıdır."
+msgstr "Ceny muszą być liczbami równymi 0 lub większymi."
 
 msgid "Enter an amount greater than 0, or leave it empty to refund the rest."
-msgstr "0'dan büyük bir tutar girin veya kalanını iade etmek için boş bırakın."
+msgstr "Wpisz kwotę większą niż 0 albo zostaw puste, aby zwrócić resztę."
 
 msgid "Could not reach sudemi. Nothing was changed; try again shortly."
-msgstr "sudemi'ye ulaşılamadı. Hiçbir şey değiştirilmedi; birazdan tekrar deneyin."
+msgstr "Nie udało się połączyć z sudemi. Nic nie zostało zmienione; spróbuj ponownie za chwilę."
 
 msgid "sudemi refused this."
-msgstr "sudemi bunu reddetti."
+msgstr "sudemi odmówiło."
 
 msgid "Declined on sudemi. The buyer is not charged."
-msgstr "sudemi'de reddedildi. Alıcıdan ücret alınmaz."
+msgstr "Odrzucono w sudemi. Kupujący nie zostanie obciążony."
 
 msgid "Marked shipped on sudemi. The buyer is told."
-msgstr "sudemi'de kargoya verildi olarak işaretlendi. Alıcıya bildirildi."
+msgstr "Oznaczono jako wysłane w sudemi. Kupujący zostanie powiadomiony."
 
 msgid "Marked delivered on sudemi."
-msgstr "sudemi'de teslim edildi olarak işaretlendi."
+msgstr "Oznaczono jako doręczone w sudemi."
 
 msgid "Refunded through sudemi. The refund is recorded on the WooCommerce order."
-msgstr "sudemi üzerinden iade edildi. İade, WooCommerce siparişine kaydedildi."
+msgstr "Zwrócono pieniądze przez sudemi. Zwrot jest zarejestrowany w zamówieniu WooCommerce."
 
 msgid "Cancelled on sudemi and refunded in full. The WooCommerce order is cancelled and the stock restored."
-msgstr "sudemi'de iptal edildi ve tutarın tamamı iade edildi. WooCommerce siparişi iptal edildi ve stok geri yüklendi."
+msgstr "Anulowano w sudemi i zwrócono całą kwotę. Zamówienie WooCommerce zostało anulowane, a stan magazynowy przywrócony."
 
 msgid "The WooCommerce order for this sudemi order is cancelled. Decline it instead."
-msgstr "Bu sudemi siparişine ait WooCommerce siparişi iptal edilmiş. Bunun yerine siparişi reddedin."
+msgstr "Zamówienie WooCommerce dla tego zamówienia sudemi jest anulowane. Zamiast tego je odrzuć."
 
 msgid "The order could not be recorded in WooCommerce (a product in it is no longer in this shop). Decline it instead."
-msgstr "Sipariş WooCommerce'e kaydedilemedi (içindeki bir ürün artık bu mağazada yok). Bunun yerine siparişi reddedin."
+msgstr "Nie udało się zarejestrować zamówienia w WooCommerce (jednego z produktów nie ma już w tym sklepie). Zamiast tego je odrzuć."
 
 msgid "Accepted. The buyer has been charged; the WooCommerce order is ready to ship."
-msgstr "Kabul edildi. Alıcıdan ücret tahsil edildi; WooCommerce siparişi kargoya hazır."
+msgstr "Przyjęto. Kupujący został obciążony; zamówienie WooCommerce jest gotowe do wysyłki."
 
 msgid "Accepted. sudemi takes the money once the other shops in the buyer's payment have answered; do not ship until the order moves to Processing."
-msgstr "Kabul edildi. sudemi, alıcının ödemesindeki diğer mağazalar yanıt verdiğinde parayı tahsil eder; sipariş \"İşleniyor\" durumuna geçene kadar kargolamayın."
+msgstr "Przyjęto. sudemi pobierze pieniądze, gdy pozostałe sklepy objęte płatnością kupującego odpowiedzą; nie wysyłaj, dopóki zamówienie nie przejdzie do statusu W trakcie realizacji."
 
 msgid "sudemi did not answer. The WooCommerce order stays on hold and the acceptance is sent again on the next heartbeat."
-msgstr "sudemi yanıt vermedi. WooCommerce siparişi beklemede kalır ve kabul bir sonraki durum sinyalinde yeniden gönderilir."
+msgstr "sudemi nie odpowiedziało. Zamówienie WooCommerce pozostaje wstrzymane, a przyjęcie zostanie wysłane ponownie przy następnym heartbeacie."
 
 #, php-format
 msgid "%1$d done, %2$d refused."
-msgstr "%1$d tamamlandı, %2$d yapılamadı."
+msgstr "Wykonano: %1$d, odmówiono: %2$d."
 
 msgid "Mark delivered on sudemi"
-msgstr "sudemi'de teslim edildi olarak işaretle"
+msgstr "Oznacz jako doręczone w sudemi"
 
 msgid "sudemi did not record the delivery (the order may not be shipped there yet). Check the order under WooCommerce > sudemi > Orders."
-msgstr "sudemi teslimatı kaydetmedi (sipariş orada henüz kargolanmamış olabilir). Siparişi WooCommerce > sudemi > Siparişler altında kontrol edin."
+msgstr "sudemi nie zarejestrowało doręczenia (zamówienie może nie być tam jeszcze wysłane). Sprawdź zamówienie w WooCommerce > sudemi > Zamówienia."
 
 msgid "Could not reach sudemi to report the delivery. It is sent again on the next heartbeat."
-msgstr "Teslimatı bildirmek için sudemi'ye ulaşılamadı. Bir sonraki durum sinyalinde yeniden gönderilir."
+msgstr "Nie udało się połączyć z sudemi, aby zgłosić doręczenie. Zostanie wysłane ponownie przy następnym heartbeacie."
 
 #, php-format
 msgid "%d order(s) are waiting for your answer under WooCommerce > sudemi > Orders. Automatic confirmation is off, so they must be answered by hand before their window closes."
-msgstr "%d sipariş WooCommerce > sudemi > Siparişler altında yanıtınızı bekliyor. Otomatik onay kapalı olduğundan, süreleri dolmadan elle yanıtlanmaları gerekiyor."
+msgstr "Zamówienia czekające na Twoją odpowiedź w WooCommerce > sudemi > Zamówienia: %d. Automatyczne potwierdzanie jest wyłączone, więc trzeba na nie odpowiedzieć ręcznie przed upływem terminu."
 
 msgid "Cancelled by your shop on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
-msgstr "Kargodan önce mağazanız tarafından sudemi'de iptal edildi; alıcıya tutarın tamamı iade edildi. Bu siparişi kargolamayın."
+msgstr "Anulowane przez Twój sklep w sudemi przed wysyłką; kupujący otrzymał pełny zwrot pieniędzy. Nie wysyłaj tego zamówienia."
 
 msgid "Cancelled by sudemi before shipping (for example because the order was not answered in time); the buyer has been refunded in full. Do not ship this order."
-msgstr "Kargodan önce sudemi tarafından iptal edildi (örneğin sipariş zamanında yanıtlanmadığı için); alıcıya tutarın tamamı iade edildi. Bu siparişi kargolamayın."
+msgstr "Anulowane przez sudemi przed wysyłką (na przykład dlatego, że na zamówienie nie odpowiedziano na czas); kupujący otrzymał pełny zwrot pieniędzy. Nie wysyłaj tego zamówienia."
 
 msgid "Cancelled on sudemi before shipping; the buyer has been refunded in full. Do not ship this order."
-msgstr "Kargodan önce sudemi'de iptal edildi; alıcıya tutarın tamamı iade edildi. Bu siparişi kargolamayın."
+msgstr "Anulowane w sudemi przed wysyłką; kupujący otrzymał pełny zwrot pieniędzy. Nie wysyłaj tego zamówienia."
 
 #, php-format
 msgid "sudemi order %1$s was cancelled by your shop on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi siparişi %1$s mağazanız tarafından kargodan önce sudemi'de iptal edildi; #%2$s numaralı sipariş burada iptal edildi ve stok geri yüklendi."
+msgstr "Zamówienie sudemi %1$s zostało anulowane przez Twój sklep w sudemi przed wysyłką; zamówienie nr %2$s zostało tu anulowane, a stan magazynowy przywrócony."
 
 #, php-format
 msgid "sudemi order %1$s was cancelled by sudemi before shipping; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi siparişi %1$s sudemi tarafından kargodan önce iptal edildi; #%2$s numaralı sipariş burada iptal edildi ve stok geri yüklendi."
+msgstr "Zamówienie sudemi %1$s zostało anulowane przez sudemi przed wysyłką; zamówienie nr %2$s zostało tu anulowane, a stan magazynowy przywrócony."
 
 #, php-format
 msgid "sudemi order %1$s was cancelled on sudemi before shipping; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi siparişi %1$s kargodan önce sudemi'de iptal edildi; #%2$s numaralı sipariş burada iptal edildi ve stok geri yüklendi."
+msgstr "Zamówienie sudemi %1$s zostało anulowane w sudemi przed wysyłką; zamówienie nr %2$s zostało tu anulowane, a stan magazynowy przywrócony."
 
 msgid "The stock has been restored."
-msgstr "Stok geri yüklendi."
+msgstr "Stan magazynowy został przywrócony."
 
 #, php-format
 msgid "New tracking sent to sudemi: %s. sudemi e-mails the buyer the new code."
-msgstr "Yeni takip bilgisi sudemi'ye gönderildi: %s. sudemi yeni kodu alıcıya e-postayla bildirir."
+msgstr "Nowy numer przesyłki wysłany do sudemi: %s. sudemi wysyła kupującemu nowy numer e-mailem."
 
 #, php-format
 msgid "Could not send the new tracking (%s) to sudemi yet. It is sent again on the next heartbeat."
-msgstr "Yeni takip bilgisi (%s) henüz sudemi'ye gönderilemedi. Bir sonraki durum sinyalinde yeniden gönderilir."
+msgstr "Nie udało się jeszcze wysłać nowego numeru przesyłki (%s) do sudemi. Zostanie wysłany ponownie przy następnym heartbeacie."
 
 #, php-format
 msgid "The new tracking (%s) was not sent: on sudemi this order is already delivered, cancelled or refunded, so its tracking can no longer change."
-msgstr "Yeni takip bilgisi (%s) gönderilmedi: bu sipariş sudemi'de zaten teslim edildi, iptal edildi ya da iade edildi, bu yüzden takip bilgisi artık değişemez."
+msgstr "Nowy numer przesyłki (%s) nie został wysłany: w sudemi to zamówienie jest już doręczone, anulowane lub zwrócone, więc jego numer przesyłki nie może się już zmienić."
 
 #, php-format
 msgid "sudemi did not take the new tracking (%s). Check the order under WooCommerce > sudemi > Orders."
-msgstr "sudemi yeni takip bilgisini (%s) kabul etmedi. Siparişi WooCommerce > sudemi > Siparişler altında kontrol edin."
+msgstr "sudemi nie przyjęło nowego numeru przesyłki (%s). Sprawdź zamówienie w WooCommerce > sudemi > Zamówienia."
 
 #, php-format
 msgid "Could not send the new tracking for sudemi order %1$s yet. It is sent again on the next heartbeat."
-msgstr "sudemi siparişi %1$s için yeni takip bilgisi henüz gönderilemedi. Bir sonraki durum sinyalinde yeniden gönderilir."
+msgstr "Nie udało się jeszcze wysłać nowego numeru przesyłki dla zamówienia sudemi %1$s. Zostanie wysłany ponownie przy następnym heartbeacie."
 
 #, php-format
 msgid "Sent the new tracking for sudemi order %1$s."
-msgstr "sudemi siparişi %1$s için yeni takip bilgisi gönderildi."
+msgstr "Wysłano nowy numer przesyłki dla zamówienia sudemi %1$s."
 
 #, php-format
 msgid "The new tracking for sudemi order %1$s was not sent: the order is already delivered, cancelled or refunded on sudemi."
-msgstr "sudemi siparişi %1$s için yeni takip bilgisi gönderilmedi: sipariş sudemi'de zaten teslim edildi, iptal edildi ya da iade edildi."
+msgstr "Nowy numer przesyłki dla zamówienia sudemi %1$s nie został wysłany: zamówienie jest już w sudemi doręczone, anulowane lub zwrócone."
 
 msgid "The tracking can no longer be changed: on sudemi this order is already delivered, cancelled or refunded."
-msgstr "Takip bilgisi artık değiştirilemez: bu sipariş sudemi'de zaten teslim edildi, iptal edildi ya da iade edildi."
+msgstr "Numeru przesyłki nie można już zmienić: w sudemi to zamówienie jest już doręczone, anulowane lub zwrócone."
 
 msgid "Enter a tracking code."
-msgstr "Bir takip kodu girin."
+msgstr "Wpisz numer przesyłki."
 
 msgid "Tracking changed on sudemi. sudemi e-mails the buyer the new code."
-msgstr "Takip bilgisi sudemi'de değiştirildi. sudemi yeni kodu alıcıya e-postayla bildirir."
+msgstr "Numer przesyłki zmieniony w sudemi. sudemi wysyła kupującemu nowy numer e-mailem."
 
 msgid "sudemi already has this tracking. Nothing was changed."
-msgstr "sudemi bu takip bilgisine zaten sahip. Hiçbir şey değişmedi."
+msgstr "sudemi ma już ten numer przesyłki. Nic nie zostało zmienione."
 
 msgid "Shipped already. Wrong or missing tracking? Enter the right one: sudemi e-mails the buyer the new code."
-msgstr "Zaten kargolandı. Takip bilgisi yanlış mı ya da eksik mi? Doğrusunu girin: sudemi yeni kodu alıcıya e-postayla bildirir."
+msgstr "Już wysłane. Błędny lub brakujący numer przesyłki? Wpisz właściwy: sudemi wysyła kupującemu nowy numer e-mailem."
 
 msgid "Change tracking"
-msgstr "Takip bilgisini değiştir"
+msgstr "Zmień numer przesyłki"
 
 msgid "Declined by your shop on sudemi; the buyer was not charged. The stock has been restored."
-msgstr "Mağazanız tarafından sudemi'de reddedildi; alıcıdan ücret alınmadı. Stok geri yüklendi."
+msgstr "Odrzucone przez Twój sklep w sudemi; kupujący nie został obciążony. Stan magazynowy został przywrócony."
 
 msgid "Declined automatically by sudemi (for example because the order was not answered in time); the buyer was not charged. The stock has been restored."
-msgstr "sudemi tarafından otomatik olarak reddedildi (örneğin sipariş zamanında yanıtlanmadığı için); alıcıdan ücret alınmadı. Stok geri yüklendi."
+msgstr "Odrzucone automatycznie przez sudemi (na przykład dlatego, że zamówienie nie zostało rozpatrzone na czas); kupujący nie został obciążony. Stan magazynowy został przywrócony."
 
 msgid "Cancelled by the buyer on sudemi before the order was confirmed; the buyer was not charged. The stock has been restored."
-msgstr "Sipariş onaylanmadan önce alıcı tarafından sudemi'de iptal edildi; alıcıdan ücret alınmadı. Stok geri yüklendi."
+msgstr "Anulowane przez kupującego w sudemi przed potwierdzeniem zamówienia; kupujący nie został obciążony. Stan magazynowy został przywrócony."
 
 #, php-format
 msgid "sudemi order %1$s was declined by your shop on sudemi; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi siparişi %1$s mağazanız tarafından sudemi'de reddedildi; #%2$s numaralı sipariş burada iptal edildi ve stok geri yüklendi."
+msgstr "Zamówienie sudemi %1$s zostało odrzucone przez Twój sklep w sudemi; zamówienie nr %2$s zostało tu anulowane, a stan magazynowy przywrócony."
 
 #, php-format
 msgid "sudemi order %1$s was declined automatically by sudemi; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi siparişi %1$s sudemi tarafından otomatik olarak reddedildi; #%2$s numaralı sipariş burada iptal edildi ve stok geri yüklendi."
+msgstr "Zamówienie sudemi %1$s zostało automatycznie odrzucone przez sudemi; zamówienie nr %2$s zostało tu anulowane, a stan magazynowy przywrócony."
 
 #, php-format
 msgid "sudemi order %1$s was cancelled by the buyer before it was confirmed; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi siparişi %1$s onaylanmadan önce alıcı tarafından iptal edildi; #%2$s numaralı sipariş burada iptal edildi ve stok geri yüklendi."
+msgstr "Zamówienie sudemi %1$s zostało anulowane przez kupującego przed potwierdzeniem; zamówienie nr %2$s zostało tu anulowane, a stan magazynowy przywrócony."
 
 #, php-format
 msgid "sudemi order %1$s was declined on sudemi; order #%2$s was cancelled here and the stock restored."
-msgstr "sudemi siparişi %1$s sudemi'de reddedildi; #%2$s numaralı sipariş burada iptal edildi ve stok geri yüklendi."
+msgstr "Zamówienie sudemi %1$s zostało odrzucone w sudemi; zamówienie nr %2$s zostało tu anulowane, a stan magazynowy przywrócony."
 
 #, php-format
 msgid "Reason: %s."
-msgstr "Neden: %s."
+msgstr "Powód: %s."
 
 #, php-format
 msgid "sudemi order %1$s could not be applied here yet (%2$s); it is read from sudemi again on the next heartbeats."
-msgstr "sudemi siparişi %1$s henüz burada işlenemedi (%2$s); sonraki durum sinyallerinde sudemi'den yeniden okunacak."
+msgstr "Zamówienia sudemi %1$s nie udało się jeszcze tu zastosować (%2$s); zostanie ponownie odczytane z sudemi przy kolejnych heartbeatach."
 
 #, php-format
 msgid "sudemi order %1$s is not applied here: sudemi no longer has it for this shop (%2$s). Check the WooCommerce order by hand."
-msgstr "sudemi siparişi %1$s burada işlenmiyor: sudemi'de bu mağaza için artık yok (%2$s). WooCommerce siparişini elle kontrol edin."
+msgstr "Zamówienie sudemi %1$s nie jest tu stosowane: sudemi nie ma go już dla tego sklepu (%2$s). Sprawdź zamówienie WooCommerce ręcznie."
 
 #, php-format
 msgid "Gave up applying sudemi order %1$s here after %2$d tries (%3$s). Check this order under WooCommerce > sudemi > Orders and update the WooCommerce order by hand."
-msgstr "sudemi siparişi %1$s, %2$d denemeden sonra burada işlenemedi ve vazgeçildi (%3$s). Bu siparişi WooCommerce > sudemi > Siparişler altında kontrol edin ve WooCommerce siparişini elle güncelleyin."
+msgstr "Zrezygnowano z zastosowania tu zamówienia sudemi %1$s po %2$d próbach (%3$s). Sprawdź to zamówienie w WooCommerce > sudemi > Zamówienia i zaktualizuj zamówienie WooCommerce ręcznie."
 
 #: includes/class-sudemi-insights.php
 msgid "Switched off by you"
-msgstr "Sizin tarafınızdan kapatıldı"
+msgstr "Wyłączone przez Ciebie"
 
 #: includes/class-sudemi-insights.php
 msgid "No longer in your shop (deleted, hidden or not published)"
-msgstr "Artık mağazanızda yok (silinmiş, gizlenmiş veya yayımlanmamış)"
+msgstr "Nie ma go już w Twoim sklepie (usunięty, ukryty lub nieopublikowany)"
 
 #: includes/class-sudemi-insights.php
 msgid "Out of stock"
-msgstr "Stokta yok"
+msgstr "Brak w magazynie"
 
 #: includes/class-sudemi-insights.php
 msgid "No shipping price for any country"
-msgstr "Hiçbir ülke için kargo ücreti yok"
+msgstr "Brak ceny wysyłki dla jakiegokolwiek kraju"
 
 #: includes/class-sudemi-insights.php
 msgid "Taken down by sudemi (see your e-mail or contact support)"
-msgstr "sudemi tarafından yayından kaldırıldı (e-postanıza bakın veya destekle iletişime geçin)"
+msgstr "Wycofane przez sudemi (sprawdź e-mail lub skontaktuj się ze wsparciem)"
 
 #: includes/class-sudemi-insights.php
 msgid "Your payout account is not active yet"
-msgstr "Ödeme aktarımı hesabınız henüz etkin değil"
+msgstr "Twoje konto wypłat nie jest jeszcze aktywne"
 
 #: includes/class-sudemi-insights.php
 msgid "This shop stopped reporting in to sudemi"
-msgstr "Bu mağaza artık sudemi'ye bildirim göndermiyor"
+msgstr "Ten sklep przestał się zgłaszać do sudemi"
 
 #: includes/class-sudemi-insights.php
 msgid "Not listed"
-msgstr "Gösterilmiyor"
+msgstr "Niewyświetlany"
 
 #: includes/class-sudemi-insights.php
 msgid "The description can be at most %d characters."
-msgstr "Açıklama en fazla %d karakter olabilir."
+msgstr "Opis może mieć najwyżej %d znaków."
 
 #: includes/class-sudemi-insights.php
 msgid "Enter a valid e-mail address for buyers' questions."
-msgstr "Alıcıların soruları için geçerli bir e-posta adresi girin."
+msgstr "Podaj prawidłowy adres e-mail na pytania kupujących."
 
 #: includes/class-sudemi-insights.php
 msgid "The return period must be a whole number of days from %1$d to %2$d."
-msgstr "İade süresi %1$d ile %2$d arasında tam gün sayısı olmalıdır."
+msgstr "Termin zwrotu musi być całkowitą liczbą dni od %1$d do %2$d."
 
 #: includes/class-sudemi-insights.php
 msgid "That period cannot be shown."
-msgstr "Bu dönem gösterilemiyor."
+msgstr "Tego okresu nie można wyświetlić."
 
 #: includes/class-sudemi-insights.php
 msgid "sudemi does not have this product for this shop (yet). It arrives with the next sync."
-msgstr "sudemi'de bu mağaza için bu ürün (henüz) yok. Bir sonraki eşitlemeyle gelir."
+msgstr "sudemi nie ma (jeszcze) tego produktu dla tego sklepu. Pojawi się po następnej synchronizacji."
 
 #: admin/class-sudemi-admin-manage.php
 msgid "Not connected yet"
-msgstr "Henüz bağlı değil"
+msgstr "Jeszcze niepołączony"
 
 #: admin/class-sudemi-admin-manage.php
 msgid "Orders appear here as soon as a buyer orders one of your products through their AI assistant."
-msgstr "Bir alıcı yapay zekâ asistanı üzerinden ürünlerinizden birini sipariş ettiğinde siparişler burada görünür."
+msgstr "Zamówienia pojawią się tutaj, gdy tylko kupujący zamówi jeden z Twoich produktów przez swojego asystenta AI."
 
 #: admin/class-sudemi-admin-manage.php
 msgid "Open payouts on the seller portal"
-msgstr "Ödeme aktarımlarını satıcı portalında aç"
+msgstr "Otwórz wypłaty w portalu sprzedawcy"
 
 #: admin/class-sudemi-admin.php
 msgid "Dashboard"
-msgstr "Gösterge paneli"
+msgstr "Pulpit"
 
 #: admin/class-sudemi-admin.php
 msgid "Products on sudemi"
-msgstr "sudemi'deki ürünler"
+msgstr "Produkty w sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "Shop profile"
-msgstr "Mağaza profili"
+msgstr "Profil sklepu"
 
 #: admin/class-sudemi-admin.php
 msgid "Settings"
-msgstr "Ayarlar"
+msgstr "Ustawienia"
 
 #: admin/class-sudemi-admin.php
 msgid "Waiting for your confirmation"
-msgstr "Onayınız bekleniyor"
+msgstr "Czeka na Twoje potwierdzenie"
 
 #: admin/class-sudemi-admin.php
 msgid "Not connected"
-msgstr "Bağlı değil"
+msgstr "Niepołączony"
 
 #: admin/class-sudemi-admin.php
 msgid "Connected, first report pending"
-msgstr "Bağlandı, ilk bildirim bekleniyor"
+msgstr "Połączony, czeka na pierwsze zgłoszenie"
 
 #: admin/class-sudemi-admin.php
 msgid "Cannot reach sudemi"
-msgstr "sudemi'ye ulaşılamıyor"
+msgstr "Brak połączenia z sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "Refused by sudemi"
-msgstr "sudemi tarafından reddedildi"
+msgstr "Odrzucony przez sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "Connected, products not shown"
-msgstr "Bağlı, ürünler gösterilmiyor"
+msgstr "Połączony, produkty niewyświetlane"
 
 #: admin/class-sudemi-admin.php
 msgid "Live on sudemi"
-msgstr "sudemi'de yayında"
+msgstr "Aktywny w sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "Seller portal"
-msgstr "Satıcı portalı"
+msgstr "Portal sprzedawcy"
 
 #: admin/class-sudemi-admin.php
 msgid "Orders buyers placed through their AI assistant. Accept, ship, refund and export them here."
-msgstr "Alıcıların yapay zekâ asistanı üzerinden verdiği siparişler. Onaylayın, gönderin, iade edin ve dışa aktarın."
+msgstr "Zamówienia złożone przez kupujących przez ich asystenta AI. Tutaj je przyjmiesz, wyślesz, zwrócisz pieniądze i wyeksportujesz."
 
 #: admin/class-sudemi-admin.php
 msgid "What sudemi buyers pay for delivery, per country."
-msgstr "sudemi alıcılarının ülkeye göre teslimat için ödediği tutar."
+msgstr "Ile kupujący w sudemi płacą za dostawę, według kraju."
 
 #: admin/class-sudemi-admin.php
 msgid "What sudemi has paid you and what is still to come."
-msgstr "sudemi'nin size aktardığı ve henüz gelecek olan tutarlar."
+msgstr "Co sudemi Ci wypłaciło i co jeszcze nadejdzie."
 
 #: admin/class-sudemi-admin.php
 msgid "Questions about an order, a payment, payouts or this plugin? sudemi support answers here."
-msgstr "Bir sipariş, ödeme, ödeme aktarımları veya bu eklenti hakkında sorunuz mu var? sudemi destek burada yanıtlar."
+msgstr "Pytania o zamówienie, płatność, wypłaty lub tę wtyczkę? Wsparcie sudemi odpowiada tutaj."
 
 #: admin/class-sudemi-admin.php
 msgid "The connection with sudemi, delivery times, currency and the shop's reporting."
-msgstr "sudemi bağlantısı, teslimat süreleri, para birimi ve mağazanın bildirimleri."
+msgstr "Połączenie z sudemi, czasy dostawy, waluta i zgłoszenia sklepu."
 
 #: admin/class-sudemi-admin.php
 msgid "Sell through AI assistants"
-msgstr "Yapay zekâ asistanlarıyla satış yapın"
+msgstr "Sprzedawaj przez asystentów AI"
 
 #: admin/class-sudemi-admin.php
 msgid "Let ChatGPT, Claude and other AI assistants sell your products"
-msgstr "Ürünlerinizi ChatGPT, Claude ve diğer yapay zekâ asistanları satsın"
+msgstr "Pozwól ChatGPT, Claude i innym asystentom AI sprzedawać Twoje produkty"
 
 #: admin/class-sudemi-admin.php
 msgid "Buyers ask their AI assistant for a product. sudemi shows them your products with the price and delivery to their country, and the order arrives here as a normal WooCommerce order. You stay the seller; sudemi takes a commission only on what sells."
-msgstr "Alıcılar yapay zekâ asistanından bir ürün ister. sudemi onlara ürünlerinizi fiyatı ve ülkelerine teslimatıyla gösterir; sipariş buraya normal bir WooCommerce siparişi olarak gelir. Satıcı siz kalırsınız; sudemi yalnızca satılan üründen komisyon alır."
+msgstr "Kupujący proszą swojego asystenta AI o produkt. sudemi pokazuje im Twoje produkty z ceną i dostawą do ich kraju, a zamówienie trafia tutaj jako zwykłe zamówienie WooCommerce. Ty pozostajesz sprzedawcą; sudemi pobiera prowizję tylko od tego, co się sprzeda."
 
 #: admin/class-sudemi-admin.php
 msgid "Connect"
-msgstr "Bağlanın"
+msgstr "Połącz"
 
 #: admin/class-sudemi-admin.php
 msgid "Click the button and confirm on sudemi that this shop is yours."
-msgstr "Düğmeye tıklayın ve sudemi'de bu mağazanın size ait olduğunu onaylayın."
+msgstr "Kliknij przycisk i potwierdź w sudemi, że ten sklep należy do Ciebie."
 
 #: admin/class-sudemi-admin.php
 msgid "Your products go live"
-msgstr "Ürünleriniz yayına girer"
+msgstr "Twoje produkty są widoczne"
 
 #: admin/class-sudemi-admin.php
 msgid "Your catalogue, prices, stock and shipping are sent and kept up to date by themselves."
-msgstr "Kataloğunuz, fiyatlarınız, stokunuz ve kargo bilgileriniz kendiliğinden gönderilir ve güncel tutulur."
+msgstr "Katalog, ceny, stany magazynowe i wysyłka są przesyłane i aktualizowane same."
 
 #: admin/class-sudemi-admin.php
 msgid "Orders come in"
-msgstr "Siparişler gelir"
+msgstr "Przychodzą zamówienia"
 
 #: admin/class-sudemi-admin.php
 msgid "You confirm, ship, and are paid out by sudemi."
-msgstr "Siz onaylar ve gönderirsiniz, sudemi ödemenizi aktarır."
+msgstr "Ty potwierdzasz i wysyłasz, a sudemi wypłaca Ci pieniądze."
 
 #: admin/class-sudemi-admin.php
 msgid "You confirm the connection on sudemi, signed in to your own account. This plugin never asks for your sudemi password."
-msgstr "Bağlantıyı sudemi'de kendi hesabınızla oturum açarak onaylarsınız. Bu eklenti sudemi şifrenizi asla sormaz."
+msgstr "Połączenie potwierdzasz w sudemi, zalogowany na własne konto. Ta wtyczka nigdy nie pyta o hasło do sudemi."
 
 #: admin/class-sudemi-admin.php
 msgid "Connection"
-msgstr "Bağlantı"
+msgstr "Połączenie"
 
 #: admin/class-sudemi-admin.php
 msgid "Disconnect this shop from sudemi? Its products stop being shown to buyers right away."
-msgstr "Bu mağazanın sudemi bağlantısı kesilsin mi? Ürünleri alıcılara hemen gösterilmez olur."
+msgstr "Odłączyć ten sklep od sudemi? Jego produkty od razu przestaną być pokazywane kupującym."
 
 #: admin/class-sudemi-admin.php
 msgid "sudemi support answers here, and by e-mail."
-msgstr "sudemi destek burada ve e-postayla yanıt verir."
+msgstr "Wsparcie sudemi odpowiada tutaj i e-mailem."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Period"
-msgstr "Dönem"
+msgstr "Okres"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%d days"
-msgstr "%d gün"
+msgstr "%d dni"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "How your products did on sudemi in the last %d days."
-msgstr "Ürünlerinizin son %d günde sudemi'deki performansı."
+msgstr "Jak radziły sobie Twoje produkty w sudemi w ostatnich %d dniach."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Sales"
-msgstr "Satışlar"
+msgstr "Sprzedaż"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "What buyers paid, shipping and VAT included"
-msgstr "Alıcıların ödediği tutar, kargo ve KDV dahil"
+msgstr "Ile zapłacili kupujący, z wysyłką i VAT"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "After %1$s refunds and %2$s commission"
-msgstr "%1$s iade ve %2$s komisyon sonrası"
+msgstr "Po odjęciu %1$s zwrotów i %2$s prowizji"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Average order"
-msgstr "Ortalama sipariş"
+msgstr "Średnie zamówienie"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Per order, shipping included"
-msgstr "Sipariş başına, kargo dahil"
+msgstr "Na zamówienie, z wysyłką"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shown in search results"
-msgstr "Arama sonuçlarında gösterildi"
+msgstr "Pokazano w wynikach wyszukiwania"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Times an AI assistant got one of your products back from a search"
-msgstr "Bir yapay zekâ asistanının aramada ürünlerinizden birini aldığı sayı"
+msgstr "Ile razy asystent AI otrzymał w wyszukiwaniu jeden z Twoich produktów"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Product views"
-msgstr "Ürün görüntülemeleri"
+msgstr "Wyświetlenia produktów"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Times an assistant opened a product's details for a buyer"
-msgstr "Bir asistanın bir alıcı için ürün ayrıntılarını açtığı sayı"
+msgstr "Ile razy asystent otworzył szczegóły produktu dla kupującego"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Added to a cart"
-msgstr "Sepete eklendi"
+msgstr "Dodano do koszyka"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Times a buyer put one of your products in a cart"
-msgstr "Bir alıcının ürünlerinizden birini sepete eklediği sayı"
+msgstr "Ile razy kupujący dodał jeden z Twoich produktów do koszyka"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Conversion"
-msgstr "Dönüşüm"
+msgstr "Konwersja"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Orders per product view"
-msgstr "Ürün görüntüleme başına sipariş"
+msgstr "Zamówienia na wyświetlenie produktu"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Seen by buyers"
-msgstr "Alıcılar tarafından görüldü"
+msgstr "Widziane przez kupujących"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Searches and product views per day"
-msgstr "Günlük arama sonuçları ve ürün görüntülemeleri"
+msgstr "Wyniki wyszukiwania i wyświetlenia produktów dziennie"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Sales per day"
-msgstr "Günlük satışlar"
+msgstr "Sprzedaż dziennie"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "The buyer is not charged until you accept. Without an answer by the deadline the order lapses."
-msgstr "Siz onaylayana kadar alıcıdan ücret alınmaz. Süre dolana kadar yanıt verilmezse sipariş düşer."
+msgstr "Kupujący nie płaci, dopóki nie przyjmiesz zamówienia. Bez odpowiedzi w terminie zamówienie wygasa."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Answer now"
-msgstr "Şimdi yanıtla"
+msgstr "Odpowiedz teraz"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Buyers cannot see your products right now. The Settings page shows why and what to do."
-msgstr "Alıcılar şu anda ürünlerinizi göremiyor. Ayarlar sayfası nedenini ve ne yapmanız gerektiğini gösterir."
+msgstr "Kupujący nie widzą teraz Twoich produktów. Strona Ustawienia pokazuje dlaczego i co zrobić."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Open settings"
-msgstr "Ayarları aç"
+msgstr "Otwórz ustawienia"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Top products"
-msgstr "En iyi ürünler"
+msgstr "Najlepsze produkty"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "All products on sudemi"
-msgstr "sudemi'deki tüm ürünler"
+msgstr "Wszystkie produkty w sudemi"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "No activity in this period yet. Buyers find your products by asking their AI assistant; the numbers show up here day by day."
-msgstr "Bu dönemde henüz hareket yok. Alıcılar ürünlerinizi yapay zekâ asistanlarına sorarak bulur; rakamlar burada gün gün görünür."
+msgstr "W tym okresie nie ma jeszcze aktywności. Kupujący znajdują Twoje produkty, pytając asystenta AI; liczby pojawiają się tutaj dzień po dniu."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shown"
-msgstr "Gösterildi"
+msgstr "Pokazano"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Views"
-msgstr "Görüntüleme"
+msgstr "Wyświetlenia"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "In cart"
-msgstr "Sepette"
+msgstr "W koszyku"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Your products on sudemi"
-msgstr "sudemi'deki ürünleriniz"
+msgstr "Twoje produkty w sudemi"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "shown to buyers"
-msgstr "alıcılara gösteriliyor"
+msgstr "pokazywanych kupującym"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Orders by status"
-msgstr "Duruma göre siparişler"
+msgstr "Zamówienia według statusu"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "No orders in this period."
-msgstr "Bu dönemde sipariş yok."
+msgstr "Brak zamówień w tym okresie."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Where buyers are"
-msgstr "Alıcılar nerede"
+msgstr "Skąd są kupujący"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Your products as sudemi has them: whether buyers can see each one, why not, and how often it was found in the last 30 days."
-msgstr "Ürünleriniz sudemi'de nasıl görünüyor: alıcılar her birini görüyor mu, görmüyorsa neden, son 30 günde kaç kez bulundu."
+msgstr "Twoje produkty tak, jak widzi je sudemi: czy kupujący je widzą, dlaczego nie i jak często były znajdowane w ostatnich 30 dniach."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shown to buyers"
-msgstr "Alıcılara gösterilen"
+msgstr "Pokazywane kupującym"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Not shown"
-msgstr "Gösterilmiyor"
+msgstr "Niewyświetlany"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Search products"
-msgstr "Ürün ara"
+msgstr "Szukaj produktów"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Name, SKU or ID"
-msgstr "Ad, stok kodu veya kimlik"
+msgstr "Nazwa, SKU lub ID"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "No products match."
-msgstr "Eşleşen ürün yok."
+msgstr "Brak pasujących produktów."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Products reach sudemi with the catalogue sync, a few minutes after you publish them."
-msgstr "Ürünler, yayımladıktan birkaç dakika sonra katalog eşitlemesiyle sudemi'ye ulaşır."
+msgstr "Produkty trafiają do sudemi z synchronizacją katalogu, kilka minut po ich opublikowaniu."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Stock"
-msgstr "Stok"
+msgstr "Stan"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Buyers see it"
-msgstr "Alıcılar görüyor mu"
+msgstr "Widoczny dla kupujących"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shown (30 days)"
-msgstr "Gösterilme (30 gün)"
+msgstr "Pokazano (30 dni)"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Views (30 days)"
-msgstr "Görüntüleme (30 gün)"
+msgstr "Wyświetlenia (30 dni)"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Orders (30 days)"
-msgstr "Sipariş (30 gün)"
+msgstr "Zamówienia (30 dni)"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Show on sudemi"
-msgstr "sudemi'de göster"
+msgstr "Pokazuj w sudemi"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "SKU %s"
-msgstr "Stok kodu %s"
+msgstr "SKU %s"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "ID %s"
-msgstr "Kimlik %s"
+msgstr "ID %s"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "in stock"
-msgstr "stokta"
+msgstr "w magazynie"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Show %s on sudemi"
-msgstr "%s ürününü sudemi'de göster"
+msgstr "Pokazuj %s w sudemi"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "On"
-msgstr "Açık"
+msgstr "Wł."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Off"
-msgstr "Kapalı"
+msgstr "Wył."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Products %1$d to %2$d of %3$d"
-msgstr "%3$d üründen %1$d ile %2$d arası"
+msgstr "Produkty od %1$d do %2$d z %3$d"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Prices, stock, photos and texts come from your WooCommerce products and are sent by themselves when you change them. The switch only decides whether sudemi shows a product; it does not change anything in your shop."
-msgstr "Fiyatlar, stok, fotoğraflar ve metinler WooCommerce ürünlerinizden gelir ve değiştirdiğinizde kendiliğinden gönderilir. Anahtar yalnızca sudemi'nin bir ürünü gösterip göstermeyeceğini belirler; mağazanızda hiçbir şeyi değiştirmez."
+msgstr "Ceny, stany, zdjęcia i teksty pochodzą z Twoich produktów WooCommerce i są wysyłane same, gdy je zmienisz. Przełącznik decyduje tylko o tym, czy sudemi pokazuje produkt; w Twoim sklepie nic się nie zmienia."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Product %s switched on for sudemi."
-msgstr "%s ürünü sudemi için açıldı."
+msgstr "Produkt %s włączony dla sudemi."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Product %s switched off for sudemi."
-msgstr "%s ürünü sudemi için kapatıldı."
+msgstr "Produkt %s wyłączony dla sudemi."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Switched on. sudemi shows this product again (when it is in stock and can be shipped)."
-msgstr "Açıldı. sudemi bu ürünü yeniden gösterir (stokta olduğunda ve gönderilebildiğinde)."
+msgstr "Włączono. sudemi znów pokazuje ten produkt (gdy jest w magazynie i można go wysłać)."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Switched off. sudemi no longer shows this product to buyers. Your shop is not changed."
-msgstr "Kapatıldı. sudemi bu ürünü artık alıcılara göstermez. Mağazanızda değişiklik olmaz."
+msgstr "Wyłączono. sudemi nie pokazuje już tego produktu kupującym. Twój sklep się nie zmienia."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "What buyers and their AI assistant are told about your shop."
-msgstr "Alıcılara ve yapay zekâ asistanlarına mağazanız hakkında söylenenler."
+msgstr "Co kupujący i ich asystent AI dowiadują się o Twoim sklepie."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shop name buyers see"
-msgstr "Alıcıların gördüğü mağaza adı"
+msgstr "Nazwa sklepu widoczna dla kupujących"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "The name is checked by sudemi, so it is changed through support."
-msgstr "Ad sudemi tarafından kontrol edilir, bu yüzden destek üzerinden değiştirilir."
+msgstr "Nazwę sprawdza sudemi, dlatego zmienia się ją przez wsparcie."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Please change my shop name"
-msgstr "Lütfen mağaza adımı değiştirin"
+msgstr "Proszę o zmianę nazwy mojego sklepu"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Ask for a new name"
-msgstr "Yeni ad iste"
+msgstr "Poproś o nową nazwę"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "About your shop"
-msgstr "Mağazanız hakkında"
+msgstr "O Twoim sklepie"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "A few sentences: what you sell and what makes your shop worth buying from. AI assistants may quote it to buyers."
-msgstr "Birkaç cümle: ne sattığınız ve neden sizden alışveriş yapmaya değdiği. Yapay zekâ asistanları bunu alıcılara aktarabilir."
+msgstr "Kilka zdań: co sprzedajesz i dlaczego warto kupować u Ciebie. Asystenci AI mogą to cytować kupującym."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "E-mail for buyers' questions"
-msgstr "Alıcı soruları için e-posta"
+msgstr "E-mail na pytania kupujących"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shown to buyers after they ordered, for questions about delivery and returns."
-msgstr "Sipariş verdikten sonra alıcılara, teslimat ve iade soruları için gösterilir."
+msgstr "Pokazywany kupującym po złożeniu zamówienia, na pytania o dostawę i zwroty."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Return period (days)"
-msgstr "İade süresi (gün)"
+msgstr "Termin zwrotu (dni)"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "How long after delivery a buyer may change their mind. The law gives at least 14 days; you may give more."
-msgstr "Alıcının teslimattan sonra ne kadar süre içinde vazgeçebileceği. Yasa en az 14 gün verir; daha fazlasını verebilirsiniz."
+msgstr "Jak długo po dostawie kupujący może zmienić zdanie. Prawo daje co najmniej 14 dni; możesz dać więcej."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Save on sudemi"
-msgstr "sudemi'ye kaydet"
+msgstr "Zapisz w sudemi"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Fixed details"
-msgstr "Sabit bilgiler"
+msgstr "Stałe dane"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Company details on the seller portal"
-msgstr "Satıcı portalındaki şirket bilgileri"
+msgstr "Dane firmy w portalu sprzedawcy"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Shop profile saved on sudemi."
-msgstr "Mağaza profili sudemi'ye kaydedildi."
+msgstr "Profil sklepu zapisany w sudemi."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "Saved on sudemi. Buyers see the new details from now on."
-msgstr "sudemi'ye kaydedildi. Alıcılar bundan sonra yeni bilgileri görür."
+msgstr "Zapisano w sudemi. Od teraz kupujący widzą nowe dane."
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%s item sold"
 msgid_plural "%s items sold"
-msgstr[0] "%s ürün satıldı"
-msgstr[1] "%s ürün satıldı"
+msgstr[0] "Sprzedano %s sztukę"
+msgstr[1] "Sprzedano %s sztuki"
+msgstr[2] "Sprzedano %s sztuk"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%d order is waiting for your answer"
 msgid_plural "%d orders are waiting for your answer"
-msgstr[0] "%d sipariş yanıtınızı bekliyor"
-msgstr[1] "%d sipariş yanıtınızı bekliyor"
+msgstr[0] "%d zamówienie czeka na Twoją odpowiedź"
+msgstr[1] "%d zamówienia czekają na Twoją odpowiedź"
+msgstr[2] "%d zamówień czeka na Twoją odpowiedź"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%d return request is waiting for your answer"
 msgid_plural "%d return requests are waiting for your answer"
-msgstr[0] "%d iade talebi yanıtınızı bekliyor"
-msgstr[1] "%d iade talebi yanıtınızı bekliyor"
+msgstr[0] "%d prośba o zwrot czeka na Twoją odpowiedź"
+msgstr[1] "%d prośby o zwrot czekają na Twoją odpowiedź"
+msgstr[2] "%d próśb o zwrot czeka na Twoją odpowiedź"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%d product is not shown: see why"
 msgid_plural "%d products are not shown: see why"
-msgstr[0] "%d ürün gösterilmiyor: nedenini görün"
-msgstr[1] "%d ürün gösterilmiyor: nedenini görün"
+msgstr[0] "%d produkt nie jest pokazywany: zobacz dlaczego"
+msgstr[1] "%d produkty nie są pokazywane: zobacz dlaczego"
+msgstr[2] "%d produktów nie jest pokazywanych: zobacz dlaczego"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "%d photo"
 msgid_plural "%d photos"
-msgstr[0] "%d fotoğraf"
-msgstr[1] "%d fotoğraf"
+msgstr[0] "%d zdjęcie"
+msgstr[1] "%d zdjęcia"
+msgstr[2] "%d zdjęć"
 
 #: admin/class-sudemi-admin-insights.php
 msgid "ships to %d country"
 msgid_plural "ships to %d countries"
-msgstr[0] "%d ülkeye gönderim"
-msgstr[1] "%d ülkeye gönderim"
+msgstr[0] "wysyłka do %d kraju"
+msgstr[1] "wysyłka do %d krajów"
+msgstr[2] "wysyłka do %d krajów"
 
 #: admin/class-sudemi-admin.php
 msgid "Not reporting in to sudemi"
-msgstr "sudemi'ye bildirim göndermiyor"
+msgstr "Nie zgłasza się do sudemi"
 
 #: admin/class-sudemi-admin.php
 msgid "This shop has not reported in to sudemi for more than 15 minutes, so its products are paused. Set up the cron job below."
-msgstr "Bu mağaza 15 dakikadan uzun süredir sudemi'ye bildirim göndermedi, bu yüzden ürünleri duraklatıldı. Aşağıdaki cron görevini kurun."
+msgstr "Ten sklep nie zgłosił się do sudemi od ponad 15 minut, więc jego produkty są wstrzymane. Skonfiguruj zadanie cron poniżej."
 
 #: admin/class-sudemi-admin.php
 msgid "Stripe is not connected. Your products are listed on sudemi, Connect Stripe"
-msgstr "Stripe bağlı değil. Ürünleriniz sudemi'de listeleniyor, Stripe'ı bağlayın"
+msgstr "Stripe nie jest połączony. Twoje produkty są wyświetlane w sudemi, połącz Stripe"
 
 #: admin/class-sudemi-admin.php
 msgid "Until then buyers pay on your own website: free listing, no commission."
-msgstr "O zamana kadar alıcılar kendi web sitenizde öder: ücretsiz listeleme, komisyon yok."
+msgstr "Do tego czasu kupujący płacą na Twojej stronie: bezpłatne wyświetlanie, bez prowizji."
 
 #: admin/class-sudemi-admin.php
 msgid "Stripe needs more information from you."
-msgstr "Stripe sizden daha fazla bilgi istiyor."
+msgstr "Stripe potrzebuje od Ciebie więcej informacji."
 
 #: admin/class-sudemi-admin.php
 msgid "Connect Stripe"
-msgstr "Stripe'ı bağla"
+msgstr "Połącz Stripe"
 
 #: admin/class-sudemi-admin.php
 msgid "Connect Stripe is done"
-msgstr "Stripe bağlantısı tamam"
+msgstr "Stripe jest połączony"
 
 #: admin/class-sudemi-admin.php
 msgid "Buyers pay through sudemi, and you get your orders and payouts here."
-msgstr "Alıcılar sudemi üzerinden öder; siparişleriniz ve ödeme aktarımlarınız burada."
+msgstr "Kupujący płacą przez sudemi, a Twoje zamówienia i wypłaty są tutaj."
 
 #: admin/class-sudemi-admin.php
 msgid "Your shop is paused on sudemi while we review a payment provider restriction"
-msgstr "Bir ödeme kuruluşu kısıtlamasını incelerken mağazanız sudemi'de duraklatıldı"
+msgstr "Twój sklep jest wstrzymany w sudemi, dopóki sprawdzamy ograniczenie nałożone przez dostawcę płatności"
 
 #: admin/class-sudemi-admin.php
 msgid "Your products are not shown for now. We e-mail you what is needed."
-msgstr "Ürünleriniz şimdilik gösterilmiyor. Neyin gerektiğini size e-postayla bildiririz."
+msgstr "Twoje produkty na razie nie są wyświetlane. Napiszemy Ci, czego potrzeba."
 
 #: admin/class-sudemi-admin.php
 msgid "Contact support"
-msgstr "Destekle iletişime geçin"
+msgstr "Skontaktuj się ze wsparciem"

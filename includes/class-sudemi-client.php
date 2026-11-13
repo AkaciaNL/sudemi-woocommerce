@@ -143,7 +143,7 @@ final class Sudemi_Client {
 				// Give up rather than sit in a cron slot indefinitely. The caller abandons the
 				// sync, which delists nothing, and the next scheduled run starts again.
 				Sudemi_Logger::warn(
-					__( 'sudemi is still asking this shop to slow down. Stopping for now; this will continue on the next scheduled run and nothing has been lost.', 'sudemi' )
+					__( 'sudemi is still asking this shop to slow down. Stopping for now; this will continue on the next scheduled run and nothing has been lost.', 'sudemi-connector' )
 				);
 				return $response;
 			}
@@ -154,7 +154,7 @@ final class Sudemi_Client {
 			Sudemi_Logger::info(
 				sprintf(
 					/* translators: %d: seconds to wait. */
-					__( 'sudemi asked this shop to slow down; waiting %d seconds before continuing.', 'sudemi' ),
+					__( 'sudemi asked this shop to slow down; waiting %d seconds before continuing.', 'sudemi-connector' ),
 					$wait
 				)
 			);
@@ -170,7 +170,7 @@ final class Sudemi_Client {
 		} else {
 			$json = wp_json_encode( $body );
 			if ( false === $json ) {
-				return new WP_Error( 'sudemi_encode_failed', __( 'The payload could not be encoded.', 'sudemi' ) );
+				return new WP_Error( 'sudemi_encode_failed', __( 'The payload could not be encoded.', 'sudemi-connector' ) );
 			}
 		}
 
@@ -186,7 +186,7 @@ final class Sudemi_Client {
 		if ( $signed ) {
 			$install_id = self::install_id();
 			if ( null === $install_id ) {
-				return new WP_Error( 'sudemi_not_connected', __( 'This shop is not connected to sudemi.', 'sudemi' ) );
+				return new WP_Error( 'sudemi_not_connected', __( 'This shop is not connected to sudemi.', 'sudemi-connector' ) );
 			}
 			$timestamp = (string) time();
 			$nonce     = bin2hex( random_bytes( 16 ) );
@@ -196,7 +196,7 @@ final class Sudemi_Client {
 			);
 			$signature = Sudemi_Keys::sign( $canonical );
 			if ( null === $signature ) {
-				return new WP_Error( 'sudemi_cannot_sign', __( 'This site has no signing key.', 'sudemi' ) );
+				return new WP_Error( 'sudemi_cannot_sign', __( 'This site has no signing key.', 'sudemi-connector' ) );
 			}
 			$headers['Sudemi-Install']   = $install_id;
 			$headers['Sudemi-Timestamp'] = $timestamp;
@@ -253,7 +253,7 @@ final class Sudemi_Client {
 			return new WP_Error(
 				'sudemi_bad_response',
 				/* translators: %d: HTTP status code. */
-				sprintf( __( 'sudemi answered %d with something that was not JSON.', 'sudemi' ), $status )
+				sprintf( __( 'sudemi answered %d with something that was not JSON.', 'sudemi-connector' ), $status )
 			);
 		}
 

@@ -33,11 +33,11 @@ final class Sudemi_Pairing {
 		if ( ! Sudemi_Keys::is_supported() ) {
 			return new WP_Error(
 				'sudemi_no_sodium',
-				__( 'This server is missing the sodium extension, which the connection needs in order to sign requests. Ask your host to enable it.', 'sudemi' )
+				__( 'This server is missing the sodium extension, which the connection needs in order to sign requests. Ask your host to enable it.', 'sudemi-connector' )
 			);
 		}
 		if ( ! Sudemi_Keys::regenerate() ) {
-			return new WP_Error( 'sudemi_keygen_failed', __( 'A signing key could not be created on this server.', 'sudemi' ) );
+			return new WP_Error( 'sudemi_keygen_failed', __( 'A signing key could not be created on this server.', 'sudemi-connector' ) );
 		}
 
 		$result = Sudemi_Client::post_unsigned(
@@ -57,7 +57,7 @@ final class Sudemi_Pairing {
 		if ( 200 !== $result['status'] ) {
 			$message = isset( $result['body']['message'] )
 				? $result['body']['message']
-				: __( 'sudemi refused to start the connection.', 'sudemi' );
+				: __( 'sudemi refused to start the connection.', 'sudemi-connector' );
 			return new WP_Error( 'sudemi_pair_refused', $message );
 		}
 

@@ -67,12 +67,12 @@ class Sudemi_Claims {
 		global $wpdb;
 		$table = self::table();
 		$now   = gmdate( 'Y-m-d H:i:s' );
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- own table; the insert's key is the claim.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter -- own table (prefix plus a fixed name); the insert's key is the claim.
 		$inserted = $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO {$table} (sudemi_order_id, local_order_id, claimed_at) VALUES (%s, 0, %s)", $sudemi_id, $now ) );
 		if ( 1 === (int) $inserted ) {
 			return self::WON;
 		}
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- own table.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter -- own table (prefix plus a fixed name).
 		$row = $wpdb->get_row( $wpdb->prepare( "SELECT local_order_id, claimed_at FROM {$table} WHERE sudemi_order_id = %s", $sudemi_id ), ARRAY_A );
 		if ( ! $row ) {
 			// The row went between the insert and the read (released after a failed build): the
@@ -84,7 +84,7 @@ class Sudemi_Claims {
 			if ( function_exists( 'wc_get_order' ) && ! wc_get_order( $local ) ) {
 				// The order was deleted for good while sudemi still waits for an answer: taken over
 				// from exactly that order id, so only one caller rebuilds it.
-				// phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- own table.
+				// phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter -- own table (prefix plus a fixed name).
 				$taken = $wpdb->query( $wpdb->prepare( "UPDATE {$table} SET local_order_id = 0, claimed_at = %s WHERE sudemi_order_id = %s AND local_order_id = %d", $now, $sudemi_id, $local ) );
 				return 1 === (int) $taken ? self::WON : self::BUSY;
 			}
@@ -96,7 +96,7 @@ class Sudemi_Claims {
 		}
 		// The caller that claimed it died before the order was built. Taken over from exactly the
 		// time it was claimed, so of several callers arriving now only one gets it.
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- own table.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter -- own table (prefix plus a fixed name).
 		$taken = $wpdb->query( $wpdb->prepare( "UPDATE {$table} SET claimed_at = %s WHERE sudemi_order_id = %s AND local_order_id = 0 AND claimed_at = %s", $now, $sudemi_id, $row['claimed_at'] ) );
 		return 1 === (int) $taken ? self::WON : self::BUSY;
 	}
