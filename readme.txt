@@ -1,5 +1,5 @@
 === sudemi Connector ===
-Contributors: akacia
+Contributors: akacianl
 Tags: woocommerce, marketplace, ai, chatgpt, product feed
 Requires at least: 6.2
 Tested up to: 7.1
