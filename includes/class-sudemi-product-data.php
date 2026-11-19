@@ -138,6 +138,8 @@ final class Sudemi_Product_Data {
 	 * a rule (the stock is sent anyway).
 	 */
 	public static function quantities( $product ) {
+		// WooCommerce's own quantity hooks (the plugins set these), read as its quantity box does.
+		// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		try {
 			$min  = apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product );
 			$max  = apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product );
@@ -155,6 +157,7 @@ final class Sudemi_Product_Data {
 		} catch ( \Throwable $e ) {
 			return array();
 		}
+		// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		$stock = $product->managing_stock() && ! $product->backorders_allowed() ? (int) $product->get_stock_quantity() : null;
 		return self::quantity_fields(
 			isset( $args['min_value'] ) ? $args['min_value'] : 1,

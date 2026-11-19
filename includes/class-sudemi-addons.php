@@ -698,8 +698,8 @@ final class Sudemi_Addons {
 		if ( ! is_string( $raw ) || '' === $raw ) {
 			return array();
 		}
-		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize -- YITH stores its add-ons serialized; objects are refused.
-		$value = @unserialize( $raw, array( 'allowed_classes' => false ) ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+		// YITH stores its add-ons serialized; objects are refused (allowed_classes false).
+		$value = @unserialize( $raw, array( 'allowed_classes' => false ) ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
 		return is_array( $value ) ? $value : array();
 	}
 
