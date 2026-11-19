@@ -240,6 +240,23 @@ expect( 'YITH: "sell individually" with a price is charged once per line: not of
 $capf = Sudemi_Personalisation::cap( array() );
 expect( 'cap of nothing: nothing blocked', $capf['blocked'], null );
 
+// Owner rule 2026-11-19: a REQUIRED add-on sudemi cannot price keeps the product off sudemi (an
+// error issue); an OPTIONAL one is left out (a warning issue).
+$req_flat = Sudemi_Addons::from_pao( array( array( 'name' => 'Setup fee', 'type' => 'custom_text', 'required' => 1, 'adjust_price' => 1, 'price_type' => 'flat_fee', 'price' => '5' ) ) );
+$scr      = Sudemi_Personalisation::screen( $req_flat );
+expect( 'required flat fee: the product is blocked (not listed), the reason is the flat fee', array( null !== $scr['blocked'], $scr['blocked_why'], $scr['offered'] ), array( true, Sudemi_Addons::REASON_FLAT, array() ) );
+$req_neg = Sudemi_Addons::from_pao( array( array( 'name' => 'Club discount', 'type' => 'multiple_choice', 'required' => 1, 'options' => array( array( 'label' => 'Member', 'price' => '-3', 'price_type' => 'quantity_based' ) ) ) ) );
+$scr     = Sudemi_Personalisation::screen( $req_neg );
+expect( 'required negative price: the product is blocked (not listed), the reason is the discount', array( null !== $scr['blocked'], $scr['blocked_why'] ), array( true, Sudemi_Addons::REASON_DISCOUNT ) );
+$opt_mix = array_merge(
+	Sudemi_Addons::from_pao( array( array( 'name' => 'Gift box', 'type' => 'multiple_choice', 'required' => 0, 'options' => array( array( 'label' => 'Box', 'price' => '4', 'price_type' => 'flat_fee' ) ) ) ) ),
+	Sudemi_Addons::from_pao( array( array( 'name' => 'Name', 'type' => 'custom_text', 'required' => 1, 'adjust_price' => 1, 'price_type' => 'quantity_based', 'price' => '2' ) ) )
+);
+$scr     = Sudemi_Personalisation::screen( $opt_mix );
+expect( 'optional flat fee: left out (warning), the product stays listed with the rest', array( $scr['blocked'], array_keys( $scr['left_out'] ), count( $scr['offered'] ) ), array( null, array( 'Gift box' ), 1 ) );
+$req_yd = Sudemi_Addons::from_yith( 70, array( 'type' => 'text', 'title' => 'T' ), array( 'label' => array( 'Loyalty code' ), 'price_method' => array( 'decrease' ), 'price' => array( '2' ), 'required' => array( 'yes' ) ) );
+expect( 'YITH required "decrease" (negative): blocked', null !== Sudemi_Personalisation::screen( $req_yd )['blocked'], true );
+
 if ( $failures ) {
 	echo "\n$failures failure(s)\n";
 	exit( 1 );

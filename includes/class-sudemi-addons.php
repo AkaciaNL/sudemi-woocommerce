@@ -670,7 +670,9 @@ final class Sudemi_Addons {
 		// 2026-11-19: no licence). Its options on a product are reported, never guessed.
 		if ( self::active( 'woocommerce-tm-extra-product-options/tm-woo-extra-product-options.php' )
 			&& ( get_post_meta( $id, 'tm_meta', true ) || get_post_meta( $id, 'tm_meta_cpf', true ) ) ) {
-			$fields[] = self::unofferable( self::make( 'tc:' . $id, 'ThemeComplete Extra Product Options', 'text', false, 0, 0, 0, array(), array( 'kind' => 'label' ) ), self::REASON_PLUGIN );
+			// Whether its options are required is not known: taken as required, so the product
+			// is never sold without them (not listed, an error issue).
+			$fields[] = self::unofferable( self::make( 'tc:' . $id, 'ThemeComplete Extra Product Options', 'text', true, 0, 0, 0, array(), array( 'kind' => 'label' ) ), self::REASON_PLUGIN );
 		}
 		if ( class_exists( 'THWEPOF_Utils_Section' ) && is_callable( array( 'THWEPOF_Utils_Section', 'get_product_fields' ) ) ) {
 			$props = array();

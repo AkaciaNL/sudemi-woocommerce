@@ -85,19 +85,11 @@ final class Sudemi_Personalisation {
 	private static function compute( $product, $parent_product, $with_store ) {
 		$base     = $parent_product ? $parent_product : $product;
 		$fields   = array();
-		$left_out    = array();
-		$blocked     = null;
-		$blocked_why = null;
-		foreach ( Sudemi_Addons::for_product( $base ) as $addon ) {
-			if ( ! empty( $addon['unofferable'] ) ) {
-				// Never offered free or at the wrong price: left out, with the reason.
-				$left_out[ $addon['label'] ] = $addon['unofferable'];
-				if ( $addon['required'] && null === $blocked ) {
-					$blocked     = sprintf( '"%s" is required and %s', $addon['label'], $addon['unofferable'] );
-					$blocked_why = $addon['unofferable'];
-				}
-				continue;
-			}
+		$screened    = self::screen( Sudemi_Addons::for_product( $base ) );
+		$left_out    = $screened['left_out'];
+		$blocked     = $screened['blocked'];
+		$blocked_why = $screened['blocked_why'];
+		foreach ( $screened['offered'] as $addon ) {
 			// An add-on without a longest length takes as much as sudemi does.
 			$field = self::field( $addon['key'], $addon['label'], $addon['max'] > 0 ? $addon['max'] : self::LIMIT_MAX, $addon['required'], self::addon_minor( $product, $addon ) );
 			$type  = isset( $addon['type'] ) ? $addon['type'] : 'text';
@@ -137,6 +129,38 @@ final class Sudemi_Personalisation {
 			'fields'   => $capped['fields'],
 			'left_out' => $left_out,
 			'blocked'     => null !== $blocked ? $blocked : $capped['blocked'],
+			'blocked_why' => $blocked_why,
+		);
+	}
+
+	/**
+	 * The add-ons sudemi can ask, and what it cannot (owner 2026-11-19): an add-on whose price
+	 * sudemi cannot charge (a flat fee, a discount, per character or a formula, a plugin it cannot
+	 * read) is never offered free or at the wrong price. A required one keeps the product off
+	 * sudemi (blocked: an error issue); an optional one is left out (a warning issue). Pure.
+	 *
+	 * @return array{offered:array,left_out:array,blocked:string|null,blocked_why:string|null}
+	 */
+	public static function screen( array $addons ) {
+		$offered     = array();
+		$left_out    = array();
+		$blocked     = null;
+		$blocked_why = null;
+		foreach ( $addons as $addon ) {
+			if ( ! empty( $addon['unofferable'] ) ) {
+				$left_out[ $addon['label'] ] = $addon['unofferable'];
+				if ( ! empty( $addon['required'] ) && null === $blocked ) {
+					$blocked     = sprintf( '"%s" is required and %s', $addon['label'], $addon['unofferable'] );
+					$blocked_why = $addon['unofferable'];
+				}
+				continue;
+			}
+			$offered[] = $addon;
+		}
+		return array(
+			'offered'     => $offered,
+			'left_out'    => $left_out,
+			'blocked'     => $blocked,
 			'blocked_why' => $blocked_why,
 		);
 	}
