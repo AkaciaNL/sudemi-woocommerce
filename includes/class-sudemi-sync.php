@@ -211,11 +211,8 @@ final class Sudemi_Sync {
 				Sudemi_Issues::remember( $chunk, $issues, isset( $sent['body'] ) ? $sent['body'] : null, $fresh );
 				$fresh = false;
 			}
-			// Nothing listed on this page but something left out: the shop still sees it.
-			$left = Sudemi_Issues::take();
-			if ( ! empty( $left ) ) {
-				Sudemi_Issues::remember( array(), $left, null, $fresh );
-			}
+			// Nothing listed on this page but something left out: sent on its own (best effort).
+			self::send_left_issues( $state['id'], $fresh );
 			// Moved on only once the page is in: a step stopped halfway sends it again.
 			$state['cursor'] = (int) end( $ids );
 			$state['sent']   = (int) $state['sent'] + count( $products );
@@ -417,7 +414,8 @@ final class Sudemi_Sync {
 				self::push_listings( $listings );
 			}
 			// Without a sellable variation nothing is sent; the change counter already moved,
-			// so the next heartbeat disagrees and sudemi asks for a full sync.
+			// so the next heartbeat disagrees and sudemi asks for a full sync. Why: told now.
+			self::send_left_issues( null );
 			return;
 		}
 
@@ -430,6 +428,7 @@ final class Sudemi_Sync {
 				self::push_listings( $own );
 				return;
 			}
+			self::send_left_issues( null );
 		}
 
 		$update = array(
@@ -457,6 +456,24 @@ final class Sudemi_Sync {
 		if ( ! empty( $response['body']['full_sync_requested'] ) ) {
 			wp_schedule_single_event( time() + 30, self::CRON_FULL );
 		}
+	}
+
+	/**
+	 * Issues found while building listings that were all left out (a product not listed): sent on
+	 * their own, without products, which sudemi takes from 2026-11-19. Best effort: a core that
+	 * refuses a push without products changes nothing here, and the shop sees them all the same.
+	 */
+	private static function send_left_issues( $sync_id, $fresh = false ) {
+		$left = Sudemi_Issues::take();
+		if ( empty( $left ) ) {
+			return;
+		}
+		$body = array( 'products' => array() );
+		if ( null !== $sync_id ) {
+			$body['syncId'] = $sync_id;
+		}
+		$answer = Sudemi_Client::post_signed( '/integration/v1/products', Sudemi_Issues::attach( $body, $left ) );
+		Sudemi_Issues::remember( array(), $left, ! is_wp_error( $answer ) && 200 === $answer['status'] && isset( $answer['body'] ) ? $answer['body'] : null, $fresh );
 	}
 
 	/** Listings removed in the shop, counted, and the count the last committed full sync covered. */
