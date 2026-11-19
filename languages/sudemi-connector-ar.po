@@ -2305,3 +2305,11 @@ msgstr "لا يمكن طلب \"%s\" بهذه الكمية"
 #, php-format
 msgid "\"%s\" needs a choice sudemi cannot ask yet"
 msgstr "يحتاج \"%s\" إلى اختيار لا يستطيع sudemi طلبه بعد"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Accept returns of personalised items"
+msgstr "قبول إرجاع المنتجات المخصصة"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Off (default): an item made with a text the buyer typed (a name, an engraving) cannot be returned, as the law allows; buyers are told before paying. On: buyers may return it like any other item."
+msgstr "إيقاف (افتراضي): لا يمكن إرجاع منتج مصنوع بنص كتبه المشتري (اسم أو نقش)، كما يسمح القانون؛ ويُبلَّغ المشتري بذلك قبل الدفع. تشغيل: يمكن للمشترين إرجاعه مثل أي منتج آخر."

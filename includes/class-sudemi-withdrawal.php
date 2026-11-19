@@ -20,6 +20,14 @@ final class Sudemi_Withdrawal {
 	const META  = '_sudemi_withdrawal_exclusion';
 	const FIELD = 'sudemi_withdrawal_exclusion';
 
+	/**
+	 * Owner decision 2 (2026-11-19): an item made with a text the buyer typed is not returnable
+	 * by default (EU 2011/83 art. 16(c)). A shop may accept returns of it anyway, per product:
+	 * the listing then says personalisationReturnable: true. Off by default.
+	 */
+	const META_RETURNABLE  = '_sudemi_personalisation_returnable';
+	const FIELD_RETURNABLE = 'sudemi_personalisation_returnable';
+
 	/** The art. 16 exceptions sudemi accepts, as sent in the product payload. */
 	const REASONS = array( 'hygiene', 'custom', 'perishable', 'media', 'press', 'mixed', 'alcohol' );
 
@@ -57,6 +65,11 @@ final class Sudemi_Withdrawal {
 			$payload['withdrawalExclusion'] = $reason;
 		}
 		return $payload;
+	}
+
+	/** Whether the shop accepts returns of this product when personalised (a variation: its parent's). */
+	public static function personalisation_returnable( $product_id ) {
+		return 'yes' === get_post_meta( (int) $product_id, self::META_RETURNABLE, true );
 	}
 
 	/** The stored exclusion of a product (for a variation: of its parent). */
@@ -103,6 +116,14 @@ final class Sudemi_Withdrawal {
 				'desc_tip'    => false,
 			)
 		);
+		woocommerce_wp_checkbox(
+			array(
+				'id'          => self::FIELD_RETURNABLE,
+				'label'       => __( 'Accept returns of personalised items', 'sudemi-connector' ),
+				'value'       => $post && self::personalisation_returnable( $post->ID ) ? 'yes' : 'no',
+				'description' => __( 'Off (default): an item made with a text the buyer typed (a name, an engraving) cannot be returned, as the law allows; buyers are told before paying. On: buyers may return it like any other item.', 'sudemi-connector' ),
+			)
+		);
 		if ( $post ) {
 			Sudemi_Personalisation::render_fields( $post->ID );
 		}
@@ -121,6 +142,13 @@ final class Sudemi_Withdrawal {
 			|| ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['woocommerce_meta_nonce'] ) ), 'woocommerce_save_data' )
 			|| ! current_user_can( 'edit_product', $post_id ) ) {
 			return;
+		}
+		$returnable = isset( $_POST[ self::FIELD_RETURNABLE ] );
+		if ( self::personalisation_returnable( $post_id ) !== $returnable ) {
+			update_post_meta( $post_id, self::META_RETURNABLE, $returnable ? 'yes' : 'no' );
+			if ( Sudemi_Client::is_connected() ) {
+				Sudemi_Sync::schedule_soon();
+			}
 		}
 		$reason   = self::sanitize( sanitize_text_field( wp_unslash( $_POST[ self::FIELD ] ) ) );
 		$previous = self::for_product( $post_id );

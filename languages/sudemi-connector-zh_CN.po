@@ -2270,3 +2270,11 @@ msgstr "\"%s\" 不能按此数量订购"
 #, php-format
 msgid "\"%s\" needs a choice sudemi cannot ask yet"
 msgstr "\"%s\" 需要一个 sudemi 目前还无法询问的选择"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Accept returns of personalised items"
+msgstr "接受个性化商品的退货"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Off (default): an item made with a text the buyer typed (a name, an engraving) cannot be returned, as the law allows; buyers are told before paying. On: buyers may return it like any other item."
+msgstr "关闭（默认）：按法律允许，带有买家输入文字（名字、刻字）的商品不可退货；买家在付款前会被告知。开启：买家可以像其他商品一样退货。"

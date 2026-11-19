@@ -903,6 +903,9 @@ final class Sudemi_Sync {
 		// The sale and its dates, stock status and backorders, dimensions, the quantities the
 		// shop sells in and quantity prices (Sudemi_Product_Data).
 		$payload = array_merge( $payload, Sudemi_Product_Data::for_product( $product ) );
+		// The shop accepts returns of personalised items of this product (owner decision 2; the
+		// parent's setting for a variation). False is sent too, so switching it off reaches sudemi.
+		$payload['personalisationReturnable'] = Sudemi_Withdrawal::personalisation_returnable( $base_id );
 		// Excluded from the right of withdrawal (EU 2011/83 art. 16), with the reason; a
 		// variation carries its parent's setting. Omitted when the normal right applies.
 		return Sudemi_Withdrawal::apply( $payload, Sudemi_Withdrawal::for_product( $base_id ) );

@@ -2277,3 +2277,11 @@ msgstr "לא ניתן להזמין את \"%s\" בכמות הזו"
 #, php-format
 msgid "\"%s\" needs a choice sudemi cannot ask yet"
 msgstr "\"%s\" דורש בחירה ש-sudemi עדיין לא יכול לבקש"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Accept returns of personalised items"
+msgstr "קבלת החזרות של פריטים מותאמים אישית"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Off (default): an item made with a text the buyer typed (a name, an engraving) cannot be returned, as the law allows; buyers are told before paying. On: buyers may return it like any other item."
+msgstr "כבוי (ברירת מחדל): פריט שנעשה עם טקסט שהקונה הקליד (שם, חריטה) אינו ניתן להחזרה, כפי שהחוק מתיר; הקונים מקבלים על כך הודעה לפני התשלום. פועל: הקונים רשאים להחזיר אותו כמו כל פריט אחר."

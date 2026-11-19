@@ -144,6 +144,7 @@ Clearer WordPress.org description, a list of every call to sudemi (External serv
 * An add-on that lowers the price (a discount), is priced per character, or is charged once per order line (a flat fee: Product Add-Ons "flat fee", Advanced Product Fields "fixed", PPOM "fixed fee", YITH "sell individually") is not offered on sudemi yet, never free and never at the wrong price; a product that requires one is not listed. What is left out is recorded on the product (meta _sudemi_not_offered) and in the log.
 * Orders from sudemi keep your quantity rules (minimum, step, maximum, sold individually), and a product you sell on backorder is accepted without stock.
 * A product that needs more than five texts or choices from the buyer is not listed (required ones come first); before, a required sixth was left out.
+* New per-product setting on the sudemi tab: "Accept returns of personalised items" (off by default). An item made with a text the buyer typed is not returnable by default, as EU law allows, and buyers are told before paying; tick it to accept returns of such items on that product.
 * A page of the full catalogue sync is sent in requests of at most 500 listings, so a product with many variations (100 or more, or an "Any" attribute with many values) never makes a request sudemi refuses.
 
 = 1.4.3 =

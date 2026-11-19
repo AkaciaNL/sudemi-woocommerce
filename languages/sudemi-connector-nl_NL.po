@@ -2277,3 +2277,11 @@ msgstr "\"%s\" kan niet in deze hoeveelheid besteld worden"
 #, php-format
 msgid "\"%s\" needs a choice sudemi cannot ask yet"
 msgstr "\"%s\" vraagt een keuze die sudemi nog niet kan stellen"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Accept returns of personalised items"
+msgstr "Retouren van gepersonaliseerde artikelen accepteren"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Off (default): an item made with a text the buyer typed (a name, an engraving) cannot be returned, as the law allows; buyers are told before paying. On: buyers may return it like any other item."
+msgstr "Uit (standaard): een artikel gemaakt met een tekst die de koper typte (een naam, een gravure) kan niet worden geretourneerd, zoals de wet toestaat; kopers horen dit voor het betalen. Aan: kopers mogen het retourneren zoals elk ander artikel."

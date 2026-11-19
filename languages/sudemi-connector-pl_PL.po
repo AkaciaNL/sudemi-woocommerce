@@ -2284,3 +2284,11 @@ msgstr "\"%s\" nie może być zamówiony w tej ilości"
 #, php-format
 msgid "\"%s\" needs a choice sudemi cannot ask yet"
 msgstr "\"%s\" wymaga wyboru, o który sudemi nie może jeszcze zapytać"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Accept returns of personalised items"
+msgstr "Przyjmuj zwroty spersonalizowanych produktów"
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Off (default): an item made with a text the buyer typed (a name, an engraving) cannot be returned, as the law allows; buyers are told before paying. On: buyers may return it like any other item."
+msgstr "Wyłączone (domyślnie): produktu wykonanego z tekstem wpisanym przez kupującego (imię, grawer) nie można zwrócić, na co pozwala prawo; kupujący dowiadują się o tym przed zapłatą. Włączone: kupujący mogą go zwrócić jak każdy inny produkt."

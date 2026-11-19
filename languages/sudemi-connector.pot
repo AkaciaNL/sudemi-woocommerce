@@ -2276,3 +2276,11 @@ msgstr ""
 #, php-format
 msgid "\"%s\" needs a choice sudemi cannot ask yet"
 msgstr ""
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Accept returns of personalised items"
+msgstr ""
+
+#: includes/class-sudemi-withdrawal.php
+msgid "Off (default): an item made with a text the buyer typed (a name, an engraving) cannot be returned, as the law allows; buyers are told before paying. On: buyers may return it like any other item."
+msgstr ""
