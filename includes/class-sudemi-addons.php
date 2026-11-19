@@ -26,9 +26,10 @@
  * On an order from sudemi the text is written on the order line the way the plugin writes it
  * itself (see order_meta()), so the shop sees it as for any other order.
  *
- * Only text fields are read (single line and multi line): sudemi asks the buyer for a text. A
- * price on the field is sent as priceMinor (with tax, as the shop's prices are shown): fixed
- * and per-item prices as they are, a percentage of the product's price worked out.
+ * Text fields (type text) and choices from the shop's list (select, radio: type choice;
+ * checkboxes: multi_choice), each with its price (with tax, as the shop's prices are shown):
+ * fixed and per-item prices as they are, a percentage of the product's price worked out. A
+ * price this contract cannot carry (per character, a formula) leaves that field out.
  *
  * The parsers are pure, so they can be tested without WordPress.
  *
@@ -39,175 +40,89 @@ defined( 'ABSPATH' ) || exit;
 
 final class Sudemi_Addons {
 
-	/** Field types that are a text the buyer types, per plugin. */
-	const PAO_TEXT  = array( 'custom_text', 'custom_textarea', 'custom', 'custom_letters_only', 'custom_digits_only', 'custom_letters_or_digits' );
-	const WAPF_TEXT = array( 'text', 'textarea', 'email', 'url', 'number' );
-	const PPOM_TEXT = array( 'text', 'textarea', 'email', 'number' );
-	const YITH_TEXT = array( 'text', 'textarea' );
-	const THWEPOF_TEXT = array( 'inputtext', 'textarea', 'email', 'tel', 'url', 'number' );
+	/** Field types per plugin: text, one choice, several choices. */
+	const PAO_TEXT     = array( 'custom_text', 'custom_textarea', 'custom', 'custom_letters_only', 'custom_digits_only', 'custom_letters_or_digits', 'custom_email' );
+	const PAO_CHOICE   = array( 'multiple_choice', 'select', 'radiobutton' );
+	const PAO_MULTI    = array( 'checkbox' );
+	const WAPF_TEXT    = array( 'text', 'textarea', 'email', 'url', 'number' );
+	const WAPF_CHOICE  = array( 'select', 'radio', 'image-swatch', 'color-swatch', 'text-swatch' );
+	const WAPF_MULTI   = array( 'checkboxes', 'multi-image-swatch', 'multi-color-swatch', 'multi-text-swatch' );
+	const PPOM_TEXT    = array( 'text', 'textarea', 'email', 'number' );
+	const PPOM_CHOICE  = array( 'select', 'radio', 'image', 'palettes' );
+	const PPOM_MULTI   = array( 'checkbox' );
+	const YITH_TEXT    = array( 'text', 'textarea' );
+	const YITH_CHOICE  = array( 'select', 'radio', 'color', 'label' );
+	const YITH_MULTI   = array( 'checkbox' );
+	const THWEPOF_TEXT   = array( 'inputtext', 'textarea', 'email', 'tel', 'url', 'number' );
+	const THWEPOF_CHOICE = array( 'select', 'radio' );
+	const THWEPOF_MULTI  = array( 'checkboxgroup' );
 
-	/**
-	 * YITH Product Add-ons: the text inputs of one add-on row (`yith_wapo_addons`), one per
-	 * option index. A price per character cannot be offered as one price, so such an input is
-	 * left out; a discount (price_method "decrease") is not an extra price and counts as 0.
-	 *
-	 * @param int   $addon_id The add-on row's id.
-	 * @param mixed $settings Its `settings`, unserialized.
-	 * @param mixed $options  Its `options`, unserialized.
-	 */
-	public static function from_yith( $addon_id, $settings, $options ) {
-		$out = array();
-		if ( ! is_array( $settings ) || ! is_array( $options ) || ! in_array( isset( $settings['type'] ) ? (string) $settings['type'] : '', self::YITH_TEXT, true ) ) {
-			return $out;
-		}
-		$get   = function ( $name, $i, $default = '' ) use ( $options ) {
-			return isset( $options[ $name ] ) && is_array( $options[ $name ] ) && isset( $options[ $name ][ $i ] ) ? $options[ $name ][ $i ] : $default;
-		};
-		$count = 0;
-		foreach ( array( 'label', 'price', 'required' ) as $column ) {
-			if ( isset( $options[ $column ] ) && is_array( $options[ $column ] ) ) {
-				$count = max( $count, count( $options[ $column ] ) );
-			}
-		}
-		$title = isset( $settings['title'] ) ? trim( (string) $settings['title'] ) : '';
-		for ( $i = 0; $i < $count; $i++ ) {
-			$method = (string) $get( 'price_method', $i, 'free' );
-			$type   = (string) $get( 'price_type', $i, 'fixed' );
-			if ( 'free' !== $method && 'characters' === $type ) {
-				continue;
-			}
-			$price = 0.0;
-			if ( 'increase' === $method ) {
-				$sale  = str_replace( ',', '.', (string) $get( 'price_sale', $i ) );
-				$base  = str_replace( ',', '.', (string) $get( 'price', $i ) );
-				$price = is_numeric( $sale ) && (float) $sale >= 0 && '' !== trim( $sale ) ? (float) $sale : ( is_numeric( $base ) ? (float) $base : 0.0 );
-			}
-			$label = trim( (string) $get( 'label', $i ) );
-			$label = '' !== $label ? $label : $title;
-			if ( '' === $label ) {
-				continue;
-			}
-			$out[] = array(
-				'key'      => 'yith:' . (int) $addon_id . '-' . $i,
-				'label'    => $label,
-				'required' => 'yes' === $get( 'required', $i, 'no' ),
-				'max'      => 'yes' === $get( 'characters_limit', $i, 'no' ) && is_numeric( $get( 'characters_limit_max', $i ) ) ? (int) $get( 'characters_limit_max', $i ) : 0,
-				'price'    => 'percentage' === $type ? 0.0 : max( 0.0, $price ),
-				'percent'  => 'percentage' === $type ? max( 0.0, $price ) : 0.0,
-				'store'    => array(
-					'kind'   => 'yith',
-					'addon'  => (int) $addon_id,
-					'option' => $i,
-				),
-			);
-		}
-		return $out;
+	/** sudemi takes at most 100 choices per field. */
+	const MAX_CHOICES = 100;
+
+	/** One field as the parsers return it. Pure. */
+	private static function make( $key, $label, $type, $required, $max, $price, $percent, array $choices, array $store ) {
+		return array(
+			'key'      => $key,
+			'label'    => (string) $label,
+			'type'     => $type,
+			'required' => (bool) $required,
+			'max'      => (int) $max,
+			'price'    => max( 0.0, (float) $price ),
+			'percent'  => max( 0.0, (float) $percent ),
+			'choices'  => $choices,
+			'store'    => $store,
+		);
 	}
 
-	/**
-	 * ThemeHigh Extra Product Options: its text fields for a product, as property lists
-	 * (type, name, title, required, enabled, maxlength, and price in the paid version).
-	 *
-	 * @param array $fields Field name => properties.
-	 */
-	public static function from_thwepof( array $fields ) {
-		$out = array();
-		foreach ( $fields as $name => $props ) {
-			if ( ! is_array( $props ) || ! in_array( isset( $props['type'] ) ? (string) $props['type'] : '', self::THWEPOF_TEXT, true ) ) {
-				continue;
-			}
-			if ( isset( $props['enabled'] ) && ! self::truthy( $props['enabled'] ) ) {
-				continue;
-			}
-			$name  = isset( $props['name'] ) && '' !== (string) $props['name'] ? (string) $props['name'] : (string) $name;
-			$label = isset( $props['title'] ) && '' !== trim( (string) $props['title'] ) ? trim( (string) $props['title'] ) : $name;
-			if ( '' === $name ) {
-				continue;
-			}
-			$ptype = isset( $props['price_type'] ) ? (string) $props['price_type'] : '';
-			$price = isset( $props['price'] ) && is_numeric( $props['price'] ) ? max( 0.0, (float) $props['price'] ) : 0.0;
-			$out[] = array(
-				'key'      => 'thwepof:' . self::slug( $name ),
-				'label'    => $label,
-				'required' => isset( $props['required'] ) && self::truthy( $props['required'] ),
-				'max'      => isset( $props['maxlength'] ) && is_numeric( $props['maxlength'] ) ? (int) $props['maxlength'] : 0,
-				'price'    => 'percentage' === $ptype ? 0.0 : $price,
-				'percent'  => 'percentage' === $ptype ? $price : 0.0,
-				'store'    => array(
-					'kind' => 'name',
-					'name' => $name,
-				),
-			);
+	/** One choice: key (no commas), label, price, percent. Labels unique; null when unusable. Pure. */
+	private static function choice( $key, $label, $price, $percent ) {
+		$label = trim( self::plain( (string) $label ) );
+		if ( '' === $label ) {
+			return null;
 		}
-		return $out;
+		return array(
+			'key'     => str_replace( ',', '-', (string) $key ),
+			'label'   => $label,
+			'price'   => max( 0.0, (float) $price ),
+			'percent' => max( 0.0, (float) $percent ),
+		);
 	}
 
-	/**
-	 * The order item meta for what the buyer typed, the way each plugin writes it (read from
-	 * their source): YITH a visible `ywapo-addon-<addon>-<option>` entry ("text (+price)", shown
-	 * under the add-on's label) and the hidden `_ywapo_meta_data` list its order screens read;
-	 * ThemeHigh the field's name with the text (shown under the field's title); the others and
-	 * this plugin's own setting the field's label with the text. Pure.
-	 *
-	 * @param array    $fields What the listing asks for, with 'store' (Sudemi_Personalisation::for_listing( ..., true )).
-	 * @param array    $typed  key => [label, value] (Sudemi_Personalisation::from_line()).
-	 * @param callable $price  Formats a field's price (minor units) for display, e.g. "€20.00".
-	 * @return array List of [meta key, meta value].
-	 */
-	public static function order_meta( array $fields, array $typed, $price ) {
-		$out  = array();
-		$yith = array();
-		foreach ( $fields as $field ) {
-			if ( ! isset( $typed[ $field['key'] ] ) ) {
+	/** Drops repeated keys or labels and caps the list. Pure. */
+	private static function unique_choices( array $choices ) {
+		$out    = array();
+		$keys   = array();
+		$labels = array();
+		foreach ( $choices as $c ) {
+			if ( null === $c || isset( $keys[ $c['key'] ] ) || isset( $labels[ strtolower( $c['label'] ) ] ) ) {
 				continue;
 			}
-			$value = $typed[ $field['key'] ]['value'];
-			$store = isset( $field['store'] ) && is_array( $field['store'] ) ? $field['store'] : array( 'kind' => 'label' );
-			if ( 'yith' === $store['kind'] ) {
-				$id      = $store['addon'] . '-' . $store['option'];
-				$display = $value . ( ! empty( $field['priceMinor'] ) ? ' (+' . call_user_func( $price, (int) $field['priceMinor'] ) . ')' : '' );
-				$out[]   = array( 'ywapo-addon-' . $id, $display );
-				$yith[]  = array(
-					$id => array(
-						0               => $value,
-						'addon_id'      => (string) $store['addon'],
-						'option_id'     => (string) $store['option'],
-						'addon_value'   => $value,
-						'display_label' => $field['label'],
-						'display_value' => $display,
-					),
-				);
-			} elseif ( 'name' === $store['kind'] ) {
-				$out[] = array( $store['name'], $value );
-			} else {
-				$out[] = array( $field['label'], $value );
-			}
-		}
-		if ( ! empty( $yith ) ) {
-			$out[] = array( '_ywapo_meta_data', $yith );
-		}
-		// A text whose field is gone since sudemi listed it: under the label sudemi sent.
-		$known = array();
-		foreach ( $fields as $field ) {
-			$known[ $field['key'] ] = true;
-		}
-		foreach ( $typed as $key => $entry ) {
-			if ( ! isset( $known[ $key ] ) ) {
-				$out[] = array( $entry['label'], $entry['value'] );
+			$keys[ $c['key'] ]                 = true;
+			$labels[ strtolower( $c['label'] ) ] = true;
+			$out[]                             = $c;
+			if ( count( $out ) >= self::MAX_CHOICES ) {
+				break;
 			}
 		}
 		return $out;
 	}
 
-	private static function truthy( $value ) {
-		return true === $value || 1 === $value || in_array( strtolower( (string) $value ), array( '1', 'yes', 'true', 'on' ), true );
+	private static function num( $value ) {
+		$value = str_replace( ',', '.', trim( (string) $value ) );
+		return is_numeric( $value ) ? (float) $value : 0.0;
+	}
+
+	public static function truthy( $value ) {
+		return true === $value || 1 === $value || in_array( strtolower( trim( (string) $value ) ), array( '1', 'yes', 'true', 'on' ), true );
 	}
 
 	/**
-	 * WooCommerce Product Add-Ons: the text add-ons of one `_product_addons` list.
+	 * WooCommerce Product Add-Ons: text add-ons and choices (multiple choice, checkboxes) of one
+	 * `_product_addons` list. A flat fee is sent as a price per item.
 	 *
-	 * @param mixed $addons The stored list.
-	 * @return array List of [key, label, required, max, price, percent].
+	 * @param mixed  $addons The stored list.
+	 * @param string $scope  'p' for the product's own, 'g<id>' for a global group.
 	 */
 	public static function from_pao( $addons, $scope = 'p' ) {
 		$out = array();
@@ -218,32 +133,41 @@ final class Sudemi_Addons {
 			if ( ! is_array( $addon ) || empty( $addon['name'] ) ) {
 				continue;
 			}
-			$type = isset( $addon['type'] ) ? (string) $addon['type'] : '';
-			// Before Product Add-Ons 3.0 a text field was type "custom" with one option.
-			if ( ! in_array( $type, self::PAO_TEXT, true ) ) {
-				continue;
+			$type    = isset( $addon['type'] ) ? (string) $addon['type'] : '';
+			$key     = 'pao:' . $scope . ':' . self::slug( (string) $addon['name'] . '-' . $i );
+			$options = isset( $addon['options'] ) && is_array( $addon['options'] ) ? array_values( $addon['options'] ) : array();
+			if ( in_array( $type, self::PAO_TEXT, true ) ) {
+				// Before Product Add-Ons 3.0 a text field was type "custom" with one option.
+				$option = isset( $options[0] ) && is_array( $options[0] ) ? $options[0] : array();
+				$adjust = ! isset( $addon['adjust_price'] ) || self::truthy( $addon['adjust_price'] );
+				$price  = $adjust && isset( $addon['price'] ) && '' !== (string) $addon['price'] ? self::num( $addon['price'] ) : self::num( isset( $option['price'] ) ? $option['price'] : 0 );
+				$ptype  = isset( $addon['price_type'] ) ? (string) $addon['price_type'] : ( isset( $option['price_type'] ) ? (string) $option['price_type'] : 'flat_fee' );
+				$max    = isset( $addon['max'] ) && (int) $addon['max'] > 0 ? (int) $addon['max'] : ( isset( $option['max'] ) ? (int) $option['max'] : 0 );
+				$pct    = 'percentage_based' === $ptype;
+				$out[]  = self::make( $key, $addon['name'], 'text', ! empty( $addon['required'] ), $max, $pct ? 0 : $price, $pct ? $price : 0, array(), array( 'kind' => 'label' ) );
+			} elseif ( in_array( $type, self::PAO_CHOICE, true ) || in_array( $type, self::PAO_MULTI, true ) ) {
+				$choices = array();
+				foreach ( $options as $j => $option ) {
+					if ( ! is_array( $option ) ) {
+						continue;
+					}
+					$pct       = isset( $option['price_type'] ) && 'percentage_based' === $option['price_type'];
+					$price     = self::num( isset( $option['price'] ) ? $option['price'] : 0 );
+					$choices[] = self::choice( 'o' . $j, isset( $option['label'] ) ? $option['label'] : '', $pct ? 0 : $price, $pct ? $price : 0 );
+				}
+				$choices = self::unique_choices( $choices );
+				if ( ! empty( $choices ) ) {
+					$out[] = self::make( $key, $addon['name'], in_array( $type, self::PAO_MULTI, true ) ? 'multi_choice' : 'choice', ! empty( $addon['required'] ), 0, 0, 0, $choices, array( 'kind' => 'label' ) );
+				}
 			}
-			$option = isset( $addon['options'][0] ) && is_array( $addon['options'][0] ) ? $addon['options'][0] : array();
-			$adjust = ! isset( $addon['adjust_price'] ) || ! empty( $addon['adjust_price'] );
-			$price  = $adjust && isset( $addon['price'] ) && is_numeric( $addon['price'] ) ? (float) $addon['price']
-				: ( isset( $option['price'] ) && is_numeric( $option['price'] ) ? (float) $option['price'] : 0.0 );
-			$ptype  = isset( $addon['price_type'] ) ? (string) $addon['price_type'] : ( isset( $option['price_type'] ) ? (string) $option['price_type'] : 'flat_fee' );
-			$max    = isset( $addon['max'] ) && is_numeric( $addon['max'] ) && (int) $addon['max'] > 0 ? (int) $addon['max']
-				: ( isset( $option['max'] ) && is_numeric( $option['max'] ) ? (int) $option['max'] : 0 );
-			$out[]  = array(
-				'key'      => 'pao:' . $scope . ':' . self::slug( (string) $addon['name'] . '-' . $i ),
-				'label'    => (string) $addon['name'],
-				'required' => ! empty( $addon['required'] ),
-				'max'      => $max,
-				'price'    => 'percentage_based' === $ptype ? 0.0 : $price,
-				'percent'  => 'percentage_based' === $ptype ? $price : 0.0,
-			);
 		}
 		return $out;
 	}
 
 	/**
-	 * Advanced Product Fields: the text fields of one `_wapf_fieldgroup`.
+	 * Advanced Product Fields: the fields of one field group, as stored in `_wapf_fieldgroup`
+	 * (strings "true"/"false") or as its objects give them. Prices: fixed (flat fee) and per item
+	 * as they are, percent worked out; a formula or a price per character leaves the field out.
 	 *
 	 * @param mixed $group The stored field group.
 	 */
@@ -253,28 +177,65 @@ final class Sudemi_Addons {
 			return $out;
 		}
 		foreach ( $group['fields'] as $field ) {
-			if ( ! is_array( $field ) || empty( $field['label'] ) || ! in_array( isset( $field['type'] ) ? (string) $field['type'] : '', self::WAPF_TEXT, true ) ) {
+			if ( ! is_array( $field ) || empty( $field['label'] ) ) {
 				continue;
 			}
-			$pricing = isset( $field['pricing'] ) && is_array( $field['pricing'] ) ? $field['pricing'] : array();
-			$on      = ! empty( $pricing['enabled'] ) && isset( $pricing['amount'] ) && is_numeric( $pricing['amount'] );
-			$ptype   = isset( $pricing['type'] ) ? (string) $pricing['type'] : 'fixed';
-			$amount  = $on ? (float) $pricing['amount'] : 0.0;
-			$max     = isset( $field['attributes']['maxlength'] ) && is_numeric( $field['attributes']['maxlength'] ) ? (int) $field['attributes']['maxlength'] : 0;
-			$out[]   = array(
-				'key'      => 'wapf:' . ( isset( $field['id'] ) ? self::slug( (string) $field['id'] ) : self::slug( (string) $field['label'] ) ),
-				'label'    => (string) $field['label'],
-				'required' => ! empty( $field['required'] ),
-				'max'      => $max,
-				'price'    => in_array( $ptype, array( 'p', 'percent' ), true ) ? 0.0 : $amount,
-				'percent'  => in_array( $ptype, array( 'p', 'percent' ), true ) ? $amount : 0.0,
+			$type  = isset( $field['type'] ) ? (string) $field['type'] : '';
+			$id    = isset( $field['id'] ) ? (string) $field['id'] : (string) $field['label'];
+			$key   = 'wapf:' . self::slug( $id );
+			$label = trim( self::plain( (string) $field['label'] ) );
+			$store = array(
+				'kind' => 'wapf',
+				'id'   => $id,
 			);
+			$req   = isset( $field['required'] ) && self::truthy( $field['required'] );
+			if ( in_array( $type, self::WAPF_TEXT, true ) ) {
+				$pricing = isset( $field['pricing'] ) && is_array( $field['pricing'] ) ? $field['pricing'] : array();
+				$on      = isset( $pricing['enabled'] ) && self::truthy( $pricing['enabled'] );
+				$ptype   = isset( $pricing['type'] ) ? (string) $pricing['type'] : 'fixed';
+				if ( $on && ! in_array( $ptype, array( 'fixed', 'qt', 'percent', 'p' ), true ) ) {
+					continue;
+				}
+				$amount = $on ? self::num( isset( $pricing['amount'] ) ? $pricing['amount'] : 0 ) : 0.0;
+				$pct    = in_array( $ptype, array( 'p', 'percent' ), true );
+				$max    = 0;
+				foreach ( array( array( 'attributes', 'maxlength' ), array( 'options', 'maxlength' ), array( 'maxlength', null ) ) as $path ) {
+					$v = null === $path[1] ? ( isset( $field[ $path[0] ] ) ? $field[ $path[0] ] : null ) : ( isset( $field[ $path[0] ][ $path[1] ] ) ? $field[ $path[0] ][ $path[1] ] : null );
+					if ( is_numeric( $v ) && (int) $v > 0 ) {
+						$max = (int) $v;
+						break;
+					}
+				}
+				$out[] = self::make( $key, $label, 'text', $req, $max, $pct ? 0 : $amount, $pct ? $amount : 0, array(), $store );
+			} elseif ( in_array( $type, self::WAPF_CHOICE, true ) || in_array( $type, self::WAPF_MULTI, true ) ) {
+				$raw     = isset( $field['choices'] ) ? $field['choices'] : ( isset( $field['options']['choices'] ) ? $field['options']['choices'] : array() );
+				$choices = array();
+				$skip    = false;
+				foreach ( (array) $raw as $c ) {
+					if ( ! is_array( $c ) ) {
+						continue;
+					}
+					$ptype = isset( $c['pricing_type'] ) ? (string) $c['pricing_type'] : 'none';
+					if ( ! in_array( $ptype, array( 'none', 'fixed', 'qt', 'percent', 'p' ), true ) ) {
+						$skip = true;
+						break;
+					}
+					$amount    = 'none' === $ptype ? 0.0 : self::num( isset( $c['pricing_amount'] ) ? $c['pricing_amount'] : 0 );
+					$pct       = in_array( $ptype, array( 'p', 'percent' ), true );
+					$choices[] = self::choice( isset( $c['slug'] ) ? $c['slug'] : self::slug( isset( $c['label'] ) ? $c['label'] : '' ), isset( $c['label'] ) ? $c['label'] : '', $pct ? 0 : $amount, $pct ? $amount : 0 );
+				}
+				$choices = self::unique_choices( $choices );
+				if ( ! $skip && ! empty( $choices ) ) {
+					$out[] = self::make( $key, $label, in_array( $type, self::WAPF_MULTI, true ) ? 'multi_choice' : 'choice', $req, 0, 0, 0, $choices, $store );
+				}
+			}
 		}
 		return $out;
 	}
 
 	/**
-	 * PPOM: the text fields of one field group (`the_meta`, JSON).
+	 * PPOM: the fields of one field group (`the_meta`, JSON). Options are [{option, price, id}];
+	 * a price with "%" is a percentage of the product's price.
 	 *
 	 * @param mixed $meta The stored JSON or list.
 	 */
@@ -285,35 +246,309 @@ final class Sudemi_Addons {
 			return $out;
 		}
 		foreach ( $fields as $field ) {
-			if ( ! is_array( $field ) || ! in_array( isset( $field['type'] ) ? (string) $field['type'] : '', self::PPOM_TEXT, true ) ) {
+			$type = is_array( $field ) && isset( $field['type'] ) ? (string) $field['type'] : '';
+			if ( ! is_array( $field ) || ( isset( $field['status'] ) && 'off' === $field['status'] ) ) {
 				continue;
 			}
-			if ( isset( $field['status'] ) && 'off' === $field['status'] ) {
+			$name  = isset( $field['data_name'] ) ? (string) $field['data_name'] : '';
+			$label = isset( $field['title'] ) && '' !== (string) $field['title'] ? (string) $field['title'] : $name;
+			if ( '' === $label || '' === $name ) {
 				continue;
 			}
-			$label = isset( $field['title'] ) && '' !== (string) $field['title'] ? (string) $field['title'] : ( isset( $field['data_name'] ) ? (string) $field['data_name'] : '' );
-			if ( '' === $label ) {
-				continue;
-			}
-			$out[] = array(
-				'key'      => 'ppom:' . self::slug( isset( $field['data_name'] ) ? (string) $field['data_name'] : $label ),
-				'label'    => $label,
-				'required' => isset( $field['required'] ) && in_array( (string) $field['required'], array( 'on', '1', 'yes', 'true' ), true ),
-				'max'      => isset( $field['max_length'] ) && is_numeric( $field['max_length'] ) ? (int) $field['max_length'] : 0,
-				'price'    => isset( $field['price'] ) && is_numeric( $field['price'] ) ? (float) $field['price'] : 0.0,
-				'percent'  => 0.0,
+			$key   = 'ppom:' . self::slug( $name );
+			$req   = isset( $field['required'] ) && self::truthy( $field['required'] );
+			$store = array(
+				'kind' => 'ppom',
+				'name' => $name,
 			);
+			if ( in_array( $type, self::PPOM_TEXT, true ) ) {
+				$price = isset( $field['price'] ) ? (string) $field['price'] : '';
+				$pct   = false !== strpos( $price, '%' );
+				$out[] = self::make( $key, $label, 'text', $req, isset( $field['max_length'] ) ? (int) $field['max_length'] : 0, $pct ? 0 : self::num( $price ), $pct ? self::num( str_replace( '%', '', $price ) ) : 0, array(), $store );
+			} elseif ( in_array( $type, self::PPOM_CHOICE, true ) || in_array( $type, self::PPOM_MULTI, true ) ) {
+				$raw     = isset( $field['options'] ) && is_array( $field['options'] ) ? $field['options'] : ( isset( $field['images'] ) && is_array( $field['images'] ) ? $field['images'] : array() );
+				$choices = array();
+				foreach ( $raw as $o ) {
+					if ( ! is_array( $o ) ) {
+						continue;
+					}
+					$text      = isset( $o['option'] ) ? (string) $o['option'] : ( isset( $o['title'] ) ? (string) $o['title'] : '' );
+					$price     = isset( $o['price'] ) ? (string) $o['price'] : '';
+					$pct       = false !== strpos( $price, '%' );
+					$id        = isset( $o['option_id'] ) && '' !== (string) $o['option_id'] ? (string) $o['option_id'] : ( isset( $o['id'] ) && '' !== (string) $o['id'] ? (string) $o['id'] : self::slug( $text ) );
+					$choices[] = self::choice( $id, $text, $pct ? 0 : self::num( $price ), $pct ? self::num( str_replace( '%', '', $price ) ) : 0 );
+				}
+				$choices = self::unique_choices( $choices );
+				if ( ! empty( $choices ) ) {
+					$out[] = self::make( $key, $label, in_array( $type, self::PPOM_MULTI, true ) ? 'multi_choice' : 'choice', $req, 0, 0, 0, $choices, $store );
+				}
+			}
 		}
 		return $out;
 	}
 
 	/**
-	 * Every text add-on of a product, from whichever of the plugins above the shop uses (their
-	 * stored data, whether the plugin is active or not; a plugin removed leaves its data behind,
-	 * so only an active one counts).
+	 * YITH Product Add-ons: one add-on row (`yith_wapo_addons`). A text add-on is one text input
+	 * per option index; a select, radio or checkbox add-on is one field whose options are the
+	 * choices. A price per character cannot be offered as one price (left out); a discount
+	 * ("decrease") is not an extra price and counts as 0.
 	 *
-	 * @param WC_Product $base The product (the parent of a variation).
+	 * @param int   $addon_id The add-on row's id.
+	 * @param mixed $settings Its `settings`, unserialized.
+	 * @param mixed $options  Its `options`, unserialized.
 	 */
+	public static function from_yith( $addon_id, $settings, $options ) {
+		$out = array();
+		if ( ! is_array( $settings ) || ! is_array( $options ) ) {
+			return $out;
+		}
+		$type  = isset( $settings['type'] ) ? (string) $settings['type'] : '';
+		$get   = function ( $name, $i, $default = '' ) use ( $options ) {
+			return isset( $options[ $name ] ) && is_array( $options[ $name ] ) && isset( $options[ $name ][ $i ] ) ? $options[ $name ][ $i ] : $default;
+		};
+		$price = function ( $i ) use ( $get ) {
+			$method = (string) $get( 'price_method', $i, 'free' );
+			$ptype  = (string) $get( 'price_type', $i, 'fixed' );
+			if ( 'free' !== $method && 'characters' === $ptype ) {
+				return null;
+			}
+			$amount = 0.0;
+			if ( 'increase' === $method ) {
+				$sale   = trim( (string) $get( 'price_sale', $i ) );
+				$amount = '' !== $sale && is_numeric( str_replace( ',', '.', $sale ) ) ? self::num( $sale ) : self::num( $get( 'price', $i ) );
+			}
+			return 'percentage' === $ptype ? array( 0.0, $amount ) : array( $amount, 0.0 );
+		};
+		$count = 0;
+		foreach ( array( 'label', 'price', 'required' ) as $column ) {
+			if ( isset( $options[ $column ] ) && is_array( $options[ $column ] ) ) {
+				$count = max( $count, count( $options[ $column ] ) );
+			}
+		}
+		$title = isset( $settings['title'] ) ? trim( self::plain( (string) $settings['title'] ) ) : '';
+		if ( in_array( $type, self::YITH_TEXT, true ) ) {
+			for ( $i = 0; $i < $count; $i++ ) {
+				$p = $price( $i );
+				if ( null === $p ) {
+					continue;
+				}
+				$label = trim( self::plain( (string) $get( 'label', $i ) ) );
+				$label = '' !== $label ? $label : $title;
+				if ( '' === $label ) {
+					continue;
+				}
+				$out[] = self::make(
+					'yith:' . (int) $addon_id . '-' . $i,
+					$label,
+					'text',
+					'yes' === $get( 'required', $i, 'no' ),
+					'yes' === $get( 'characters_limit', $i, 'no' ) ? (int) $get( 'characters_limit_max', $i, 0 ) : 0,
+					$p[0],
+					$p[1],
+					array(),
+					array(
+						'kind'   => 'yith',
+						'addon'  => (int) $addon_id,
+						'option' => $i,
+					)
+				);
+			}
+		} elseif ( in_array( $type, self::YITH_CHOICE, true ) || in_array( $type, self::YITH_MULTI, true ) ) {
+			$choices = array();
+			for ( $i = 0; $i < $count; $i++ ) {
+				$p = $price( $i );
+				if ( null === $p ) {
+					return $out;
+				}
+				$choices[] = self::choice( (string) $i, $get( 'label', $i ), $p[0], $p[1] );
+			}
+			$choices = self::unique_choices( $choices );
+			if ( '' !== $title && ! empty( $choices ) ) {
+				$out[] = self::make(
+					'yith:' . (int) $addon_id,
+					$title,
+					in_array( $type, self::YITH_MULTI, true ) ? 'multi_choice' : 'choice',
+					isset( $settings['required'] ) && 'yes' === $settings['required'],
+					0,
+					0,
+					0,
+					$choices,
+					array(
+						'kind'  => 'yith',
+						'addon' => (int) $addon_id,
+					)
+				);
+			}
+		}
+		return $out;
+	}
+
+	/**
+	 * ThemeHigh Extra Product Options: its fields for a product, as property lists (type, name,
+	 * title, required, enabled, maxlength, options; price in the paid version). The free version
+	 * has no prices; its options are plain texts.
+	 *
+	 * @param array $fields Field name => properties.
+	 */
+	public static function from_thwepof( array $fields ) {
+		$out = array();
+		foreach ( $fields as $name => $props ) {
+			$type = is_array( $props ) && isset( $props['type'] ) ? (string) $props['type'] : '';
+			if ( ! is_array( $props ) || ( isset( $props['enabled'] ) && ! self::truthy( $props['enabled'] ) ) ) {
+				continue;
+			}
+			$name  = isset( $props['name'] ) && '' !== (string) $props['name'] ? (string) $props['name'] : (string) $name;
+			$label = isset( $props['title'] ) && '' !== trim( (string) $props['title'] ) ? trim( self::plain( (string) $props['title'] ) ) : $name;
+			if ( '' === $name ) {
+				continue;
+			}
+			$ptype = isset( $props['price_type'] ) ? (string) $props['price_type'] : '';
+			$price = isset( $props['price'] ) ? self::num( $props['price'] ) : 0.0;
+			$pct   = 'percentage' === $ptype;
+			$req   = isset( $props['required'] ) && self::truthy( $props['required'] );
+			$store = array(
+				'kind' => 'name',
+				'name' => $name,
+			);
+			$key   = 'thwepof:' . self::slug( $name );
+			if ( in_array( $type, self::THWEPOF_TEXT, true ) ) {
+				$out[] = self::make( $key, $label, 'text', $req, isset( $props['maxlength'] ) ? (int) $props['maxlength'] : 0, $pct ? 0 : $price, $pct ? $price : 0, array(), $store );
+			} elseif ( in_array( $type, self::THWEPOF_CHOICE, true ) || in_array( $type, self::THWEPOF_MULTI, true ) ) {
+				$choices = array();
+				foreach ( isset( $props['options'] ) && is_array( $props['options'] ) ? $props['options'] : array() as $option ) {
+					$text      = is_array( $option ) ? ( isset( $option['text'] ) ? $option['text'] : ( isset( $option['key'] ) ? $option['key'] : '' ) ) : (string) $option;
+					$choices[] = self::choice( self::slug( $text ), $text, 0, 0 );
+				}
+				$choices = self::unique_choices( $choices );
+				if ( ! empty( $choices ) ) {
+					$out[] = self::make( $key, $label, in_array( $type, self::THWEPOF_MULTI, true ) ? 'multi_choice' : 'choice', $req, 0, $pct ? 0 : $price, $pct ? $price : 0, $choices, $store );
+				}
+			}
+		}
+		return $out;
+	}
+
+	/**
+	 * The order item meta for what the buyer typed or chose, the way each plugin writes it (read
+	 * from their source):
+	 * - Product Add-Ons and this plugin's own setting: the field's label with the text, or with
+	 *   each chosen option.
+	 * - Advanced Product Fields: the label with the value, and the hidden `_wapf_meta` list
+	 *   (id => id, label, value, raw).
+	 * - PPOM: the field's data name with the value (PPOM shows it under the field's title), and
+	 *   the hidden `_ppom_fields` (fields: data name => value).
+	 * - YITH: a visible `ywapo-addon-<addon>-<option>` per text or chosen option ("value
+	 *   (+price)", shown under the add-on's label) and the hidden `_ywapo_meta_data` list.
+	 * - ThemeHigh: the field's name with the value (choices joined by ","; shown under the title).
+	 * Pure.
+	 *
+	 * @param array    $fields What the listing asks for, with 'store' (Sudemi_Personalisation::for_listing( ..., true )).
+	 * @param array    $typed  key => [label, value, choice_keys] (Sudemi_Personalisation::from_line()).
+	 * @param callable $price  Formats a price (minor units) for display, e.g. "€20.00".
+	 * @return array List of [meta key, meta value].
+	 */
+	public static function order_meta( array $fields, array $typed, $price ) {
+		$out   = array();
+		$yith  = array();
+		$wapf  = array();
+		$ppom  = array();
+		$known = array();
+		foreach ( $fields as $field ) {
+			$known[ $field['key'] ] = true;
+			if ( ! isset( $typed[ $field['key'] ] ) ) {
+				continue;
+			}
+			$entry  = $typed[ $field['key'] ];
+			$store  = isset( $field['store'] ) && is_array( $field['store'] ) ? $field['store'] : array( 'kind' => 'label' );
+			$type   = isset( $field['type'] ) ? $field['type'] : 'text';
+			$chosen = array();
+			if ( 'text' !== $type && ! empty( $field['choices'] ) ) {
+				$keys = isset( $entry['choice_keys'] ) ? (array) $entry['choice_keys'] : array();
+				foreach ( $field['choices'] as $c ) {
+					if ( in_array( (string) $c['key'], array_map( 'strval', $keys ), true ) ) {
+						$chosen[] = $c;
+					}
+				}
+				if ( empty( $chosen ) ) {
+					// Older answer without keys: match the labels sudemi joined with ", ".
+					foreach ( $field['choices'] as $c ) {
+						if ( in_array( strtolower( $c['label'] ), array_map( 'strtolower', array_map( 'trim', explode( ',', (string) $entry['value'] ) ) ), true ) ) {
+							$chosen[] = $c;
+						}
+					}
+				}
+			}
+			$value = 'text' === $type || empty( $chosen ) ? (string) $entry['value'] : implode( ', ', self::labels_of( $chosen ) );
+			switch ( $store['kind'] ) {
+				case 'yith':
+					$parts = 'text' === $type
+						? array( array( (string) $store['option'], $entry['value'], isset( $field['priceMinor'] ) ? (int) $field['priceMinor'] : 0 ) )
+						: array_map(
+							function ( $c ) {
+								return array( (string) $c['key'], $c['label'], isset( $c['priceMinor'] ) ? (int) $c['priceMinor'] : 0 );
+							},
+							$chosen
+						);
+					foreach ( $parts as $part ) {
+						$id      = $store['addon'] . '-' . $part[0];
+						$display = $part[1] . ( $part[2] > 0 ? ' (+' . call_user_func( $price, $part[2] ) . ')' : '' );
+						$out[]   = array( 'ywapo-addon-' . $id, $display );
+						$yith[]  = array(
+							$id => array(
+								0               => $part[1],
+								'addon_id'      => (string) $store['addon'],
+								'option_id'     => $part[0],
+								'addon_value'   => $part[1],
+								'display_label' => $field['label'],
+								'display_value' => $display,
+							),
+						);
+					}
+					break;
+				case 'wapf':
+					$out[]                 = array( $field['label'], $value );
+					$wapf[ $store['id'] ] = array(
+						'id'    => $store['id'],
+						'label' => $field['label'],
+						'value' => $value,
+						'raw'   => 'text' === $type ? $value : implode( ',', array_map( 'strval', self::keys_of( $chosen ) ) ),
+					);
+					break;
+				case 'ppom':
+					$out[]                   = array( $store['name'], $value );
+					$ppom[ $store['name'] ] = 'multi_choice' === $type ? self::labels_of( $chosen ) : $value;
+					break;
+				case 'name':
+					$out[] = array( $store['name'], 'text' === $type || empty( $chosen ) ? $value : implode( ',', self::labels_of( $chosen ) ) );
+					break;
+				default:
+					if ( 'multi_choice' === $type && ! empty( $chosen ) ) {
+						foreach ( $chosen as $c ) {
+							$out[] = array( $field['label'], $c['label'] );
+						}
+					} else {
+						$out[] = array( $field['label'], $value );
+					}
+			}
+		}
+		if ( ! empty( $yith ) ) {
+			$out[] = array( '_ywapo_meta_data', $yith );
+		}
+		if ( ! empty( $wapf ) ) {
+			$out[] = array( '_wapf_meta', $wapf );
+		}
+		if ( ! empty( $ppom ) ) {
+			$out[] = array( '_ppom_fields', array( 'fields' => $ppom ) );
+		}
+		// A value whose field is gone since sudemi listed it: under the label sudemi sent.
+		foreach ( $typed as $key => $entry ) {
+			if ( ! isset( $known[ $key ] ) ) {
+				$out[] = array( $entry['label'], $entry['value'] );
+			}
+		}
+		return $out;
+	}
+
 	public static function for_product( $base ) {
 		$id     = (int) $base->get_id();
 		$fields = array();
@@ -327,7 +562,12 @@ final class Sudemi_Addons {
 		}
 		if ( self::active( 'advanced-product-fields-for-woocommerce/advanced-product-fields-for-woocommerce.php' )
 			|| self::active( 'advanced-product-fields-for-woocommerce-pro/advanced-product-fields-for-woocommerce-pro.php' ) ) {
-			$fields = array_merge( $fields, self::from_wapf( get_post_meta( $id, '_wapf_fieldgroup', true ) ) );
+			$groups = class_exists( '\\SW_WAPF\\Includes\\Classes\\Field_Groups' )
+				? self::wapf_groups( $base )
+				: array( get_post_meta( $id, '_wapf_fieldgroup', true ) );
+			foreach ( $groups as $group ) {
+				$fields = array_merge( $fields, self::from_wapf( $group ) );
+			}
 		}
 		if ( self::active( 'woocommerce-product-addon/woocommerce-product-addon.php' ) ) {
 			foreach ( self::ppom_groups( $id ) as $meta ) {
@@ -346,7 +586,7 @@ final class Sudemi_Addons {
 			foreach ( (array) THWEPOF_Utils_Section::get_product_fields( $base, false ) as $name => $field ) {
 				if ( is_object( $field ) && is_callable( array( $field, 'get_property' ) ) ) {
 					$props[ $name ] = array();
-					foreach ( array( 'type', 'name', 'title', 'required', 'enabled', 'maxlength', 'price', 'price_type' ) as $p ) {
+					foreach ( array( 'type', 'name', 'title', 'required', 'enabled', 'maxlength', 'options', 'price', 'price_type' ) as $p ) {
 						$props[ $name ][ $p ] = $field->get_property( $p );
 					}
 				}
@@ -354,6 +594,42 @@ final class Sudemi_Addons {
 			$fields = array_merge( $fields, self::from_thwepof( $props ) );
 		}
 		return $fields;
+	}
+
+	/**
+	 * Advanced Product Fields' own field groups for the product (on the product and global
+	 * groups whose rules match), as arrays from_wapf() reads.
+	 */
+	private static function wapf_groups( $product ) {
+		$out = array();
+		foreach ( (array) \SW_WAPF\Includes\Classes\Field_Groups::get_field_groups_of_product( $product ) as $group ) {
+			if ( ! is_object( $group ) || empty( $group->fields ) ) {
+				continue;
+			}
+			$fields = array();
+			foreach ( (array) $group->fields as $f ) {
+				if ( ! is_object( $f ) ) {
+					continue;
+				}
+				$options  = isset( $f->options ) && is_array( $f->options ) ? $f->options : array();
+				$pricing  = isset( $f->pricing ) && is_object( $f->pricing ) ? $f->pricing : null;
+				$fields[] = array(
+					'id'       => isset( $f->id ) ? (string) $f->id : '',
+					'label'    => isset( $f->label ) ? (string) $f->label : '',
+					'type'     => isset( $f->type ) ? (string) $f->type : '',
+					'required' => ! empty( $f->required ),
+					'choices'  => isset( $options['choices'] ) ? $options['choices'] : array(),
+					'options'  => $options,
+					'pricing'  => $pricing ? array(
+						'enabled' => ! empty( $pricing->enabled ),
+						'amount'  => isset( $pricing->amount ) ? $pricing->amount : 0,
+						'type'    => isset( $pricing->type ) ? $pricing->type : 'fixed',
+					) : array(),
+				);
+			}
+			$out[] = array( 'fields' => $fields );
+		}
+		return $out;
 	}
 
 	private static function active( $plugin ) {
@@ -456,5 +732,28 @@ final class Sudemi_Addons {
 		$key = strtolower( (string) preg_replace( '/[^A-Za-z0-9]+/', '-', (string) $text ) );
 		$key = trim( $key, '-' );
 		return '' === $key ? substr( md5( (string) $text ), 0, 8 ) : substr( $key, 0, 40 );
+	}
+
+	/** Text without markup (labels may hold a little HTML in some plugins). Pure. */
+	private static function plain( $text ) {
+		return trim( (string) preg_replace( '/\s+/u', ' ', strip_tags( (string) $text ) ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.strip_tags_strip_tags -- pure, also outside WordPress.
+	}
+
+	private static function labels_of( array $choices ) {
+		return array_map(
+			function ( $c ) {
+				return $c['label'];
+			},
+			$choices
+		);
+	}
+
+	private static function keys_of( array $choices ) {
+		return array_map(
+			function ( $c ) {
+				return $c['key'];
+			},
+			$choices
+		);
 	}
 }

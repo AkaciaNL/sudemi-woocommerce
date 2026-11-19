@@ -426,6 +426,7 @@ final class Sudemi_Sync {
 			'inStock'    => (bool) $product->is_in_stock(),
 			'quantity'   => $product->managing_stock() ? (int) $product->get_stock_quantity() : null,
 		);
+		$update = array_merge( $update, Sudemi_Product_Data::price_update_fields( array_merge( Sudemi_Product_Data::sale( $product ), Sudemi_Product_Data::availability( $product ) ) ) );
 
 		$response = Sudemi_Client::post_signed(
 			'/integration/v1/products/prices',
@@ -521,13 +522,17 @@ final class Sudemi_Sync {
 			if ( is_wp_error( $response ) || 200 !== $response['status'] ) {
 				$clean = false;
 				foreach ( $batch as $listing ) {
+					// With the sale and availability: a price alone would end a running sale.
 					Sudemi_Queue::enqueue(
-						array(
-							'externalId' => $listing['externalId'],
-							'priceMinor' => $listing['priceMinor'],
-							'currency'   => $listing['currency'],
-							'inStock'    => $listing['inStock'],
-							'quantity'   => $listing['quantity'],
+						array_merge(
+							array(
+								'externalId' => $listing['externalId'],
+								'priceMinor' => $listing['priceMinor'],
+								'currency'   => $listing['currency'],
+								'inStock'    => $listing['inStock'],
+								'quantity'   => $listing['quantity'],
+							),
+							Sudemi_Product_Data::price_update_fields( $listing )
 						)
 					);
 				}
@@ -857,6 +862,9 @@ final class Sudemi_Sync {
 			'gtin'        => self::gtin( $product ),
 			'brand'       => self::brand( $base_id ),
 		);
+		// The sale and its dates, stock status and backorders, dimensions, the quantities the
+		// shop sells in and quantity prices (Sudemi_Product_Data).
+		$payload = array_merge( $payload, Sudemi_Product_Data::for_product( $product ) );
 		// Excluded from the right of withdrawal (EU 2011/83 art. 16), with the reason; a
 		// variation carries its parent's setting. Omitted when the normal right applies.
 		return Sudemi_Withdrawal::apply( $payload, Sudemi_Withdrawal::for_product( $base_id ) );

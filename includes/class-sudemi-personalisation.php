@@ -59,6 +59,20 @@ final class Sudemi_Personalisation {
 		foreach ( Sudemi_Addons::for_product( $base ) as $addon ) {
 			// An add-on without a longest length takes as much as sudemi does.
 			$field = self::field( $addon['key'], $addon['label'], $addon['max'] > 0 ? $addon['max'] : self::LIMIT_MAX, $addon['required'], self::addon_minor( $product, $addon ) );
+			$type  = isset( $addon['type'] ) ? $addon['type'] : 'text';
+			if ( 'text' !== $type ) {
+				// A choice from the shop's list: each choice with its own price.
+				unset( $field['maxLength'] );
+				$field['type']    = $type;
+				$field['choices'] = array();
+				foreach ( $addon['choices'] as $choice ) {
+					$field['choices'][] = array(
+						'key'        => $choice['key'],
+						'label'      => $choice['label'],
+						'priceMinor' => self::addon_minor( $product, $choice ),
+					);
+				}
+			}
 			if ( $with_store && isset( $addon['store'] ) ) {
 				$field['store'] = $addon['store'];
 			}
@@ -142,9 +156,17 @@ final class Sudemi_Personalisation {
 				$value = mb_substr( $value, 0, self::LIMIT_MAX );
 				$label = mb_substr( $label, 0, 100 );
 			}
+			$keys = array();
+			if ( isset( $entry['choice_keys'] ) && is_array( $entry['choice_keys'] ) ) {
+				$keys = array_values( array_map( 'strval', array_filter( $entry['choice_keys'], 'is_scalar' ) ) );
+			} elseif ( isset( $entry['choice_key'] ) && is_scalar( $entry['choice_key'] ) ) {
+				$keys = array( (string) $entry['choice_key'] );
+			}
 			$out[ $key ] = array(
-				'label' => $label,
-				'value' => $value,
+				'label'       => $label,
+				'value'       => $value,
+				'type'        => isset( $entry['type'] ) && is_scalar( $entry['type'] ) ? (string) $entry['type'] : 'text',
+				'choice_keys' => $keys,
 			);
 		}
 		return $out;

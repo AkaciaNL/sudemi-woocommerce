@@ -57,7 +57,9 @@ $pao = array(
 	),
 );
 $f   = Sudemi_Addons::from_pao( $pao );
-expect( 'Product Add-Ons: two text fields, the choice left out', count( $f ), 2 );
+expect( 'Product Add-Ons: two texts and the multiple choice', count( $f ), 3 );
+expect( 'Product Add-Ons: the multiple choice is a choice with its priced option', array( $f[1]['type'], $f[1]['label'], $f[1]['choices'] ), array( 'choice', 'Gift wrap', array( array( 'key' => 'o0', 'label' => 'Yes', 'price' => 3.0, 'percent' => 0.0 ) ) ) );
+$f = array( $f[0], $f[2] );
 expect( 'Product Add-Ons: label', $f[0]['label'], 'Custom name' );
 expect( 'Product Add-Ons: required', $f[0]['required'], true );
 expect( 'Product Add-Ons: price 20', $f[0]['price'], 20.0 );
@@ -102,7 +104,7 @@ $typed = Sudemi_Personalisation::from_line(
 		),
 	)
 );
-expect( 'typed: control characters become spaces, empty left out', $typed, array( 'pao:p:custom-name-0' => array( 'label' => 'Custom name', 'value' => 'AJAX AMSTERDAM' ) ) );
+expect( 'typed: control characters become spaces, empty left out', $typed, array( 'pao:p:custom-name-0' => array( 'label' => 'Custom name', 'value' => 'AJAX AMSTERDAM', 'type' => 'text', 'choice_keys' => array() ) ) );
 $fields = array( Sudemi_Personalisation::field( 'pao:p:custom-name-0', 'Custom name', 12, true, 2000 ) );
 $euro   = function ( $minor ) {
 	return 'EUR ' . number_format( $minor / 100, 2, '.', '' );
@@ -153,6 +155,48 @@ expect( 'ThemeHigh: fields', array( $t[0]['key'], $t[0]['label'], $t[0]['require
 $tf = array( Sudemi_Personalisation::field( 'thwepof:club-name', 'Club name', 16, true, 0 ) + array( 'store' => $t[0]['store'] ) );
 expect( 'ThemeHigh order line: the field name with the text, as ThemeHigh writes it', Sudemi_Addons::order_meta( $tf, array( 'thwepof:club-name' => array( 'label' => 'Club name', 'value' => 'AJAX' ) ), $euro ), array( array( 'club_name', 'AJAX' ) ) );
 expect( 'a text whose field is gone: under the label sudemi sent', Sudemi_Addons::order_meta( array(), array( 'x' => array( 'label' => 'Old', 'value' => 'v' ) ), $euro ), array( array( 'Old', 'v' ) ) );
+
+// Choices (contract v2): every plugin's select / radio / checkbox options, each with its price,
+// and written on the order line as that plugin writes a chosen option.
+$pao_multi = Sudemi_Addons::from_pao( array( array( 'name' => 'Extras', 'type' => 'checkbox', 'required' => 0, 'options' => array( array( 'label' => 'Gift wrap', 'price' => '3', 'price_type' => 'flat_fee' ), array( 'label' => 'Card', 'price' => '1.5', 'price_type' => 'quantity_based' ) ) ) ) );
+expect( 'Product Add-Ons: checkboxes are a multi_choice', array( $pao_multi[0]['type'], count( $pao_multi[0]['choices'] ), $pao_multi[0]['choices'][1]['price'] ), array( 'multi_choice', 2, 1.5 ) );
+$paof   = array( Sudemi_Personalisation::field( $pao_multi[0]['key'], 'Extras', 0, false, 0 ) + array( 'type' => 'multi_choice', 'choices' => array( array( 'key' => 'o0', 'label' => 'Gift wrap', 'priceMinor' => 300 ), array( 'key' => 'o1', 'label' => 'Card', 'priceMinor' => 150 ) ), 'store' => array( 'kind' => 'label' ) ) );
+$pao_ty = Sudemi_Personalisation::from_line( array( 'personalisation' => array( array( 'key' => $pao_multi[0]['key'], 'label' => 'Extras', 'value' => 'Gift wrap, Card', 'type' => 'multi_choice', 'choice_keys' => array( 'o0', 'o1' ) ) ) ) );
+expect( 'Product Add-Ons order line: one entry per chosen option under the add-on name', Sudemi_Addons::order_meta( $paof, $pao_ty, $euro ), array( array( 'Extras', 'Gift wrap' ), array( 'Extras', 'Card' ) ) );
+
+$wc = Sudemi_Addons::from_wapf( array( 'fields' => array(
+	array( 'id' => 'a1', 'label' => 'Colour', 'type' => 'radio', 'required' => 'true', 'choices' => array(
+		array( 'slug' => 'red', 'label' => 'Red', 'selected' => 'false', 'pricing_type' => 'none', 'pricing_amount' => 0 ),
+		array( 'slug' => 'gold', 'label' => 'Gold', 'selected' => 'false', 'pricing_type' => 'fixed', 'pricing_amount' => 4 ),
+	) ),
+	array( 'id' => 'a2', 'label' => 'Note', 'type' => 'text', 'required' => 'false', 'pricing' => array( 'enabled' => 'false', 'amount' => '0', 'type' => 'fixed' ) ),
+	array( 'id' => 'a3', 'label' => 'Engrave', 'type' => 'text', 'required' => 'false', 'pricing' => array( 'enabled' => 'true', 'amount' => '2', 'type' => 'char' ) ),
+) ) );
+expect( 'Advanced Product Fields: the stored "false" is not required; a per-character price leaves that field out', array( count( $wc ), $wc[0]['required'], $wc[1]['required'] ), array( 2, true, false ) );
+expect( 'Advanced Product Fields: radio is a choice with slugs as keys', array( $wc[0]['type'], $wc[0]['choices'][1]['key'], $wc[0]['choices'][1]['price'] ), array( 'choice', 'gold', 4.0 ) );
+$wf = array( Sudemi_Personalisation::field( 'wapf:a1', 'Colour', 0, true, 0 ) + array( 'type' => 'choice', 'choices' => array( array( 'key' => 'red', 'label' => 'Red', 'priceMinor' => 0 ), array( 'key' => 'gold', 'label' => 'Gold', 'priceMinor' => 400 ) ), 'store' => array( 'kind' => 'wapf', 'id' => 'a1' ) ) );
+$wt = Sudemi_Personalisation::from_line( array( 'personalisation' => array( array( 'key' => 'wapf:a1', 'label' => 'Colour', 'value' => 'Gold', 'type' => 'choice', 'choice_key' => 'gold' ) ) ) );
+expect( 'Advanced Product Fields order line: label and value, and _wapf_meta as APF writes it', Sudemi_Addons::order_meta( $wf, $wt, $euro ), array( array( 'Colour', 'Gold' ), array( '_wapf_meta', array( 'a1' => array( 'id' => 'a1', 'label' => 'Colour', 'value' => 'Gold', 'raw' => 'gold' ) ) ) ) );
+
+$pc = Sudemi_Addons::from_ppom( '[{"type":"select","data_name":"font","title":"Font","required":"on","options":[{"option":"Serif","price":"","id":"serif"},{"option":"Gothic","price":"10%","id":"gothic"}]},{"type":"checkbox","data_name":"extras","title":"Extras","options":[{"option":"Box","price":"2"}]}]' );
+expect( 'PPOM: select is a choice, a "10%" price a percentage; checkbox a multi_choice', array( $pc[0]['type'], $pc[0]['choices'][1]['percent'], $pc[1]['type'], $pc[1]['choices'][0]['key'] ), array( 'choice', 10.0, 'multi_choice', 'box' ) );
+$pf = array( Sudemi_Personalisation::field( 'ppom:extras', 'Extras', 0, false, 0 ) + array( 'type' => 'multi_choice', 'choices' => array( array( 'key' => 'box', 'label' => 'Box', 'priceMinor' => 200 ) ), 'store' => array( 'kind' => 'ppom', 'name' => 'extras' ) ) );
+$pt = Sudemi_Personalisation::from_line( array( 'personalisation' => array( array( 'key' => 'ppom:extras', 'label' => 'Extras', 'value' => 'Box', 'type' => 'multi_choice', 'choice_keys' => array( 'box' ) ) ) ) );
+expect( 'PPOM order line: data name with the value, and _ppom_fields as PPOM writes it', Sudemi_Addons::order_meta( $pf, $pt, $euro ), array( array( 'extras', 'Box' ), array( '_ppom_fields', array( 'fields' => array( 'extras' => array( 'Box' ) ) ) ) ) );
+
+$yc = Sudemi_Addons::from_yith( 40, array( 'type' => 'select', 'title' => 'Gift wrap', 'required' => 'yes' ), array( 'label' => array( 'None', 'Paper', 'Box' ), 'price_method' => array( 'free', 'increase', 'increase' ), 'price' => array( '', '2', '5' ), 'price_type' => array( 'fixed', 'fixed', 'fixed' ) ) );
+expect( 'YITH: a select add-on is one choice field, options as choices with their price', array( $yc[0]['key'], $yc[0]['type'], $yc[0]['required'], count( $yc[0]['choices'] ), $yc[0]['choices'][2]['price'] ), array( 'yith:40', 'choice', true, 3, 5.0 ) );
+$ycf = array( Sudemi_Personalisation::field( 'yith:40', 'Gift wrap', 0, true, 0 ) + array( 'type' => 'choice', 'choices' => array( array( 'key' => '2', 'label' => 'Box', 'priceMinor' => 500 ) ), 'store' => $yc[0]['store'] ) );
+$yct = Sudemi_Personalisation::from_line( array( 'personalisation' => array( array( 'key' => 'yith:40', 'label' => 'Gift wrap', 'value' => 'Box', 'type' => 'choice', 'choice_key' => '2' ) ) ) );
+$ycm = Sudemi_Addons::order_meta( $ycf, $yct, $euro );
+expect( 'YITH order line: the chosen option as ywapo-addon-<addon>-<option index> with its price', $ycm[0], array( 'ywapo-addon-40-2', 'Box (+EUR 5.00)' ) );
+
+$tc = Sudemi_Addons::from_thwepof( array( 'wrap' => array( 'type' => 'checkboxgroup', 'name' => 'wrap', 'title' => 'Wrapping', 'enabled' => 1, 'options' => array( 'Paper', 'Ribbon' ) ) ) );
+expect( 'ThemeHigh: a checkbox group is a multi_choice of its options (no prices in the free version)', array( $tc[0]['type'], $tc[0]['choices'][1]['label'], $tc[0]['choices'][1]['price'] ), array( 'multi_choice', 'Ribbon', 0.0 ) );
+$tcf = array( Sudemi_Personalisation::field( $tc[0]['key'], 'Wrapping', 0, false, 0 ) + array( 'type' => 'multi_choice', 'choices' => array( array( 'key' => 'paper', 'label' => 'Paper', 'priceMinor' => 0 ), array( 'key' => 'ribbon', 'label' => 'Ribbon', 'priceMinor' => 0 ) ), 'store' => $tc[0]['store'] ) );
+$tct = Sudemi_Personalisation::from_line( array( 'personalisation' => array( array( 'key' => $tc[0]['key'], 'label' => 'Wrapping', 'value' => 'Paper, Ribbon', 'type' => 'multi_choice', 'choice_keys' => array( 'paper', 'ribbon' ) ) ) ) );
+expect( 'ThemeHigh order line: the field name with the options joined by "," as ThemeHigh writes them', Sudemi_Addons::order_meta( $tcf, $tct, $euro ), array( array( 'wrap', 'Paper,Ribbon' ) ) );
+expect( 'choice keys never hold a comma; repeated labels are dropped', count( Sudemi_Addons::from_pao( array( array( 'name' => 'X', 'type' => 'multiple_choice', 'options' => array( array( 'label' => 'A' ), array( 'label' => 'a' ) ) ) ) )[0]['choices'] ), 1 );
 
 if ( $failures ) {
 	echo "\n$failures failure(s)\n";
