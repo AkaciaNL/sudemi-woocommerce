@@ -31,7 +31,9 @@ final class Sudemi_Personalisation {
 	const KEY = 'text';
 
 	const DEFAULT_MAX = 40;
-	const LIMIT_MAX   = 500;
+	/** sudemi takes at most 200 characters and 5 texts per listing. */
+	const LIMIT_MAX   = 200;
+	const MAX_FIELDS  = 5;
 
 	public static function boot() {
 		add_action( 'woocommerce_process_product_meta', array( __CLASS__, 'save' ), 20, 1 );
@@ -53,7 +55,8 @@ final class Sudemi_Personalisation {
 		$base   = $parent_product ? $parent_product : $product;
 		$fields = array();
 		foreach ( Sudemi_Addons::for_product( $base ) as $addon ) {
-			$fields[] = self::field( $addon['key'], $addon['label'], $addon['max'], $addon['required'], self::addon_minor( $product, $addon ) );
+			// An add-on without a longest length takes as much as sudemi does.
+			$fields[] = self::field( $addon['key'], $addon['label'], $addon['max'] > 0 ? $addon['max'] : self::LIMIT_MAX, $addon['required'], self::addon_minor( $product, $addon ) );
 		}
 		$label = trim( (string) get_post_meta( (int) $base->get_id(), self::META_LABEL, true ) );
 		if ( '' !== $label && ( ! $parent_product || 'yes' === get_post_meta( (int) $product->get_id(), self::META_VARIATION, true ) ) ) {
@@ -65,7 +68,8 @@ final class Sudemi_Personalisation {
 				0
 			);
 		}
-		return $fields;
+		// sudemi takes five per listing; a sixth is not asked (and, if required, the order is declined).
+		return array_slice( $fields, 0, self::MAX_FIELDS );
 	}
 
 	/** An add-on's price in minor units, with tax as the shop shows its prices. */

@@ -229,10 +229,10 @@ final class Sudemi_Addons {
 		return $out;
 	}
 
-	/** A stable, short key part: lower case letters, digits and dashes. Pure. */
+	/** A stable, short key part (sudemi keys are at most 64 long): lower case letters, digits and dashes. Pure. */
 	public static function slug( $text ) {
 		$key = strtolower( (string) preg_replace( '/[^A-Za-z0-9]+/', '-', (string) $text ) );
 		$key = trim( $key, '-' );
-		return '' === $key ? substr( md5( (string) $text ), 0, 8 ) : substr( $key, 0, 60 );
+		return '' === $key ? substr( md5( (string) $text ), 0, 8 ) : substr( $key, 0, 40 );
 	}
 }
