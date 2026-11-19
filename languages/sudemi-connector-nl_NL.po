@@ -2285,3 +2285,67 @@ msgstr "Retouren van gepersonaliseerde artikelen accepteren"
 #: includes/class-sudemi-withdrawal.php
 msgid "Off (default): an item made with a text the buyer typed (a name, an engraving) cannot be returned, as the law allows; buyers are told before paying. On: buyers may return it like any other item."
 msgstr "Uit (standaard): een artikel gemaakt met een tekst die de koper typte (een naam, een gravure) kan niet worden geretourneerd, zoals de wet toestaat; kopers horen dit voor het betalen. Aan: kopers mogen het retourneren zoals elk ander artikel."
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered."
+msgstr "Een add-on verlaagt de prijs (een korting); dat kan sudemi nog niet rekenen, dus wordt het niet aangeboden."
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on is charged once per order line (a flat fee); sudemi cannot charge that yet, so it is not offered."
+msgstr "Een add-on wordt eenmaal per orderregel gerekend (vaste kosten); dat kan sudemi nog niet rekenen, dus wordt het niet aangeboden."
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on is priced per character or by a formula; sudemi cannot charge that yet, so it is not offered."
+msgstr "Een add-on is geprijsd per teken of met een formule; dat kan sudemi nog niet rekenen, dus wordt het niet aangeboden."
+
+#: includes/class-sudemi-issues.php
+msgid "The product uses an add-on plugin sudemi cannot read; its options are not offered."
+msgstr "Het product gebruikt een add-on-plugin die sudemi niet kan lezen; de opties worden niet aangeboden."
+
+#: includes/class-sudemi-issues.php
+msgid "The product needs more than five texts or choices from the buyer; sudemi can ask five, so it is not listed."
+msgstr "Het product vraagt meer dan vijf teksten of keuzes van de koper; sudemi kan er vijf vragen, dus het wordt niet vermeld."
+
+#: includes/class-sudemi-issues.php
+msgid "sudemi asks the buyer at most five texts or choices; an optional one is not asked."
+msgstr "sudemi vraagt de koper hoogstens vijf teksten of keuzes; een optionele wordt niet gevraagd."
+
+#: includes/class-sudemi-issues.php
+msgid "The product has more combinations than sudemi lists; only the first are listed."
+msgstr "Het product heeft meer combinaties dan sudemi vermeldt; alleen de eerste worden vermeld."
+
+#: includes/class-sudemi-issues.php
+msgid "The product has no price, so it is not listed."
+msgstr "Het product heeft geen prijs, dus het wordt niet vermeld."
+
+#: includes/class-sudemi-issues.php
+msgid "A required add-on cannot be offered on sudemi, so the product is not listed."
+msgstr "Een verplichte add-on kan niet op sudemi worden aangeboden, dus het product wordt niet vermeld."
+
+#: includes/class-sudemi-issues.php
+msgid "sudemi refused this product."
+msgstr "sudemi heeft dit product geweigerd."
+
+#: includes/class-sudemi-issues.php
+msgid "Something about this product could not be sent to sudemi."
+msgstr "Iets van dit product kon niet naar sudemi worden gestuurd."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What sudemi cannot offer, and why"
+msgstr "Wat sudemi niet kan aanbieden, en waarom"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Found during the last catalogue sync. Products marked \"Not listed\" are not shown to buyers until this is solved; the others are listed without what is named here."
+msgstr "Gevonden bij de laatste catalogussynchronisatie. Producten met \"Niet vermeld\" worden kopers pas getoond als dit is opgelost; de andere worden vermeld zonder wat hier staat."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What happened"
+msgstr "Wat er gebeurde"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Details"
+msgstr "Details"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Listed, with something left out"
+msgstr "Vermeld, met iets weggelaten"

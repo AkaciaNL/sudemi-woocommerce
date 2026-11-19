@@ -2292,3 +2292,67 @@ msgstr "Принимать возврат персонализированных
 #: includes/class-sudemi-withdrawal.php
 msgid "Off (default): an item made with a text the buyer typed (a name, an engraving) cannot be returned, as the law allows; buyers are told before paying. On: buyers may return it like any other item."
 msgstr "Выключено (по умолчанию): товар, сделанный с текстом, который ввёл покупатель (имя, гравировка), нельзя вернуть, как разрешает закон; покупателям сообщают об этом до оплаты. Включено: покупатели могут вернуть его, как любой другой товар."
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered."
+msgstr "Дополнение снижает цену (скидка); sudemi пока не может это учесть, поэтому оно не предлагается."
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on is charged once per order line (a flat fee); sudemi cannot charge that yet, so it is not offered."
+msgstr "Дополнение оплачивается один раз за строку заказа (фиксированный сбор); sudemi пока не может это учесть, поэтому оно не предлагается."
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on is priced per character or by a formula; sudemi cannot charge that yet, so it is not offered."
+msgstr "Цена дополнения зависит от числа символов или формулы; sudemi пока не может это учесть, поэтому оно не предлагается."
+
+#: includes/class-sudemi-issues.php
+msgid "The product uses an add-on plugin sudemi cannot read; its options are not offered."
+msgstr "Товар использует плагин дополнений, который sudemi не может прочитать; его опции не предлагаются."
+
+#: includes/class-sudemi-issues.php
+msgid "The product needs more than five texts or choices from the buyer; sudemi can ask five, so it is not listed."
+msgstr "Товару нужно от покупателя больше пяти текстов или выборов; sudemi может спросить пять, поэтому он не размещён."
+
+#: includes/class-sudemi-issues.php
+msgid "sudemi asks the buyer at most five texts or choices; an optional one is not asked."
+msgstr "sudemi спрашивает у покупателя не больше пяти текстов или выборов; необязательный не спрашивается."
+
+#: includes/class-sudemi-issues.php
+msgid "The product has more combinations than sudemi lists; only the first are listed."
+msgstr "У товара больше комбинаций, чем размещает sudemi; размещены только первые."
+
+#: includes/class-sudemi-issues.php
+msgid "The product has no price, so it is not listed."
+msgstr "У товара нет цены, поэтому он не размещён."
+
+#: includes/class-sudemi-issues.php
+msgid "A required add-on cannot be offered on sudemi, so the product is not listed."
+msgstr "Обязательное дополнение нельзя предложить на sudemi, поэтому товар не размещён."
+
+#: includes/class-sudemi-issues.php
+msgid "sudemi refused this product."
+msgstr "sudemi отклонил этот товар."
+
+#: includes/class-sudemi-issues.php
+msgid "Something about this product could not be sent to sudemi."
+msgstr "Что-то в этом товаре не удалось отправить в sudemi."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What sudemi cannot offer, and why"
+msgstr "Что sudemi не может предложить и почему"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Found during the last catalogue sync. Products marked \"Not listed\" are not shown to buyers until this is solved; the others are listed without what is named here."
+msgstr "Найдено при последней синхронизации каталога. Товары с отметкой \"Не размещён\" не показываются покупателям, пока это не решено; остальные размещены без указанного здесь."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What happened"
+msgstr "Что произошло"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Details"
+msgstr "Подробности"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Listed, with something left out"
+msgstr "Размещён, кое-что пропущено"

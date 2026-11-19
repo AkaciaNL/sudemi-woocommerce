@@ -145,6 +145,7 @@ Clearer WordPress.org description, a list of every call to sudemi (External serv
 * Orders from sudemi keep your quantity rules (minimum, step, maximum, sold individually), and a product you sell on backorder is accepted without stock.
 * A product that needs more than five texts or choices from the buyer is not listed (required ones come first); before, a required sixth was left out.
 * New per-product setting on the sudemi tab: "Accept returns of personalised items" (off by default). An item made with a text the buyer typed is not returnable by default, as EU law allows, and buyers are told before paying; tick it to accept returns of such items on that product.
+* What the plugin leaves out or cannot read (an add-on it cannot charge yet, a product needing more than five texts, a product without a price, more combinations than sudemi lists, an add-on plugin it cannot read such as ThemeComplete) is now reported to sudemi with each catalogue push, and shown on the "Products on sudemi" page with what sudemi refused, in plain words.
 * A page of the full catalogue sync is sent in requests of at most 500 listings, so a product with many variations (100 or more, or an "Any" attribute with many values) never makes a request sudemi refuses.
 
 = 1.4.3 =

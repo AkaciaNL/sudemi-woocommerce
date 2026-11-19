@@ -2278,3 +2278,67 @@ msgstr "接受个性化商品的退货"
 #: includes/class-sudemi-withdrawal.php
 msgid "Off (default): an item made with a text the buyer typed (a name, an engraving) cannot be returned, as the law allows; buyers are told before paying. On: buyers may return it like any other item."
 msgstr "关闭（默认）：按法律允许，带有买家输入文字（名字、刻字）的商品不可退货；买家在付款前会被告知。开启：买家可以像其他商品一样退货。"
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered."
+msgstr "某个附加项会降低价格（折扣）；sudemi 暂时无法收取，因此不提供。"
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on is charged once per order line (a flat fee); sudemi cannot charge that yet, so it is not offered."
+msgstr "某个附加项按订单行只收一次费用（固定费用）；sudemi 暂时无法收取，因此不提供。"
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on is priced per character or by a formula; sudemi cannot charge that yet, so it is not offered."
+msgstr "某个附加项按字符或公式计价；sudemi 暂时无法收取，因此不提供。"
+
+#: includes/class-sudemi-issues.php
+msgid "The product uses an add-on plugin sudemi cannot read; its options are not offered."
+msgstr "该商品使用了 sudemi 无法读取的附加项插件；其选项不提供。"
+
+#: includes/class-sudemi-issues.php
+msgid "The product needs more than five texts or choices from the buyer; sudemi can ask five, so it is not listed."
+msgstr "该商品需要买家填写或选择超过五项；sudemi 最多可询问五项，因此不上架。"
+
+#: includes/class-sudemi-issues.php
+msgid "sudemi asks the buyer at most five texts or choices; an optional one is not asked."
+msgstr "sudemi 最多向买家询问五项文字或选择；一个可选项不会被询问。"
+
+#: includes/class-sudemi-issues.php
+msgid "The product has more combinations than sudemi lists; only the first are listed."
+msgstr "该商品的组合数超过 sudemi 可上架的数量；只上架前面的组合。"
+
+#: includes/class-sudemi-issues.php
+msgid "The product has no price, so it is not listed."
+msgstr "该商品没有价格，因此不上架。"
+
+#: includes/class-sudemi-issues.php
+msgid "A required add-on cannot be offered on sudemi, so the product is not listed."
+msgstr "一个必填附加项无法在 sudemi 上提供，因此该商品不上架。"
+
+#: includes/class-sudemi-issues.php
+msgid "sudemi refused this product."
+msgstr "sudemi 拒绝了该商品。"
+
+#: includes/class-sudemi-issues.php
+msgid "Something about this product could not be sent to sudemi."
+msgstr "该商品的某些信息无法发送到 sudemi。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What sudemi cannot offer, and why"
+msgstr "sudemi 无法提供的内容及原因"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Found during the last catalogue sync. Products marked \"Not listed\" are not shown to buyers until this is solved; the others are listed without what is named here."
+msgstr "在上次目录同步时发现。标记为“未上架”的商品在解决之前不会向买家显示；其他商品会在不含此处所列内容的情况下上架。"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What happened"
+msgstr "发生了什么"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Details"
+msgstr "详情"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Listed, with something left out"
+msgstr "已上架，但有内容被省略"

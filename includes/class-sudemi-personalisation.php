@@ -66,6 +66,12 @@ final class Sudemi_Personalisation {
 		return self::compute( $product, $parent_product, false )['blocked'];
 	}
 
+	/** The issue code for blocked(): the left-out required field's reason, or too many required. */
+	public static function blocked_code( $product, $parent_product ) {
+		$why = self::compute( $product, $parent_product, false )['blocked_why'];
+		return null === $why ? Sudemi_Issues::TOO_MANY_REQUIRED_TEXTS : Sudemi_Issues::code_for_reason( $why );
+	}
+
 	/** The fields left out of a listing: label => why (optional ones; see blocked()). */
 	public static function left_out( $product, $parent_product ) {
 		return self::compute( $product, $parent_product, false )['left_out'];
@@ -79,14 +85,16 @@ final class Sudemi_Personalisation {
 	private static function compute( $product, $parent_product, $with_store ) {
 		$base     = $parent_product ? $parent_product : $product;
 		$fields   = array();
-		$left_out = array();
-		$blocked  = null;
+		$left_out    = array();
+		$blocked     = null;
+		$blocked_why = null;
 		foreach ( Sudemi_Addons::for_product( $base ) as $addon ) {
 			if ( ! empty( $addon['unofferable'] ) ) {
 				// Never offered free or at the wrong price: left out, with the reason.
 				$left_out[ $addon['label'] ] = $addon['unofferable'];
 				if ( $addon['required'] && null === $blocked ) {
-					$blocked = sprintf( '"%s" is required and %s', $addon['label'], $addon['unofferable'] );
+					$blocked     = sprintf( '"%s" is required and %s', $addon['label'], $addon['unofferable'] );
+					$blocked_why = $addon['unofferable'];
 				}
 				continue;
 			}
@@ -128,7 +136,8 @@ final class Sudemi_Personalisation {
 		return array(
 			'fields'   => $capped['fields'],
 			'left_out' => $left_out,
-			'blocked'  => null !== $blocked ? $blocked : $capped['blocked'],
+			'blocked'     => null !== $blocked ? $blocked : $capped['blocked'],
+			'blocked_why' => $blocked_why,
 		);
 	}
 

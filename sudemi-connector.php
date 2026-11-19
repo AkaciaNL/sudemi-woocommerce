@@ -34,6 +34,7 @@ require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-shipping.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-withdrawal.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-variants.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-product-data.php';
+require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-issues.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-addons.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-personalisation.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-sync.php';

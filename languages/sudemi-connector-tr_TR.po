@@ -2285,3 +2285,67 @@ msgstr "Kişiselleştirilmiş ürünlerin iadesini kabul et"
 #: includes/class-sudemi-withdrawal.php
 msgid "Off (default): an item made with a text the buyer typed (a name, an engraving) cannot be returned, as the law allows; buyers are told before paying. On: buyers may return it like any other item."
 msgstr "Kapalı (varsayılan): alıcının yazdığı bir metinle (bir isim, bir gravür) yapılan ürün, yasanın izin verdiği gibi iade edilemez; alıcılara ödemeden önce söylenir. Açık: alıcılar bunu diğer ürünler gibi iade edebilir."
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered."
+msgstr "Bir eklenti fiyatı düşürüyor (indirim); sudemi bunu henüz tahsil edemiyor, bu yüzden sunulmuyor."
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on is charged once per order line (a flat fee); sudemi cannot charge that yet, so it is not offered."
+msgstr "Bir eklenti sipariş satırı başına bir kez ücretlendiriliyor (sabit ücret); sudemi bunu henüz tahsil edemiyor, bu yüzden sunulmuyor."
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on is priced per character or by a formula; sudemi cannot charge that yet, so it is not offered."
+msgstr "Bir eklenti karakter başına veya bir formülle fiyatlandırılıyor; sudemi bunu henüz tahsil edemiyor, bu yüzden sunulmuyor."
+
+#: includes/class-sudemi-issues.php
+msgid "The product uses an add-on plugin sudemi cannot read; its options are not offered."
+msgstr "Ürün, sudemi'nin okuyamadığı bir eklenti eklentisi kullanıyor; seçenekleri sunulmuyor."
+
+#: includes/class-sudemi-issues.php
+msgid "The product needs more than five texts or choices from the buyer; sudemi can ask five, so it is not listed."
+msgstr "Ürün alıcıdan beşten fazla metin veya seçim istiyor; sudemi beş tane sorabilir, bu yüzden listelenmiyor."
+
+#: includes/class-sudemi-issues.php
+msgid "sudemi asks the buyer at most five texts or choices; an optional one is not asked."
+msgstr "sudemi alıcıya en fazla beş metin veya seçim sorar; isteğe bağlı biri sorulmuyor."
+
+#: includes/class-sudemi-issues.php
+msgid "The product has more combinations than sudemi lists; only the first are listed."
+msgstr "Ürünün sudemi'nin listelediğinden fazla kombinasyonu var; yalnızca ilkleri listeleniyor."
+
+#: includes/class-sudemi-issues.php
+msgid "The product has no price, so it is not listed."
+msgstr "Ürünün fiyatı yok, bu yüzden listelenmiyor."
+
+#: includes/class-sudemi-issues.php
+msgid "A required add-on cannot be offered on sudemi, so the product is not listed."
+msgstr "Zorunlu bir eklenti sudemi'de sunulamıyor, bu yüzden ürün listelenmiyor."
+
+#: includes/class-sudemi-issues.php
+msgid "sudemi refused this product."
+msgstr "sudemi bu ürünü reddetti."
+
+#: includes/class-sudemi-issues.php
+msgid "Something about this product could not be sent to sudemi."
+msgstr "Bu ürünle ilgili bir şey sudemi'ye gönderilemedi."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What sudemi cannot offer, and why"
+msgstr "sudemi'nin sunamadıkları ve nedeni"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Found during the last catalogue sync. Products marked \"Not listed\" are not shown to buyers until this is solved; the others are listed without what is named here."
+msgstr "Son katalog eşitlemesinde bulundu. \"Listelenmiyor\" olarak işaretli ürünler bu çözülene kadar alıcılara gösterilmez; diğerleri burada adı geçen olmadan listelenir."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What happened"
+msgstr "Ne oldu"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Details"
+msgstr "Ayrıntılar"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Listed, with something left out"
+msgstr "Listeleniyor, bir şey dışarıda bırakıldı"

@@ -2285,3 +2285,67 @@ msgstr "קבלת החזרות של פריטים מותאמים אישית"
 #: includes/class-sudemi-withdrawal.php
 msgid "Off (default): an item made with a text the buyer typed (a name, an engraving) cannot be returned, as the law allows; buyers are told before paying. On: buyers may return it like any other item."
 msgstr "כבוי (ברירת מחדל): פריט שנעשה עם טקסט שהקונה הקליד (שם, חריטה) אינו ניתן להחזרה, כפי שהחוק מתיר; הקונים מקבלים על כך הודעה לפני התשלום. פועל: הקונים רשאים להחזיר אותו כמו כל פריט אחר."
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered."
+msgstr "תוסף מוריד את המחיר (הנחה); sudemi עדיין לא יכול לחייב זאת, ולכן הוא לא מוצע."
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on is charged once per order line (a flat fee); sudemi cannot charge that yet, so it is not offered."
+msgstr "תוסף מחויב פעם אחת לכל שורת הזמנה (עמלה קבועה); sudemi עדיין לא יכול לחייב זאת, ולכן הוא לא מוצע."
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on is priced per character or by a formula; sudemi cannot charge that yet, so it is not offered."
+msgstr "מחיר תוסף נקבע לפי תו או לפי נוסחה; sudemi עדיין לא יכול לחייב זאת, ולכן הוא לא מוצע."
+
+#: includes/class-sudemi-issues.php
+msgid "The product uses an add-on plugin sudemi cannot read; its options are not offered."
+msgstr "המוצר משתמש בתוסף אפשרויות ש-sudemi לא יכול לקרוא; האפשרויות שלו לא מוצעות."
+
+#: includes/class-sudemi-issues.php
+msgid "The product needs more than five texts or choices from the buyer; sudemi can ask five, so it is not listed."
+msgstr "המוצר דורש מהקונה יותר מחמישה טקסטים או בחירות; sudemi יכול לבקש חמישה, ולכן הוא לא מופיע."
+
+#: includes/class-sudemi-issues.php
+msgid "sudemi asks the buyer at most five texts or choices; an optional one is not asked."
+msgstr "sudemi מבקש מהקונה עד חמישה טקסטים או בחירות; אחד אופציונלי לא נשאל."
+
+#: includes/class-sudemi-issues.php
+msgid "The product has more combinations than sudemi lists; only the first are listed."
+msgstr "למוצר יש יותר צירופים ממה ש-sudemi מציג; רק הראשונים מופיעים."
+
+#: includes/class-sudemi-issues.php
+msgid "The product has no price, so it is not listed."
+msgstr "למוצר אין מחיר, ולכן הוא לא מופיע."
+
+#: includes/class-sudemi-issues.php
+msgid "A required add-on cannot be offered on sudemi, so the product is not listed."
+msgstr "תוסף חובה לא ניתן להצעה ב-sudemi, ולכן המוצר לא מופיע."
+
+#: includes/class-sudemi-issues.php
+msgid "sudemi refused this product."
+msgstr "sudemi דחה את המוצר הזה."
+
+#: includes/class-sudemi-issues.php
+msgid "Something about this product could not be sent to sudemi."
+msgstr "משהו במוצר הזה לא נשלח ל-sudemi."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What sudemi cannot offer, and why"
+msgstr "מה ש-sudemi לא יכול להציע, ולמה"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Found during the last catalogue sync. Products marked \"Not listed\" are not shown to buyers until this is solved; the others are listed without what is named here."
+msgstr "נמצא בסנכרון הקטלוג האחרון. מוצרים שסומנו \"לא מופיע\" לא מוצגים לקונים עד שזה ייפתר; האחרים מופיעים בלי מה שצוין כאן."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What happened"
+msgstr "מה קרה"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Details"
+msgstr "פרטים"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Listed, with something left out"
+msgstr "מופיע, עם משהו שהושמט"

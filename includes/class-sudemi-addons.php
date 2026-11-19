@@ -91,6 +91,7 @@ final class Sudemi_Addons {
 	const REASON_DISCOUNT = 'it lowers the price (a discount), which sudemi cannot charge yet';
 	const REASON_PRICING  = 'it is priced per character or by a formula, which sudemi cannot charge yet';
 	const REASON_FLAT     = 'its price is charged once per order line (a flat fee), which sudemi cannot charge yet';
+	const REASON_PLUGIN   = 'it comes from an add-on plugin sudemi cannot read (ThemeComplete Extra Product Options)';
 
 	/**
 	 * A field whose price is charged once per order line, not per item (Product Add-Ons
@@ -664,6 +665,12 @@ final class Sudemi_Addons {
 			foreach ( self::yith_addons( $base ) as $row ) {
 				$fields = array_merge( $fields, self::from_yith( $row['id'], $row['settings'], $row['options'] ) );
 			}
+		}
+		// ThemeComplete Extra Product Options: no free version to read its format from (owner
+		// 2026-11-19: no licence). Its options on a product are reported, never guessed.
+		if ( self::active( 'woocommerce-tm-extra-product-options/tm-woo-extra-product-options.php' )
+			&& ( get_post_meta( $id, 'tm_meta', true ) || get_post_meta( $id, 'tm_meta_cpf', true ) ) ) {
+			$fields[] = self::unofferable( self::make( 'tc:' . $id, 'ThemeComplete Extra Product Options', 'text', false, 0, 0, 0, array(), array( 'kind' => 'label' ) ), self::REASON_PLUGIN );
 		}
 		if ( class_exists( 'THWEPOF_Utils_Section' ) && is_callable( array( 'THWEPOF_Utils_Section', 'get_product_fields' ) ) ) {
 			$props = array();

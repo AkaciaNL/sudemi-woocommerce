@@ -2285,3 +2285,67 @@ msgstr "Accetta i resi degli articoli personalizzati"
 #: includes/class-sudemi-withdrawal.php
 msgid "Off (default): an item made with a text the buyer typed (a name, an engraving) cannot be returned, as the law allows; buyers are told before paying. On: buyers may return it like any other item."
 msgstr "Disattivato (predefinito): un articolo realizzato con un testo scritto dall'acquirente (un nome, un'incisione) non può essere reso, come consente la legge; gli acquirenti lo sanno prima di pagare. Attivato: gli acquirenti possono renderlo come qualsiasi altro articolo."
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered."
+msgstr "Un'aggiunta abbassa il prezzo (uno sconto); sudemi non può ancora addebitarlo, quindi non è offerta."
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on is charged once per order line (a flat fee); sudemi cannot charge that yet, so it is not offered."
+msgstr "Un'aggiunta è addebitata una volta per riga d'ordine (un costo fisso); sudemi non può ancora addebitarlo, quindi non è offerta."
+
+#: includes/class-sudemi-issues.php
+msgid "An add-on is priced per character or by a formula; sudemi cannot charge that yet, so it is not offered."
+msgstr "Un'aggiunta ha un prezzo per carattere o calcolato con una formula; sudemi non può ancora addebitarlo, quindi non è offerta."
+
+#: includes/class-sudemi-issues.php
+msgid "The product uses an add-on plugin sudemi cannot read; its options are not offered."
+msgstr "Il prodotto usa un plugin di aggiunte che sudemi non può leggere; le sue opzioni non sono offerte."
+
+#: includes/class-sudemi-issues.php
+msgid "The product needs more than five texts or choices from the buyer; sudemi can ask five, so it is not listed."
+msgstr "Il prodotto chiede all'acquirente più di cinque testi o scelte; sudemi ne può chiedere cinque, quindi non è elencato."
+
+#: includes/class-sudemi-issues.php
+msgid "sudemi asks the buyer at most five texts or choices; an optional one is not asked."
+msgstr "sudemi chiede all'acquirente al massimo cinque testi o scelte; uno facoltativo non viene chiesto."
+
+#: includes/class-sudemi-issues.php
+msgid "The product has more combinations than sudemi lists; only the first are listed."
+msgstr "Il prodotto ha più combinazioni di quante sudemi ne elenchi; sono elencate solo le prime."
+
+#: includes/class-sudemi-issues.php
+msgid "The product has no price, so it is not listed."
+msgstr "Il prodotto non ha un prezzo, quindi non è elencato."
+
+#: includes/class-sudemi-issues.php
+msgid "A required add-on cannot be offered on sudemi, so the product is not listed."
+msgstr "Un'aggiunta obbligatoria non può essere offerta su sudemi, quindi il prodotto non è elencato."
+
+#: includes/class-sudemi-issues.php
+msgid "sudemi refused this product."
+msgstr "sudemi ha rifiutato questo prodotto."
+
+#: includes/class-sudemi-issues.php
+msgid "Something about this product could not be sent to sudemi."
+msgstr "Qualcosa di questo prodotto non è stato inviato a sudemi."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What sudemi cannot offer, and why"
+msgstr "Cosa sudemi non può offrire, e perché"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Found during the last catalogue sync. Products marked \"Not listed\" are not shown to buyers until this is solved; the others are listed without what is named here."
+msgstr "Trovato durante l'ultima sincronizzazione del catalogo. I prodotti indicati come \"Non elencato\" non sono mostrati agli acquirenti finché non è risolto; gli altri sono elencati senza ciò che è indicato qui."
+
+#: admin/class-sudemi-admin-insights.php
+msgid "What happened"
+msgstr "Cosa è successo"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Details"
+msgstr "Dettagli"
+
+#: admin/class-sudemi-admin-insights.php
+msgid "Listed, with something left out"
+msgstr "Elencato, con qualcosa escluso"

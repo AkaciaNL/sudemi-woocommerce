@@ -190,18 +190,31 @@ final class Sudemi_Sync {
 				}
 			}
 			// At most MAX_LISTINGS_PER_REQUEST per request: a page of products can be many more
-			// listings (a variation with "Any colour" is one per colour).
+			// listings (a variation with "Any colour" is one per colour). What was left out of
+			// this page goes with its first request (issues, Sudemi_Issues).
+			$fresh = 0 === (int) $state['sent'] && 0 === (int) $state['cursor'];
 			foreach ( array_chunk( $products, self::MAX_LISTINGS_PER_REQUEST ) as $chunk ) {
-				$sent = Sudemi_Client::post_signed(
+				$issues = Sudemi_Issues::take();
+				$sent   = Sudemi_Client::post_signed(
 					'/integration/v1/products',
-					array(
-						'syncId'   => $state['id'],
-						'products' => $chunk,
+					Sudemi_Issues::attach(
+						array(
+							'syncId'   => $state['id'],
+							'products' => $chunk,
+						),
+						$issues
 					)
 				);
 				if ( is_wp_error( $sent ) || 200 !== $sent['status'] ) {
 					return self::failed( $sent, 'A batch failed' );
 				}
+				Sudemi_Issues::remember( $chunk, $issues, isset( $sent['body'] ) ? $sent['body'] : null, $fresh );
+				$fresh = false;
+			}
+			// Nothing listed on this page but something left out: the shop still sees it.
+			$left = Sudemi_Issues::take();
+			if ( ! empty( $left ) ) {
+				Sudemi_Issues::remember( array(), $left, null, $fresh );
 			}
 			// Moved on only once the page is in: a step stopped halfway sends it again.
 			$state['cursor'] = (int) end( $ids );
@@ -518,7 +531,12 @@ final class Sudemi_Sync {
 				}
 			}
 
-			$response = Sudemi_Client::post_signed( '/integration/v1/products', $body );
+			// What was left out of this product goes with its first request (Sudemi_Issues).
+			$issues   = 0 === $i ? Sudemi_Issues::take() : array();
+			$response = Sudemi_Client::post_signed( '/integration/v1/products', Sudemi_Issues::attach( $body, $issues ) );
+			if ( ! is_wp_error( $response ) && 200 === $response['status'] ) {
+				Sudemi_Issues::remember( $batch, $issues, isset( $response['body'] ) ? $response['body'] : null );
+			}
 			if ( is_wp_error( $response ) || 200 !== $response['status'] ) {
 				$clean = false;
 				foreach ( $batch as $listing ) {
@@ -684,8 +702,22 @@ final class Sudemi_Sync {
 		}
 		// What the buyer must type or choose and sudemi cannot ask (a required discount add-on,
 		// more than five required texts): not sold here, with the reason recorded (see note()).
-		$blocked = Sudemi_Personalisation::blocked( $product, $parent_product );
-		self::note_not_offered( $parent_product ? $parent_product : $product, $blocked, Sudemi_Personalisation::left_out( $product, $parent_product ) );
+		$blocked  = Sudemi_Personalisation::blocked( $product, $parent_product );
+		$left_out = Sudemi_Personalisation::left_out( $product, $parent_product );
+		self::note_not_offered( $parent_product ? $parent_product : $product, $blocked, $left_out );
+		// Reported to sudemi with the push, and on the shop's "Products on sudemi" page.
+		foreach ( $left_out as $label => $why ) {
+			Sudemi_Issues::add( $product->get_id(), Sudemi_Issues::code_for_reason( $why ), 'warning', $label, sprintf( '"%s" is not offered: %s', $label, $why ) );
+		}
+		if ( null !== $blocked ) {
+			Sudemi_Issues::add(
+				$product->get_id(),
+				Sudemi_Personalisation::blocked_code( $product, $parent_product ),
+				'error',
+				'personalisation',
+				'Not listed: ' . $blocked
+			);
+		}
 		if ( null !== $blocked ) {
 			return array();
 		}
@@ -779,6 +811,7 @@ final class Sudemi_Sync {
 		$choices = Sudemi_Variants::choices( $own, $options, $siblings, (int) $variation->get_id() );
 		if ( count( $choices ) >= Sudemi_Variants::MAX_PER_VARIATION ) {
 			Sudemi_Logger::warn( 'Variation ' . (int) $variation->get_id() . ' has more than ' . Sudemi_Variants::MAX_PER_VARIATION . ' choices; only the first are listed on sudemi.' );
+			Sudemi_Issues::add( $variation->get_id(), Sudemi_Issues::VARIANT_CAP, 'warning', 'attributes', 'More than ' . Sudemi_Variants::MAX_PER_VARIATION . ' choices for an "Any" attribute; only the first are listed.', array( 'listed' => Sudemi_Variants::MAX_PER_VARIATION ) );
 		}
 		return $choices;
 	}
@@ -900,6 +933,10 @@ final class Sudemi_Sync {
 			'gtin'        => self::gtin( $product ),
 			'brand'       => self::brand( $base_id ),
 		);
+		if ( null === $payload['priceMinor'] ) {
+			// sudemi refuses a listing without a price; the shop is told why it is missing.
+			Sudemi_Issues::add( $payload['externalId'], Sudemi_Issues::MISSING_PRICE, 'error', 'price', 'The product has no price.' );
+		}
 		// The sale and its dates, stock status and backorders, dimensions, the quantities the
 		// shop sells in and quantity prices (Sudemi_Product_Data).
 		$payload = array_merge( $payload, Sudemi_Product_Data::for_product( $product ) );

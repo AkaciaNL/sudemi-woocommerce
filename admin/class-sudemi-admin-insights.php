@@ -308,6 +308,7 @@ final class Sudemi_Admin_Insights {
 			return;
 		}
 		self::render_flash();
+		self::render_issues();
 
 		$in = array();
 		foreach ( array( 'status', 'q', 'paged' ) as $key ) {
@@ -454,6 +455,32 @@ final class Sudemi_Admin_Insights {
 		}
 		echo '</div></section>';
 		echo '<p class="sudemi-muted">' . esc_html__( 'Prices, stock, photos and texts come from your WooCommerce products and are sent by themselves when you change them. The switch only decides whether sudemi shows a product; it does not change anything in your shop.', 'sudemi-connector' ) . '</p>';
+	}
+
+	/**
+	 * What the plugin could not send to sudemi (left out, not listed) and what sudemi refused,
+	 * from the last catalogue pushes (Sudemi_Issues), in plain words.
+	 */
+	private static function render_issues() {
+		$issues = Sudemi_Issues::all();
+		if ( empty( $issues ) ) {
+			return;
+		}
+		echo '<div class="sudemi-card" id="sudemi-issues"><h2>' . esc_html__( 'What sudemi cannot offer, and why', 'sudemi-connector' ) . '</h2><p class="description">'
+			. esc_html__( 'Found during the last catalogue sync. Products marked "Not listed" are not shown to buyers until this is solved; the others are listed without what is named here.', 'sudemi-connector' )
+			. '</p><table class="widefat striped"><thead><tr><th>' . esc_html__( 'Product', 'sudemi-connector' ) . '</th><th>' . esc_html__( 'What happened', 'sudemi-connector' )
+			. '</th><th>' . esc_html__( 'Details', 'sudemi-connector' ) . '</th></tr></thead><tbody>';
+		foreach ( array_slice( array_reverse( $issues ), 0, 100 ) as $issue ) {
+			$id      = (int) $issue['externalId'];
+			$product = $id > 0 && function_exists( 'wc_get_product' ) ? wc_get_product( $id ) : null;
+			$name    = $product ? $product->get_name() : (string) $issue['externalId'];
+			$link    = $product ? get_edit_post_link( $product->is_type( 'variation' ) ? $product->get_parent_id() : $id ) : '';
+			$status  = 'error' === $issue['severity'] ? __( 'Not listed', 'sudemi-connector' ) : __( 'Listed, with something left out', 'sudemi-connector' );
+			echo '<tr><td>' . ( $link ? '<a href="' . esc_url( (string) $link ) . '">' . esc_html( $name ) . '</a>' : esc_html( $name ) ) . '</td><td><strong>'
+				. esc_html( $status ) . '</strong><br />' . esc_html( Sudemi_Issues::label( $issue['code'] ) ) . '</td><td>'
+				. esc_html( '' !== (string) $issue['field'] ? $issue['field'] . ': ' : '' ) . esc_html( (string) $issue['message'] ) . '</td></tr>';
+		}
+		echo '</tbody></table></div>';
 	}
 
 	public static function handle_enabled() {
