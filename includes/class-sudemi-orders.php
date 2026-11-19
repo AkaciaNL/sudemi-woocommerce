@@ -1005,15 +1005,15 @@ class Sudemi_Orders {
 			// The colour or size the buyer picked for an "Any ..." attribute, on the order line.
 			$chosen   = null === $resolved['variation'] ? array() : array( 'variation' => $resolved['variation'] );
 			$quantity = isset( $line['quantity'] ) ? (int) $line['quantity'] : 1;
-			// The text the buyer typed (a name to print), written on the order line under the
-			// field's name, as the shop's add-on plugin (or this plugin's own setting) names it.
-			$typed = Sudemi_Personalisation::item_meta( self::personalisation_fields( $product ), Sudemi_Personalisation::from_line( $line ) );
+			// The text the buyer typed (a name to print), written on the order line the way the
+			// shop's add-on plugin writes it (or under the field's name; Sudemi_Addons::order_meta).
+			$typed = Sudemi_Addons::order_meta( self::personalisation_fields( $product ), Sudemi_Personalisation::from_line( $line ), array( __CLASS__, 'price_text' ) );
 			if ( null === $paid ) {
 				$item_id = $order->add_product( $product, $quantity, $chosen );
 				$item    = $item_id ? $order->get_item( $item_id, false ) : null;
 				if ( $item && ! empty( $typed ) ) {
-					foreach ( $typed as $label => $value ) {
-						$item->add_meta_data( $label, $value, true );
+					foreach ( $typed as $meta ) {
+						$item->add_meta_data( $meta[0], $meta[1] );
 					}
 					$item->save();
 				}
@@ -1048,8 +1048,8 @@ class Sudemi_Orders {
 			$item = $order->get_item( $item_id, false );
 			if ( $item ) {
 				$item->set_taxes( self::tax_array( $taxes, true, $currency ) );
-				foreach ( $typed as $label => $value ) {
-					$item->add_meta_data( $label, $value, true );
+				foreach ( $typed as $meta ) {
+					$item->add_meta_data( $meta[0], $meta[1] );
 				}
 				$item->save();
 			}
@@ -1280,7 +1280,13 @@ class Sudemi_Orders {
 	/** What the listing of a product or variation asks the buyer to type. */
 	private static function personalisation_fields( $product ) {
 		$parent = $product->is_type( 'variation' ) ? wc_get_product( $product->get_parent_id() ) : null;
-		return Sudemi_Personalisation::for_listing( $product, $parent ? $parent : null );
+		return Sudemi_Personalisation::for_listing( $product, $parent ? $parent : null, true );
+	}
+
+	/** A price in the shop's currency as text, for an add-on's order line ("€20.00"). */
+	public static function price_text( $minor ) {
+		$currency = Sudemi_Currency::shop_currency();
+		return html_entity_decode( wp_strip_all_tags( wc_price( Sudemi_Currency::to_major( $minor, $currency ), array( 'currency' => $currency ) ) ), ENT_QUOTES, 'UTF-8' );
 	}
 
 	/**

@@ -4,7 +4,8 @@
  * plugins shops use are read from their stored data (WooCommerce Product Add-Ons, Advanced
  * Product Fields, PPOM): only text fields, with their price, length and whether required; what
  * sudemi sends back on an order line is written under the field's name; a required text that
- * did not come is named.
+ * did not come is named. YITH and ThemeHigh: their stored formats (from their source) and the
+ * order item meta they write themselves.
  *
  * Runs without WordPress.
  */
@@ -103,10 +104,55 @@ $typed = Sudemi_Personalisation::from_line(
 );
 expect( 'typed: control characters become spaces, empty left out', $typed, array( 'pao:p:custom-name-0' => array( 'label' => 'Custom name', 'value' => 'AJAX AMSTERDAM' ) ) );
 $fields = array( Sudemi_Personalisation::field( 'pao:p:custom-name-0', 'Custom name', 12, true, 2000 ) );
-expect( 'order item meta under the field name', Sudemi_Personalisation::item_meta( $fields, $typed ), array( 'Custom name' => 'AJAX AMSTERDAM' ) );
+$euro   = function ( $minor ) {
+	return 'EUR ' . number_format( $minor / 100, 2, '.', '' );
+};
+expect( 'order item meta under the field name', Sudemi_Addons::order_meta( $fields, $typed, $euro ), array( array( 'Custom name', 'AJAX AMSTERDAM' ) ) );
 expect( 'nothing missing', Sudemi_Personalisation::missing( $fields, $typed ), null );
 expect( 'a required text missing is named', Sudemi_Personalisation::missing( $fields, array() ), 'Custom name' );
 expect( 'no personalisation on the line', Sudemi_Personalisation::from_line( array() ), array() );
+
+// YITH WooCommerce Product Add-ons 4.x (fixture in its stored format: settings and options as
+// serialized in yith_wapo_addons; options are one list per property, one text input per index).
+$settings = serialize( array( 'type' => 'text', 'title' => 'Shirt print' ) );
+$options  = serialize(
+	array(
+		'label'                => array( 'Name on the back', 'Number', 'Per letter' ),
+		'required'             => array( 'yes', 'no', 'no' ),
+		'price_method'         => array( 'increase', 'free', 'increase' ),
+		'price_type'           => array( 'fixed', 'fixed', 'characters' ),
+		'price'                => array( '20', '', '1' ),
+		'price_sale'           => array( '', '', '' ),
+		'characters_limit'     => array( 'yes', 'no', 'no' ),
+		'characters_limit_max' => array( '18', '', '' ),
+	)
+);
+$y = Sudemi_Addons::from_yith( 31, Sudemi_Addons::unserialize_plain( $settings ), Sudemi_Addons::unserialize_plain( $options ) );
+expect( 'YITH: two text inputs; the per-character priced one left out', count( $y ), 2 );
+expect( 'YITH: first input', array( $y[0]['key'], $y[0]['label'], $y[0]['required'], $y[0]['max'], $y[0]['price'] ), array( 'yith:31-0', 'Name on the back', true, 18, 20.0 ) );
+expect( 'YITH: free input', array( $y[1]['key'], $y[1]['required'], $y[1]['price'] ), array( 'yith:31-1', false, 0.0 ) );
+expect( 'YITH: a sale price wins', Sudemi_Addons::from_yith( 5, array( 'type' => 'text' ), array( 'label' => array( 'Name' ), 'price_method' => array( 'increase' ), 'price' => array( '20' ), 'price_sale' => array( '15' ) ) )[0]['price'], 15.0 );
+expect( 'YITH: a select add-on is not a text', Sudemi_Addons::from_yith( 6, array( 'type' => 'select' ), array( 'label' => array( 'Red' ) ) ), array() );
+expect( 'YITH: objects in its data are refused', Sudemi_Addons::unserialize_plain( 'O:8:"stdClass":0:{}' ), array() );
+$yf  = array( Sudemi_Personalisation::field( 'yith:31-0', 'Name on the back', 18, true, 2000 ) + array( 'store' => $y[0]['store'] ) );
+$ym  = Sudemi_Addons::order_meta( $yf, array( 'yith:31-0' => array( 'label' => 'Name on the back', 'value' => 'AJAX AMSTERDAM' ) ), $euro );
+expect( 'YITH order line: visible ywapo-addon-<addon>-<option> with the price, as YITH writes it', $ym[0], array( 'ywapo-addon-31-0', 'AJAX AMSTERDAM (+EUR 20.00)' ) );
+expect( 'YITH order line: _ywapo_meta_data as YITH reads it (label, value, ids)', $ym[1], array( '_ywapo_meta_data', array( array( '31-0' => array( 0 => 'AJAX AMSTERDAM', 'addon_id' => '31', 'option_id' => '0', 'addon_value' => 'AJAX AMSTERDAM', 'display_label' => 'Name on the back', 'display_value' => 'AJAX AMSTERDAM (+EUR 20.00)' ) ) ) ) );
+
+// ThemeHigh Extra Product Options 3.x (fixture: the properties of its field objects).
+$t = Sudemi_Addons::from_thwepof(
+	array(
+		'club_name' => array( 'type' => 'inputtext', 'name' => 'club_name', 'title' => 'Club name', 'required' => 1, 'enabled' => 1, 'maxlength' => '16' ),
+		'notes'     => array( 'type' => 'textarea', 'name' => 'notes', 'title' => '', 'required' => false, 'enabled' => true, 'maxlength' => '' ),
+		'size_pick' => array( 'type' => 'select', 'name' => 'size_pick', 'title' => 'Size', 'enabled' => 1 ),
+		'off'       => array( 'type' => 'inputtext', 'name' => 'off', 'title' => 'Off', 'enabled' => 0 ),
+	)
+);
+expect( 'ThemeHigh: the two enabled text fields', count( $t ), 2 );
+expect( 'ThemeHigh: fields', array( $t[0]['key'], $t[0]['label'], $t[0]['required'], $t[0]['max'], $t[0]['price'], $t[1]['label'] ), array( 'thwepof:club-name', 'Club name', true, 16, 0.0, 'notes' ) );
+$tf = array( Sudemi_Personalisation::field( 'thwepof:club-name', 'Club name', 16, true, 0 ) + array( 'store' => $t[0]['store'] ) );
+expect( 'ThemeHigh order line: the field name with the text, as ThemeHigh writes it', Sudemi_Addons::order_meta( $tf, array( 'thwepof:club-name' => array( 'label' => 'Club name', 'value' => 'AJAX' ) ), $euro ), array( array( 'club_name', 'AJAX' ) ) );
+expect( 'a text whose field is gone: under the label sudemi sent', Sudemi_Addons::order_meta( array(), array( 'x' => array( 'label' => 'Old', 'value' => 'v' ) ), $euro ), array( array( 'Old', 'v' ) ) );
 
 if ( $failures ) {
 	echo "\n$failures failure(s)\n";

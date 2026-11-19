@@ -13,6 +13,18 @@
  * - Advanced Product Fields for WooCommerce (StudioWombat): product meta `_wapf_fieldgroup`.
  * - PPOM (Product Addons & Fields): the field group in the `nm_personalized` table named by
  *   the product meta `_product_meta_id`.
+ * - YITH WooCommerce Product Add-ons (4.x, read from its source): the add-on blocks YITH itself
+ *   picks for the product (YITH_WAPO_DB()->yith_wapo_get_blocks_by_product), and their text
+ *   add-ons in the `yith_wapo_addons` table: `settings` (serialized: type, title) and `options`
+ *   (serialized, one list per property: label, required, price, price_sale, price_method,
+ *   price_type, characters_limit, characters_limit_max), one text input per option index.
+ * - ThemeHigh Extra Product Options (free 3.x, read from its source): the fields its own
+ *   THWEPOF_Utils_Section::get_product_fields() shows for the product (sections in the option
+ *   `thwepof_custom_sections`, with their product and category rules). The free version has no
+ *   prices; a `price` property (the paid version) is read when present.
+ *
+ * On an order from sudemi the text is written on the order line the way the plugin writes it
+ * itself (see order_meta()), so the shop sees it as for any other order.
  *
  * Only text fields are read (single line and multi line): sudemi asks the buyer for a text. A
  * price on the field is sent as priceMinor (with tax, as the shop's prices are shown): fixed
@@ -31,6 +43,165 @@ final class Sudemi_Addons {
 	const PAO_TEXT  = array( 'custom_text', 'custom_textarea', 'custom', 'custom_letters_only', 'custom_digits_only', 'custom_letters_or_digits' );
 	const WAPF_TEXT = array( 'text', 'textarea', 'email', 'url', 'number' );
 	const PPOM_TEXT = array( 'text', 'textarea', 'email', 'number' );
+	const YITH_TEXT = array( 'text', 'textarea' );
+	const THWEPOF_TEXT = array( 'inputtext', 'textarea', 'email', 'tel', 'url', 'number' );
+
+	/**
+	 * YITH Product Add-ons: the text inputs of one add-on row (`yith_wapo_addons`), one per
+	 * option index. A price per character cannot be offered as one price, so such an input is
+	 * left out; a discount (price_method "decrease") is not an extra price and counts as 0.
+	 *
+	 * @param int   $addon_id The add-on row's id.
+	 * @param mixed $settings Its `settings`, unserialized.
+	 * @param mixed $options  Its `options`, unserialized.
+	 */
+	public static function from_yith( $addon_id, $settings, $options ) {
+		$out = array();
+		if ( ! is_array( $settings ) || ! is_array( $options ) || ! in_array( isset( $settings['type'] ) ? (string) $settings['type'] : '', self::YITH_TEXT, true ) ) {
+			return $out;
+		}
+		$get   = function ( $name, $i, $default = '' ) use ( $options ) {
+			return isset( $options[ $name ] ) && is_array( $options[ $name ] ) && isset( $options[ $name ][ $i ] ) ? $options[ $name ][ $i ] : $default;
+		};
+		$count = 0;
+		foreach ( array( 'label', 'price', 'required' ) as $column ) {
+			if ( isset( $options[ $column ] ) && is_array( $options[ $column ] ) ) {
+				$count = max( $count, count( $options[ $column ] ) );
+			}
+		}
+		$title = isset( $settings['title'] ) ? trim( (string) $settings['title'] ) : '';
+		for ( $i = 0; $i < $count; $i++ ) {
+			$method = (string) $get( 'price_method', $i, 'free' );
+			$type   = (string) $get( 'price_type', $i, 'fixed' );
+			if ( 'free' !== $method && 'characters' === $type ) {
+				continue;
+			}
+			$price = 0.0;
+			if ( 'increase' === $method ) {
+				$sale  = str_replace( ',', '.', (string) $get( 'price_sale', $i ) );
+				$base  = str_replace( ',', '.', (string) $get( 'price', $i ) );
+				$price = is_numeric( $sale ) && (float) $sale >= 0 && '' !== trim( $sale ) ? (float) $sale : ( is_numeric( $base ) ? (float) $base : 0.0 );
+			}
+			$label = trim( (string) $get( 'label', $i ) );
+			$label = '' !== $label ? $label : $title;
+			if ( '' === $label ) {
+				continue;
+			}
+			$out[] = array(
+				'key'      => 'yith:' . (int) $addon_id . '-' . $i,
+				'label'    => $label,
+				'required' => 'yes' === $get( 'required', $i, 'no' ),
+				'max'      => 'yes' === $get( 'characters_limit', $i, 'no' ) && is_numeric( $get( 'characters_limit_max', $i ) ) ? (int) $get( 'characters_limit_max', $i ) : 0,
+				'price'    => 'percentage' === $type ? 0.0 : max( 0.0, $price ),
+				'percent'  => 'percentage' === $type ? max( 0.0, $price ) : 0.0,
+				'store'    => array(
+					'kind'   => 'yith',
+					'addon'  => (int) $addon_id,
+					'option' => $i,
+				),
+			);
+		}
+		return $out;
+	}
+
+	/**
+	 * ThemeHigh Extra Product Options: its text fields for a product, as property lists
+	 * (type, name, title, required, enabled, maxlength, and price in the paid version).
+	 *
+	 * @param array $fields Field name => properties.
+	 */
+	public static function from_thwepof( array $fields ) {
+		$out = array();
+		foreach ( $fields as $name => $props ) {
+			if ( ! is_array( $props ) || ! in_array( isset( $props['type'] ) ? (string) $props['type'] : '', self::THWEPOF_TEXT, true ) ) {
+				continue;
+			}
+			if ( isset( $props['enabled'] ) && ! self::truthy( $props['enabled'] ) ) {
+				continue;
+			}
+			$name  = isset( $props['name'] ) && '' !== (string) $props['name'] ? (string) $props['name'] : (string) $name;
+			$label = isset( $props['title'] ) && '' !== trim( (string) $props['title'] ) ? trim( (string) $props['title'] ) : $name;
+			if ( '' === $name ) {
+				continue;
+			}
+			$ptype = isset( $props['price_type'] ) ? (string) $props['price_type'] : '';
+			$price = isset( $props['price'] ) && is_numeric( $props['price'] ) ? max( 0.0, (float) $props['price'] ) : 0.0;
+			$out[] = array(
+				'key'      => 'thwepof:' . self::slug( $name ),
+				'label'    => $label,
+				'required' => isset( $props['required'] ) && self::truthy( $props['required'] ),
+				'max'      => isset( $props['maxlength'] ) && is_numeric( $props['maxlength'] ) ? (int) $props['maxlength'] : 0,
+				'price'    => 'percentage' === $ptype ? 0.0 : $price,
+				'percent'  => 'percentage' === $ptype ? $price : 0.0,
+				'store'    => array(
+					'kind' => 'name',
+					'name' => $name,
+				),
+			);
+		}
+		return $out;
+	}
+
+	/**
+	 * The order item meta for what the buyer typed, the way each plugin writes it (read from
+	 * their source): YITH a visible `ywapo-addon-<addon>-<option>` entry ("text (+price)", shown
+	 * under the add-on's label) and the hidden `_ywapo_meta_data` list its order screens read;
+	 * ThemeHigh the field's name with the text (shown under the field's title); the others and
+	 * this plugin's own setting the field's label with the text. Pure.
+	 *
+	 * @param array    $fields What the listing asks for, with 'store' (Sudemi_Personalisation::for_listing( ..., true )).
+	 * @param array    $typed  key => [label, value] (Sudemi_Personalisation::from_line()).
+	 * @param callable $price  Formats a field's price (minor units) for display, e.g. "€20.00".
+	 * @return array List of [meta key, meta value].
+	 */
+	public static function order_meta( array $fields, array $typed, $price ) {
+		$out  = array();
+		$yith = array();
+		foreach ( $fields as $field ) {
+			if ( ! isset( $typed[ $field['key'] ] ) ) {
+				continue;
+			}
+			$value = $typed[ $field['key'] ]['value'];
+			$store = isset( $field['store'] ) && is_array( $field['store'] ) ? $field['store'] : array( 'kind' => 'label' );
+			if ( 'yith' === $store['kind'] ) {
+				$id      = $store['addon'] . '-' . $store['option'];
+				$display = $value . ( ! empty( $field['priceMinor'] ) ? ' (+' . call_user_func( $price, (int) $field['priceMinor'] ) . ')' : '' );
+				$out[]   = array( 'ywapo-addon-' . $id, $display );
+				$yith[]  = array(
+					$id => array(
+						0               => $value,
+						'addon_id'      => (string) $store['addon'],
+						'option_id'     => (string) $store['option'],
+						'addon_value'   => $value,
+						'display_label' => $field['label'],
+						'display_value' => $display,
+					),
+				);
+			} elseif ( 'name' === $store['kind'] ) {
+				$out[] = array( $store['name'], $value );
+			} else {
+				$out[] = array( $field['label'], $value );
+			}
+		}
+		if ( ! empty( $yith ) ) {
+			$out[] = array( '_ywapo_meta_data', $yith );
+		}
+		// A text whose field is gone since sudemi listed it: under the label sudemi sent.
+		$known = array();
+		foreach ( $fields as $field ) {
+			$known[ $field['key'] ] = true;
+		}
+		foreach ( $typed as $key => $entry ) {
+			if ( ! isset( $known[ $key ] ) ) {
+				$out[] = array( $entry['label'], $entry['value'] );
+			}
+		}
+		return $out;
+	}
+
+	private static function truthy( $value ) {
+		return true === $value || 1 === $value || in_array( strtolower( (string) $value ), array( '1', 'yes', 'true', 'on' ), true );
+	}
 
 	/**
 	 * WooCommerce Product Add-Ons: the text add-ons of one `_product_addons` list.
@@ -163,6 +334,25 @@ final class Sudemi_Addons {
 				$fields = array_merge( $fields, self::from_ppom( $meta ) );
 			}
 		}
+		// YITH and ThemeHigh: their own code decides which blocks / sections apply (product,
+		// category, exclusions), so only when they are loaded.
+		if ( function_exists( 'YITH_WAPO_DB' ) ) {
+			foreach ( self::yith_addons( $base ) as $row ) {
+				$fields = array_merge( $fields, self::from_yith( $row['id'], $row['settings'], $row['options'] ) );
+			}
+		}
+		if ( class_exists( 'THWEPOF_Utils_Section' ) && is_callable( array( 'THWEPOF_Utils_Section', 'get_product_fields' ) ) ) {
+			$props = array();
+			foreach ( (array) THWEPOF_Utils_Section::get_product_fields( $base, false ) as $name => $field ) {
+				if ( is_object( $field ) && is_callable( array( $field, 'get_property' ) ) ) {
+					$props[ $name ] = array();
+					foreach ( array( 'type', 'name', 'title', 'required', 'enabled', 'maxlength', 'price', 'price_type' ) as $p ) {
+						$props[ $name ][ $p ] = $field->get_property( $p );
+					}
+				}
+			}
+			$fields = array_merge( $fields, self::from_thwepof( $props ) );
+		}
 		return $fields;
 	}
 
@@ -203,6 +393,38 @@ final class Sudemi_Addons {
 			}
 		}
 		return $out;
+	}
+
+	/** The YITH add-on rows of the blocks YITH shows on this product: id, settings, options. */
+	private static function yith_addons( $product ) {
+		global $wpdb;
+		$db = YITH_WAPO_DB();
+		if ( ! is_object( $db ) || ! is_callable( array( $db, 'yith_wapo_get_blocks_by_product' ) ) ) {
+			return array();
+		}
+		$out = array();
+		foreach ( (array) $db->yith_wapo_get_blocks_by_product( $product, null, 'yes' ) as $block_id ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$rows = $wpdb->get_results( $wpdb->prepare( 'SELECT id, settings, options FROM %i WHERE block_id = %d AND visibility = 1 ORDER BY priority ASC', $wpdb->prefix . 'yith_wapo_addons', (int) $block_id ) );
+			foreach ( (array) $rows as $row ) {
+				$out[] = array(
+					'id'       => (int) $row->id,
+					'settings' => self::unserialize_plain( $row->settings ),
+					'options'  => self::unserialize_plain( $row->options ),
+				);
+			}
+		}
+		return $out;
+	}
+
+	/** A serialized array, never an object (allowed_classes false). Pure. */
+	public static function unserialize_plain( $raw ) {
+		if ( ! is_string( $raw ) || '' === $raw ) {
+			return array();
+		}
+		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize -- YITH stores its add-ons serialized; objects are refused.
+		$value = @unserialize( $raw, array( 'allowed_classes' => false ) ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+		return is_array( $value ) ? $value : array();
 	}
 
 	/** PPOM field groups (their stored JSON) attached to a product. */

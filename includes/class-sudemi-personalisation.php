@@ -48,15 +48,21 @@ final class Sudemi_Personalisation {
 	 * variation only when it is ticked; its price is 0, because the extra price is the price of
 	 * the variation that carries it).
 	 *
-	 * @param WC_Product      $product The product or variation.
-	 * @param WC_Product|null $parent_product  The variable product of a variation.
+	 * @param WC_Product      $product        The product or variation.
+	 * @param WC_Product|null $parent_product The variable product of a variation.
+	 * @param bool            $with_store     Also where each text goes on an order line ('store',
+	 *                                        for Sudemi_Addons::order_meta(); never sent to sudemi).
 	 */
-	public static function for_listing( $product, $parent_product ) {
+	public static function for_listing( $product, $parent_product, $with_store = false ) {
 		$base   = $parent_product ? $parent_product : $product;
 		$fields = array();
 		foreach ( Sudemi_Addons::for_product( $base ) as $addon ) {
 			// An add-on without a longest length takes as much as sudemi does.
-			$fields[] = self::field( $addon['key'], $addon['label'], $addon['max'] > 0 ? $addon['max'] : self::LIMIT_MAX, $addon['required'], self::addon_minor( $product, $addon ) );
+			$field = self::field( $addon['key'], $addon['label'], $addon['max'] > 0 ? $addon['max'] : self::LIMIT_MAX, $addon['required'], self::addon_minor( $product, $addon ) );
+			if ( $with_store && isset( $addon['store'] ) ) {
+				$field['store'] = $addon['store'];
+			}
+			$fields[] = $field;
 		}
 		$label = trim( (string) get_post_meta( (int) $base->get_id(), self::META_LABEL, true ) );
 		if ( '' !== $label && ( ! $parent_product || 'yes' === get_post_meta( (int) $product->get_id(), self::META_VARIATION, true ) ) ) {
@@ -140,26 +146,6 @@ final class Sudemi_Personalisation {
 				'label' => $label,
 				'value' => $value,
 			);
-		}
-		return $out;
-	}
-
-	/**
-	 * The order item meta for what the buyer typed: label => value, the label as the shop named
-	 * the field (the add-on plugins show a typed text on the order line under the field's name
-	 * the same way). Pure.
-	 *
-	 * @param array $fields What the listing asks for (for_listing()).
-	 * @param array $typed  What the buyer typed (from_line()).
-	 */
-	public static function item_meta( array $fields, array $typed ) {
-		$labels = array();
-		foreach ( $fields as $field ) {
-			$labels[ $field['key'] ] = $field['label'];
-		}
-		$out = array();
-		foreach ( $typed as $key => $entry ) {
-			$out[ isset( $labels[ $key ] ) && '' !== $labels[ $key ] ? $labels[ $key ] : $entry['label'] ] = $entry['value'];
 		}
 		return $out;
 	}
