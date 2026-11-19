@@ -115,6 +115,16 @@ expect( 'no colours offered: no listing', Sudemi_Variants::choices( $any, array(
 $many = array( 'colour' => array_map( fn( $i ) => 'c' . $i, range( 1, 400 ) ) );
 expect( 'capped at ' . Sudemi_Variants::MAX_PER_VARIATION, count( Sudemi_Variants::choices( array( 'colour' => '' ), $many, array( 1 => array( 'colour' => '' ) ), 1 ) ), Sudemi_Variants::MAX_PER_VARIATION );
 
+// Three "Any" attributes of 40 values each would be 64000 choices: built only up to MAX_BUILD.
+$big = array();
+foreach ( array( 'a', 'b', 'c' ) as $n ) {
+	$big[ $n ] = array_map( fn( $i ) => $n . $i, range( 1, 40 ) );
+}
+$t0 = microtime( true );
+$c  = Sudemi_Variants::choices( array( 'a' => '', 'b' => '', 'c' => '' ), $big, array( 1 => array( 'a' => '', 'b' => '', 'c' => '' ) ), 1 );
+expect( 'cartesian product capped while building (listed: ' . Sudemi_Variants::MAX_PER_VARIATION . ')', count( $c ), Sudemi_Variants::MAX_PER_VARIATION );
+expect( 'and quickly (under 2 s)', microtime( true ) - $t0 < 2, true );
+
 if ( $failures ) {
 	echo "\n$failures failure(s)\n";
 	exit( 1 );

@@ -82,6 +82,21 @@ class WC_Product {
 	public function is_type( $type ) {
 		return false;
 	}
+	public function backorders_allowed() {
+		return false;
+	}
+	public function get_min_purchase_quantity() {
+		return 1;
+	}
+	public function get_max_purchase_quantity() {
+		return -1;
+	}
+	public function managing_stock() {
+		return false;
+	}
+	public function is_sold_individually() {
+		return false;
+	}
 	public function get_id() {
 		return 14;
 	}
@@ -91,6 +106,9 @@ function get_post_meta( $id, $key, $single = false ) {
 }
 function is_multisite() {
 	return false;
+}
+function apply_filters( $hook, $value ) {
+	return $value;
 }
 class WP_Error {
 }
@@ -119,6 +137,7 @@ class Sudemi_Logger {
 
 require __DIR__ . '/../includes/class-sudemi-currency.php';
 require __DIR__ . '/../includes/class-sudemi-variants.php';
+require __DIR__ . '/../includes/class-sudemi-product-data.php';
 require __DIR__ . '/../includes/class-sudemi-addons.php';
 require __DIR__ . '/../includes/class-sudemi-personalisation.php';
 require __DIR__ . '/../includes/class-sudemi-orders.php';

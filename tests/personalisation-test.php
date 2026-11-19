@@ -130,7 +130,7 @@ $options  = serialize(
 	)
 );
 $y = Sudemi_Addons::from_yith( 31, Sudemi_Addons::unserialize_plain( $settings ), Sudemi_Addons::unserialize_plain( $options ) );
-expect( 'YITH: two text inputs; the per-character priced one left out', count( $y ), 2 );
+expect( 'YITH: three text inputs, the per-character priced one marked not offerable (never free)', array( count( $y ), $y[0]['unofferable'], $y[1]['unofferable'], $y[2]['unofferable'] ), array( 3, null, null, Sudemi_Addons::REASON_PRICING ) );
 expect( 'YITH: first input', array( $y[0]['key'], $y[0]['label'], $y[0]['required'], $y[0]['max'], $y[0]['price'] ), array( 'yith:31-0', 'Name on the back', true, 18, 20.0 ) );
 expect( 'YITH: free input', array( $y[1]['key'], $y[1]['required'], $y[1]['price'] ), array( 'yith:31-1', false, 0.0 ) );
 expect( 'YITH: a sale price wins', Sudemi_Addons::from_yith( 5, array( 'type' => 'text' ), array( 'label' => array( 'Name' ), 'price_method' => array( 'increase' ), 'price' => array( '20' ), 'price_sale' => array( '15' ) ) )[0]['price'], 15.0 );
@@ -172,7 +172,7 @@ $wc = Sudemi_Addons::from_wapf( array( 'fields' => array(
 	array( 'id' => 'a2', 'label' => 'Note', 'type' => 'text', 'required' => 'false', 'pricing' => array( 'enabled' => 'false', 'amount' => '0', 'type' => 'fixed' ) ),
 	array( 'id' => 'a3', 'label' => 'Engrave', 'type' => 'text', 'required' => 'false', 'pricing' => array( 'enabled' => 'true', 'amount' => '2', 'type' => 'char' ) ),
 ) ) );
-expect( 'Advanced Product Fields: the stored "false" is not required; a per-character price leaves that field out', array( count( $wc ), $wc[0]['required'], $wc[1]['required'] ), array( 2, true, false ) );
+expect( 'Advanced Product Fields: the stored "false" is not required; a per-character price makes that field not offerable', array( count( $wc ), $wc[0]['required'], $wc[1]['required'], $wc[2]['unofferable'] ), array( 3, true, false, Sudemi_Addons::REASON_PRICING ) );
 expect( 'Advanced Product Fields: radio is a choice with slugs as keys', array( $wc[0]['type'], $wc[0]['choices'][1]['key'], $wc[0]['choices'][1]['price'] ), array( 'choice', 'gold', 4.0 ) );
 $wf = array( Sudemi_Personalisation::field( 'wapf:a1', 'Colour', 0, true, 0 ) + array( 'type' => 'choice', 'choices' => array( array( 'key' => 'red', 'label' => 'Red', 'priceMinor' => 0 ), array( 'key' => 'gold', 'label' => 'Gold', 'priceMinor' => 400 ) ), 'store' => array( 'kind' => 'wapf', 'id' => 'a1' ) ) );
 $wt = Sudemi_Personalisation::from_line( array( 'personalisation' => array( array( 'key' => 'wapf:a1', 'label' => 'Colour', 'value' => 'Gold', 'type' => 'choice', 'choice_key' => 'gold' ) ) ) );
@@ -197,6 +197,28 @@ $tcf = array( Sudemi_Personalisation::field( $tc[0]['key'], 'Wrapping', 0, false
 $tct = Sudemi_Personalisation::from_line( array( 'personalisation' => array( array( 'key' => $tc[0]['key'], 'label' => 'Wrapping', 'value' => 'Paper, Ribbon', 'type' => 'multi_choice', 'choice_keys' => array( 'paper', 'ribbon' ) ) ) ) );
 expect( 'ThemeHigh order line: the field name with the options joined by "," as ThemeHigh writes them', Sudemi_Addons::order_meta( $tcf, $tct, $euro ), array( array( 'wrap', 'Paper,Ribbon' ) ) );
 expect( 'choice keys never hold a comma; repeated labels are dropped', count( Sudemi_Addons::from_pao( array( array( 'name' => 'X', 'type' => 'multiple_choice', 'options' => array( array( 'label' => 'A' ), array( 'label' => 'a' ) ) ) ) )[0]['choices'] ), 1 );
+
+// Review 2026-11-19: a discount add-on is never made free (the buyer would overpay) nor charged
+// in full: it is not offered, with the reason; a required one blocks the listing.
+$neg = Sudemi_Addons::from_pao( array( array( 'name' => 'Loyalty discount', 'type' => 'custom_text', 'required' => 0, 'adjust_price' => 1, 'price_type' => 'flat_fee', 'price' => '-5' ) ) );
+expect( 'Product Add-Ons: a negative price is kept as it is and marked not offerable', array( $neg[0]['price'], $neg[0]['unofferable'] ), array( -5.0, Sudemi_Addons::REASON_DISCOUNT ) );
+$negc = Sudemi_Addons::from_pao( array( array( 'name' => 'Pick-up', 'type' => 'multiple_choice', 'options' => array( array( 'label' => 'In store', 'price' => '-2' ), array( 'label' => 'Courier', 'price' => '0' ) ) ) ) );
+expect( 'Product Add-Ons: a choice with a negative price makes the field not offerable', $negc[0]['unofferable'], Sudemi_Addons::REASON_DISCOUNT );
+$yd = Sudemi_Addons::from_yith( 50, array( 'type' => 'text', 'title' => 'T' ), array( 'label' => array( 'Coupon text' ), 'price_method' => array( 'decrease' ), 'price' => array( '3' ), 'required' => array( 'yes' ) ) );
+expect( 'YITH: a "decrease" is a negative price (a discount), not offerable, never 0', array( $yd[0]['price'], $yd[0]['unofferable'], $yd[0]['required'] ), array( -3.0, Sudemi_Addons::REASON_DISCOUNT, true ) );
+
+// The five-text cap keeps required ones first; more than five required ones block the listing.
+$mk  = function ( $n, $req ) {
+	$out = array();
+	for ( $i = 1; $i <= $n; $i++ ) {
+		$out[] = Sudemi_Personalisation::field( 'k' . $i, 'Line ' . $i, 10, $req, 0 );
+	}
+	return $out;
+};
+$cap = Sudemi_Personalisation::cap( array_merge( $mk( 5, false ), array( Sudemi_Personalisation::field( 'r', 'Required sixth', 10, true, 0 ) ) ) );
+expect( 'cap: a required sixth is kept (first), an optional one left out instead', array( count( $cap['fields'] ), $cap['fields'][0]['key'], $cap['left_out'], $cap['blocked'] ), array( 5, 'r', array( 'Line 5' ), null ) );
+$cap = Sudemi_Personalisation::cap( $mk( 6, true ) );
+expect( 'cap: six required texts block the listing (not offered at all)', array( $cap['fields'], null !== $cap['blocked'] ), array( array(), true ) );
 
 if ( $failures ) {
 	echo "\n$failures failure(s)\n";

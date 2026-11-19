@@ -61,6 +61,15 @@ expect( 'at most 20 quantity prices', count( Sudemi_Product_Data::tier_fields( $
 
 expect( 'a price update carries the sale and availability (a price alone would end the sale)', Sudemi_Product_Data::price_update_fields( array( 'priceMinor' => 1995, 'regularPriceMinor' => 2995, 'salePriceMinor' => 1995, 'salePriceUntil' => '2026-12-01T00:00:00Z', 'availability' => 'in_stock', 'title' => 'x' ) ), array( 'regularPriceMinor' => 2995, 'salePriceMinor' => 1995, 'salePriceUntil' => '2026-12-01T00:00:00Z', 'availability' => 'in_stock' ) );
 
+// Orders from sudemi keep the shop's quantity rules (review 2026-11-19).
+$rules = Sudemi_Product_Data::quantity_fields( 6, 6, 60, null, false );
+expect( 'order of 12 when sold per 6 from 6 to 60: allowed', Sudemi_Product_Data::quantity_allowed( 12, $rules ), true );
+expect( 'order of 8 when sold per 6: refused (not a multiple of the step)', Sudemi_Product_Data::quantity_allowed( 8, $rules ), false );
+expect( 'order of 66 above the maximum 60: refused', Sudemi_Product_Data::quantity_allowed( 66, $rules ), false );
+expect( 'order of 3 below the minimum 6: refused', Sudemi_Product_Data::quantity_allowed( 3, $rules ), false );
+expect( 'sold individually: 2 refused, 1 allowed', array( Sudemi_Product_Data::quantity_allowed( 2, Sudemi_Product_Data::quantity_fields( 1, 1, -1, null, true ) ), Sudemi_Product_Data::quantity_allowed( 1, Sudemi_Product_Data::quantity_fields( 1, 1, -1, null, true ) ) ), array( false, true ) );
+expect( 'no rules: any quantity from 1', Sudemi_Product_Data::quantity_allowed( 7, array() ), true );
+
 if ( $failures ) {
 	echo "\n$failures failure(s)\n";
 	exit( 1 );

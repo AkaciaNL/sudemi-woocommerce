@@ -2265,3 +2265,15 @@ msgstr "sudemi מבקש מהקונה את הטקסט שהוגדר בלשונית
 #: includes/class-sudemi-personalisation.php
 msgid "Buyer types a text"
 msgstr "הקונה מקליד טקסט"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "\"%s\" cannot be ordered in this quantity"
+msgstr "לא ניתן להזמין את \"%s\" בכמות הזו"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "\"%s\" needs a choice sudemi cannot ask yet"
+msgstr "\"%s\" דורש בחירה ש-sudemi עדיין לא יכול לבקש"

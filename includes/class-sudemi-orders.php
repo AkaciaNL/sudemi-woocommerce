@@ -890,10 +890,28 @@ class Sudemi_Orders {
 				);
 			}
 			$quantity = isset( $line['quantity'] ) ? (int) $line['quantity'] : 1;
-			if ( ! $product->is_in_stock() || ! $product->has_enough_stock( $quantity ) ) {
+			// Out of stock only refuses when the shop takes no backorders for it.
+			if ( ( ! $product->is_in_stock() || ! $product->has_enough_stock( $quantity ) ) && ! $product->backorders_allowed() ) {
 				return sprintf(
 					/* translators: %s: the product name. */
 					__( '"%s" is out of stock', 'sudemi-connector' ),
+					$product->get_name()
+				);
+			}
+			// The quantities the shop sells in (minimum, step, maximum; sold individually = 1),
+			// as its own quantity box takes them.
+			if ( ! Sudemi_Product_Data::quantity_allowed( $quantity, Sudemi_Product_Data::quantities( $product ) ) ) {
+				return sprintf(
+					/* translators: %s: the product name. */
+					__( '"%s" cannot be ordered in this quantity', 'sudemi-connector' ),
+					$product->get_name()
+				);
+			}
+			$parent_product = $product->is_type( 'variation' ) ? wc_get_product( $product->get_parent_id() ) : null;
+			if ( null !== Sudemi_Personalisation::blocked( $product, $parent_product ? $parent_product : null ) ) {
+				return sprintf(
+					/* translators: %s: the product name. */
+					__( '"%s" needs a choice sudemi cannot ask yet', 'sudemi-connector' ),
 					$product->get_name()
 				);
 			}
@@ -1254,6 +1272,13 @@ class Sudemi_Orders {
 			return null;
 		}
 		if ( null === $parsed[1] ) {
+			// A variable product is never sold itself, and a variation with an "Any ..."
+			// attribute only as one of its "<id>~<key>" choices: a plain id for either names no
+			// exact item.
+			if ( $product->is_type( 'variable' )
+				|| ( $product->is_type( 'variation' ) && Sudemi_Variants::has_open( $product->get_variation_attributes( false ) ) ) ) {
+				return null;
+			}
 			return array(
 				'product'   => $product,
 				'variation' => null,

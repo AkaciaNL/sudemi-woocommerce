@@ -26,6 +26,9 @@ final class Sudemi_Variants {
 	/** At most this many listings come out of one variation with "Any" attributes. */
 	const MAX_PER_VARIATION = 250;
 
+	/** The cartesian product is built up to this many choices, never more (memory and time). */
+	const MAX_BUILD = 5000;
+
 	/**
 	 * The full choices one variation is sold as.
 	 *
@@ -57,6 +60,9 @@ final class Sudemi_Variants {
 					}
 					$combo[ $name ] = $value;
 					$next[]         = $combo;
+					if ( count( $next ) >= self::MAX_BUILD ) {
+						break 2;
+					}
 				}
 			}
 			$combos = $next;

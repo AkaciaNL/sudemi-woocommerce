@@ -2265,3 +2265,15 @@ msgstr "sudemi demande à l'acheteur le texte défini dans l'onglet sudemi du pr
 #: includes/class-sudemi-personalisation.php
 msgid "Buyer types a text"
 msgstr "L'acheteur saisit un texte"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "\"%s\" cannot be ordered in this quantity"
+msgstr "\"%s\" ne peut pas être commandé dans cette quantité"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "\"%s\" needs a choice sudemi cannot ask yet"
+msgstr "\"%s\" demande un choix que sudemi ne peut pas encore proposer"

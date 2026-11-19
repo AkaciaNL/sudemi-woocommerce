@@ -2293,3 +2293,15 @@ msgstr "يطلب sudemi من المشتري النص المحدد في تبوي�
 #: includes/class-sudemi-personalisation.php
 msgid "Buyer types a text"
 msgstr "المشتري يكتب نصًا"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "\"%s\" cannot be ordered in this quantity"
+msgstr "لا يمكن طلب \"%s\" بهذه الكمية"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "\"%s\" needs a choice sudemi cannot ask yet"
+msgstr "يحتاج \"%s\" إلى اختيار لا يستطيع sudemi طلبه بعد"

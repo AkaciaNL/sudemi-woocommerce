@@ -62,17 +62,39 @@ final class Sudemi_Addons {
 
 	/** One field as the parsers return it. Pure. */
 	private static function make( $key, $label, $type, $required, $max, $price, $percent, array $choices, array $store ) {
-		return array(
-			'key'      => $key,
-			'label'    => (string) $label,
-			'type'     => $type,
-			'required' => (bool) $required,
-			'max'      => (int) $max,
-			'price'    => max( 0.0, (float) $price ),
-			'percent'  => max( 0.0, (float) $percent ),
-			'choices'  => $choices,
-			'store'    => $store,
+		$field = array(
+			'key'         => $key,
+			'label'       => (string) $label,
+			'type'        => $type,
+			'required'    => (bool) $required,
+			'max'         => (int) $max,
+			'price'       => (float) $price,
+			'percent'     => (float) $percent,
+			'choices'     => $choices,
+			'store'       => $store,
+			'unofferable' => null,
 		);
+		// A discount (a negative price) cannot be charged through sudemi yet: never made free
+		// (the buyer would pay too much) and never left at full price. The field is not offered,
+		// with the reason, so the gap stays visible (Sudemi_Personalisation).
+		$negative = $field['price'] < 0 || $field['percent'] < 0;
+		foreach ( $choices as $c ) {
+			$negative = $negative || $c['price'] < 0 || $c['percent'] < 0;
+		}
+		if ( $negative ) {
+			$field['unofferable'] = self::REASON_DISCOUNT;
+		}
+		return $field;
+	}
+
+	/** Why a field cannot be offered on sudemi yet. */
+	const REASON_DISCOUNT = 'it lowers the price (a discount), which sudemi cannot charge yet';
+	const REASON_PRICING  = 'it is priced per character or by a formula, which sudemi cannot charge yet';
+
+	/** A field whose price this contract cannot carry: kept, marked, never offered. Pure. */
+	private static function unofferable( array $field, $reason ) {
+		$field['unofferable'] = $reason;
+		return $field;
 	}
 
 	/** One choice: key (no commas), label, price, percent. Labels unique; null when unusable. Pure. */
@@ -84,8 +106,8 @@ final class Sudemi_Addons {
 		return array(
 			'key'     => str_replace( ',', '-', (string) $key ),
 			'label'   => $label,
-			'price'   => max( 0.0, (float) $price ),
-			'percent' => max( 0.0, (float) $percent ),
+			'price'   => (float) $price,
+			'percent' => (float) $percent,
 		);
 	}
 
@@ -194,6 +216,7 @@ final class Sudemi_Addons {
 				$on      = isset( $pricing['enabled'] ) && self::truthy( $pricing['enabled'] );
 				$ptype   = isset( $pricing['type'] ) ? (string) $pricing['type'] : 'fixed';
 				if ( $on && ! in_array( $ptype, array( 'fixed', 'qt', 'percent', 'p' ), true ) ) {
+					$out[] = self::unofferable( self::make( $key, $label, 'text', $req, 0, 0, 0, array(), $store ), self::REASON_PRICING );
 					continue;
 				}
 				$amount = $on ? self::num( isset( $pricing['amount'] ) ? $pricing['amount'] : 0 ) : 0.0;
@@ -225,8 +248,11 @@ final class Sudemi_Addons {
 					$choices[] = self::choice( isset( $c['slug'] ) ? $c['slug'] : self::slug( isset( $c['label'] ) ? $c['label'] : '' ), isset( $c['label'] ) ? $c['label'] : '', $pct ? 0 : $amount, $pct ? $amount : 0 );
 				}
 				$choices = self::unique_choices( $choices );
-				if ( ! $skip && ! empty( $choices ) ) {
-					$out[] = self::make( $key, $label, in_array( $type, self::WAPF_MULTI, true ) ? 'multi_choice' : 'choice', $req, 0, 0, 0, $choices, $store );
+				$field   = self::make( $key, $label, in_array( $type, self::WAPF_MULTI, true ) ? 'multi_choice' : 'choice', $req, 0, 0, 0, $choices, $store );
+				if ( $skip ) {
+					$out[] = self::unofferable( $field, self::REASON_PRICING );
+				} elseif ( ! empty( $choices ) ) {
+					$out[] = $field;
 				}
 			}
 		}
@@ -313,9 +339,11 @@ final class Sudemi_Addons {
 				return null;
 			}
 			$amount = 0.0;
-			if ( 'increase' === $method ) {
+			if ( 'increase' === $method || 'decrease' === $method ) {
 				$sale   = trim( (string) $get( 'price_sale', $i ) );
 				$amount = '' !== $sale && is_numeric( str_replace( ',', '.', $sale ) ) ? self::num( $sale ) : self::num( $get( 'price', $i ) );
+				// A decrease is a discount: negative, so the field is not offered (make()).
+				$amount = 'decrease' === $method ? -abs( $amount ) : $amount;
 			}
 			return 'percentage' === $ptype ? array( 0.0, $amount ) : array( $amount, 0.0 );
 		};
@@ -328,13 +356,14 @@ final class Sudemi_Addons {
 		$title = isset( $settings['title'] ) ? trim( self::plain( (string) $settings['title'] ) ) : '';
 		if ( in_array( $type, self::YITH_TEXT, true ) ) {
 			for ( $i = 0; $i < $count; $i++ ) {
-				$p = $price( $i );
-				if ( null === $p ) {
-					continue;
-				}
+				$p     = $price( $i );
 				$label = trim( self::plain( (string) $get( 'label', $i ) ) );
 				$label = '' !== $label ? $label : $title;
 				if ( '' === $label ) {
+					continue;
+				}
+				if ( null === $p ) {
+					$out[] = self::unofferable( self::make( 'yith:' . (int) $addon_id . '-' . $i, $label, 'text', 'yes' === $get( 'required', $i, 'no' ), 0, 0, 0, array(), array( 'kind' => 'yith', 'addon' => (int) $addon_id, 'option' => $i ) ), self::REASON_PRICING );
 					continue;
 				}
 				$out[] = self::make(
@@ -355,16 +384,18 @@ final class Sudemi_Addons {
 			}
 		} elseif ( in_array( $type, self::YITH_CHOICE, true ) || in_array( $type, self::YITH_MULTI, true ) ) {
 			$choices = array();
+			$per_char = false;
 			for ( $i = 0; $i < $count; $i++ ) {
 				$p = $price( $i );
 				if ( null === $p ) {
-					return $out;
+					$per_char = true;
+					continue;
 				}
 				$choices[] = self::choice( (string) $i, $get( 'label', $i ), $p[0], $p[1] );
 			}
 			$choices = self::unique_choices( $choices );
-			if ( '' !== $title && ! empty( $choices ) ) {
-				$out[] = self::make(
+			if ( '' !== $title && ( ! empty( $choices ) || $per_char ) ) {
+				$field = self::make(
 					'yith:' . (int) $addon_id,
 					$title,
 					in_array( $type, self::YITH_MULTI, true ) ? 'multi_choice' : 'choice',
@@ -378,6 +409,7 @@ final class Sudemi_Addons {
 						'addon' => (int) $addon_id,
 					)
 				);
+				$out[] = $per_char ? self::unofferable( $field, self::REASON_PRICING ) : $field;
 			}
 		}
 		return $out;
@@ -549,7 +581,26 @@ final class Sudemi_Addons {
 		return $out;
 	}
 
+	/** The fields read per product in this request (every variation shares its parent's). */
+	private static $read = array();
+
+	/** Forgets what was read (a new sync or push: the shop may have changed its add-ons). */
+	public static function reset() {
+		self::$read = array();
+	}
+
 	public static function for_product( $base ) {
+		$id = (int) $base->get_id();
+		if ( ! isset( self::$read[ $id ] ) ) {
+			if ( count( self::$read ) > 200 ) {
+				self::$read = array();
+			}
+			self::$read[ $id ] = self::read_product( $base );
+		}
+		return self::$read[ $id ];
+	}
+
+	private static function read_product( $base ) {
 		$id     = (int) $base->get_id();
 		$fields = array();
 		if ( self::active( 'woocommerce-product-addons/woocommerce-product-addons.php' ) ) {

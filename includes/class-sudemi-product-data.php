@@ -191,9 +191,25 @@ final class Sudemi_Product_Data {
 		return $out;
 	}
 
+	/** Whether a quantity fits the shop's rules (quantity_fields()). Pure. */
+	public static function quantity_allowed( $quantity, array $rules ) {
+		$quantity = (int) $quantity;
+		$min      = isset( $rules['minQuantity'] ) ? (int) $rules['minQuantity'] : 1;
+		$step     = isset( $rules['quantityStep'] ) ? (int) $rules['quantityStep'] : 1;
+		if ( $quantity < max( 1, $min ) ) {
+			return false;
+		}
+		if ( isset( $rules['maxQuantity'] ) && $quantity > (int) $rules['maxQuantity'] ) {
+			return false;
+		}
+		// Multiples of the step, as WooCommerce's quantity box counts them (from the step).
+		return $step <= 1 || 0 === $quantity % $step;
+	}
+
 	/**
 	 * Quantity prices from Tiered Pricing Table (its own PricingRule: fixed, percentage or
-	 * amount tiers, with tax as the shop shows prices), at most 20, from 2 items up.
+	 * amount tiers; getTierPrice() is a price per unit, read from its source), with VAT like the
+	 * base price, at most 20, from 2 items up.
 	 */
 	public static function tier_prices( $product ) {
 		if ( ! class_exists( '\\TierPricingTable\\PriceManager' ) || ! is_callable( array( '\\TierPricingTable\\PriceManager', 'getPricingRule' ) ) ) {
@@ -206,9 +222,12 @@ final class Sudemi_Product_Data {
 			}
 			$prices = array();
 			foreach ( array_keys( (array) $rule->getRules() ) as $quantity ) {
-				$price = $rule->getTierPrice( (int) $quantity, true );
-				if ( is_numeric( $price ) ) {
-					$prices[ (int) $quantity ] = Sudemi_Currency::to_minor( $price, Sudemi_Currency::shop_currency() );
+				// Tiered Pricing Table's price per unit from that quantity, as entered (false: not
+				// its "price to display", which follows the shop's display setting and may be
+				// without VAT); VAT is added exactly as for the base price.
+				$price = $rule->getTierPrice( (int) $quantity, false );
+				if ( is_numeric( $price ) && (float) $price > 0 ) {
+					$prices[ (int) $quantity ] = self::minor_with_tax( $product, $price );
 				}
 			}
 		} catch ( \Throwable $e ) {

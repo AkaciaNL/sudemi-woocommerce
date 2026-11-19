@@ -682,6 +682,13 @@ final class Sudemi_Sync {
 		} elseif ( ! $product->is_visible() ) {
 			return array();
 		}
+		// What the buyer must type or choose and sudemi cannot ask (a required discount add-on,
+		// more than five required texts): not sold here, with the reason recorded (see note()).
+		$blocked = Sudemi_Personalisation::blocked( $product, $parent_product );
+		self::note_not_offered( $parent_product ? $parent_product : $product, $blocked, Sudemi_Personalisation::left_out( $product, $parent_product ) );
+		if ( null !== $blocked ) {
+			return array();
+		}
 		if ( ! $parent_product ) {
 			return array( self::product_payload( $product, null, array(), array() ) );
 		}
@@ -691,6 +698,35 @@ final class Sudemi_Sync {
 			$listings[] = self::product_payload( $product, $parent_product, $own, $choice );
 		}
 		return $listings;
+	}
+
+	/** What could not be offered on sudemi for a product, and why (product meta, readable). */
+	const META_NOT_OFFERED = '_sudemi_not_offered';
+
+	/**
+	 * Records what of a product sudemi cannot offer yet (a discount add-on, a price per
+	 * character, a sixth text), so the gap stays visible: on the product (meta) and in the log
+	 * when it changes. Never silent.
+	 */
+	private static function note_not_offered( $product, $blocked, array $left_out ) {
+		$parts = array();
+		if ( null !== $blocked ) {
+			$parts[] = 'Not listed on sudemi: ' . $blocked . '.';
+		}
+		foreach ( $left_out as $label => $why ) {
+			$parts[] = sprintf( '"%s" is not asked on sudemi: %s.', $label, $why );
+		}
+		$text = implode( ' ', array_unique( $parts ) );
+		$id   = (int) $product->get_id();
+		if ( (string) get_post_meta( $id, self::META_NOT_OFFERED, true ) === $text ) {
+			return;
+		}
+		if ( '' === $text ) {
+			delete_post_meta( $id, self::META_NOT_OFFERED );
+			return;
+		}
+		update_post_meta( $id, self::META_NOT_OFFERED, $text );
+		Sudemi_Logger::warn( sprintf( 'Product #%d: %s', $id, $text ) );
 	}
 
 	/** A variation's attributes as WooCommerce stores them: name => value ('' = any). */
@@ -730,7 +766,8 @@ final class Sudemi_Sync {
 			// In the shop's variation order (menu order), as the storefront matches a choice.
 			foreach ( $parent_product->get_children() as $child_id ) {
 				$child = wc_get_product( $child_id );
-				if ( $child && $child->is_type( 'variation' ) ) {
+				// Only enabled variations: the storefront never matches a disabled one.
+				if ( $child && $child->is_type( 'variation' ) && 'publish' === $child->get_status() ) {
 					self::$siblings[ $parent_id ][ (int) $child_id ] = self::variation_attributes( $child );
 				}
 			}
@@ -749,6 +786,7 @@ final class Sudemi_Sync {
 	/** Forgets the siblings read in this request (a variation was changed since). */
 	private static function forget_siblings() {
 		self::$siblings = array();
+		Sudemi_Addons::reset();
 	}
 
 	/** The value of one attribute as the shop shows it: the term's name, or the value as typed. */

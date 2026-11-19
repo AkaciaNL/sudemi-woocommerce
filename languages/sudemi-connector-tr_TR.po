@@ -2265,3 +2265,15 @@ msgstr "sudemi, alıcıdan ürünün sudemi sekmesinde ayarlanan metni ister."
 #: includes/class-sudemi-personalisation.php
 msgid "Buyer types a text"
 msgstr "Alıcı bir metin yazar"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "\"%s\" cannot be ordered in this quantity"
+msgstr "\"%s\" bu miktarda sipariş edilemez"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "\"%s\" needs a choice sudemi cannot ask yet"
+msgstr "\"%s\" sudemi'nin henüz soramadığı bir seçim gerektiriyor"

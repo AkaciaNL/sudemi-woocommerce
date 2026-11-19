@@ -2258,3 +2258,15 @@ msgstr "sudemi 会向买家询问在商品的 sudemi 选项卡中设置的文字
 #: includes/class-sudemi-personalisation.php
 msgid "Buyer types a text"
 msgstr "买家填写文字"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "\"%s\" cannot be ordered in this quantity"
+msgstr "\"%s\" 不能按此数量订购"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "\"%s\" needs a choice sudemi cannot ask yet"
+msgstr "\"%s\" 需要一个 sudemi 目前还无法询问的选择"
