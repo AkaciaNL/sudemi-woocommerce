@@ -37,7 +37,7 @@ $pao = array(
 		'type'         => 'custom_text',
 		'required'     => 1,
 		'adjust_price' => 1,
-		'price_type'   => 'flat_fee',
+		'price_type'   => 'quantity_based',
 		'price'        => '20',
 		'max'          => '12',
 		'options'      => array(),
@@ -76,7 +76,7 @@ expect( 'Product Add-Ons: nothing stored', Sudemi_Addons::from_pao( '' ), array(
 $w = Sudemi_Addons::from_wapf(
 	array(
 		'fields' => array(
-			array( 'id' => '5f1a', 'label' => 'Name on shirt', 'type' => 'text', 'required' => true, 'pricing' => array( 'enabled' => true, 'type' => 'fixed', 'amount' => 20 ), 'attributes' => array( 'maxlength' => 15 ) ),
+			array( 'id' => '5f1a', 'label' => 'Name on shirt', 'type' => 'text', 'required' => true, 'pricing' => array( 'enabled' => true, 'type' => 'qt', 'amount' => 20 ), 'attributes' => array( 'maxlength' => 15 ) ),
 			array( 'id' => '5f1b', 'label' => 'Size guide', 'type' => 'select' ),
 		),
 	)
@@ -158,7 +158,7 @@ expect( 'a text whose field is gone: under the label sudemi sent', Sudemi_Addons
 
 // Choices (contract v2): every plugin's select / radio / checkbox options, each with its price,
 // and written on the order line as that plugin writes a chosen option.
-$pao_multi = Sudemi_Addons::from_pao( array( array( 'name' => 'Extras', 'type' => 'checkbox', 'required' => 0, 'options' => array( array( 'label' => 'Gift wrap', 'price' => '3', 'price_type' => 'flat_fee' ), array( 'label' => 'Card', 'price' => '1.5', 'price_type' => 'quantity_based' ) ) ) ) );
+$pao_multi = Sudemi_Addons::from_pao( array( array( 'name' => 'Extras', 'type' => 'checkbox', 'required' => 0, 'options' => array( array( 'label' => 'Gift wrap', 'price' => '3', 'price_type' => 'quantity_based' ), array( 'label' => 'Card', 'price' => '1.5', 'price_type' => 'quantity_based' ) ) ) ) );
 expect( 'Product Add-Ons: checkboxes are a multi_choice', array( $pao_multi[0]['type'], count( $pao_multi[0]['choices'] ), $pao_multi[0]['choices'][1]['price'] ), array( 'multi_choice', 2, 1.5 ) );
 $paof   = array( Sudemi_Personalisation::field( $pao_multi[0]['key'], 'Extras', 0, false, 0 ) + array( 'type' => 'multi_choice', 'choices' => array( array( 'key' => 'o0', 'label' => 'Gift wrap', 'priceMinor' => 300 ), array( 'key' => 'o1', 'label' => 'Card', 'priceMinor' => 150 ) ), 'store' => array( 'kind' => 'label' ) ) );
 $pao_ty = Sudemi_Personalisation::from_line( array( 'personalisation' => array( array( 'key' => $pao_multi[0]['key'], 'label' => 'Extras', 'value' => 'Gift wrap, Card', 'type' => 'multi_choice', 'choice_keys' => array( 'o0', 'o1' ) ) ) ) );
@@ -167,7 +167,7 @@ expect( 'Product Add-Ons order line: one entry per chosen option under the add-o
 $wc = Sudemi_Addons::from_wapf( array( 'fields' => array(
 	array( 'id' => 'a1', 'label' => 'Colour', 'type' => 'radio', 'required' => 'true', 'choices' => array(
 		array( 'slug' => 'red', 'label' => 'Red', 'selected' => 'false', 'pricing_type' => 'none', 'pricing_amount' => 0 ),
-		array( 'slug' => 'gold', 'label' => 'Gold', 'selected' => 'false', 'pricing_type' => 'fixed', 'pricing_amount' => 4 ),
+		array( 'slug' => 'gold', 'label' => 'Gold', 'selected' => 'false', 'pricing_type' => 'qt', 'pricing_amount' => 4 ),
 	) ),
 	array( 'id' => 'a2', 'label' => 'Note', 'type' => 'text', 'required' => 'false', 'pricing' => array( 'enabled' => 'false', 'amount' => '0', 'type' => 'fixed' ) ),
 	array( 'id' => 'a3', 'label' => 'Engrave', 'type' => 'text', 'required' => 'false', 'pricing' => array( 'enabled' => 'true', 'amount' => '2', 'type' => 'char' ) ),
@@ -219,6 +219,26 @@ $cap = Sudemi_Personalisation::cap( array_merge( $mk( 5, false ), array( Sudemi_
 expect( 'cap: a required sixth is kept (first), an optional one left out instead', array( count( $cap['fields'] ), $cap['fields'][0]['key'], $cap['left_out'], $cap['blocked'] ), array( 5, 'r', array( 'Line 5' ), null ) );
 $cap = Sudemi_Personalisation::cap( $mk( 6, true ) );
 expect( 'cap: six required texts block the listing (not offered at all)', array( $cap['fields'], null !== $cap['blocked'] ), array( array(), true ) );
+
+// Review 2026-11-19 (MONEY): a price charged once per order line (a flat fee) sent as a price
+// per item would overcharge a buyer of two: not offered, with the reason; a required one blocks.
+$flat = Sudemi_Addons::from_pao( array(
+	array( 'name' => 'Setup', 'type' => 'custom_text', 'required' => 1, 'adjust_price' => 1, 'price_type' => 'flat_fee', 'price' => '5' ),
+	array( 'name' => 'Box', 'type' => 'multiple_choice', 'options' => array( array( 'label' => 'Gift box', 'price' => '4', 'price_type' => 'flat_fee' ) ) ),
+	array( 'name' => 'Free note', 'type' => 'custom_text', 'adjust_price' => 1, 'price_type' => 'flat_fee', 'price' => '0' ),
+) );
+expect( 'Product Add-Ons: a flat fee text and a flat fee choice are not offered; a free one (0) is', array( $flat[0]['unofferable'], $flat[1]['unofferable'], $flat[2]['unofferable'] ), array( Sudemi_Addons::REASON_FLAT, Sudemi_Addons::REASON_FLAT, null ) );
+$wflat = Sudemi_Addons::from_wapf( array( 'fields' => array(
+	array( 'id' => 'f1', 'label' => 'Engraving', 'type' => 'text', 'required' => 'false', 'pricing' => array( 'enabled' => 'true', 'amount' => '6', 'type' => 'fixed' ) ),
+	array( 'id' => 'f2', 'label' => 'Wrap', 'type' => 'radio', 'choices' => array( array( 'slug' => 'paper', 'label' => 'Paper', 'selected' => 'false', 'pricing_type' => 'fixed', 'pricing_amount' => 2 ) ) ),
+) ) );
+expect( 'Advanced Product Fields: "fixed" (flat fee, not quantity-based) is not offered, text and choice', array( $wflat[0]['unofferable'], $wflat[1]['unofferable'] ), array( Sudemi_Addons::REASON_FLAT, Sudemi_Addons::REASON_FLAT ) );
+$pflat = Sudemi_Addons::from_ppom( '[{"type":"text","data_name":"logo","title":"Logo text","price":"8","onetime":"on"},{"type":"select","data_name":"setup","title":"Setup","onetime":"on","options":[{"option":"Yes","price":"3"}]},{"type":"text","data_name":"note","title":"Note","price":"2"}]' );
+expect( 'PPOM: a "fixed fee" (onetime) field is not offered, text and choice; a per-item price is', array( $pflat[0]['unofferable'], $pflat[1]['unofferable'], $pflat[2]['unofferable'] ), array( Sudemi_Addons::REASON_FLAT, Sudemi_Addons::REASON_FLAT, null ) );
+$yflat = Sudemi_Addons::from_yith( 60, array( 'type' => 'checkbox', 'title' => 'Setup', 'sell_individually' => 'yes' ), array( 'label' => array( 'Yes' ), 'price_method' => array( 'increase' ), 'price' => array( '9' ), 'price_type' => array( 'fixed' ) ) );
+expect( 'YITH: "sell individually" with a price is charged once per line: not offered', $yflat[0]['unofferable'], Sudemi_Addons::REASON_FLAT );
+$capf = Sudemi_Personalisation::cap( array() );
+expect( 'cap of nothing: nothing blocked', $capf['blocked'], null );
 
 if ( $failures ) {
 	echo "\n$failures failure(s)\n";

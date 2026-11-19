@@ -90,6 +90,17 @@ final class Sudemi_Addons {
 	/** Why a field cannot be offered on sudemi yet. */
 	const REASON_DISCOUNT = 'it lowers the price (a discount), which sudemi cannot charge yet';
 	const REASON_PRICING  = 'it is priced per character or by a formula, which sudemi cannot charge yet';
+	const REASON_FLAT     = 'its price is charged once per order line (a flat fee), which sudemi cannot charge yet';
+
+	/**
+	 * A field whose price is charged once per order line, not per item (Product Add-Ons
+	 * "flat fee", Advanced Product Fields "fixed", PPOM "fixed fee", YITH "sell individually"):
+	 * sent as a price per item it overcharges a buyer of two or more, so it is not offered (unless
+	 * already left out for another reason). Pure.
+	 */
+	private static function flat( array $field, $is_flat ) {
+		return $is_flat && null === $field['unofferable'] ? self::unofferable( $field, self::REASON_FLAT ) : $field;
+	}
 
 	/** A field whose price this contract cannot carry: kept, marked, never offered. Pure. */
 	private static function unofferable( array $field, $reason ) {
@@ -166,20 +177,22 @@ final class Sudemi_Addons {
 				$ptype  = isset( $addon['price_type'] ) ? (string) $addon['price_type'] : ( isset( $option['price_type'] ) ? (string) $option['price_type'] : 'flat_fee' );
 				$max    = isset( $addon['max'] ) && (int) $addon['max'] > 0 ? (int) $addon['max'] : ( isset( $option['max'] ) ? (int) $option['max'] : 0 );
 				$pct    = 'percentage_based' === $ptype;
-				$out[]  = self::make( $key, $addon['name'], 'text', ! empty( $addon['required'] ), $max, $pct ? 0 : $price, $pct ? $price : 0, array(), array( 'kind' => 'label' ) );
+				$out[]  = self::flat( self::make( $key, $addon['name'], 'text', ! empty( $addon['required'] ), $max, $pct ? 0 : $price, $pct ? $price : 0, array(), array( 'kind' => 'label' ) ), 'flat_fee' === $ptype && 0.0 !== $price );
 			} elseif ( in_array( $type, self::PAO_CHOICE, true ) || in_array( $type, self::PAO_MULTI, true ) ) {
 				$choices = array();
+				$is_flat = false;
 				foreach ( $options as $j => $option ) {
 					if ( ! is_array( $option ) ) {
 						continue;
 					}
 					$pct       = isset( $option['price_type'] ) && 'percentage_based' === $option['price_type'];
 					$price     = self::num( isset( $option['price'] ) ? $option['price'] : 0 );
+					$is_flat   = $is_flat || ( ( ! isset( $option['price_type'] ) || 'flat_fee' === $option['price_type'] ) && 0.0 !== $price );
 					$choices[] = self::choice( 'o' . $j, isset( $option['label'] ) ? $option['label'] : '', $pct ? 0 : $price, $pct ? $price : 0 );
 				}
 				$choices = self::unique_choices( $choices );
 				if ( ! empty( $choices ) ) {
-					$out[] = self::make( $key, $addon['name'], in_array( $type, self::PAO_MULTI, true ) ? 'multi_choice' : 'choice', ! empty( $addon['required'] ), 0, 0, 0, $choices, array( 'kind' => 'label' ) );
+					$out[] = self::flat( self::make( $key, $addon['name'], in_array( $type, self::PAO_MULTI, true ) ? 'multi_choice' : 'choice', ! empty( $addon['required'] ), 0, 0, 0, $choices, array( 'kind' => 'label' ) ), $is_flat );
 				}
 			}
 		}
@@ -229,11 +242,13 @@ final class Sudemi_Addons {
 						break;
 					}
 				}
-				$out[] = self::make( $key, $label, 'text', $req, $max, $pct ? 0 : $amount, $pct ? $amount : 0, array(), $store );
+				// "fixed" is a flat fee (not quantity-based, APF's own label); "qt" is per item.
+				$out[] = self::flat( self::make( $key, $label, 'text', $req, $max, $pct ? 0 : $amount, $pct ? $amount : 0, array(), $store ), $on && 'fixed' === $ptype && 0.0 !== $amount );
 			} elseif ( in_array( $type, self::WAPF_CHOICE, true ) || in_array( $type, self::WAPF_MULTI, true ) ) {
 				$raw     = isset( $field['choices'] ) ? $field['choices'] : ( isset( $field['options']['choices'] ) ? $field['options']['choices'] : array() );
 				$choices = array();
 				$skip    = false;
+				$is_flat = false;
 				foreach ( (array) $raw as $c ) {
 					if ( ! is_array( $c ) ) {
 						continue;
@@ -244,11 +259,12 @@ final class Sudemi_Addons {
 						break;
 					}
 					$amount    = 'none' === $ptype ? 0.0 : self::num( isset( $c['pricing_amount'] ) ? $c['pricing_amount'] : 0 );
+					$is_flat   = $is_flat || ( 'fixed' === $ptype && 0.0 !== $amount );
 					$pct       = in_array( $ptype, array( 'p', 'percent' ), true );
 					$choices[] = self::choice( isset( $c['slug'] ) ? $c['slug'] : self::slug( isset( $c['label'] ) ? $c['label'] : '' ), isset( $c['label'] ) ? $c['label'] : '', $pct ? 0 : $amount, $pct ? $amount : 0 );
 				}
 				$choices = self::unique_choices( $choices );
-				$field   = self::make( $key, $label, in_array( $type, self::WAPF_MULTI, true ) ? 'multi_choice' : 'choice', $req, 0, 0, 0, $choices, $store );
+				$field   = self::flat( self::make( $key, $label, in_array( $type, self::WAPF_MULTI, true ) ? 'multi_choice' : 'choice', $req, 0, 0, 0, $choices, $store ), $is_flat );
 				if ( $skip ) {
 					$out[] = self::unofferable( $field, self::REASON_PRICING );
 				} elseif ( ! empty( $choices ) ) {
@@ -290,7 +306,9 @@ final class Sudemi_Addons {
 			if ( in_array( $type, self::PPOM_TEXT, true ) ) {
 				$price = isset( $field['price'] ) ? (string) $field['price'] : '';
 				$pct   = false !== strpos( $price, '%' );
-				$out[] = self::make( $key, $label, 'text', $req, isset( $field['max_length'] ) ? (int) $field['max_length'] : 0, $pct ? 0 : self::num( $price ), $pct ? self::num( str_replace( '%', '', $price ) ) : 0, array(), $store );
+				// PPOM's "fixed fee" (onetime) is charged once per cart line: not per item.
+				$onetime = isset( $field['onetime'] ) && self::truthy( $field['onetime'] );
+				$out[]   = self::flat( self::make( $key, $label, 'text', $req, isset( $field['max_length'] ) ? (int) $field['max_length'] : 0, $pct ? 0 : self::num( $price ), $pct ? self::num( str_replace( '%', '', $price ) ) : 0, array(), $store ), $onetime && 0.0 !== self::num( str_replace( '%', '', $price ) ) );
 			} elseif ( in_array( $type, self::PPOM_CHOICE, true ) || in_array( $type, self::PPOM_MULTI, true ) ) {
 				$raw     = isset( $field['options'] ) && is_array( $field['options'] ) ? $field['options'] : ( isset( $field['images'] ) && is_array( $field['images'] ) ? $field['images'] : array() );
 				$choices = array();
@@ -306,7 +324,11 @@ final class Sudemi_Addons {
 				}
 				$choices = self::unique_choices( $choices );
 				if ( ! empty( $choices ) ) {
-					$out[] = self::make( $key, $label, in_array( $type, self::PPOM_MULTI, true ) ? 'multi_choice' : 'choice', $req, 0, 0, 0, $choices, $store );
+					$priced = false;
+					foreach ( $choices as $c ) {
+						$priced = $priced || 0.0 !== $c['price'] || 0.0 !== $c['percent'];
+					}
+					$out[] = self::flat( self::make( $key, $label, in_array( $type, self::PPOM_MULTI, true ) ? 'multi_choice' : 'choice', $req, 0, 0, 0, $choices, $store ), isset( $field['onetime'] ) && self::truthy( $field['onetime'] ) && $priced );
 				}
 			}
 		}
@@ -410,6 +432,17 @@ final class Sudemi_Addons {
 					)
 				);
 				$out[] = $per_char ? self::unofferable( $field, self::REASON_PRICING ) : $field;
+			}
+		}
+		// "Sell individually": YITH puts the add-on in the cart once, whatever the quantity (its
+		// own setting, read from its source); a price on it is charged once per order line.
+		if ( isset( $settings['sell_individually'] ) && 'yes' === $settings['sell_individually'] ) {
+			foreach ( $out as $n => $field ) {
+				$priced = 0.0 !== $field['price'] || 0.0 !== $field['percent'];
+				foreach ( $field['choices'] as $c ) {
+					$priced = $priced || 0.0 !== $c['price'] || 0.0 !== $c['percent'];
+				}
+				$out[ $n ] = self::flat( $field, $priced );
 			}
 		}
 		return $out;
