@@ -8,7 +8,7 @@ The plugin is free. There is no monthly fee.
 
 ## What the plugin does
 
-- **Lists your catalogue on sudemi**: categories, products with their descriptions and specifications, photos, prices, stock and delivery prices. Variable products: every variation is its own listing with its own price, stock and photo.
+- **Lists your catalogue on sudemi**: categories, products with their descriptions and specifications, photos, prices, stock and delivery prices. Variable products: every variation is its own listing with its own price, stock and photo, shown to buyers as one product with a choice. A text the buyer types (WooCommerce Product Add-Ons, Advanced Product Fields, PPOM, or the plugin's own setting) is asked on sudemi too.
 - **Keeps it current**: a price or stock change is sent the moment you save it, so sudemi and your shop agree within seconds, not after the next import.
 - **Checks in every few minutes**, so sudemi only shows your products while your shop is online and its prices are current.
 - **Brings sudemi into your WordPress admin**: statistics, the products as sudemi holds them, orders, delivery prices, payouts, your shop profile and support, under the **sudemi** item in the WordPress admin menu.

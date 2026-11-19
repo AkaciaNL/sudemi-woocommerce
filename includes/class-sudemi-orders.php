@@ -897,6 +897,13 @@ class Sudemi_Orders {
 					$product->get_name()
 				);
 			}
+			if ( null !== Sudemi_Personalisation::missing( self::personalisation_fields( $product ), Sudemi_Personalisation::from_line( $line ) ) ) {
+				return sprintf(
+					/* translators: %s: the product name. */
+					__( 'the text the buyer has to type for "%s" is missing', 'sudemi-connector' ),
+					$product->get_name()
+				);
+			}
 			if ( ! $product->is_purchasable() ) {
 				return sprintf(
 					/* translators: %s: the product name. */
@@ -989,14 +996,27 @@ class Sudemi_Orders {
 		$order->update_meta_data( Sudemi_Currency::META_ORDER_CURRENCY, $currency );
 
 		foreach ( $pending['lines'] as $index => $line ) {
-			$product = self::resolve_product( $line );
-			if ( ! $product ) {
+			$resolved = self::resolve_line( $line );
+			if ( null === $resolved ) {
 				$order->delete( true );
 				return null;
 			}
+			$product = $resolved['product'];
+			// The colour or size the buyer picked for an "Any ..." attribute, on the order line.
+			$chosen   = null === $resolved['variation'] ? array() : array( 'variation' => $resolved['variation'] );
 			$quantity = isset( $line['quantity'] ) ? (int) $line['quantity'] : 1;
+			// The text the buyer typed (a name to print), written on the order line under the
+			// field's name, as the shop's add-on plugin (or this plugin's own setting) names it.
+			$typed = Sudemi_Personalisation::item_meta( self::personalisation_fields( $product ), Sudemi_Personalisation::from_line( $line ) );
 			if ( null === $paid ) {
-				$order->add_product( $product, $quantity );
+				$item_id = $order->add_product( $product, $quantity, $chosen );
+				$item    = $item_id ? $order->get_item( $item_id, false ) : null;
+				if ( $item && ! empty( $typed ) ) {
+					foreach ( $typed as $label => $value ) {
+						$item->add_meta_data( $label, $value, true );
+					}
+					$item->save();
+				}
 				continue;
 			}
 			// The buyer's price wins over today's catalogue price: the price may have changed
@@ -1011,9 +1031,12 @@ class Sudemi_Orders {
 			$item_id = $order->add_product(
 				$product,
 				$quantity,
-				array(
-					'subtotal' => $net,
-					'total'    => $net,
+				array_merge(
+					$chosen,
+					array(
+						'subtotal' => $net,
+						'total'    => $net,
+					)
 				)
 			);
 			if ( ! $item_id ) {
@@ -1025,6 +1048,9 @@ class Sudemi_Orders {
 			$item = $order->get_item( $item_id, false );
 			if ( $item ) {
 				$item->set_taxes( self::tax_array( $taxes, true, $currency ) );
+				foreach ( $typed as $label => $value ) {
+					$item->add_meta_data( $label, $value, true );
+				}
 				$item->save();
 			}
 		}
@@ -1201,11 +1227,60 @@ class Sudemi_Orders {
 	 * @return WC_Product|null
 	 */
 	private static function resolve_product( array $line ) {
-		if ( empty( $line['external_id'] ) ) {
+		$resolved = self::resolve_line( $line );
+		return null === $resolved ? null : $resolved['product'];
+	}
+
+	/**
+	 * The product behind a line and the attributes to write on the order line.
+	 *
+	 * A variation with an "Any ..." attribute was sent once per value the buyer can pick, as
+	 * "<variation id>~<key>" (Sudemi_Variants): the key names the value the buyer bought, and the
+	 * order line gets it, as WooCommerce's own checkout writes it. A key that no longer matches a
+	 * value the variation offers is an item no longer sold here.
+	 *
+	 * @param array $line One entry of a pending order's lines.
+	 * @return array{product:WC_Product,variation:array|null}|null variation: the attributes for
+	 *               the order line, or null for WooCommerce's own (a product, a variation with
+	 *               every attribute set).
+	 */
+	private static function resolve_line( array $line ) {
+		$parsed = isset( $line['external_id'] ) ? Sudemi_Variants::parse( (string) $line['external_id'] ) : null;
+		if ( null === $parsed || $parsed[0] <= 0 ) {
 			return null;
 		}
-		$product = wc_get_product( (int) $line['external_id'] );
-		return $product instanceof WC_Product ? $product : null;
+		$product = wc_get_product( $parsed[0] );
+		if ( ! $product instanceof WC_Product ) {
+			return null;
+		}
+		if ( null === $parsed[1] ) {
+			return array(
+				'product'   => $product,
+				'variation' => null,
+			);
+		}
+		$parent = $product->is_type( 'variation' ) ? wc_get_product( $product->get_parent_id() ) : null;
+		if ( ! $parent ) {
+			return null;
+		}
+		$choice = Sudemi_Variants::find( Sudemi_Sync::variation_choices( $product, $parent ), $parsed[1] );
+		if ( null === $choice ) {
+			return null;
+		}
+		$variation = array();
+		foreach ( $choice as $name => $value ) {
+			$variation[ 'attribute_' . $name ] = $value;
+		}
+		return array(
+			'product'   => $product,
+			'variation' => $variation,
+		);
+	}
+
+	/** What the listing of a product or variation asks the buyer to type. */
+	private static function personalisation_fields( $product ) {
+		$parent = $product->is_type( 'variation' ) ? wc_get_product( $product->get_parent_id() ) : null;
+		return Sudemi_Personalisation::for_listing( $product, $parent ? $parent : null );
 	}
 
 	/**

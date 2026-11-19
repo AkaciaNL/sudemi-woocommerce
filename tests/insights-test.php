@@ -76,6 +76,8 @@ expect( 'size capped at 200', strpos( Sudemi_Insights::listings_path( Sudemi_Ins
 expect( 'numeric id ok', Sudemi_Insights::is_external_id( '27' ), true );
 expect( 'path traversal refused', Sudemi_Insights::is_external_id( '../shop' ), false );
 expect( 'empty refused', Sudemi_Insights::is_external_id( '' ), false );
+expect( 'one value of an "Any" attribute ok (1.4.4)', Sudemi_Insights::is_external_id( '27~0a1b2c3d4e' ), true );
+expect( 'a key that is not ours refused', Sudemi_Insights::is_external_id( '27~../x' ), false );
 expect( 'enabled path', Sudemi_Insights::enabled_path( '27' ), '/integration/v1/listings/27/enabled' );
 $read = Sudemi_Insights::set_enabled( '1/../2', true );
 expect( 'a bad id is refused here, nothing sent', $read['error'], 'not_found' );

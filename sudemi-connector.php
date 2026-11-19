@@ -3,7 +3,7 @@
  * Plugin Name:       sudemi Connector
  * Plugin URI:        https://sudemi.com/integrations/woocommerce
  * Description:       Lists this shop's products on sudemi, so an AI assistant can find them and send buyers to you. You stay the merchant of record.
- * Version:           1.4.3
+ * Version:           1.4.4
  * Requires at least: 6.2
  * Requires PHP:      8.0
  * Author:            Akacia
@@ -19,7 +19,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SUDEMI_VERSION', '1.4.3' );
+define( 'SUDEMI_VERSION', '1.4.4' );
 define( 'SUDEMI_PLUGIN_FILE', __FILE__ );
 define( 'SUDEMI_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
@@ -32,6 +32,9 @@ require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-pairing.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-queue.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-shipping.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-withdrawal.php';
+require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-variants.php';
+require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-addons.php';
+require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-personalisation.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-sync.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-claims.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-orders.php';
@@ -118,6 +121,7 @@ add_action(
 		if ( is_admin() ) {
 			Sudemi_Admin::boot();
 			Sudemi_Withdrawal::boot();
+			Sudemi_Personalisation::boot();
 		}
 	}
 );

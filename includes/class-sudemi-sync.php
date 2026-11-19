@@ -19,6 +19,9 @@ final class Sudemi_Sync {
 	const CRON_FULL   = 'sudemi_full_sync';
 	const BATCH_SIZE  = 100;
 
+	/** The most listings one /products request carries (sudemi's limit). */
+	const MAX_LISTINGS_PER_REQUEST = 500;
+
 	public static function boot() {
 		add_action( self::CRON_FULL, array( __CLASS__, 'cron_full' ), 10, 1 );
 		// Price and stock, as they change. Guarded inside so an unconnected shop does nothing.
@@ -122,6 +125,7 @@ final class Sudemi_Sync {
 			return 'busy';
 		}
 		try {
+			self::forget_siblings();
 			$state = self::state();
 			if ( null !== $state && time() - (int) $state['started'] > self::MAX_SYNC_AGE ) {
 				Sudemi_Logger::warn( 'An unfinished catalogue sync was too old and is started again.' );
@@ -181,17 +185,18 @@ final class Sudemi_Sync {
 			}
 			$products = array();
 			foreach ( $ids as $id ) {
-				$payload = self::product_payload( $id );
-				if ( null !== $payload ) {
+				foreach ( self::product_listings( $id ) as $payload ) {
 					$products[] = $payload;
 				}
 			}
-			if ( ! empty( $products ) ) {
+			// At most MAX_LISTINGS_PER_REQUEST per request: a page of products can be many more
+			// listings (a variation with "Any colour" is one per colour).
+			foreach ( array_chunk( $products, self::MAX_LISTINGS_PER_REQUEST ) as $chunk ) {
 				$sent = Sudemi_Client::post_signed(
 					'/integration/v1/products',
 					array(
 						'syncId'   => $state['id'],
-						'products' => $products,
+						'products' => $chunk,
 					)
 				);
 				if ( is_wp_error( $sent ) || 200 !== $sent['status'] ) {
@@ -374,6 +379,8 @@ final class Sudemi_Sync {
 	 * and the heartbeat sends it a few minutes later.
 	 */
 	private static function push_delta( $product_id ) {
+		// The variations as they are now, not as an earlier step of this request read them.
+		self::forget_siblings();
 		$product = wc_get_product( $product_id );
 		if ( ! $product ) {
 			// Deleted while this request ran: its listings wait for a full sync to remove them.
@@ -386,9 +393,10 @@ final class Sudemi_Sync {
 			// hidden) has no listing, and if it had one, only a full sync can remove it.
 			$listings = array();
 			foreach ( $product->get_children() as $child_id ) {
-				$listing = self::product_payload( $child_id );
-				self::mark_listed( $child_id, null !== $listing );
-				if ( null !== $listing ) {
+				// One listing, or one per value a buyer can pick for an "Any ..." attribute.
+				$own = self::product_listings( $child_id );
+				self::mark_listed( $child_id, ! empty( $own ) );
+				foreach ( $own as $listing ) {
 					$listings[] = $listing;
 				}
 			}
@@ -403,10 +411,10 @@ final class Sudemi_Sync {
 		if ( $product->is_type( 'simple' ) ) {
 			// A product that is no longer sellable (hidden, a draft) has no listing: its removal
 			// is a full sync's job.
-			$listing = 'publish' === $product->get_status() ? self::product_payload( $product->get_id() ) : null;
-			self::mark_listed( $product->get_id(), null !== $listing );
-			if ( null !== $listing ) {
-				self::push_listings( array( $listing ) );
+			$own = 'publish' === $product->get_status() ? self::product_listings( $product->get_id() ) : array();
+			self::mark_listed( $product->get_id(), ! empty( $own ) );
+			if ( ! empty( $own ) ) {
+				self::push_listings( $own );
 				return;
 			}
 		}
@@ -494,7 +502,7 @@ final class Sudemi_Sync {
 			Sudemi_Queue::discard( $listing['externalId'] );
 		}
 
-		$batches = array_chunk( $listings, 500 );
+		$batches = array_chunk( $listings, self::MAX_LISTINGS_PER_REQUEST );
 		$clean   = true;
 		$last    = count( $batches ) - 1;
 		foreach ( $batches as $i => $batch ) {
@@ -625,7 +633,7 @@ final class Sudemi_Sync {
 	/**
 	 * Published products and variations after $after, in id order. Variations are listings of
 	 * their own (size, colour...): a buyer buys one of them, never the variable "parent", which
-	 * has no single price, stock or barcode (product_payload() skips it).
+	 * has no single price, stock or barcode (product_listings() skips it).
 	 */
 	private static function product_ids_after( $after, $limit ) {
 		global $wpdb;
@@ -641,40 +649,151 @@ final class Sudemi_Sync {
 	}
 
 	/**
-	 * One product, as sudemi stores it.
+	 * The listings one product or variation becomes, as sudemi stores them: none (not sellable
+	 * here), one, or for a variation with an "Any ..." attribute one per value the buyer can pick
+	 * (see Sudemi_Variants), because sudemi sells an exact item and the shop's order has to say
+	 * which colour or size was bought.
 	 *
-	 * Images are sent as URLs on this shop's own origin, never as bytes: sudemi fetches them
-	 * through its egress guard and refuses anything that is not on the verified shop, which is
-	 * what stops a payload walking it around an internal network one image at a time.
+	 * @return array List of payloads.
 	 */
-	private static function product_payload( $product_id ) {
+	private static function product_listings( $product_id ) {
 		$product = wc_get_product( $product_id );
 		if ( ! $product ) {
-			return null;
+			return array();
 		}
 		// Not sellable as one item through sudemi: a variable parent (its variations are sent
 		// instead), a grouped product (a set of other products) and an external/affiliate link.
 		if ( $product->is_type( array( 'variable', 'grouped', 'external' ) ) ) {
-			return null;
+			return array();
 		}
-		$parent = $product->is_type( 'variation' ) ? wc_get_product( $product->get_parent_id() ) : null;
-		if ( $parent ) {
-			if ( ! $parent->is_visible() || 'publish' !== $parent->get_status() || ! $product->variation_is_visible() ) {
-				return null;
+		$parent_product = $product->is_type( 'variation' ) ? wc_get_product( $product->get_parent_id() ) : null;
+		if ( $product->is_type( 'variation' ) && ! $parent_product ) {
+			return array();
+		}
+		if ( $parent_product ) {
+			if ( ! $parent_product->is_visible() || 'publish' !== $parent_product->get_status() || ! $product->variation_is_visible() ) {
+				return array();
 			}
 		} elseif ( ! $product->is_visible() ) {
-			return null;
+			return array();
 		}
+		if ( ! $parent_product ) {
+			return array( self::product_payload( $product, null, array(), array() ) );
+		}
+		$own      = self::variation_attributes( $product );
+		$listings = array();
+		foreach ( self::variation_choices( $product, $parent_product ) as $choice ) {
+			$listings[] = self::product_payload( $product, $parent_product, $own, $choice );
+		}
+		return $listings;
+	}
+
+	/** A variation's attributes as WooCommerce stores them: name => value ('' = any). */
+	private static function variation_attributes( $variation ) {
+		$own = array();
+		foreach ( $variation->get_variation_attributes( false ) as $name => $value ) {
+			$own[ (string) $name ] = (string) $value;
+		}
+		return $own;
+	}
+
+	/** Siblings of a variable product, per request: parent id => [variation id => attributes]. */
+	private static $siblings = array();
+
+	/**
+	 * The full choices a variation is sold as (Sudemi_Variants::choices): its own attributes, or
+	 * for an "Any ..." attribute each value the parent offers for it.
+	 */
+	public static function variation_choices( $variation, $parent_product ) {
+		$own = self::variation_attributes( $variation );
+		if ( ! Sudemi_Variants::has_open( $own ) ) {
+			return array( $own );
+		}
+		$options = array();
+		foreach ( $parent_product->get_attributes() as $key => $attribute ) {
+			if ( ! $attribute instanceof WC_Product_Attribute || ! $attribute->get_variation() ) {
+				continue;
+			}
+			$values = $attribute->is_taxonomy()
+				? wc_get_product_terms( $parent_product->get_id(), $attribute->get_name(), array( 'fields' => 'slugs' ) )
+				: $attribute->get_options();
+			$options[ (string) $key ] = is_array( $values ) ? array_values( array_map( 'strval', $values ) ) : array();
+		}
+		$parent_id = (int) $parent_product->get_id();
+		if ( ! isset( self::$siblings[ $parent_id ] ) ) {
+			self::$siblings[ $parent_id ] = array();
+			// In the shop's variation order (menu order), as the storefront matches a choice.
+			foreach ( $parent_product->get_children() as $child_id ) {
+				$child = wc_get_product( $child_id );
+				if ( $child && $child->is_type( 'variation' ) ) {
+					self::$siblings[ $parent_id ][ (int) $child_id ] = self::variation_attributes( $child );
+				}
+			}
+		}
+		$siblings = self::$siblings[ $parent_id ];
+		if ( ! isset( $siblings[ (int) $variation->get_id() ] ) ) {
+			$siblings[ (int) $variation->get_id() ] = $own;
+		}
+		$choices = Sudemi_Variants::choices( $own, $options, $siblings, (int) $variation->get_id() );
+		if ( count( $choices ) >= Sudemi_Variants::MAX_PER_VARIATION ) {
+			Sudemi_Logger::warn( 'Variation ' . (int) $variation->get_id() . ' has more than ' . Sudemi_Variants::MAX_PER_VARIATION . ' choices; only the first are listed on sudemi.' );
+		}
+		return $choices;
+	}
+
+	/** Forgets the siblings read in this request (a variation was changed since). */
+	private static function forget_siblings() {
+		self::$siblings = array();
+	}
+
+	/** The value of one attribute as the shop shows it: the term's name, or the value as typed. */
+	private static function attribute_value( $name, $value ) {
+		$term = taxonomy_exists( $name ) ? get_term_by( 'slug', $value, $name ) : null;
+		return $term ? $term->name : (string) $value;
+	}
+
+	/**
+	 * The chosen attributes as sudemi takes them: [{name, value}] with the attribute's label and
+	 * the value in the shop's own words (Colour: Red, Size: L).
+	 */
+	private static function variant_attributes( $parent_product, array $choice ) {
+		$out = array();
+		foreach ( $choice as $name => $value ) {
+			if ( '' === (string) $value ) {
+				continue;
+			}
+			$out[] = array(
+				'name'  => wc_attribute_label( $name, $parent_product ),
+				'value' => self::attribute_value( $name, $value ),
+			);
+		}
+		return $out;
+	}
+
+	/**
+	 * One listing, as sudemi stores it: a simple product, or a variation sold as one full choice.
+	 *
+	 * Images are sent as URLs on this shop's own origin, never as bytes: sudemi fetches them
+	 * through its egress guard and refuses anything that is not on the verified shop, which is
+	 * what stops a payload walking it around an internal network one image at a time.
+	 *
+	 * @param WC_Product      $product The product or variation.
+	 * @param WC_Product|null $parent_product  The variable product of a variation.
+	 * @param array           $own     The variation's attributes as stored ('' = any).
+	 * @param array           $choice  The variation's full choice (every attribute filled in).
+	 */
+	private static function product_payload( $product, $parent_product, array $own, array $choice ) {
+		$product_id = $product->get_id();
 		// Categories, brand and the shared attributes live on the parent of a variation.
-		$base_id = $parent ? $parent->get_id() : $product_id;
-		$base    = $parent ? $parent : $product;
+		$base_id = $parent_product ? $parent_product->get_id() : $product_id;
+		$base    = $parent_product ? $parent_product : $product;
 
 		$images = array();
 		$image_ids = array_merge(
 			array( $product->get_image_id() ? $product->get_image_id() : $base->get_image_id() ),
 			$base->get_gallery_image_ids()
 		);
-		foreach ( array_filter( $image_ids ) as $image_id ) {
+		foreach ( array_unique( array_filter( $image_ids ) ) as $image_id ) {
 			$url = wp_get_attachment_url( $image_id );
 			if ( $url ) {
 				$images[] = $url;
@@ -683,22 +802,17 @@ final class Sudemi_Sync {
 
 		$categories = wp_get_post_terms( $base_id, 'product_cat', array( 'fields' => 'ids' ) );
 
-		$specs = array();
-		if ( $parent ) {
-			// This variation's own choices (Colour: Red, Size: L) first.
-			foreach ( $product->get_variation_attributes( false ) as $taxonomy => $value ) {
-				if ( '' === $value ) {
-					continue;
-				}
-				$term = taxonomy_exists( $taxonomy ) ? get_term_by( 'slug', $value, $taxonomy ) : null;
-				$specs[] = array(
-					'name'   => wc_attribute_label( $taxonomy, $parent ),
-					'values' => array( $term ? $term->name : (string) $value ),
-				);
-			}
+		$specs   = array();
+		$variant = $parent_product ? self::variant_attributes( $parent_product, $choice ) : array();
+		// This variation's own choices (Colour: Red, Size: L) first.
+		foreach ( $variant as $attribute ) {
+			$specs[] = array(
+				'name'   => $attribute['name'],
+				'values' => array( $attribute['value'] ),
+			);
 		}
 		foreach ( $base->get_attributes() as $attribute ) {
-			if ( ! $attribute instanceof WC_Product_Attribute || ( $parent && $attribute->get_variation() ) ) {
+			if ( ! $attribute instanceof WC_Product_Attribute || ( $parent_product && $attribute->get_variation() ) ) {
 				continue;
 			}
 			$name = wc_attribute_label( $attribute->get_name() );
@@ -714,9 +828,16 @@ final class Sudemi_Sync {
 		}
 
 		$payload = array(
-			'externalId'  => (string) $product->get_id(),
+			'externalId'  => $parent_product ? Sudemi_Variants::external_id( $product_id, $own, $choice ) : (string) $product_id,
 			'sku'         => $product->get_sku(),
-			'title'       => self::title( $product, $parent ),
+			'title'       => self::title( $product, $parent_product, $own, $variant ),
+			// The variations of one variable product share its id: sudemi shows them as one
+			// product with a choice of sizes or colours. Null for a simple product.
+			'itemGroupId' => $parent_product ? (string) $parent_product->get_id() : null,
+			// What tells the variations apart, by name: the buyer's AI chooses by them.
+			'variantAttributes' => $variant,
+			// A text the buyer types (a name to print), set on the product's sudemi tab.
+			'personalisation' => Sudemi_Personalisation::for_listing( $product, $parent_product ),
 			'description' => wp_strip_all_tags( $product->get_description() ? $product->get_description() : $base->get_description() ),
 			'url'         => $product->get_permalink(),
 			'priceMinor'  => self::minor( self::price_with_tax( $product ) ),
@@ -741,19 +862,24 @@ final class Sudemi_Sync {
 		return Sudemi_Withdrawal::apply( $payload, Sudemi_Withdrawal::for_product( $base_id ) );
 	}
 
-	/** A variation's title names its options ("T-shirt - Red, L"), so each size reads as itself. */
-	private static function title( $product, $parent ) {
+	/**
+	 * A variation's title names its options ("T-shirt - Red, L"), so each size reads as itself.
+	 * WooCommerce names a variation with one or two attributes itself; with three or more, or an
+	 * "Any ..." attribute, its name is the parent's, and the options are added here.
+	 */
+	private static function title( $product, $parent_product, array $own, array $variant ) {
 		$name = $product->get_name();
-		if ( ! $parent || $name !== $parent->get_name() ) {
+		if ( ! $parent_product ) {
+			return $name;
+		}
+		if ( Sudemi_Variants::has_open( $own ) ) {
+			$name = $parent_product->get_name();
+		} elseif ( $name !== $parent_product->get_name() ) {
 			return $name;
 		}
 		$values = array();
-		foreach ( $product->get_variation_attributes( false ) as $taxonomy => $value ) {
-			if ( '' === $value ) {
-				continue;
-			}
-			$term     = taxonomy_exists( $taxonomy ) ? get_term_by( 'slug', $value, $taxonomy ) : null;
-			$values[] = $term ? $term->name : (string) $value;
+		foreach ( $variant as $attribute ) {
+			$values[] = $attribute['value'];
 		}
 		return empty( $values ) ? $name : $name . ' - ' . implode( ', ', $values );
 	}

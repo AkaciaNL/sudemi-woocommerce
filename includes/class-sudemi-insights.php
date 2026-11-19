@@ -106,9 +106,12 @@ final class Sudemi_Insights {
 		return '/integration/v1/listings?' . http_build_query( $query, '', '&', PHP_QUERY_RFC3986 );
 	}
 
-	/** An external id as this plugin sends them (WooCommerce product or variation id). */
+	/**
+	 * An external id as this plugin sends them: a WooCommerce product or variation id, or
+	 * "<variation id>~<key>" for one value of an "Any ..." attribute (Sudemi_Variants).
+	 */
 	public static function is_external_id( $id ) {
-		return is_string( $id ) && 1 === preg_match( '/^[0-9]{1,20}$/', $id );
+		return is_string( $id ) && 1 === preg_match( '/^[0-9]{1,20}(~[0-9a-f]{10})?$/', $id );
 	}
 
 	public static function enabled_path( $external_id ) {

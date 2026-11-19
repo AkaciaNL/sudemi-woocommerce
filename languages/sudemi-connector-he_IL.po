@@ -2227,3 +2227,41 @@ msgstr "המוצרים שלכם לא מוצגים בינתיים. נכתוב ל�
 #: admin/class-sudemi-admin.php
 msgid "Contact support"
 msgstr "פנייה לתמיכה"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "the text the buyer has to type for \"%s\" is missing"
+msgstr "חסר הטקסט שהקונה צריך להקליד עבור \"%s\""
+
+#: includes/class-sudemi-personalisation.php
+msgid "Text the buyer types"
+msgstr "טקסט שהקונה מקליד"
+
+#: includes/class-sudemi-personalisation.php
+msgid "For example: Name to print"
+msgstr "לדוגמה: שם להדפסה"
+
+#: includes/class-sudemi-personalisation.php
+msgid "What sudemi asks the buyer to type, for example a name printed on a shirt. Leave empty when the buyer types nothing. On a variable product it applies to the variations ticked \"Buyer types a text\"."
+msgstr "מה ש-sudemi מבקש מהקונה להקליד, למשל שם שמודפס על חולצה. השאירו ריק אם הקונה לא מקליד דבר. במוצר עם וריאציות זה חל על הווריאציות שסומן בהן \"הקונה מקליד טקסט\"."
+
+#: includes/class-sudemi-personalisation.php
+msgid "Longest text (characters)"
+msgstr "הטקסט הארוך ביותר (תווים)"
+
+#: includes/class-sudemi-personalisation.php
+msgid "Text required"
+msgstr "טקסט חובה"
+
+#: includes/class-sudemi-personalisation.php
+msgid "The buyer cannot order without typing it."
+msgstr "הקונה לא יכול להזמין בלי להקליד אותו."
+
+#: includes/class-sudemi-personalisation.php
+msgid "sudemi asks the buyer for the text set on the product's sudemi tab."
+msgstr "sudemi מבקש מהקונה את הטקסט שהוגדר בלשונית sudemi של המוצר."
+
+#: includes/class-sudemi-personalisation.php
+msgid "Buyer types a text"
+msgstr "הקונה מקליד טקסט"

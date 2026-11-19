@@ -63,6 +63,9 @@ final class Sudemi_Client {
 
 require __DIR__ . '/../includes/class-sudemi-logger.php';
 require __DIR__ . '/../includes/class-sudemi-order-calls.php';
+require __DIR__ . '/../includes/class-sudemi-variants.php';
+require __DIR__ . '/../includes/class-sudemi-addons.php';
+require __DIR__ . '/../includes/class-sudemi-personalisation.php';
 require __DIR__ . '/../includes/class-sudemi-orders.php';
 
 $failures = 0;

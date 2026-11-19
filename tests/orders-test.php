@@ -29,6 +29,9 @@ function is_wp_error( $thing ) {
 }
 
 require __DIR__ . '/../includes/class-sudemi-currency.php';
+require __DIR__ . '/../includes/class-sudemi-variants.php';
+require __DIR__ . '/../includes/class-sudemi-addons.php';
+require __DIR__ . '/../includes/class-sudemi-personalisation.php';
 require __DIR__ . '/../includes/class-sudemi-orders.php';
 require __DIR__ . '/../includes/class-sudemi-queue.php';
 

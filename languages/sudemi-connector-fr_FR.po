@@ -2227,3 +2227,41 @@ msgstr "Vos produits ne sont pas affichés pour le moment. Nous vous écrivons c
 #: admin/class-sudemi-admin.php
 msgid "Contact support"
 msgstr "Contacter le support"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "the text the buyer has to type for \"%s\" is missing"
+msgstr "le texte que l'acheteur doit saisir pour \"%s\" est manquant"
+
+#: includes/class-sudemi-personalisation.php
+msgid "Text the buyer types"
+msgstr "Texte saisi par l'acheteur"
+
+#: includes/class-sudemi-personalisation.php
+msgid "For example: Name to print"
+msgstr "Par exemple : Nom à imprimer"
+
+#: includes/class-sudemi-personalisation.php
+msgid "What sudemi asks the buyer to type, for example a name printed on a shirt. Leave empty when the buyer types nothing. On a variable product it applies to the variations ticked \"Buyer types a text\"."
+msgstr "Ce que sudemi demande à l'acheteur de saisir, par exemple un nom imprimé sur un t-shirt. Laissez vide si l'acheteur ne saisit rien. Pour un produit variable, cela s'applique aux variations cochées \"L'acheteur saisit un texte\"."
+
+#: includes/class-sudemi-personalisation.php
+msgid "Longest text (characters)"
+msgstr "Texte le plus long (caractères)"
+
+#: includes/class-sudemi-personalisation.php
+msgid "Text required"
+msgstr "Texte obligatoire"
+
+#: includes/class-sudemi-personalisation.php
+msgid "The buyer cannot order without typing it."
+msgstr "L'acheteur ne peut pas commander sans le saisir."
+
+#: includes/class-sudemi-personalisation.php
+msgid "sudemi asks the buyer for the text set on the product's sudemi tab."
+msgstr "sudemi demande à l'acheteur le texte défini dans l'onglet sudemi du produit."
+
+#: includes/class-sudemi-personalisation.php
+msgid "Buyer types a text"
+msgstr "L'acheteur saisit un texte"

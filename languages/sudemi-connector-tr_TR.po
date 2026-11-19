@@ -2227,3 +2227,41 @@ msgstr "Ürünleriniz şimdilik gösterilmiyor. Neyin gerektiğini size e-postay
 #: admin/class-sudemi-admin.php
 msgid "Contact support"
 msgstr "Destekle iletişime geçin"
+
+#. translators: %s: the product name.
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "the text the buyer has to type for \"%s\" is missing"
+msgstr "\"%s\" için alıcının yazması gereken metin eksik"
+
+#: includes/class-sudemi-personalisation.php
+msgid "Text the buyer types"
+msgstr "Alıcının yazdığı metin"
+
+#: includes/class-sudemi-personalisation.php
+msgid "For example: Name to print"
+msgstr "Örneğin: Basılacak isim"
+
+#: includes/class-sudemi-personalisation.php
+msgid "What sudemi asks the buyer to type, for example a name printed on a shirt. Leave empty when the buyer types nothing. On a variable product it applies to the variations ticked \"Buyer types a text\"."
+msgstr "sudemi'nin alıcıdan yazmasını istediği metin, örneğin bir tişörte basılacak isim. Alıcı bir şey yazmayacaksa boş bırakın. Varyasyonlu bir üründe \"Alıcı bir metin yazar\" işaretli varyasyonlar için geçerlidir."
+
+#: includes/class-sudemi-personalisation.php
+msgid "Longest text (characters)"
+msgstr "En uzun metin (karakter)"
+
+#: includes/class-sudemi-personalisation.php
+msgid "Text required"
+msgstr "Metin zorunlu"
+
+#: includes/class-sudemi-personalisation.php
+msgid "The buyer cannot order without typing it."
+msgstr "Alıcı bu metni yazmadan sipariş veremez."
+
+#: includes/class-sudemi-personalisation.php
+msgid "sudemi asks the buyer for the text set on the product's sudemi tab."
+msgstr "sudemi, alıcıdan ürünün sudemi sekmesinde ayarlanan metni ister."
+
+#: includes/class-sudemi-personalisation.php
+msgid "Buyer types a text"
+msgstr "Alıcı bir metin yazar"

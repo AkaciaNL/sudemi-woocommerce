@@ -24,6 +24,10 @@ jobs:
         run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/site-test.php"
       - name: Return requests
         run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/requests-test.php"
+      - name: Variations (every "Any" value its own listing, the exact variation on the order)
+        run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/variants-test.php"
+      - name: Texts the buyer types (add-on plugins, own setting, order line)
+        run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/personalisation-test.php"
       - name: Order safety (accept/reject/shipped answers, price queue)
         run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/orders-test.php"
       - name: Order claims (one caller builds the order)

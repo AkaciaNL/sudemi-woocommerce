@@ -103,6 +103,9 @@ final class Sudemi_Withdrawal {
 				'desc_tip'    => false,
 			)
 		);
+		if ( $post ) {
+			Sudemi_Personalisation::render_fields( $post->ID );
+		}
 		echo '</div></div>';
 	}
 

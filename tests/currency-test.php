@@ -79,6 +79,18 @@ class WC_Product {
 	public function get_name() {
 		return 'Mug';
 	}
+	public function is_type( $type ) {
+		return false;
+	}
+	public function get_id() {
+		return 14;
+	}
+}
+function get_post_meta( $id, $key, $single = false ) {
+	return '';
+}
+function is_multisite() {
+	return false;
 }
 class WP_Error {
 }
@@ -106,6 +118,9 @@ class Sudemi_Logger {
 }
 
 require __DIR__ . '/../includes/class-sudemi-currency.php';
+require __DIR__ . '/../includes/class-sudemi-variants.php';
+require __DIR__ . '/../includes/class-sudemi-addons.php';
+require __DIR__ . '/../includes/class-sudemi-personalisation.php';
 require __DIR__ . '/../includes/class-sudemi-orders.php';
 
 $failures = 0;

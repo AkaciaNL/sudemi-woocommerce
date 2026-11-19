@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, chatgpt, product feed
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ This plugin connects your WooCommerce shop to sudemi. It keeps your catalogue th
 
 = What the plugin does =
 
-* **Lists your catalogue on sudemi:** categories, products with their descriptions and specifications, photos, prices, stock and delivery prices. Every variation of a variable product is its own listing with its own price, stock and photo.
+* **Lists your catalogue on sudemi:** categories, products with their descriptions and specifications, photos, prices, stock and delivery prices. Every variation of a variable product is its own listing with its own price, stock and photo, shown to buyers as one product with a choice of sizes and colours. A text the buyer types (from WooCommerce Product Add-Ons, Advanced Product Fields or PPOM, or the plugin's own setting) is asked on sudemi too.
 * **Keeps it current:** a price or stock change is sent the moment you save it, so sudemi and your shop agree within seconds.
 * **Checks in every 5 minutes,** so sudemi only shows your products while your shop is online and its prices are current.
 * **Dashboard:** sales, orders, average order, what you receive, how often AI assistants showed your products, how often they were opened and put in a cart, for 7, 30 or 90 days, with daily charts, top products and the countries your buyers are in.
@@ -126,10 +126,20 @@ Use the Support page inside the plugin, or the seller guides at https://sudemi.c
 
 == Upgrade Notice ==
 
+= 1.4.4 =
+Sizes and colours of one product now show to buyers as one product with a choice, and a variation with "Any colour" is sold per colour.
+
 = 1.4.3 =
 Clearer WordPress.org description, a list of every call to sudemi (External services), and screenshots. No change in how the plugin works.
 
 == Changelog ==
+
+= 1.4.4 =
+* The sizes and colours of a variable product are sent as one group, so AI assistants show the product once with its sizes and colours to choose from, instead of one result per size.
+* Each variation also sends its attributes by name (for example Size: M, Colour: Red), so an AI assistant can pick exactly the variation the buyer asked for, with its own price.
+* Fix: a variation with an "Any" attribute (for example "Any colour") is now listed once per colour the buyer can pick, and the order in your shop names the colour that was bought. Before, it was one listing without a colour, and the order line said no colour at all. A combination you also set up as its own variation keeps that variation's price, as in your shop.
+* A text the buyer types (for example a name printed on a shirt) is now asked on sudemi too, with its price. It is read from WooCommerce Product Add-Ons (product add-ons and global add-on groups), Advanced Product Fields for WooCommerce and PPOM when the shop uses one of them (text fields), and the typed text is written on the order line under the field's name. For shops without an add-on plugin there is a new setting on the product's sudemi tab ("Text the buyer types", longest text, required) and a "Buyer types a text" box on each variation, for example on the "Custom name: Yes" variations that carry the extra price. An order without a required text is declined, so nothing is made without it.
+* A page of the full catalogue sync is sent in requests of at most 500 listings, so a product with many variations (100 or more, or an "Any" attribute with many values) never makes a request sudemi refuses.
 
 = 1.4.3 =
 * WordPress.org listing: a full description in plain words, every call the plugin makes to sudemi listed under External services, more questions answered, and screenshots.
