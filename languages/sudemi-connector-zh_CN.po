@@ -2312,6 +2312,10 @@ msgid "The product has no price, so it is not listed."
 msgstr "该商品没有价格，因此不上架。"
 
 #: includes/class-sudemi-issues.php
+msgid "The product has more than 50 photos; only the first 50 are sent to sudemi."
+msgstr "该商品的照片超过 50 张；只有前 50 张会发送到 sudemi。"
+
+#: includes/class-sudemi-issues.php
 msgid "A required add-on cannot be offered on sudemi, so the product is not listed."
 msgstr "一个必填附加项无法在 sudemi 上提供，因此该商品不上架。"
 

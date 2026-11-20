@@ -2318,6 +2318,10 @@ msgid "The product has no price, so it is not listed."
 msgstr ""
 
 #: includes/class-sudemi-issues.php
+msgid "The product has more than 50 photos; only the first 50 are sent to sudemi."
+msgstr ""
+
+#: includes/class-sudemi-issues.php
 msgid "A required add-on cannot be offered on sudemi, so the product is not listed."
 msgstr ""
 

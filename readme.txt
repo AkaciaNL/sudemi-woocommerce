@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, chatgpt, product feed
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.4.5
+Stable tag: 1.4.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -126,6 +126,9 @@ Use the Support page inside the plugin, or the seller guides at https://sudemi.c
 
 == Upgrade Notice ==
 
+= 1.4.6 =
+Product photos: each variation also sends its own photos from popular variation gallery add-ons.
+
 = 1.4.5 =
 New orders are no longer confirmed automatically unless you turn it on: each order waits for your answer, with a notice on every admin page.
 
@@ -136,6 +139,12 @@ Sizes and colours of one product now show to buyers as one product with a choice
 Clearer WordPress.org description, a list of every call to sudemi (External services), and screenshots. No change in how the plugin works.
 
 == Changelog ==
+
+= 1.4.6 =
+* Product photos: also sends variation galleries from popular add-ons. A variation with its own photos sends only those, its own main photo first, the way your storefront shows them: from WooCommerce's own variation gallery (WooCommerce 11.1 and later), WooCommerce Additional Variation Images, Variation Images Gallery for WooCommerce (Emran Ahmed and RadiusTheme), WooThumbs and Smart Variations Images. A variation without its own gallery keeps the product's photos, as before.
+* Photos on a CDN or another website are accepted by sudemi now, not only photos on your own domain. A photo address starting with http:// is sent as https:// when your shop itself uses https.
+* At most 50 photos are sent per product or variation; when there are more, the "Products on sudemi" page says so.
+* The new text in all twelve languages.
 
 = 1.4.5 =
 * "Confirm orders automatically when the items are in stock" is now off unless you turn it on (sudemi > Orders). A shop that never saved this setting now answers each new order by hand, so nothing is accepted before you have checked it; a shop that turned it on keeps it on.

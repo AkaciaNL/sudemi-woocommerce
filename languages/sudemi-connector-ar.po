@@ -2347,6 +2347,10 @@ msgid "The product has no price, so it is not listed."
 msgstr "ليس للمنتج سعر، لذا لا يُدرج."
 
 #: includes/class-sudemi-issues.php
+msgid "The product has more than 50 photos; only the first 50 are sent to sudemi."
+msgstr "للمنتج أكثر من 50 صورة؛ تُرسل أول 50 صورة فقط إلى sudemi."
+
+#: includes/class-sudemi-issues.php
 msgid "A required add-on cannot be offered on sudemi, so the product is not listed."
 msgstr "لا يمكن عرض إضافة إلزامية على sudemi، لذا لا يُدرج المنتج."
 

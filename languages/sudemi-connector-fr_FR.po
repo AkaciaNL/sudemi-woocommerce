@@ -2319,6 +2319,10 @@ msgid "The product has no price, so it is not listed."
 msgstr "Le produit n'a pas de prix, il n'est donc pas référencé."
 
 #: includes/class-sudemi-issues.php
+msgid "The product has more than 50 photos; only the first 50 are sent to sudemi."
+msgstr "Le produit a plus de 50 photos ; seules les 50 premières sont envoyées à sudemi."
+
+#: includes/class-sudemi-issues.php
 msgid "A required add-on cannot be offered on sudemi, so the product is not listed."
 msgstr "Une option obligatoire ne peut pas être proposée sur sudemi, le produit n'est donc pas référencé."
 

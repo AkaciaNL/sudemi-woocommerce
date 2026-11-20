@@ -319,6 +319,8 @@ final class Sudemi_Issues {
 				return __( 'The product has more combinations than sudemi lists; only the first are listed.', 'sudemi-connector' );
 			case self::MISSING_PRICE:
 				return __( 'The product has no price, so it is not listed.', 'sudemi-connector' );
+			case self::IMAGE_SKIPPED:
+				return __( 'The product has more than 50 photos; only the first 50 are sent to sudemi.', 'sudemi-connector' );
 			case self::NOT_ORDERABLE:
 				return __( 'A required add-on cannot be offered on sudemi, so the product is not listed.', 'sudemi-connector' );
 			case 'rejected':

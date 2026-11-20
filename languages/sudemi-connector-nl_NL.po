@@ -2319,6 +2319,10 @@ msgid "The product has no price, so it is not listed."
 msgstr "Het product heeft geen prijs, dus het wordt niet vermeld."
 
 #: includes/class-sudemi-issues.php
+msgid "The product has more than 50 photos; only the first 50 are sent to sudemi."
+msgstr "Het product heeft meer dan 50 foto's; alleen de eerste 50 worden naar sudemi gestuurd."
+
+#: includes/class-sudemi-issues.php
 msgid "A required add-on cannot be offered on sudemi, so the product is not listed."
 msgstr "Een verplichte add-on kan niet op sudemi worden aangeboden, dus het product wordt niet vermeld."
 

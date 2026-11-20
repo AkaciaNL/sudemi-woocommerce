@@ -893,9 +893,10 @@ final class Sudemi_Sync {
 	/**
 	 * One listing, as sudemi stores it: a simple product, or a variation sold as one full choice.
 	 *
-	 * Images are sent as URLs on this shop's own origin, never as bytes: sudemi fetches them
-	 * through its egress guard and refuses anything that is not on the verified shop, which is
-	 * what stops a payload walking it around an internal network one image at a time.
+	 * Images are sent as absolute URLs, never as bytes, the main photo first (Sudemi_Images: a
+	 * variation's own gallery from WooCommerce or a variation gallery add-on, at most 50). Any
+	 * public https address is accepted, a CDN included: sudemi fetches each one through its
+	 * egress guard (public addresses only) and shows it through its own signed image proxy.
 	 *
 	 * @param WC_Product      $product The product or variation.
 	 * @param WC_Product|null $parent_product  The variable product of a variation.
@@ -909,17 +910,7 @@ final class Sudemi_Sync {
 		$base_id = $parent_product ? $parent_product->get_id() : $product_id;
 		$base    = $parent_product ? $parent_product : $product;
 
-		$images = array();
-		$image_ids = array_merge(
-			array( $product->get_image_id() ? $product->get_image_id() : $base->get_image_id() ),
-			$base->get_gallery_image_ids()
-		);
-		foreach ( array_unique( array_filter( $image_ids ) ) as $image_id ) {
-			$url = wp_get_attachment_url( $image_id );
-			if ( $url ) {
-				$images[] = $url;
-			}
-		}
+		list( $images, $images_left_out ) = Sudemi_Images::for_product( $product, $parent_product );
 
 		$categories = wp_get_post_terms( $base_id, 'product_cat', array( 'fields' => 'ids' ) );
 
@@ -982,6 +973,9 @@ final class Sudemi_Sync {
 			// Never sold without a price (never free): not sent, and the shop is told why.
 			Sudemi_Issues::add( $payload['externalId'], Sudemi_Issues::MISSING_PRICE, 'error', 'price', 'Not listed: the product has no price.' );
 			return null;
+		}
+		if ( $images_left_out > 0 ) {
+			Sudemi_Issues::add( $payload['externalId'], Sudemi_Issues::IMAGE_SKIPPED, 'warning', 'images', 'More than ' . Sudemi_Images::MAX . ' photos; only the first ' . Sudemi_Images::MAX . ' are sent.', array( 'sent' => Sudemi_Images::MAX ) );
 		}
 		// The sale and its dates, stock status and backorders, dimensions, the quantities the
 		// shop sells in and quantity prices (Sudemi_Product_Data).
