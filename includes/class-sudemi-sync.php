@@ -739,12 +739,16 @@ final class Sudemi_Sync {
 			return array();
 		}
 		if ( ! $parent_product ) {
-			return array( self::product_payload( $product, null, array(), array() ) );
+			$payload = self::product_payload( $product, null, array(), array() );
+			return null === $payload ? array() : array( $payload );
 		}
 		$own      = self::variation_attributes( $product );
 		$listings = array();
 		foreach ( self::variation_choices( $product, $parent_product ) as $choice ) {
-			$listings[] = self::product_payload( $product, $parent_product, $own, $choice );
+			$payload = self::product_payload( $product, $parent_product, $own, $choice );
+			if ( null !== $payload ) {
+				$listings[] = $payload;
+			}
 		}
 		return $listings;
 	}
@@ -874,6 +878,7 @@ final class Sudemi_Sync {
 	 * @param WC_Product|null $parent_product  The variable product of a variation.
 	 * @param array           $own     The variation's attributes as stored ('' = any).
 	 * @param array           $choice  The variation's full choice (every attribute filled in).
+	 * @return array|null Null without a price (not listed, a missing_price issue).
 	 */
 	private static function product_payload( $product, $parent_product, array $own, array $choice ) {
 		$product_id = $product->get_id();
@@ -950,9 +955,10 @@ final class Sudemi_Sync {
 			'gtin'        => self::gtin( $product ),
 			'brand'       => self::brand( $base_id ),
 		);
-		if ( null === $payload['priceMinor'] ) {
-			// sudemi refuses a listing without a price; the shop is told why it is missing.
-			Sudemi_Issues::add( $payload['externalId'], Sudemi_Issues::MISSING_PRICE, 'error', 'price', 'The product has no price.' );
+		if ( null === $payload['priceMinor'] || $payload['priceMinor'] < 1 ) {
+			// Never sold without a price (never free): not sent, and the shop is told why.
+			Sudemi_Issues::add( $payload['externalId'], Sudemi_Issues::MISSING_PRICE, 'error', 'price', 'Not listed: the product has no price.' );
+			return null;
 		}
 		// The sale and its dates, stock status and backorders, dimensions, the quantities the
 		// shop sells in and quantity prices (Sudemi_Product_Data).

@@ -451,8 +451,9 @@ final class Sudemi_Addons {
 
 	/**
 	 * ThemeHigh Extra Product Options: its fields for a product, as property lists (type, name,
-	 * title, required, enabled, maxlength, options; price in the paid version). The free version
-	 * has no prices; its options are plain texts.
+	 * title, required, enabled, maxlength, options; price and price_type in the paid version,
+	 * on the field and on each option). The free version has no prices; its options are plain
+	 * texts. A price that cannot be read leaves the field not offered, never free.
 	 *
 	 * @param array $fields Field name => properties.
 	 */
@@ -468,9 +469,7 @@ final class Sudemi_Addons {
 			if ( '' === $name ) {
 				continue;
 			}
-			$ptype = isset( $props['price_type'] ) ? (string) $props['price_type'] : '';
-			$price = isset( $props['price'] ) ? self::num( $props['price'] ) : 0.0;
-			$pct   = 'percentage' === $ptype;
+			list( $price, $pct, $priced_ok ) = self::thwepof_price( isset( $props['price'] ) ? $props['price'] : '', isset( $props['price_type'] ) ? $props['price_type'] : '' );
 			$req   = isset( $props['required'] ) && self::truthy( $props['required'] );
 			$store = array(
 				'kind' => 'name',
@@ -478,20 +477,49 @@ final class Sudemi_Addons {
 			);
 			$key   = 'thwepof:' . self::slug( $name );
 			if ( in_array( $type, self::THWEPOF_TEXT, true ) ) {
-				$out[] = self::make( $key, $label, 'text', $req, isset( $props['maxlength'] ) ? (int) $props['maxlength'] : 0, $pct ? 0 : $price, $pct ? $price : 0, array(), $store );
+				$field = self::make( $key, $label, 'text', $req, isset( $props['maxlength'] ) ? (int) $props['maxlength'] : 0, $pct ? 0 : $price, $pct ? $price : 0, array(), $store );
+				$out[] = $priced_ok ? $field : self::unofferable( $field, self::REASON_PRICING );
 			} elseif ( in_array( $type, self::THWEPOF_CHOICE, true ) || in_array( $type, self::THWEPOF_MULTI, true ) ) {
 				$choices = array();
 				foreach ( isset( $props['options'] ) && is_array( $props['options'] ) ? $props['options'] : array() as $option ) {
-					$text      = is_array( $option ) ? ( isset( $option['text'] ) ? $option['text'] : ( isset( $option['key'] ) ? $option['key'] : '' ) ) : (string) $option;
-					$choices[] = self::choice( self::slug( $text ), $text, 0, 0 );
+					$text = is_array( $option ) ? ( isset( $option['text'] ) && '' !== (string) $option['text'] ? $option['text'] : ( isset( $option['key'] ) ? $option['key'] : '' ) ) : (string) $option;
+					// The paid version keeps a price per option (price, price_type: '' fixed or
+					// 'percentage'); the free one keeps plain texts. Never offered for free.
+					list( $o_price, $o_pct, $o_ok ) = is_array( $option )
+						? self::thwepof_price( isset( $option['price'] ) ? $option['price'] : '', isset( $option['price_type'] ) ? $option['price_type'] : '' )
+						: array( 0.0, false, true );
+					$priced_ok = $priced_ok && $o_ok;
+					$choices[] = self::choice( self::slug( $text ), $text, $o_pct ? 0 : $o_price, $o_pct ? $o_price : 0 );
 				}
 				$choices = self::unique_choices( $choices );
 				if ( ! empty( $choices ) ) {
-					$out[] = self::make( $key, $label, in_array( $type, self::THWEPOF_MULTI, true ) ? 'multi_choice' : 'choice', $req, 0, $pct ? 0 : $price, $pct ? $price : 0, $choices, $store );
+					$field = self::make( $key, $label, in_array( $type, self::THWEPOF_MULTI, true ) ? 'multi_choice' : 'choice', $req, 0, $pct ? 0 : $price, $pct ? $price : 0, $choices, $store );
+					$out[] = $priced_ok || null !== $field['unofferable'] ? $field : self::unofferable( $field, self::REASON_PRICING );
 				}
 			}
 		}
 		return $out;
+	}
+
+	/**
+	 * A ThemeHigh price: [amount, is percent, readable]. Fixed ('' or 'normal') and
+	 * 'percentage' are read; any other price type (per character, dynamic, a formula) with an
+	 * amount is not readable, so the field is never offered for free. Pure.
+	 */
+	private static function thwepof_price( $price, $type ) {
+		$type   = strtolower( trim( (string) $type ) );
+		$raw    = trim( (string) ( is_scalar( $price ) ? $price : '' ) );
+		$amount = self::num( $raw );
+		if ( '' !== $raw && ! is_numeric( str_replace( ',', '.', $raw ) ) ) {
+			return array( 0.0, false, false );
+		}
+		if ( in_array( $type, array( '', 'normal', 'fixed' ), true ) ) {
+			return array( $amount, false, true );
+		}
+		if ( 'percentage' === $type ) {
+			return array( $amount, true, true );
+		}
+		return array( 0.0, false, 0.0 === $amount );
 	}
 
 	/**

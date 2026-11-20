@@ -193,6 +193,18 @@ expect( 'YITH order line: the chosen option as ywapo-addon-<addon>-<option index
 
 $tc = Sudemi_Addons::from_thwepof( array( 'wrap' => array( 'type' => 'checkboxgroup', 'name' => 'wrap', 'title' => 'Wrapping', 'enabled' => 1, 'options' => array( 'Paper', 'Ribbon' ) ) ) );
 expect( 'ThemeHigh: a checkbox group is a multi_choice of its options (no prices in the free version)', array( $tc[0]['type'], $tc[0]['choices'][1]['label'], $tc[0]['choices'][1]['price'] ), array( 'multi_choice', 'Ribbon', 0.0 ) );
+$tp = Sudemi_Addons::from_thwepof(
+	array(
+		'size'  => array( 'type' => 'select', 'name' => 'size', 'title' => 'Box', 'enabled' => 1, 'options' => array( 'small' => array( 'key' => 'small', 'text' => 'Small', 'price' => '2.50', 'price_type' => '' ), 'big' => array( 'key' => 'big', 'text' => 'Big', 'price' => '10', 'price_type' => 'percentage' ) ) ),
+		'odd'   => array( 'type' => 'radio', 'name' => 'odd', 'title' => 'Odd', 'enabled' => 1, 'options' => array( array( 'key' => 'a', 'text' => 'A', 'price' => '3', 'price_type' => 'dynamic' ) ) ),
+		'chars' => array( 'type' => 'inputtext', 'name' => 'chars', 'title' => 'Chars', 'enabled' => 1, 'price' => '0.5', 'price_type' => 'char-count' ),
+		'fixed' => array( 'type' => 'inputtext', 'name' => 'fixed', 'title' => 'Fixed', 'enabled' => 1, 'price' => '4', 'price_type' => 'normal' ),
+	)
+);
+expect( 'ThemeHigh paid: option prices read (fixed and percentage), never 0', array( $tp[0]['choices'][0]['price'], $tp[0]['choices'][1]['percent'], $tp[0]['unofferable'] ), array( 2.5, 10.0, null ) );
+expect( 'ThemeHigh paid: an option price type sudemi cannot read leaves the field not offered', $tp[1]['unofferable'], Sudemi_Addons::REASON_PRICING );
+expect( 'ThemeHigh paid: a per-character field price is not offered', $tp[2]['unofferable'], Sudemi_Addons::REASON_PRICING );
+expect( 'ThemeHigh paid: a normal field price is read', array( $tp[3]['price'], $tp[3]['unofferable'] ), array( 4.0, null ) );
 $tcf = array( Sudemi_Personalisation::field( $tc[0]['key'], 'Wrapping', 0, false, 0 ) + array( 'type' => 'multi_choice', 'choices' => array( array( 'key' => 'paper', 'label' => 'Paper', 'priceMinor' => 0 ), array( 'key' => 'ribbon', 'label' => 'Ribbon', 'priceMinor' => 0 ) ), 'store' => $tc[0]['store'] ) );
 $tct = Sudemi_Personalisation::from_line( array( 'personalisation' => array( array( 'key' => $tc[0]['key'], 'label' => 'Wrapping', 'value' => 'Paper, Ribbon', 'type' => 'multi_choice', 'choice_keys' => array( 'paper', 'ribbon' ) ) ) ) );
 expect( 'ThemeHigh order line: the field name with the options joined by "," as ThemeHigh writes them', Sudemi_Addons::order_meta( $tcf, $tct, $euro ), array( array( 'wrap', 'Paper,Ribbon' ) ) );

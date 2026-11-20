@@ -147,6 +147,8 @@ Clearer WordPress.org description, a list of every call to sudemi (External serv
 * New per-product setting on the sudemi tab: "Accept returns of personalised items" (off by default). An item made with a text the buyer typed is not returnable by default, as EU law allows, and buyers are told before paying; tick it to accept returns of such items on that product.
 * What the plugin leaves out or cannot read (an add-on it cannot charge yet, a product needing more than five texts, a product without a price, more combinations than sudemi lists, an add-on plugin it cannot read such as ThemeComplete) is now reported to sudemi with each catalogue push, and shown on the "Products on sudemi" page with what sudemi refused, in plain words.
 * A page of the full catalogue sync is sent in requests of at most 500 listings, so a product with many variations (100 or more, or an "Any" attribute with many values) never makes a request sudemi refuses.
+* Prices of ThemeHigh Extra Product Options (paid version, per field and per option, fixed or a percentage) are read; a price type sudemi cannot charge leaves that option out, never free.
+* A product or variation without a price is not sent to sudemi (never sold free) and is reported as not listed.
 
 = 1.4.3 =
 * WordPress.org listing: a full description in plain words, every call the plugin makes to sudemi listed under External services, more questions answered, and screenshots.
