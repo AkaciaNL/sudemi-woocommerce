@@ -16,6 +16,32 @@ defined( 'ABSPATH' ) || exit;
 function __( $text, $domain = 'default' ) {
 	return $text;
 }
+$GLOBALS['opts'] = array();
+function get_option( $k, $d = false ) {
+	return array_key_exists( $k, $GLOBALS['opts'] ) ? $GLOBALS['opts'][ $k ] : $d;
+}
+function update_option( $k, $v, $a = null ) {
+	$GLOBALS['opts'][ $k ] = $v;
+	return true;
+}
+function delete_option( $k ) {
+	unset( $GLOBALS['opts'][ $k ] );
+	return true;
+}
+function is_wp_error( $x ) {
+	return false;
+}
+class Sudemi_Logger {
+	public static function warn( $m ) {}
+}
+class Sudemi_Client {
+	public static $calls = array();
+	public static $status = 200;
+	public static function post_signed( $path, $body ) {
+		self::$calls[] = array( $path, $body );
+		return array( 'status' => self::$status, 'body' => array() );
+	}
+}
 require __DIR__ . '/../includes/class-sudemi-addons.php';
 require __DIR__ . '/../includes/class-sudemi-issues.php';
 
@@ -61,6 +87,27 @@ expect( 'kept: sudemi\'s refusal as an error with its reason', array( $kept[2]['
 $kept = Sudemi_Issues::merge( $kept, array( array( 'externalId' => '7' ) ), array(), array(), 200 );
 expect( 'a later push of product 7 without issues clears its entries, others stay', array_map( function ( $k ) { return $k['externalId']; }, $kept ), array( '8', '9' ) );
 expect( 'plain words for every code', Sudemi_Issues::label( 'too_many_required_texts' ) !== Sudemi_Issues::label( 'something_new' ), true );
+
+// Issues of a product not listed: queued, no request while saving; sent once by drain().
+Sudemi_Issues::queue( array( Sudemi_Issues::make( 11, 'addon_flat_fee', 'error', 'Setup', 'Not listed' ) ) );
+Sudemi_Issues::queue( array( Sudemi_Issues::make( 12, 'missing_price', 'error', 'price', 'No price' ), Sudemi_Issues::make( 12, 'variant_cap', 'warning', 'variants', 'cap' ) ) );
+Sudemi_Issues::queue( array( Sudemi_Issues::make( 11, 'addon_negative_price', 'error', 'Setup', 'newer' ) ) );
+expect( 'queue: no request while saving', count( Sudemi_Client::$calls ), 0 );
+expect( 'queue: newest issues per product, shown on the page at once', array( count( Sudemi_Issues::flat( Sudemi_Issues::queued() ) ), count( Sudemi_Issues::all() ) ), array( 3, 3 ) );
+expect( 'queued with no room: nothing', Sudemi_Issues::queued( 0 ), array() );
+expect( 'queued: whole products up to the limit', array_map( 'strval', array_keys( Sudemi_Issues::queued( 2 ) ) ), array( '12' ) );
+Sudemi_Client::$status = 503;
+expect( 'drain on failure: one request, kept', array( Sudemi_Issues::drain(), count( Sudemi_Client::$calls ), count( Sudemi_Issues::flat( Sudemi_Issues::queued() ) ) ), array( false, 1, 3 ) );
+Sudemi_Client::$status = 200;
+expect( 'drain: one request with every waiting issue and no products', array( Sudemi_Issues::drain(), count( Sudemi_Client::$calls[1][1]['issues'] ), Sudemi_Client::$calls[1][1]['products'] ), array( true, 3, array() ) );
+expect( 'drain: nothing left, nothing more sent', array( Sudemi_Issues::queued(), Sudemi_Issues::drain(), count( Sudemi_Client::$calls ) ), array( array(), false, 2 ) );
+Sudemi_Issues::queue( array( Sudemi_Issues::make( 13, 'missing_price', 'error', 'price', 'No price' ) ) );
+Sudemi_Issues::unqueue( array( '13' ) );
+expect( 'unqueue: a newer push of the product drops what waited', Sudemi_Issues::queued(), array() );
+Sudemi_Issues::queue( array( Sudemi_Issues::make( 14, 'missing_price', 'error', 'price', 'x' ) ) );
+Sudemi_Client::$status = 422;
+Sudemi_Issues::drain();
+expect( 'drain refused for good: dropped (a full sync sends them again)', Sudemi_Issues::queued(), array() );
 
 if ( $failures ) {
 	echo "\n$failures failure(s)\n";

@@ -79,6 +79,8 @@ final class Sudemi_Heartbeat {
 		// backlog has gone in. Reporting a revision sudemi cannot match yet would ask for a full
 		// sync that the queue was about to make unnecessary.
 		$drained = Sudemi_Queue::drain();
+		// Catalogue issues no listing push carried (a product not listed): one request at most.
+		Sudemi_Issues::drain();
 
 		$response = Sudemi_Client::post_signed( '/integration/v1/heartbeat', self::beat_body() );
 

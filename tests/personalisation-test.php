@@ -269,6 +269,19 @@ expect( 'optional flat fee: left out (warning), the product stays listed with th
 $req_yd = Sudemi_Addons::from_yith( 70, array( 'type' => 'text', 'title' => 'T' ), array( 'label' => array( 'Loyalty code' ), 'price_method' => array( 'decrease' ), 'price' => array( '2' ), 'required' => array( 'yes' ) ) );
 expect( 'YITH required "decrease" (negative): blocked', null !== Sudemi_Personalisation::screen( $req_yd )['blocked'], true );
 
+// Add-on plugins sudemi does not read: never ignored (final review 2026-11-19).
+$un = Sudemi_Addons::unread_plugins(
+	array( 'woocommerce', 'woocommerce-product-addons', 'woocommerce-product-options', 'woo-custom-product-addons', 'custom-product-tabs', 'woocommerce-gravityforms-product-addons' ),
+	array( 'woocommerce-product-addons' ),
+	array( '_wcpa_product_meta' => array( array( 'fields' => array( array( 'type' => 'text', 'required' => true ) ) ) ), '_gravity_form_data' => '' )
+);
+expect( 'unread add-on plugins: by folder name (warning) and by product meta (required: error); read ones and others skipped', array_map( function ( $f ) { return array( $f['label'], $f['required'], $f['unofferable'] ); }, $un ), array( array( 'Add-on plugin woocommerce-product-options', false, Sudemi_Addons::REASON_PLUGIN ), array( 'Acowebs Custom Product Addons', true, Sudemi_Addons::REASON_PLUGIN ) ) );
+expect( 'unread add-on plugin with meta but no required option: a warning', Sudemi_Addons::unread_plugins( array( 'woo-custom-product-addons' ), array(), array( '_wcpa_product_meta' => '[{"type":"text","required":false}]' ) )[0]['required'], false );
+$scr = Sudemi_Personalisation::screen( $un );
+expect( 'a required unread plugin: not listed, the message says the options could not be read', array( $scr['blocked_why'], false !== strpos( (string) $scr['blocked'], 'options could not be read; product not listed' ) ), array( Sudemi_Addons::REASON_PLUGIN, true ) );
+$scr = Sudemi_Personalisation::screen( array( $un[0] ) );
+expect( 'an optional unread plugin: a warning, still listed', array( $scr['blocked'], array_keys( $scr['left_out'] ) ), array( null, array( 'Add-on plugin woocommerce-product-options' ) ) );
+
 if ( $failures ) {
 	echo "\n$failures failure(s)\n";
 	exit( 1 );

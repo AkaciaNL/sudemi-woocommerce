@@ -91,7 +91,7 @@ final class Sudemi_Addons {
 	const REASON_DISCOUNT = 'it lowers the price (a discount), which sudemi cannot charge yet';
 	const REASON_PRICING  = 'it is priced per character or by a formula, which sudemi cannot charge yet';
 	const REASON_FLAT     = 'its price is charged once per order line (a flat fee), which sudemi cannot charge yet';
-	const REASON_PLUGIN   = 'it comes from an add-on plugin sudemi cannot read (ThemeComplete Extra Product Options)';
+	const REASON_PLUGIN   = 'it comes from an add-on plugin sudemi cannot read';
 
 	/**
 	 * A field whose price is charged once per order line, not per item (Product Add-Ons
@@ -702,6 +702,21 @@ final class Sudemi_Addons {
 			// is never sold without them (not listed, an error issue).
 			$fields[] = self::unofferable( self::make( 'tc:' . $id, 'ThemeComplete Extra Product Options', 'text', true, 0, 0, 0, array(), array( 'kind' => 'label' ) ), self::REASON_PLUGIN );
 		}
+		// Any other active add-on plugin: reported, never ignored.
+		$read = array( 'woocommerce-product-addons', 'advanced-product-fields-for-woocommerce', 'advanced-product-fields-for-woocommerce-pro', 'woocommerce-product-addon', 'woocommerce-tm-extra-product-options', 'sudemi-connector' );
+		if ( function_exists( 'YITH_WAPO_DB' ) ) {
+			$read = array_merge( $read, array( 'yith-woocommerce-product-add-ons', 'yith-woocommerce-advanced-product-options-premium' ) );
+		}
+		if ( class_exists( 'THWEPOF_Utils_Section' ) ) {
+			$read[] = 'woo-extra-product-options';
+		}
+		$meta = array();
+		foreach ( self::UNREAD_META as $keys ) {
+			foreach ( $keys[1] as $meta_key ) {
+				$meta[ $meta_key ] = get_post_meta( $id, $meta_key, true );
+			}
+		}
+		$fields = array_merge( $fields, self::unread_plugins( self::active_dirs(), $read, $meta ) );
 		if ( class_exists( 'THWEPOF_Utils_Section' ) && is_callable( array( 'THWEPOF_Utils_Section', 'get_product_fields' ) ) ) {
 			$props = array();
 			foreach ( (array) THWEPOF_Utils_Section::get_product_fields( $base, false ) as $name => $field ) {
@@ -751,6 +766,103 @@ final class Sudemi_Addons {
 			$out[] = array( 'fields' => $fields );
 		}
 		return $out;
+	}
+
+	/**
+	 * Add-on plugins sudemi does not read, with the product meta that shows a product uses them
+	 * (plugin folder => [name, meta keys]). A product with that meta gets a field per plugin.
+	 */
+	const UNREAD_META = array(
+		'woo-custom-product-addons'               => array( 'Acowebs Custom Product Addons', array( '_wcpa_product_meta' ) ),
+		'woo-custom-product-addons-pro'           => array( 'Acowebs Custom Product Addons Pro', array( '_wcpa_product_meta' ) ),
+		'woocommerce-gravityforms-product-addons' => array( 'Gravity Forms Product Add-ons', array( '_gravity_form_data' ) ),
+	);
+
+	/** Words in a plugin folder name that mark an add-on / product options plugin. */
+	const ADDON_WORDS = array( 'product-addon', 'product-add-on', 'product-option', 'extra-product', 'product-extra', 'product-field', 'product-personali', 'product-customi', 'custom-product-addon' );
+
+	/**
+	 * Fields for active add-on plugins sudemi does not read (owner 2026-11-19: never ignored):
+	 * one unofferable field per plugin, so the product gets an addon_unsupported_plugin issue.
+	 * A plugin with known meta counts only for a product that has it; it is required (product
+	 * not listed, an error) when that meta shows a required option. Any other add-on plugin (by
+	 * its folder name) may apply to every product: a warning. Pure.
+	 *
+	 * @param array $dirs Active plugin folders.
+	 * @param array $read Folders of plugins sudemi reads.
+	 * @param array $meta Product meta key => value (for UNREAD_META keys).
+	 */
+	public static function unread_plugins( array $dirs, array $read, array $meta ) {
+		$out = array();
+		foreach ( array_unique( $dirs ) as $dir ) {
+			$dir = strtolower( (string) $dir );
+			if ( '' === $dir || in_array( $dir, $read, true ) ) {
+				continue;
+			}
+			if ( isset( self::UNREAD_META[ $dir ] ) ) {
+				$used     = false;
+				$required = false;
+				foreach ( self::UNREAD_META[ $dir ][1] as $key ) {
+					if ( ! empty( $meta[ $key ] ) ) {
+						$used     = true;
+						$required = $required || self::has_required( $meta[ $key ] );
+					}
+				}
+				if ( $used ) {
+					$out[] = self::unofferable( self::make( 'unread:' . self::slug( $dir ), self::UNREAD_META[ $dir ][0], 'text', $required, 0, 0, 0, array(), array( 'kind' => 'label' ) ), self::REASON_PLUGIN );
+				}
+				continue;
+			}
+			foreach ( self::ADDON_WORDS as $word ) {
+				if ( false !== strpos( $dir, $word ) ) {
+					$out[] = self::unofferable( self::make( 'unread:' . self::slug( $dir ), 'Add-on plugin ' . $dir, 'text', false, 0, 0, 0, array(), array( 'kind' => 'label' ) ), self::REASON_PLUGIN );
+					break;
+				}
+			}
+		}
+		return $out;
+	}
+
+	/** Whether a plugin's meta (array or JSON) marks an option as required. Pure. */
+	private static function has_required( $value, $depth = 0 ) {
+		if ( $depth > 8 ) {
+			return false;
+		}
+		if ( is_string( $value ) ) {
+			// JSON only: a serialized string is never unserialized here (objects).
+			$value = json_decode( $value, true );
+		}
+		if ( is_object( $value ) ) {
+			$value = get_object_vars( $value );
+		}
+		if ( ! is_array( $value ) ) {
+			return false;
+		}
+		foreach ( $value as $k => $v ) {
+			if ( in_array( strtolower( (string) $k ), array( 'required', 'is_required' ), true ) && is_scalar( $v ) && self::truthy( $v ) ) {
+				return true;
+			}
+			if ( ( is_array( $v ) || is_object( $v ) || is_string( $v ) ) && ( ! is_string( $v ) || strlen( $v ) > 2 ) && self::has_required( $v, $depth + 1 ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/** Folders of the active plugins (site and network). */
+	private static function active_dirs() {
+		$files = (array) get_option( 'active_plugins', array() );
+		if ( is_multisite() ) {
+			$files = array_merge( $files, array_keys( (array) get_site_option( 'active_sitewide_plugins', array() ) ) );
+		}
+		$dirs = array();
+		foreach ( $files as $file ) {
+			$dir = strtok( (string) $file, '/' );
+			if ( false !== $dir && false !== strpos( (string) $file, '/' ) ) {
+				$dirs[] = $dir;
+			}
+		}
+		return $dirs;
 	}
 
 	private static function active( $plugin ) {

@@ -150,7 +150,10 @@ final class Sudemi_Personalisation {
 			if ( ! empty( $addon['unofferable'] ) ) {
 				$left_out[ $addon['label'] ] = $addon['unofferable'];
 				if ( ! empty( $addon['required'] ) && null === $blocked ) {
-					$blocked     = sprintf( '"%s" is required and %s', $addon['label'], $addon['unofferable'] );
+					// A plugin sudemi cannot read (ThemeComplete: always taken as required).
+					$blocked     = Sudemi_Addons::REASON_PLUGIN === $addon['unofferable']
+						? sprintf( '"%s": options could not be read; product not listed (%s)', $addon['label'], $addon['unofferable'] )
+						: sprintf( '"%s" is required and %s', $addon['label'], $addon['unofferable'] );
 					$blocked_why = $addon['unofferable'];
 				}
 				continue;

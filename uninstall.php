@@ -37,6 +37,9 @@ delete_option( 'sudemi_change_counter' );
 // have signed them, and leaving them behind would mean a reinstall pushing stale prices.
 delete_option( 'sudemi_pending_prices' );
 delete_option( 'sudemi_categories_sent' );
+// Catalogue issues kept for the admin page and those not sent yet.
+delete_option( 'sudemi_catalogue_issues' );
+delete_option( 'sudemi_pending_issues' );
 delete_option( 'sudemi_removals' );
 // The shop profile values chosen on the sudemi Shop profile page.
 delete_option( 'sudemi_profile_description' );

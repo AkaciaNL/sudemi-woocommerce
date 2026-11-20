@@ -73,6 +73,139 @@ final class Sudemi_Issues {
 		return $out;
 	}
 
+	/** Issues not sent yet (no listing push carried them, or it failed): external id => issues. */
+	const OPTION_QUEUE = 'sudemi_pending_issues';
+
+	/** The most products kept waiting; a full sync sends every issue again. */
+	const MAX_QUEUED = 2000;
+
+	/** The most issues in one request. */
+	const MAX_PER_REQUEST = 500;
+
+	/**
+	 * Keeps issues for the next listing push or the heartbeat, never a request of their own while
+	 * a product is saved. The newest issues of a product replace older ones. They show on the
+	 * shop's page at once.
+	 */
+	public static function queue( array $issues ) {
+		if ( empty( $issues ) ) {
+			return;
+		}
+		$queued = self::queued_map();
+		foreach ( self::by_product( $issues ) as $id => $list ) {
+			unset( $queued[ $id ] );
+			$queued[ $id ] = $list;
+		}
+		if ( count( $queued ) > self::MAX_QUEUED ) {
+			$queued = array_slice( $queued, -self::MAX_QUEUED, null, true );
+		}
+		update_option( self::OPTION_QUEUE, $queued, false );
+		self::remember( array(), $issues, null );
+	}
+
+	/** Issues grouped by external id. Pure. */
+	public static function by_product( array $issues ) {
+		$out = array();
+		foreach ( $issues as $issue ) {
+			$out[ (string) $issue['externalId'] ][] = $issue;
+		}
+		return $out;
+	}
+
+	/** Drops what is waiting for these products: a newer push carries their current state. */
+	public static function unqueue( array $external_ids ) {
+		$queued = self::queued_map();
+		$before = count( $queued );
+		foreach ( $external_ids as $id ) {
+			unset( $queued[ (string) $id ] );
+		}
+		if ( count( $queued ) !== $before ) {
+			self::store_queue( $queued );
+		}
+	}
+
+	/** Waiting issues, oldest first, at most one request's worth: [external id => issues]. */
+	public static function queued( $limit = self::MAX_PER_REQUEST ) {
+		$out   = array();
+		$count = 0;
+		if ( $limit <= 0 ) {
+			return $out;
+		}
+		foreach ( self::queued_map() as $id => $list ) {
+			if ( $count > 0 && $count + count( $list ) > $limit ) {
+				break;
+			}
+			$out[ $id ] = $list;
+			$count     += count( $list );
+		}
+		return $out;
+	}
+
+	/** The issues of queued() as one list. Pure. */
+	public static function flat( array $by_product ) {
+		$out = array();
+		foreach ( $by_product as $list ) {
+			foreach ( $list as $issue ) {
+				$out[] = $issue;
+			}
+		}
+		return $out;
+	}
+
+	/** Removes what was sent, unless a newer list for the product came in meanwhile. */
+	public static function sent( array $by_product ) {
+		$queued = self::queued_map();
+		foreach ( $by_product as $id => $list ) {
+			if ( isset( $queued[ $id ] ) && $queued[ $id ] == $list ) { // phpcs:ignore Universal.Operators.StrictComparisons.LooseEqual -- arrays compared by content.
+				unset( $queued[ $id ] );
+			}
+		}
+		self::store_queue( $queued );
+	}
+
+	/**
+	 * Sends waiting issues on their own (from the heartbeat): one request of at most
+	 * MAX_PER_REQUEST, no products (sudemi removes no listing for that). Kept on failure; dropped
+	 * when sudemi refuses them for good (the next full sync sends them again).
+	 *
+	 * @return bool Whether something was sent.
+	 */
+	public static function drain() {
+		$batch = self::queued();
+		if ( empty( $batch ) ) {
+			return false;
+		}
+		$issues = self::flat( $batch );
+		$answer = Sudemi_Client::post_signed( '/integration/v1/products', self::attach( array( 'products' => array() ), $issues ) );
+		if ( ! is_wp_error( $answer ) && 200 === $answer['status'] ) {
+			self::sent( $batch );
+			self::remember( array(), $issues, isset( $answer['body'] ) ? $answer['body'] : null );
+			return true;
+		}
+		if ( ! is_wp_error( $answer ) && in_array( (int) $answer['status'], array( 400, 413, 422 ), true ) ) {
+			self::sent( $batch );
+			Sudemi_Logger::warn( 'sudemi refused catalogue issues (HTTP ' . (int) $answer['status'] . '); the next full sync sends them again.' );
+		}
+		return false;
+	}
+
+	public static function forget_queue() {
+		delete_option( self::OPTION_QUEUE );
+	}
+
+	private static function queued_map() {
+		$queued = get_option( self::OPTION_QUEUE, array() );
+		return is_array( $queued ) ? $queued : array();
+	}
+
+	private static function store_queue( array $queued ) {
+		if ( empty( $queued ) ) {
+			delete_option( self::OPTION_QUEUE );
+		} else {
+			update_option( self::OPTION_QUEUE, $queued, false );
+		}
+	}
+
 	/** The code for a reason a field was left out (Sudemi_Addons::REASON_*). Pure. */
 	public static function code_for_reason( $reason ) {
 		$map = array(

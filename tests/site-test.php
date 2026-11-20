@@ -101,6 +101,11 @@ class Sudemi_Queue {
 		return 0;
 	}
 }
+class Sudemi_Issues {
+	public static function drain() {
+		return false;
+	}
+}
 class Sudemi_Requests {
 	public static $replaced = array();
 	public static function replace( $list ) {

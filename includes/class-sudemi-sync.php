@@ -410,12 +410,15 @@ final class Sudemi_Sync {
 					$listings[] = $listing;
 				}
 			}
+			// Issues waiting for this product are stale now: its current ones replace them.
+			Sudemi_Issues::unqueue( array_merge( array( (string) $product->get_id() ), array_map( 'strval', $product->get_children() ) ) );
 			if ( ! empty( $listings ) ) {
 				self::push_listings( $listings );
 			}
 			// Without a sellable variation nothing is sent; the change counter already moved,
-			// so the next heartbeat disagrees and sudemi asks for a full sync. Why: told now.
-			self::send_left_issues( null );
+			// so the next heartbeat disagrees and sudemi asks for a full sync. Why: queued for
+			// the next push or the heartbeat, never a request of its own while saving.
+			Sudemi_Issues::queue( Sudemi_Issues::take() );
 			return;
 		}
 
@@ -424,11 +427,12 @@ final class Sudemi_Sync {
 			// is a full sync's job.
 			$own = 'publish' === $product->get_status() ? self::product_listings( $product->get_id() ) : array();
 			self::mark_listed( $product->get_id(), ! empty( $own ) );
+			Sudemi_Issues::unqueue( array( (string) $product->get_id() ) );
 			if ( ! empty( $own ) ) {
 				self::push_listings( $own );
 				return;
 			}
-			self::send_left_issues( null );
+			Sudemi_Issues::queue( Sudemi_Issues::take() );
 		}
 
 		$update = array(
@@ -459,21 +463,34 @@ final class Sudemi_Sync {
 	}
 
 	/**
-	 * Issues found while building listings that were all left out (a product not listed): sent on
-	 * their own, without products, which sudemi takes from 2026-11-19. Best effort: a core that
-	 * refuses a push without products changes nothing here, and the shop sees them all the same.
+	 * Issues of a full sync page where nothing was listed (every product left out): sent with the
+	 * sync, without products, which sudemi takes from 2026-11-19 (one request per page, from the
+	 * background sync, never while a product is saved). On failure they wait in the queue
+	 * (Sudemi_Issues::queue) for the next push or the heartbeat.
 	 */
 	private static function send_left_issues( $sync_id, $fresh = false ) {
 		$left = Sudemi_Issues::take();
 		if ( empty( $left ) ) {
 			return;
 		}
-		$body = array( 'products' => array() );
-		if ( null !== $sync_id ) {
-			$body['syncId'] = $sync_id;
+		$answer = Sudemi_Client::post_signed(
+			'/integration/v1/products',
+			Sudemi_Issues::attach(
+				array(
+					'syncId'   => $sync_id,
+					'products' => array(),
+				),
+				$left
+			)
+		);
+		if ( is_wp_error( $answer ) || 200 !== $answer['status'] ) {
+			if ( $fresh ) {
+				Sudemi_Issues::remember( array(), array(), null, true );
+			}
+			Sudemi_Issues::queue( $left );
+			return;
 		}
-		$answer = Sudemi_Client::post_signed( '/integration/v1/products', Sudemi_Issues::attach( $body, $left ) );
-		Sudemi_Issues::remember( array(), $left, ! is_wp_error( $answer ) && 200 === $answer['status'] && isset( $answer['body'] ) ? $answer['body'] : null, $fresh );
+		Sudemi_Issues::remember( array(), $left, isset( $answer['body'] ) ? $answer['body'] : null, $fresh );
 	}
 
 	/** Listings removed in the shop, counted, and the count the last committed full sync covered. */
@@ -548,13 +565,19 @@ final class Sudemi_Sync {
 				}
 			}
 
-			// What was left out of this product goes with its first request (Sudemi_Issues).
-			$issues   = 0 === $i ? Sudemi_Issues::take() : array();
+			// What was left out of this product goes with its first request (Sudemi_Issues), and
+			// with it the issues still waiting from earlier saves: no request of their own.
+			$own      = 0 === $i ? Sudemi_Issues::take() : array();
+			$waiting  = 0 === $i ? Sudemi_Issues::queued( max( 0, Sudemi_Issues::MAX_PER_REQUEST - count( $own ) ) ) : array();
+			$issues   = array_merge( $own, Sudemi_Issues::flat( $waiting ) );
 			$response = Sudemi_Client::post_signed( '/integration/v1/products', Sudemi_Issues::attach( $body, $issues ) );
 			if ( ! is_wp_error( $response ) && 200 === $response['status'] ) {
+				Sudemi_Issues::sent( $waiting );
 				Sudemi_Issues::remember( $batch, $issues, isset( $response['body'] ) ? $response['body'] : null );
 			}
 			if ( is_wp_error( $response ) || 200 !== $response['status'] ) {
+				// Retried with the next push or by the heartbeat.
+				Sudemi_Issues::queue( $own );
 				$clean = false;
 				foreach ( $batch as $listing ) {
 					// With the sale and availability: a price alone would end a running sale.
