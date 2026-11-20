@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, chatgpt, product feed
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -126,6 +126,9 @@ Use the Support page inside the plugin, or the seller guides at https://sudemi.c
 
 == Upgrade Notice ==
 
+= 1.4.5 =
+New orders are no longer confirmed automatically unless you turn it on: each order waits for your answer, with a notice on every admin page.
+
 = 1.4.4 =
 Sizes and colours of one product now show to buyers as one product with a choice, and a variation with "Any colour" is sold per colour.
 
@@ -133,6 +136,11 @@ Sizes and colours of one product now show to buyers as one product with a choice
 Clearer WordPress.org description, a list of every call to sudemi (External services), and screenshots. No change in how the plugin works.
 
 == Changelog ==
+
+= 1.4.5 =
+* "Confirm orders automatically when the items are in stock" is now off unless you turn it on (sudemi > Orders). A shop that never saved this setting now answers each new order by hand, so nothing is accepted before you have checked it; a shop that turned it on keeps it on.
+* Every admin page shows the orders from sudemi that are waiting for your answer, each with what was ordered, the total and the date to answer by, and the sudemi menu shows how many are waiting. An order not answered by then is released: the buyer is charged nothing and the order is cancelled. sudemi also e-mails you about each new order.
+* The new texts in all twelve languages.
 
 = 1.4.4 =
 * The sizes and colours of a variable product are sent as one group, so AI assistants show the product once with its sizes and colours to choose from, instead of one result per size.

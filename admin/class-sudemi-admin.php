@@ -34,8 +34,44 @@ final class Sudemi_Admin {
 		add_action( 'admin_post_sudemi_request_answer', array( __CLASS__, 'handle_request_answer' ) );
 		// On the WooCommerce order screen, above the order form (forms cannot be nested in it).
 		add_action( 'admin_notices', array( __CLASS__, 'render_order_screen_request' ) );
+		// Orders from sudemi waiting for an answer, on every admin screen (1.4.5).
+		add_action( 'admin_notices', array( __CLASS__, 'render_waiting_orders' ) );
 		Sudemi_Admin_Manage::boot();
 		Sudemi_Admin_Insights::boot();
+	}
+
+	/**
+	 * Orders from sudemi waiting for this shop's answer (automatic confirmation off), each with
+	 * the date to answer by: an order not answered by then is released (1.4.5, owner 2026-11-20).
+	 */
+	public static function render_waiting_orders() {
+		if ( ! current_user_can( self::CAPABILITY ) ) {
+			return;
+		}
+		$waiting = Sudemi_Orders::waiting();
+		if ( empty( $waiting ) ) {
+			return;
+		}
+		echo '<div class="notice notice-warning sudemi-waiting-orders"><p><strong>'
+			. esc_html( sprintf( /* translators: %d: number of orders. */ __( 'Orders from sudemi waiting for your answer: %d', 'sudemi-connector' ), count( $waiting ) ) )
+			. '</strong></p><ul>';
+		foreach ( array_slice( $waiting, 0, 10 ) as $order ) {
+			$currency = Sudemi_Currency::normalise( (string) $order['currency'] );
+			$places   = Sudemi_Currency::decimals( $currency );
+			$total    = number_format_i18n( (int) $order['total_minor'] / ( 10 ** $places ), $places ) . ' ' . $currency;
+			echo '<li>' . esc_html(
+				sprintf(
+					/* translators: 1: the items ordered, 2: the order total, 3: date and time. */
+					__( '%1$s (%2$s): answer by %3$s', 'sudemi-connector' ),
+					'' !== $order['items'] ? $order['items'] : $order['order_id'],
+					$total,
+					'' !== $order['respond_by'] ? Sudemi_Requests::date( $order['respond_by'] ) : '-'
+				)
+			) . '</li>';
+		}
+		echo '</ul><p>' . esc_html__( 'An order not answered by then is released: the buyer is charged nothing and the order is cancelled.', 'sudemi-connector' )
+			. ' <a class="button button-primary" href="' . esc_url( self::page_url( 'orders', array( 'status' => 'AWAITING_SELLER' ) ) ) . '">'
+			. esc_html__( 'Answer now', 'sudemi-connector' ) . '</a></p></div>';
 	}
 
 	/** The label of each page in the menu and the page navigation. */
@@ -83,9 +119,13 @@ final class Sudemi_Admin {
 	 * the same address it had under WooCommerce.
 	 */
 	public static function add_page() {
+		$waiting = count( Sudemi_Orders::waiting() );
 		add_menu_page(
 			__( 'sudemi', 'sudemi-connector' ),
-			__( 'sudemi', 'sudemi-connector' ),
+			// The number of orders waiting for an answer, as WordPress shows pending items.
+			$waiting > 0
+				? __( 'sudemi', 'sudemi-connector' ) . ' <span class="awaiting-mod count-' . (int) $waiting . '"><span class="pending-count">' . (int) $waiting . '</span></span>'
+				: __( 'sudemi', 'sudemi-connector' ),
 			self::CAPABILITY,
 			self::SLUG,
 			array( __CLASS__, 'render' ),
@@ -1078,6 +1118,7 @@ final class Sudemi_Admin {
 		Sudemi_Heartbeat::unschedule();
 		Sudemi_Heartbeat::forget();
 		Sudemi_Queue::forget();
+		delete_option( Sudemi_Orders::OPTION_WAITING );
 		Sudemi_Issues::forget_queue();
 		Sudemi_Sync::forget();
 		Sudemi_Order_Calls::forget();

@@ -23,8 +23,74 @@ class Sudemi_Orders {
 	/** Set on the WooCommerce order so one sudemi order can never produce two local ones. */
 	const META_ORDER_ID = '_sudemi_order_id';
 
-	/** When off, orders are left for a human to answer in the sudemi screen rather than confirmed. */
+	/**
+	 * When off, orders are left for a human to answer in the sudemi screen rather than confirmed.
+	 * Off unless the shop turned it on (owner 2026-11-20, 1.4.5): a shop that never saved the
+	 * setting confirms each order by hand.
+	 */
 	const OPTION_AUTO_CONFIRM = 'sudemi_auto_confirm';
+
+	/** The orders waiting for the shop's answer, from the last heartbeat (for the admin notice). */
+	const OPTION_WAITING = 'sudemi_waiting_orders';
+
+	/** The most waiting orders kept for the notice. */
+	const MAX_WAITING = 50;
+
+	/**
+	 * Keeps the orders waiting for an answer (the heartbeat's full pending list, so the copy is
+	 * replaced and emptied when none wait). Only while orders are confirmed by hand: with
+	 * automatic confirmation this shop answers them itself.
+	 *
+	 * @param array $pending The pending_orders block of a heartbeat response (may be empty).
+	 */
+	public static function remember_waiting( $pending ) {
+		$list = self::auto_confirm_enabled() ? array() : self::waiting_entries( is_array( $pending ) ? $pending : array() );
+		if ( empty( $list ) ) {
+			delete_option( self::OPTION_WAITING );
+		} else {
+			update_option( self::OPTION_WAITING, $list, false );
+		}
+	}
+
+	/** The waiting orders kept for the notice: [order_id, respond_by, total_minor, currency, items]. Pure. */
+	public static function waiting_entries( array $pending ) {
+		$out = array();
+		foreach ( $pending as $order ) {
+			if ( ! is_array( $order ) || empty( $order['order_id'] ) ) {
+				continue;
+			}
+			$items = array();
+			foreach ( isset( $order['lines'] ) && is_array( $order['lines'] ) ? $order['lines'] : array() as $line ) {
+				if ( is_array( $line ) && isset( $line['title'] ) ) {
+					$items[] = ( isset( $line['quantity'] ) ? (int) $line['quantity'] : 1 ) . ' x ' . sanitize_text_field( (string) $line['title'] );
+				}
+			}
+			$out[] = array(
+				'order_id'    => sanitize_text_field( (string) $order['order_id'] ),
+				'respond_by'  => isset( $order['respond_by'] ) ? sanitize_text_field( (string) $order['respond_by'] ) : '',
+				'total_minor' => isset( $order['total_minor'] ) ? (int) $order['total_minor'] : 0,
+				'currency'    => isset( $order['currency_code'] ) ? sanitize_text_field( (string) $order['currency_code'] ) : '',
+				'items'       => implode( ', ', $items ),
+			);
+			if ( count( $out ) >= self::MAX_WAITING ) {
+				break;
+			}
+		}
+		// Soonest deadline first.
+		usort(
+			$out,
+			function ( $a, $b ) {
+				return strcmp( $a['respond_by'], $b['respond_by'] );
+			}
+		);
+		return $out;
+	}
+
+	/** The waiting orders kept by remember_waiting(). */
+	public static function waiting() {
+		$list = get_option( self::OPTION_WAITING, array() );
+		return is_array( $list ) ? $list : array();
+	}
 
 	/**
 	 * Works through what arrived on the heartbeat.
@@ -1351,8 +1417,9 @@ class Sudemi_Orders {
 		return empty( $orders ) ? null : $orders[0];
 	}
 
+	/** On only when the shop turned it on (1.4.5: off by default). */
 	public static function auto_confirm_enabled() {
-		return 'no' !== get_option( self::OPTION_AUTO_CONFIRM, 'yes' );
+		return 'yes' === get_option( self::OPTION_AUTO_CONFIRM, 'no' );
 	}
 
 	/**

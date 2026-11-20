@@ -2356,3 +2356,17 @@ msgstr "Подробности"
 #: admin/class-sudemi-admin-insights.php
 msgid "Listed, with something left out"
 msgstr "Размещён, кое-что пропущено"
+
+#, php-format
+msgid "Orders from sudemi waiting for your answer: %d"
+msgstr "Заказы из sudemi, ожидающие вашего ответа: %d"
+
+#, php-format
+msgid "%1$s (%2$s): answer by %3$s"
+msgstr "%1$s (%2$s): ответьте до %3$s"
+
+msgid "An order not answered by then is released: the buyer is charged nothing and the order is cancelled."
+msgstr "Заказ без ответа к этому сроку освобождается: с покупателя ничего не списывается, заказ отменяется."
+
+msgid "Off by default: each new order waits for your answer here (sudemi also sends you an e-mail), so nothing is accepted before you have checked it."
+msgstr "По умолчанию выключено: каждый новый заказ ждёт здесь вашего ответа (sudemi также присылает письмо), поэтому ничего не принимается, пока вы не проверите."

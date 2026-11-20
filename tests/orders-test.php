@@ -27,6 +27,21 @@ class WP_Error {
 function is_wp_error( $thing ) {
 	return $thing instanceof WP_Error;
 }
+$GLOBALS['wp_options'] = array();
+function get_option( $key, $default = false ) {
+	return array_key_exists( $key, $GLOBALS['wp_options'] ) ? $GLOBALS['wp_options'][ $key ] : $default;
+}
+function update_option( $key, $value, $autoload = null ) {
+	$GLOBALS['wp_options'][ $key ] = $value;
+	return true;
+}
+function delete_option( $key ) {
+	unset( $GLOBALS['wp_options'][ $key ] );
+	return true;
+}
+function sanitize_text_field( $text ) {
+	return trim( (string) $text );
+}
 
 require __DIR__ . '/../includes/class-sudemi-currency.php';
 require __DIR__ . '/../includes/class-sudemi-variants.php';
@@ -116,6 +131,30 @@ expect( 'major 5', Sudemi_Orders::major( 5 ), '0.05' );
 expect( 'major 1345', Sudemi_Orders::major( 1345 ), '13.45' );
 expect( 'minor_of 13.45', Sudemi_Orders::minor_of( '13.45' ), 1345 );
 expect( 'minor_of float 8.5 + 4.95', Sudemi_Orders::minor_of( 8.5 + 4.95 ), 1345 );
+
+// 1.4.5 (owner 2026-11-20): automatic confirmation is off unless the shop turned it on, and the
+// orders waiting for an answer are kept for the admin notice with their dates.
+$GLOBALS['wp_options'] = array();
+expect( 'auto-confirm: a shop that never saved the setting confirms by hand', Sudemi_Orders::auto_confirm_enabled(), false );
+$GLOBALS['wp_options']['sudemi_auto_confirm'] = 'yes';
+expect( 'auto-confirm: on when the shop turned it on', Sudemi_Orders::auto_confirm_enabled(), true );
+$GLOBALS['wp_options']['sudemi_auto_confirm'] = 'no';
+expect( 'auto-confirm: off when the shop turned it off', Sudemi_Orders::auto_confirm_enabled(), false );
+$wait = Sudemi_Orders::waiting_entries(
+	array(
+		array( 'order_id' => 'b', 'respond_by' => '2026-11-22T10:00:00Z', 'total_minor' => 2490, 'currency_code' => 'EUR', 'lines' => array( array( 'title' => 'Mug', 'quantity' => 2 ) ) ),
+		array( 'order_id' => 'a', 'respond_by' => '2026-11-21T09:00:00Z', 'total_minor' => 900, 'currency_code' => 'PLN', 'lines' => array( array( 'title' => 'Tea', 'quantity' => 1 ), array( 'title' => 'Cup', 'quantity' => 3 ) ) ),
+		array( 'respond_by' => 'x' ),
+	)
+);
+expect( 'waiting orders: soonest deadline first, with items and total', array( count( $wait ), $wait[0]['order_id'], $wait[0]['items'], $wait[1]['total_minor'], $wait[1]['currency'] ), array( 2, 'a', '1 x Tea, 3 x Cup', 2490, 'EUR' ) );
+Sudemi_Orders::remember_waiting( array( array( 'order_id' => 'c', 'respond_by' => '2026-11-21T09:00:00Z' ) ) );
+expect( 'waiting orders kept while confirming by hand', count( Sudemi_Orders::waiting() ), 1 );
+Sudemi_Orders::remember_waiting( array() );
+expect( 'a beat without waiting orders empties the list', Sudemi_Orders::waiting(), array() );
+$GLOBALS['wp_options']['sudemi_auto_confirm'] = 'yes';
+Sudemi_Orders::remember_waiting( array( array( 'order_id' => 'c' ) ) );
+expect( 'with automatic confirmation nothing is kept (the shop answers them itself)', Sudemi_Orders::waiting(), array() );
 
 if ( $failures ) {
 	echo "$failures failure(s)\n";

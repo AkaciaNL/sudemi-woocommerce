@@ -168,6 +168,8 @@ final class Sudemi_Heartbeat {
 		// Orders whose buyers are waiting on an answer from this shop. Done before the full-sync
 		// branch below because each one is money held on someone's card against a deadline,
 		// while a catalogue disagreement costs nothing by waiting another five minutes.
+		// The full list on every beat: kept for the admin notice while orders are answered by hand.
+		Sudemi_Orders::remember_waiting( isset( $body['pending_orders'] ) ? $body['pending_orders'] : array() );
 		if ( ! empty( $body['pending_orders'] ) ) {
 			Sudemi_Orders::handle_pending( $body['pending_orders'] );
 		}

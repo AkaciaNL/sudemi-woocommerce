@@ -2342,3 +2342,17 @@ msgstr "详情"
 #: admin/class-sudemi-admin-insights.php
 msgid "Listed, with something left out"
 msgstr "已上架，但有内容被省略"
+
+#, php-format
+msgid "Orders from sudemi waiting for your answer: %d"
+msgstr "等待您答复的 sudemi 订单：%d"
+
+#, php-format
+msgid "%1$s (%2$s): answer by %3$s"
+msgstr "%1$s（%2$s）：请在 %3$s 之前答复"
+
+msgid "An order not answered by then is released: the buyer is charged nothing and the order is cancelled."
+msgstr "到时未答复的订单将被释放：不向买家收取任何费用，订单取消。"
+
+msgid "Off by default: each new order waits for your answer here (sudemi also sends you an e-mail), so nothing is accepted before you have checked it."
+msgstr "默认关闭：每个新订单都在此等待您的答复（sudemi 也会给您发送电子邮件），因此在您检查之前不会接受任何订单。"

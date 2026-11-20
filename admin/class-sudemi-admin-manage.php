@@ -447,6 +447,7 @@ final class Sudemi_Admin_Manage {
 				? __( 'On: every five minutes this shop accepts orders whose items are in stock and declines the others.', 'sudemi-connector' )
 				: __( 'Off: orders wait for you. Accept or decline each one here before the date shown; without an answer the buyer is released and charged nothing.', 'sudemi-connector' )
 		) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Off by default: each new order waits for your answer here (sudemi also sends you an e-mail), so nothing is accepted before you have checked it.', 'sudemi-connector' ) . '</p>';
 		echo '</form>';
 	}
 

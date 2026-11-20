@@ -2348,3 +2348,17 @@ msgstr ""
 #: admin/class-sudemi-admin-insights.php
 msgid "Listed, with something left out"
 msgstr ""
+
+#, php-format
+msgid "Orders from sudemi waiting for your answer: %d"
+msgstr ""
+
+#, php-format
+msgid "%1$s (%2$s): answer by %3$s"
+msgstr ""
+
+msgid "An order not answered by then is released: the buyer is charged nothing and the order is cancelled."
+msgstr ""
+
+msgid "Off by default: each new order waits for your answer here (sudemi also sends you an e-mail), so nothing is accepted before you have checked it."
+msgstr ""

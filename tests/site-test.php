@@ -114,6 +114,7 @@ class Sudemi_Requests {
 }
 class Sudemi_Orders {
 	public static function reconcile( array $handled ) {}
+	public static function remember_waiting( $pending ) {}
 }
 class Sudemi_Order_Calls {
 	public static function drain() {}

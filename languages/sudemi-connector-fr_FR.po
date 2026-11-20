@@ -2349,3 +2349,17 @@ msgstr "Détails"
 #: admin/class-sudemi-admin-insights.php
 msgid "Listed, with something left out"
 msgstr "Référencé, avec un élément laissé de côté"
+
+#, php-format
+msgid "Orders from sudemi waiting for your answer: %d"
+msgstr "Commandes sudemi en attente de votre réponse : %d"
+
+#, php-format
+msgid "%1$s (%2$s): answer by %3$s"
+msgstr "%1$s (%2$s) : répondre avant le %3$s"
+
+msgid "An order not answered by then is released: the buyer is charged nothing and the order is cancelled."
+msgstr "Une commande sans réponse à cette date est libérée : rien n'est facturé à l'acheteur et la commande est annulée."
+
+msgid "Off by default: each new order waits for your answer here (sudemi also sends you an e-mail), so nothing is accepted before you have checked it."
+msgstr "Désactivé par défaut : chaque nouvelle commande attend ici votre réponse (sudemi vous envoie aussi un e-mail), pour que rien ne soit accepté avant que vous l'ayez vérifié."

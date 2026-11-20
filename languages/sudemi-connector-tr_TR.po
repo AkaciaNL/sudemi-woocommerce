@@ -2349,3 +2349,17 @@ msgstr "Ayrıntılar"
 #: admin/class-sudemi-admin-insights.php
 msgid "Listed, with something left out"
 msgstr "Listeleniyor, bir şey dışarıda bırakıldı"
+
+#, php-format
+msgid "Orders from sudemi waiting for your answer: %d"
+msgstr "sudemi'den yanıtınızı bekleyen siparişler: %d"
+
+#, php-format
+msgid "%1$s (%2$s): answer by %3$s"
+msgstr "%1$s (%2$s): %3$s tarihine kadar yanıtlayın"
+
+msgid "An order not answered by then is released: the buyer is charged nothing and the order is cancelled."
+msgstr "O zamana kadar yanıtlanmayan sipariş serbest bırakılır: alıcıdan hiçbir şey alınmaz ve sipariş iptal edilir."
+
+msgid "Off by default: each new order waits for your answer here (sudemi also sends you an e-mail), so nothing is accepted before you have checked it."
+msgstr "Varsayılan olarak kapalı: her yeni sipariş burada yanıtınızı bekler (sudemi size ayrıca e-posta gönderir), böylece siz kontrol etmeden hiçbir şey kabul edilmez."
