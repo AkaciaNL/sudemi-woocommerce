@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, chatgpt, product feed
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.4.7
+Stable tag: 1.4.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -126,6 +126,9 @@ Use the Support page inside the plugin, or the seller guides at https://sudemi.c
 
 == Upgrade Notice ==
 
+= 1.4.8 =
+After an update, your shipping rules are sent to sudemi right away instead of with the next catalogue sync.
+
 = 1.4.7 =
 Shipping: a parcel of several items now costs on sudemi what your own checkout charges (per extra item, free over an amount).
 
@@ -142,6 +145,9 @@ Sizes and colours of one product now show to buyers as one product with a choice
 Clearer WordPress.org description, a list of every call to sudemi (External services), and screenshots. No change in how the plugin works.
 
 == Changelog ==
+
+= 1.4.8 =
+* After an update of the plugin, your shipping rules are sent to sudemi within a minute. Until now a shop that updated to 1.4.7 sent them only with its next catalogue sync or shipping change.
 
 = 1.4.7 =
 * Shipping: your WooCommerce shipping rules are sent to sudemi, so a parcel of several items costs what your own checkout would charge: a flat rate cost with [qty] (for example 4.95 + 1.50 * [qty]) charges every extra item, shipping class costs count per order or per class as you set them, and free shipping over a minimum amount makes the parcel free on sudemi from that amount (shown with VAT; a minimum your cart shows without VAT is raised by your VAT rate, so it never ships free earlier than in your shop). The rules are sent after every catalogue sync and a minute after you change a shipping zone, method, shipping class or tax setting.

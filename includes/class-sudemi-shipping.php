@@ -51,6 +51,13 @@ class Sudemi_Shipping {
 	/** What was sent last and sudemi's answer, for the Shipping tab. */
 	const OPTION_RULES_SENT = 'sudemi_shipping_rules_sent';
 
+	/**
+	 * The plugin version the rules were last flagged for. An update (a new zip over the old one runs
+	 * no activation hook) flags them once, so a shop that updates sends its rules without waiting
+	 * for its next full sync or shipping change (1.4.8).
+	 */
+	const OPTION_RULES_VERSION = 'sudemi_shipping_rules_version';
+
 	/** Sends the rules shortly after a change, once however many changes come in. */
 	const CRON_RULES = 'sudemi_shipping_rules';
 
@@ -93,6 +100,17 @@ class Sudemi_Shipping {
 		// option woocommerce_<method>_<instance>_settings, without a hook of their own.
 		add_action( 'updated_option', array( __CLASS__, 'on_option' ), 10, 1 );
 		add_action( 'added_option', array( __CLASS__, 'on_option' ), 10, 1 );
+		add_action( 'init', array( __CLASS__, 'after_update' ), 20, 0 );
+	}
+
+	/** Once per plugin version: flags the rules to be sent (see OPTION_RULES_VERSION). */
+	public static function after_update() {
+		if ( SUDEMI_VERSION === (string) get_option( self::OPTION_RULES_VERSION, '' ) ) {
+			return;
+		}
+		update_option( self::OPTION_RULES_VERSION, SUDEMI_VERSION, false );
+		// Not connected yet: pairing runs a full sync, which sends the rules.
+		self::changed();
 	}
 
 	/** An option was saved: only a shipping one flags anything. Kept cheap, it runs for every option. */

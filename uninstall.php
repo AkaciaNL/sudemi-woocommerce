@@ -59,6 +59,7 @@ delete_option( 'sudemi_db_version' );
 // The shipping rules sent to sudemi (1.4.7).
 delete_option( 'sudemi_shipping_rules_due' );
 delete_option( 'sudemi_shipping_rules_sent' );
+delete_option( 'sudemi_shipping_rules_version' );
 
 // Which sudemi order belongs to which WooCommerce order is also on the orders themselves.
 global $wpdb;
