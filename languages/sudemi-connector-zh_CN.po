@@ -2408,3 +2408,23 @@ msgstr "您对这些国家/地区的运费使用了 sudemi 无法完全照搬的
 #: includes/class-sudemi-issues.php
 msgid "Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi."
 msgstr "寄往这些国家/地区的运费由承运商插件实时计算，sudemi 无法查询。在您于 sudemi 上为这些国家/地区设置价格之前，sudemi 不向那里配送。"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open card dispute (chargeback)"
+msgstr "暂缓：银行卡争议未结（拒付）"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open cancellation request"
+msgstr "暂缓：取消申请未处理"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open return request"
+msgstr "暂缓：退货申请未处理"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold"
+msgstr "暂缓"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Payout on hold"
+msgstr "打款暂缓"

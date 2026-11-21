@@ -2414,3 +2414,23 @@ msgstr ""
 #: includes/class-sudemi-issues.php
 msgid "Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi."
 msgstr ""
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open card dispute (chargeback)"
+msgstr ""
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open cancellation request"
+msgstr ""
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open return request"
+msgstr ""
+
+#: includes/class-sudemi-manage.php
+msgid "On hold"
+msgstr ""
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Payout on hold"
+msgstr ""

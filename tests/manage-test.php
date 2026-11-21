@@ -167,5 +167,16 @@ expect( 'cursor: empty start', Sudemi_Changes::valid_cursor( '' ), true );
 expect( 'cursor: no markup', Sudemi_Changes::valid_cursor( 'c1.<script>' ), false );
 expect( 'cursor: not too long', Sudemi_Changes::valid_cursor( str_repeat( 'a', 600 ) ), false );
 
+// Why a payout is on hold (payout.on_hold), next to the due date.
+expect( 'hold: chargeback', Sudemi_Manage::payout_hold_label( array( 'state' => 'scheduled', 'due_at' => null, 'on_hold' => 'chargeback' ) ), 'On hold: open card dispute (chargeback)' );
+expect( 'hold: cancellation request', Sudemi_Manage::payout_hold_label( array( 'on_hold' => 'cancellation_request' ) ), 'On hold: open cancellation request' );
+expect( 'hold: return request', Sudemi_Manage::payout_hold_label( array( 'on_hold' => 'return_request' ) ), 'On hold: open return request' );
+expect( 'hold: an unknown future reason is a plain "On hold", never the code', Sudemi_Manage::payout_hold_label( array( 'on_hold' => 'tax_review' ) ), 'On hold' );
+expect( 'hold: null is not on hold', Sudemi_Manage::payout_hold_label( array( 'state' => 'scheduled', 'due_at' => '2026-12-01T00:00:00Z', 'on_hold' => null ) ), '' );
+expect( 'hold: missing is not on hold (older sudemi)', Sudemi_Manage::payout_hold_label( array( 'state' => 'scheduled' ) ), '' );
+expect( 'hold: empty string is not on hold', Sudemi_Manage::payout_hold_label( array( 'on_hold' => ' ' ) ), '' );
+expect( 'hold: not a string is not on hold', Sudemi_Manage::payout_hold_label( array( 'on_hold' => array( 'x' ) ) ), '' );
+expect( 'hold: no payout object', Sudemi_Manage::payout_hold_label( null ), '' );
+
 echo $failures ? "\n$failures FAILED\n" : "\nALL PASS\n";
 exit( $failures ? 1 : 0 );

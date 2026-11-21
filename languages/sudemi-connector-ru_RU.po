@@ -2422,3 +2422,23 @@ msgstr "Стоимость доставки в эти страны исполь�
 #: includes/class-sudemi-issues.php
 msgid "Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi."
 msgstr "Доставка в эти страны рассчитывается в реальном времени плагином перевозчика, к которому sudemi не может обратиться. sudemi не доставляет туда, пока вы не зададите цену для этих стран на sudemi."
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open card dispute (chargeback)"
+msgstr "Задержана: открыт спор по карте (чарджбэк)"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open cancellation request"
+msgstr "Задержана: открыт запрос на отмену"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open return request"
+msgstr "Задержана: открыт запрос на возврат"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold"
+msgstr "Задержана"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Payout on hold"
+msgstr "Выплата задержана"

@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, chatgpt, product feed
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.4.8
+Stable tag: 1.4.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -126,6 +126,9 @@ Use the Support page inside the plugin, or the seller guides at https://sudemi.c
 
 == Upgrade Notice ==
 
+= 1.4.9 =
+The Orders page shows why a payout is on hold (an open card dispute, cancellation request or return request).
+
 = 1.4.8 =
 After an update, your shipping rules are sent to sudemi right away instead of with the next catalogue sync.
 
@@ -145,6 +148,9 @@ Sizes and colours of one product now show to buyers as one product with a choice
 Clearer WordPress.org description, a list of every call to sudemi (External services), and screenshots. No change in how the plugin works.
 
 == Changelog ==
+
+= 1.4.9 =
+* Orders: when sudemi holds an order's payout, the order list shows why instead of the payout date (an open card dispute, an open cancellation request or an open return request), and the order page shows it in its own row "Payout on hold". The payout follows once it is resolved.
 
 = 1.4.8 =
 * After an update of the plugin, your shipping rules are sent to sudemi within a minute. Until now a shop that updated to 1.4.7 sent them only with its next catalogue sync or shipping change.

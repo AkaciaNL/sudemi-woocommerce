@@ -2415,3 +2415,23 @@ msgstr "עלות המשלוח שלך למדינות האלה משתמשת בנו
 #: includes/class-sudemi-issues.php
 msgid "Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi."
 msgstr "המשלוח למדינות האלה מחושב בזמן אמת על ידי תוסף של חברת שילוח, ש-sudemi לא יכול לפנות אליו. sudemi לא שולח לשם עד שתקבע מחיר למדינות האלה ב-sudemi."
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open card dispute (chargeback)"
+msgstr "מעוכב: מחלוקת כרטיס פתוחה (צ'רג'בק)"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open cancellation request"
+msgstr "מעוכב: בקשת ביטול פתוחה"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open return request"
+msgstr "מעוכב: בקשת החזרה פתוחה"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold"
+msgstr "מעוכב"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Payout on hold"
+msgstr "התשלום מעוכב"

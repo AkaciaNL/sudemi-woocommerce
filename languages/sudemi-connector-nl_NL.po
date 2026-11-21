@@ -2415,3 +2415,23 @@ msgstr "Je verzendkosten voor deze landen gebruiken een formule, een percentage 
 #: includes/class-sudemi-issues.php
 msgid "Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi."
 msgstr "Verzending naar deze landen wordt live berekend door een vervoerdersplugin, die sudemi niet kan raadplegen. sudemi levert daar niet totdat je op sudemi een prijs voor deze landen instelt."
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open card dispute (chargeback)"
+msgstr "Vastgehouden: openstaande kaartbetwisting (chargeback)"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open cancellation request"
+msgstr "Vastgehouden: openstaand annuleringsverzoek"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open return request"
+msgstr "Vastgehouden: openstaand retourverzoek"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold"
+msgstr "Vastgehouden"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Payout on hold"
+msgstr "Uitbetaling vastgehouden"

@@ -2415,3 +2415,23 @@ msgstr "Tus gastos de envío para estos países usan una fórmula, un porcentaje
 #: includes/class-sudemi-issues.php
 msgid "Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi."
 msgstr "El envío a estos países lo calcula en directo un plugin de transportista, al que sudemi no puede consultar. sudemi no entrega allí hasta que fijes un precio para estos países en sudemi."
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open card dispute (chargeback)"
+msgstr "Retenida: disputa de tarjeta abierta (contracargo)"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open cancellation request"
+msgstr "Retenida: solicitud de cancelación abierta"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open return request"
+msgstr "Retenida: solicitud de devolución abierta"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold"
+msgstr "Retenida"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Payout on hold"
+msgstr "Liquidación retenida"

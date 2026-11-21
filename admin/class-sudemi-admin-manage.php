@@ -362,7 +362,10 @@ final class Sudemi_Admin_Manage {
 		echo '<td>' . esc_html( self::money( isset( $order['total_minor'] ) ? $order['total_minor'] : null, $currency ) ) . '</td>';
 		echo '<td>' . esc_html( self::money( isset( $order['your_net_minor'] ) ? $order['your_net_minor'] : null, $currency ) ) . '</td>';
 		echo '<td>' . esc_html( isset( $payout['state'] ) ? self::payout_label( $payout['state'] ) : '-' );
-		if ( ! empty( $payout['due_at'] ) && 'scheduled' === self::str( $payout, 'state' ) ) {
+		$hold = Sudemi_Manage::payout_hold_label( $payout );
+		if ( '' !== $hold ) {
+			echo '<br /><span class="description sudemi-payout-hold">' . esc_html( $hold ) . '</span>';
+		} elseif ( ! empty( $payout['due_at'] ) && 'scheduled' === self::str( $payout, 'state' ) ) {
 			echo '<br /><span class="description">' . esc_html( self::date( self::str( $payout, 'due_at' ) ) ) . '</span>';
 		}
 		echo '</td><td>';
@@ -580,6 +583,10 @@ final class Sudemi_Admin_Manage {
 			self::detail_row( __( 'Paid out', 'sudemi-connector' ), esc_html( self::money( isset( $payout['paid_out_minor'] ) ? $payout['paid_out_minor'] : 0, $pc ) ) );
 			if ( '' !== self::str( $payout, 'due_at' ) ) {
 				self::detail_row( __( 'Payout due', 'sudemi-connector' ), esc_html( self::date( self::str( $payout, 'due_at' ) ) ) );
+			}
+			$hold = Sudemi_Manage::payout_hold_label( $payout );
+			if ( '' !== $hold ) {
+				self::detail_row( __( 'Payout on hold', 'sudemi-connector' ), esc_html( $hold ) );
 			}
 		}
 		echo '</tbody></table>';

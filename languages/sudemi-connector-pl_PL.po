@@ -2422,3 +2422,23 @@ msgstr "Koszt wysyłki do tych krajów korzysta z formuły, procentu lub wtyczki
 #: includes/class-sudemi-issues.php
 msgid "Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi."
 msgstr "Wysyłka do tych krajów jest liczona na bieżąco przez wtyczkę przewoźnika, której sudemi nie może zapytać. sudemi nie dostarcza tam, dopóki nie ustawisz w sudemi ceny dla tych krajów."
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open card dispute (chargeback)"
+msgstr "Wstrzymana: otwarty spór kartowy (chargeback)"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open cancellation request"
+msgstr "Wstrzymana: otwarty wniosek o anulowanie"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open return request"
+msgstr "Wstrzymana: otwarty wniosek o zwrot"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold"
+msgstr "Wstrzymana"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Payout on hold"
+msgstr "Wypłata wstrzymana"

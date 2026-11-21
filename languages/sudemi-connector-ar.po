@@ -2443,3 +2443,23 @@ msgstr "تكلفة الشحن إلى هذه الدول تستخدم صيغة أ�
 #: includes/class-sudemi-issues.php
 msgid "Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi."
 msgstr "يُحسب الشحن إلى هذه الدول مباشرةً بواسطة إضافة شركة شحن لا يستطيع sudemi الاستعلام منها. لا يوصل sudemi إليها حتى تحدد سعرًا لهذه الدول على sudemi."
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open card dispute (chargeback)"
+msgstr "معلّق: نزاع بطاقة مفتوح (استرداد بقرار البنك)"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open cancellation request"
+msgstr "معلّق: طلب إلغاء مفتوح"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open return request"
+msgstr "معلّق: طلب إرجاع مفتوح"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold"
+msgstr "معلّق"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Payout on hold"
+msgstr "التحويل إليك معلّق"

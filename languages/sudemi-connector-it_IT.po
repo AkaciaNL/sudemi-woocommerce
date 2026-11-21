@@ -2415,3 +2415,23 @@ msgstr "Le tue spese di spedizione per questi paesi usano una formula, una perce
 #: includes/class-sudemi-issues.php
 msgid "Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi."
 msgstr "La spedizione verso questi paesi viene calcolata in tempo reale da un plugin del corriere, che sudemi non può interrogare. sudemi non consegna lì finché non imposti un prezzo per questi paesi su sudemi."
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open card dispute (chargeback)"
+msgstr "In sospeso: contestazione della carta aperta (chargeback)"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open cancellation request"
+msgstr "In sospeso: richiesta di annullamento aperta"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open return request"
+msgstr "In sospeso: richiesta di reso aperta"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold"
+msgstr "In sospeso"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Payout on hold"
+msgstr "Accredito in sospeso"

@@ -2415,3 +2415,23 @@ msgstr "Bu ülkeler için kargo ücretiniz, sudemi'nin tam olarak aktaramadığ�
 #: includes/class-sudemi-issues.php
 msgid "Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi."
 msgstr "Bu ülkelere kargo, sudemi'nin soramadığı bir kargo firması eklentisi tarafından canlı hesaplanıyor. Bu ülkeler için sudemi'de bir fiyat belirleyene kadar sudemi oraya teslimat yapmaz."
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open card dispute (chargeback)"
+msgstr "Bekletiliyor: açık kart itirazı (chargeback)"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open cancellation request"
+msgstr "Bekletiliyor: açık iptal talebi"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold: open return request"
+msgstr "Bekletiliyor: açık iade talebi"
+
+#: includes/class-sudemi-manage.php
+msgid "On hold"
+msgstr "Bekletiliyor"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Payout on hold"
+msgstr "Satıcı ödemesi bekletiliyor"

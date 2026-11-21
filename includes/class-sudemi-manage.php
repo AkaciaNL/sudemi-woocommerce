@@ -330,6 +330,27 @@ final class Sudemi_Manage {
 		return __( 'sudemi refused this.', 'sudemi-connector' );
 	}
 
+	/**
+	 * Why an order's payout is on hold (payout.on_hold), or '' when it is not. A value this
+	 * plugin does not know yet gives a plain "On hold", never the raw code.
+	 *
+	 * @param mixed $payout The order's payout object (or anything else: not on hold).
+	 */
+	public static function payout_hold_label( $payout ) {
+		if ( ! is_array( $payout ) || ! isset( $payout['on_hold'] ) || ! is_string( $payout['on_hold'] ) || '' === trim( $payout['on_hold'] ) ) {
+			return '';
+		}
+		switch ( trim( $payout['on_hold'] ) ) {
+			case 'chargeback':
+				return __( 'On hold: open card dispute (chargeback)', 'sudemi-connector' );
+			case 'cancellation_request':
+				return __( 'On hold: open cancellation request', 'sudemi-connector' );
+			case 'return_request':
+				return __( 'On hold: open return request', 'sudemi-connector' );
+		}
+		return __( 'On hold', 'sudemi-connector' );
+	}
+
 	// ----------------------------------------------------------------- reading ----
 
 	/**
