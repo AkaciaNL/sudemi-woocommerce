@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, chatgpt, product feed
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.4.6
+Stable tag: 1.4.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -126,6 +126,9 @@ Use the Support page inside the plugin, or the seller guides at https://sudemi.c
 
 == Upgrade Notice ==
 
+= 1.4.7 =
+Shipping: a parcel of several items now costs on sudemi what your own checkout charges (per extra item, free over an amount).
+
 = 1.4.6 =
 Product photos: each variation also sends its own photos from popular variation gallery add-ons.
 
@@ -139,6 +142,12 @@ Sizes and colours of one product now show to buyers as one product with a choice
 Clearer WordPress.org description, a list of every call to sudemi (External services), and screenshots. No change in how the plugin works.
 
 == Changelog ==
+
+= 1.4.7 =
+* Shipping: your WooCommerce shipping rules are sent to sudemi, so a parcel of several items costs what your own checkout would charge: a flat rate cost with [qty] (for example 4.95 + 1.50 * [qty]) charges every extra item, shipping class costs count per order or per class as you set them, and free shipping over a minimum amount makes the parcel free on sudemi from that amount (shown with VAT; a minimum your cart shows without VAT is raised by your VAT rate, so it never ships free earlier than in your shop). The rules are sent after every catalogue sync and a minute after you change a shipping zone, method, shipping class or tax setting.
+* One shipping method per country is used for every product and for the parcel: the cheapest one for an item without a shipping class. A flat rate cost with [qty] or a fee with a maximum is now read too, so those countries are offered where they were left out before.
+* What cannot be copied exactly (a percentage fee, class costs charged per class, a table-rate or live carrier plugin as the only method) is charged at your highest rate, or not offered when no rate can be worked out, and is reported to sudemi and shown on the Shipping tab, so you can set a price for those countries on sudemi.
+* The new texts in all twelve languages.
 
 = 1.4.6 =
 * Product photos: also sends variation galleries from popular add-ons. A variation with its own photos sends only those, its own main photo first, the way your storefront shows them: from WooCommerce's own variation gallery (WooCommerce 11.1 and later), WooCommerce Additional Variation Images, Variation Images Gallery for WooCommerce (Emran Ahmed and RadiusTheme), WooThumbs and Smart Variations Images. A variation without its own gallery keeps the product's photos, as before.

@@ -289,10 +289,6 @@ msgstr "无法从你的 WooCommerce 配送区域读取运费，因此 sudemi 买
 msgid "Shipping prices sent to sudemi (from your shipping zones; one item, your first product):"
 msgstr "发送给 sudemi 的运费（来自你的配送区域；按一件商品、以你的第一个商品计算）："
 
-#: admin/class-sudemi-admin.php:372
-msgid "Countries without a fixed price (cost formulas, free shipping with a minimum, postcode-only zones) are left out rather than guessed."
-msgstr "没有固定价格的国家/地区（费用公式、有最低消费的免运费、仅限邮编的区域）将被略去，而不是估算。"
-
 #: admin/class-sudemi-admin.php:377
 msgid "Days until you dispatch an order (at most)"
 msgstr "你发出订单所需天数（最多）"
@@ -2360,3 +2356,55 @@ msgstr "到时未答复的订单将被释放：不向买家收取任何费用，
 
 msgid "Off by default: each new order waits for your answer here (sudemi also sends you an e-mail), so nothing is accepted before you have checked it."
 msgstr "默认关闭：每个新订单都在此等待您的答复（sudemi 也会给您发送电子邮件），因此在您检查之前不会接受任何订单。"
+
+#: admin/class-sudemi-admin.php
+msgid "A parcel of several items is charged by your shipping rules (each extra item, free shipping from an amount); the Shipping tab shows them. A country whose price cannot be read from your zones (a live carrier rate, a postcode-only zone) is left out rather than guessed."
+msgstr "包含多件商品的包裹按您的运费规则计费（每件额外商品、满一定金额免运费）；“运费”标签页会显示这些规则。无法从您的配送区域读取价格的国家/地区（承运商实时运费、仅按邮编划分的区域）会被排除，而不是猜测价格。"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Your WooCommerce shipping rules on sudemi"
+msgstr "您在 sudemi 上的 WooCommerce 运费规则"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "sudemi charges a parcel of several items the way your own checkout does: these rules are read from your WooCommerce shipping zones and sent again whenever you change them. A price you set above on sudemi wins over them."
+msgstr "sudemi 按照您自己结账页面的方式为包含多件商品的包裹计费：这些规则从您的 WooCommerce 配送区域读取，每次更改后都会重新发送。您在上方 sudemi 中设置的价格优先。"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Not sent yet; they are sent with the next catalogue sync."
+msgstr "尚未发送；将随下一次商品目录同步一起发送。"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Sent %s."
+msgstr "发送于 %s。"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Per parcel"
+msgstr "每个包裹"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Each extra item"
+msgstr "每件额外商品"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Free from"
+msgstr "免运费起点"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "the item's own shipping price (the highest one)"
+msgstr "商品自身的运费（取最高者）"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "What could not be copied exactly"
+msgstr "无法完全照搬的内容"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "sudemi did not take the rule for %1$s: %2$s"
+msgstr "sudemi 未接受 %1$s 的规则：%2$s"
+
+#: includes/class-sudemi-issues.php
+msgid "Your shipping cost for these countries uses a formula, a percentage or a shipping plugin that sudemi cannot copy exactly. sudemi charges your highest rate there, or does not deliver there when no rate can be worked out. Set a price for these countries on sudemi to change that."
+msgstr "您对这些国家/地区的运费使用了 sudemi 无法完全照搬的公式、百分比或运费插件。sudemi 在那里按您的最高运费收取；如果无法算出任何运费，则不向那里配送。在 sudemi 上为这些国家/地区设置价格即可更改。"
+
+#: includes/class-sudemi-issues.php
+msgid "Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi."
+msgstr "寄往这些国家/地区的运费由承运商插件实时计算，sudemi 无法查询。在您于 sudemi 上为这些国家/地区设置价格之前，sudemi 不向那里配送。"

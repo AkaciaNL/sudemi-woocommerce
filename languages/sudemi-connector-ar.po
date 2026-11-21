@@ -294,10 +294,6 @@ msgstr "تعذّرت قراءة أي سعر شحن من مناطق الشحن ف
 msgid "Shipping prices sent to sudemi (from your shipping zones; one item, your first product):"
 msgstr "أسعار الشحن المُرسلة إلى sudemi (من مناطق الشحن لديك؛ لسلعة واحدة، أول منتج لديك):"
 
-#: admin/class-sudemi-admin.php:372
-msgid "Countries without a fixed price (cost formulas, free shipping with a minimum, postcode-only zones) are left out rather than guessed."
-msgstr "البلدان التي ليس لها سعر ثابت (معادلات التكلفة، الشحن المجاني بحد أدنى، المناطق المحددة بالرمز البريدي فقط) تُستبعد بدل تقديرها."
-
 #: admin/class-sudemi-admin.php:377
 msgid "Days until you dispatch an order (at most)"
 msgstr "عدد الأيام حتى ترسل الطلب (حدًا أقصى)"
@@ -2395,3 +2391,55 @@ msgstr "الطلب الذي لا يُرد عليه حتى ذلك الحين يُ
 
 msgid "Off by default: each new order waits for your answer here (sudemi also sends you an e-mail), so nothing is accepted before you have checked it."
 msgstr "متوقف افتراضيًا: كل طلب جديد ينتظر ردك هنا (ويرسل لك sudemi أيضًا بريدًا إلكترونيًا)، فلا يُقبل شيء قبل أن تتحقق منه."
+
+#: admin/class-sudemi-admin.php
+msgid "A parcel of several items is charged by your shipping rules (each extra item, free shipping from an amount); the Shipping tab shows them. A country whose price cannot be read from your zones (a live carrier rate, a postcode-only zone) is left out rather than guessed."
+msgstr "يُحتسب الطرد الذي يحتوي على عدة منتجات وفق قواعد الشحن الخاصة بك (كل منتج إضافي، والشحن المجاني ابتداءً من مبلغ معيّن)؛ وتعرضها علامة التبويب الشحن. أما الدولة التي لا يمكن قراءة سعرها من مناطقك (سعر مباشر من شركة شحن، أو منطقة بالرموز البريدية فقط) فتُستبعد بدلًا من تخمين سعرها."
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Your WooCommerce shipping rules on sudemi"
+msgstr "قواعد شحن WooCommerce الخاصة بك على sudemi"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "sudemi charges a parcel of several items the way your own checkout does: these rules are read from your WooCommerce shipping zones and sent again whenever you change them. A price you set above on sudemi wins over them."
+msgstr "يحتسب sudemi الطرد الذي يحتوي على عدة منتجات كما تفعل صفحة الدفع في متجرك: تُقرأ هذه القواعد من مناطق الشحن في WooCommerce وتُرسل من جديد كلما غيّرتها. السعر الذي تحدده أعلاه على sudemi له الأولوية."
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Not sent yet; they are sent with the next catalogue sync."
+msgstr "لم تُرسل بعد؛ تُرسل مع المزامنة التالية للكتالوج."
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Sent %s."
+msgstr "أُرسلت في %s."
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Per parcel"
+msgstr "لكل طرد"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Each extra item"
+msgstr "كل منتج إضافي"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Free from"
+msgstr "مجاني ابتداءً من"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "the item's own shipping price (the highest one)"
+msgstr "سعر الشحن الخاص بالمنتج (الأعلى)"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "What could not be copied exactly"
+msgstr "ما لم يمكن نقله بدقة"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "sudemi did not take the rule for %1$s: %2$s"
+msgstr "لم يقبل sudemi القاعدة لـ %1$s: %2$s"
+
+#: includes/class-sudemi-issues.php
+msgid "Your shipping cost for these countries uses a formula, a percentage or a shipping plugin that sudemi cannot copy exactly. sudemi charges your highest rate there, or does not deliver there when no rate can be worked out. Set a price for these countries on sudemi to change that."
+msgstr "تكلفة الشحن إلى هذه الدول تستخدم صيغة أو نسبة مئوية أو إضافة شحن لا يستطيع sudemi نقلها بدقة. يحتسب sudemi هناك أعلى سعر لديك، أو لا يوصل إليها إذا تعذّر حساب أي سعر. حدّد سعرًا لهذه الدول على sudemi لتغيير ذلك."
+
+#: includes/class-sudemi-issues.php
+msgid "Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi."
+msgstr "يُحسب الشحن إلى هذه الدول مباشرةً بواسطة إضافة شركة شحن لا يستطيع sudemi الاستعلام منها. لا يوصل sudemi إليها حتى تحدد سعرًا لهذه الدول على sudemi."

@@ -289,10 +289,6 @@ msgstr ""
 msgid "Shipping prices sent to sudemi (from your shipping zones; one item, your first product):"
 msgstr ""
 
-#: admin/class-sudemi-admin.php:372
-msgid "Countries without a fixed price (cost formulas, free shipping with a minimum, postcode-only zones) are left out rather than guessed."
-msgstr ""
-
 #: admin/class-sudemi-admin.php:377
 msgid "Days until you dispatch an order (at most)"
 msgstr ""
@@ -2365,4 +2361,56 @@ msgid "An order not answered by then is released: the buyer is charged nothing a
 msgstr ""
 
 msgid "Off by default: each new order waits for your answer here (sudemi also sends you an e-mail), so nothing is accepted before you have checked it."
+msgstr ""
+
+#: admin/class-sudemi-admin.php
+msgid "A parcel of several items is charged by your shipping rules (each extra item, free shipping from an amount); the Shipping tab shows them. A country whose price cannot be read from your zones (a live carrier rate, a postcode-only zone) is left out rather than guessed."
+msgstr ""
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Your WooCommerce shipping rules on sudemi"
+msgstr ""
+
+#: admin/class-sudemi-admin-manage.php
+msgid "sudemi charges a parcel of several items the way your own checkout does: these rules are read from your WooCommerce shipping zones and sent again whenever you change them. A price you set above on sudemi wins over them."
+msgstr ""
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Not sent yet; they are sent with the next catalogue sync."
+msgstr ""
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Sent %s."
+msgstr ""
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Per parcel"
+msgstr ""
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Each extra item"
+msgstr ""
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Free from"
+msgstr ""
+
+#: admin/class-sudemi-admin-manage.php
+msgid "the item's own shipping price (the highest one)"
+msgstr ""
+
+#: admin/class-sudemi-admin-manage.php
+msgid "What could not be copied exactly"
+msgstr ""
+
+#: admin/class-sudemi-admin-manage.php
+msgid "sudemi did not take the rule for %1$s: %2$s"
+msgstr ""
+
+#: includes/class-sudemi-issues.php
+msgid "Your shipping cost for these countries uses a formula, a percentage or a shipping plugin that sudemi cannot copy exactly. sudemi charges your highest rate there, or does not deliver there when no rate can be worked out. Set a price for these countries on sudemi to change that."
+msgstr ""
+
+#: includes/class-sudemi-issues.php
+msgid "Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi."
 msgstr ""

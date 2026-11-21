@@ -323,6 +323,10 @@ final class Sudemi_Issues {
 				return __( 'The product has more than 50 photos; only the first 50 are sent to sudemi.', 'sudemi-connector' );
 			case self::NOT_ORDERABLE:
 				return __( 'A required add-on cannot be offered on sudemi, so the product is not listed.', 'sudemi-connector' );
+			case 'shipping_rule_approximated':
+				return __( 'Your shipping cost for these countries uses a formula, a percentage or a shipping plugin that sudemi cannot copy exactly. sudemi charges your highest rate there, or does not deliver there when no rate can be worked out. Set a price for these countries on sudemi to change that.', 'sudemi-connector' );
+			case 'shipping_rate_calculated':
+				return __( 'Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi.', 'sudemi-connector' );
 			case 'rejected':
 				return __( 'sudemi refused this product.', 'sudemi-connector' );
 		}

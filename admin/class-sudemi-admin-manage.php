@@ -888,6 +888,67 @@ final class Sudemi_Admin_Manage {
 		submit_button( __( 'Save shipping on sudemi', 'sudemi-connector' ), 'primary', 'submit', false );
 		echo ' <a class="button" href="' . esc_url( self::url( array( 'tab' => 'shipping', 'prefill' => '1' ) ) ) . '">' . esc_html__( 'Fill in from my WooCommerce shipping zones', 'sudemi-connector' ) . '</a>';
 		echo '</form></section>';
+		self::render_shipping_rules( $currency );
+	}
+
+	/**
+	 * The parcel rules read from the WooCommerce shipping zones as last sent to sudemi, and what
+	 * could not be copied exactly (Sudemi_Shipping::send_rules()).
+	 */
+	private static function render_shipping_rules( $currency ) {
+		$sent = Sudemi_Shipping::last_sent();
+		echo '<section class="sudemi-card" id="sudemi-shipping-rules"><h2>' . esc_html__( 'Your WooCommerce shipping rules on sudemi', 'sudemi-connector' ) . '</h2>';
+		echo '<p class="description">' . esc_html__( 'sudemi charges a parcel of several items the way your own checkout does: these rules are read from your WooCommerce shipping zones and sent again whenever you change them. A price you set above on sudemi wins over them.', 'sudemi-connector' ) . '</p>';
+		if ( null === $sent ) {
+			echo '<p>' . esc_html__( 'Not sent yet; they are sent with the next catalogue sync.', 'sudemi-connector' ) . '</p></section>';
+			return;
+		}
+		$currency = isset( $sent['currency'] ) && '' !== (string) $sent['currency'] ? (string) $sent['currency'] : $currency;
+		/* translators: %s: date and time. */
+		echo '<p>' . esc_html( sprintf( __( 'Sent %s.', 'sudemi-connector' ), wp_date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), (int) $sent['at'] ) ) ) . '</p>';
+		$rules = isset( $sent['rules'] ) && is_array( $sent['rules'] ) ? $sent['rules'] : array();
+		if ( ! empty( $rules ) ) {
+			echo '<div class="sudemi-table-scroll"><table class="sudemi-table"><thead><tr>'
+				. '<th>' . esc_html__( 'Country', 'sudemi-connector' ) . '</th>'
+				. '<th>' . esc_html__( 'Per parcel', 'sudemi-connector' ) . '</th>'
+				. '<th>' . esc_html__( 'Each extra item', 'sudemi-connector' ) . '</th>'
+				. '<th>' . esc_html__( 'Free from', 'sudemi-connector' ) . '</th>'
+				. '</tr></thead><tbody>';
+			foreach ( $rules as $rule ) {
+				if ( ! is_array( $rule ) || ! isset( $rule['country'] ) ) {
+					continue;
+				}
+				echo '<tr><td>' . esc_html( self::country( $rule['country'] ) ) . '</td><td>'
+					. esc_html( isset( $rule['baseMinor'] ) ? self::money( $rule['baseMinor'], $currency ) : __( 'the item\'s own shipping price (the highest one)', 'sudemi-connector' ) ) . '</td><td>'
+					. esc_html( isset( $rule['extraItemMinor'] ) ? self::money( $rule['extraItemMinor'], $currency ) : '-' ) . '</td><td>'
+					. esc_html( isset( $rule['freeOverMinor'] ) ? self::money( $rule['freeOverMinor'], $currency ) : '-' ) . '</td></tr>';
+			}
+			echo '</tbody></table></div>';
+		}
+		$issues = isset( $sent['issues'] ) && is_array( $sent['issues'] ) ? $sent['issues'] : array();
+		if ( ! empty( $issues ) ) {
+			echo '<h3>' . esc_html__( 'What could not be copied exactly', 'sudemi-connector' ) . '</h3><ul>';
+			foreach ( $issues as $issue ) {
+				$countries = isset( $issue['details']['countries'] ) && is_array( $issue['details']['countries'] ) ? $issue['details']['countries'] : array();
+				echo '<li><strong>' . esc_html( implode( ', ', array_map( 'strval', $countries ) ) ) . '</strong>: ' . esc_html( Sudemi_Issues::label( isset( $issue['code'] ) ? $issue['code'] : '' ) )
+					. ' <span class="sudemi-muted">(' . esc_html( isset( $issue['message'] ) ? (string) $issue['message'] : '' ) . ')</span></li>';
+			}
+			echo '</ul>';
+		}
+		$ignored = isset( $sent['ignored'] ) && is_array( $sent['ignored'] ) ? $sent['ignored'] : array();
+		foreach ( $ignored as $row ) {
+			if ( is_array( $row ) && isset( $row['country'] ) ) {
+				echo '<p class="sudemi-muted">' . esc_html(
+					sprintf(
+						/* translators: 1: country code, 2: sudemi's reason, in English. */
+						__( 'sudemi did not take the rule for %1$s: %2$s', 'sudemi-connector' ),
+						(string) $row['country'],
+						isset( $row['reason'] ) ? (string) $row['reason'] : ''
+					)
+				) . '</p>';
+			}
+		}
+		echo '</section>';
 	}
 
 	private static function range( $min, $max, $currency ) {

@@ -106,6 +106,9 @@ class Sudemi_Issues {
 		return false;
 	}
 }
+class Sudemi_Shipping {
+	public static function send_if_due() {}
+}
 class Sudemi_Requests {
 	public static $replaced = array();
 	public static function replace( $list ) {

@@ -290,10 +290,6 @@ msgstr "לא ניתן היה לקרוא אף מחיר משלוח מאזורי ה
 msgid "Shipping prices sent to sudemi (from your shipping zones; one item, your first product):"
 msgstr "מחירי משלוח שנשלחו ל-sudemi (מאזורי המשלוח שלכם; פריט אחד, המוצר הראשון שלכם):"
 
-#: admin/class-sudemi-admin.php:372
-msgid "Countries without a fixed price (cost formulas, free shipping with a minimum, postcode-only zones) are left out rather than guessed."
-msgstr "מדינות ללא מחיר קבוע (נוסחאות עלות, משלוח חינם עם מינימום, אזורים לפי מיקוד בלבד) מושמטות במקום לנחש."
-
 #: admin/class-sudemi-admin.php:377
 msgid "Days until you dispatch an order (at most)"
 msgstr "ימים עד שליחת הזמנה (לכל היותר)"
@@ -2367,3 +2363,55 @@ msgstr "הזמנה שלא נענתה עד אז משתחררת: הקונה לא �
 
 msgid "Off by default: each new order waits for your answer here (sudemi also sends you an e-mail), so nothing is accepted before you have checked it."
 msgstr "כבוי כברירת מחדל: כל הזמנה חדשה ממתינה כאן לתשובתך (sudemi שולח לך גם דוא\"ל), כך ששום דבר לא מתקבל לפני שבדקת אותו."
+
+#: admin/class-sudemi-admin.php
+msgid "A parcel of several items is charged by your shipping rules (each extra item, free shipping from an amount); the Shipping tab shows them. A country whose price cannot be read from your zones (a live carrier rate, a postcode-only zone) is left out rather than guessed."
+msgstr "חבילה עם כמה פריטים מחויבת לפי כללי המשלוח שלך (כל פריט נוסף, משלוח חינם מעל סכום מסוים); הלשונית משלוח מציגה אותם. מדינה שאי אפשר לקרוא את המחיר שלה מהאזורים שלך (תעריף חי של חברת שילוח, אזור לפי מיקודים בלבד) מושמטת במקום לנחש."
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Your WooCommerce shipping rules on sudemi"
+msgstr "כללי המשלוח של WooCommerce שלך ב-sudemi"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "sudemi charges a parcel of several items the way your own checkout does: these rules are read from your WooCommerce shipping zones and sent again whenever you change them. A price you set above on sudemi wins over them."
+msgstr "sudemi מחייב חבילה עם כמה פריטים כמו שהקופה שלך עושה: הכללים האלה נקראים מאזורי המשלוח שלך ב-WooCommerce ונשלחים שוב בכל פעם שהם משתנים. מחיר שקבעת למעלה ב-sudemi גובר עליהם."
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Not sent yet; they are sent with the next catalogue sync."
+msgstr "עדיין לא נשלחו; הם יישלחו עם סנכרון הקטלוג הבא."
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Sent %s."
+msgstr "נשלח ב-%s."
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Per parcel"
+msgstr "לחבילה"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Each extra item"
+msgstr "כל פריט נוסף"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Free from"
+msgstr "חינם החל מ-"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "the item's own shipping price (the highest one)"
+msgstr "מחיר המשלוח של הפריט עצמו (הגבוה ביותר)"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "What could not be copied exactly"
+msgstr "מה שלא ניתן היה להעתיק בדיוק"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "sudemi did not take the rule for %1$s: %2$s"
+msgstr "sudemi לא קיבל את הכלל עבור %1$s: %2$s"
+
+#: includes/class-sudemi-issues.php
+msgid "Your shipping cost for these countries uses a formula, a percentage or a shipping plugin that sudemi cannot copy exactly. sudemi charges your highest rate there, or does not deliver there when no rate can be worked out. Set a price for these countries on sudemi to change that."
+msgstr "עלות המשלוח שלך למדינות האלה משתמשת בנוסחה, באחוז או בתוסף משלוח ש-sudemi לא יכול להעתיק בדיוק. sudemi גובה שם את התעריף הגבוה ביותר שלך, או לא שולח לשם כשאי אפשר לחשב תעריף. קבע מחיר למדינות האלה ב-sudemi כדי לשנות זאת."
+
+#: includes/class-sudemi-issues.php
+msgid "Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi."
+msgstr "המשלוח למדינות האלה מחושב בזמן אמת על ידי תוסף של חברת שילוח, ש-sudemi לא יכול לפנות אליו. sudemi לא שולח לשם עד שתקבע מחיר למדינות האלה ב-sudemi."

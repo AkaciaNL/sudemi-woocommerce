@@ -290,10 +290,6 @@ msgstr "No se ha podido leer ningún precio de envío de tus zonas de envío de 
 msgid "Shipping prices sent to sudemi (from your shipping zones; one item, your first product):"
 msgstr "Precios de envío enviados a sudemi (según tus zonas de envío; un artículo, tu primer producto):"
 
-#: admin/class-sudemi-admin.php:372
-msgid "Countries without a fixed price (cost formulas, free shipping with a minimum, postcode-only zones) are left out rather than guessed."
-msgstr "Los países sin precio fijo (fórmulas de coste, envío gratuito con importe mínimo, zonas solo por código postal) se omiten en lugar de estimarse."
-
 #: admin/class-sudemi-admin.php:377
 msgid "Days until you dispatch an order (at most)"
 msgstr "Días hasta que despachas un pedido (como máximo)"
@@ -2367,3 +2363,55 @@ msgstr "Un pedido sin respuesta para entonces se libera: no se cobra nada al com
 
 msgid "Off by default: each new order waits for your answer here (sudemi also sends you an e-mail), so nothing is accepted before you have checked it."
 msgstr "Desactivado por defecto: cada pedido nuevo espera aquí su respuesta (sudemi también le envía un correo), para que no se acepte nada antes de que lo haya revisado."
+
+#: admin/class-sudemi-admin.php
+msgid "A parcel of several items is charged by your shipping rules (each extra item, free shipping from an amount); the Shipping tab shows them. A country whose price cannot be read from your zones (a live carrier rate, a postcode-only zone) is left out rather than guessed."
+msgstr "Un paquete con varios artículos se cobra según tus reglas de envío (cada artículo adicional, envío gratuito a partir de un importe); la pestaña Envío las muestra. Un país cuyo precio no se puede leer de tus zonas (una tarifa en directo de un transportista, una zona solo con códigos postales) se deja fuera en lugar de adivinarlo."
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Your WooCommerce shipping rules on sudemi"
+msgstr "Tus reglas de envío de WooCommerce en sudemi"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "sudemi charges a parcel of several items the way your own checkout does: these rules are read from your WooCommerce shipping zones and sent again whenever you change them. A price you set above on sudemi wins over them."
+msgstr "sudemi cobra un paquete con varios artículos como lo hace tu propia caja: estas reglas se leen de tus zonas de envío de WooCommerce y se envían de nuevo cada vez que las cambias. Un precio que fijes arriba en sudemi tiene prioridad."
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Not sent yet; they are sent with the next catalogue sync."
+msgstr "Aún no enviadas; se envían con la próxima sincronización del catálogo."
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Sent %s."
+msgstr "Enviadas el %s."
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Per parcel"
+msgstr "Por paquete"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Each extra item"
+msgstr "Cada artículo adicional"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "Free from"
+msgstr "Gratis a partir de"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "the item's own shipping price (the highest one)"
+msgstr "el precio de envío propio del artículo (el más alto)"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "What could not be copied exactly"
+msgstr "Lo que no se pudo copiar exactamente"
+
+#: admin/class-sudemi-admin-manage.php
+msgid "sudemi did not take the rule for %1$s: %2$s"
+msgstr "sudemi no aceptó la regla para %1$s: %2$s"
+
+#: includes/class-sudemi-issues.php
+msgid "Your shipping cost for these countries uses a formula, a percentage or a shipping plugin that sudemi cannot copy exactly. sudemi charges your highest rate there, or does not deliver there when no rate can be worked out. Set a price for these countries on sudemi to change that."
+msgstr "Tus gastos de envío para estos países usan una fórmula, un porcentaje o un plugin de envío que sudemi no puede copiar exactamente. sudemi cobra allí tu tarifa más alta, o no entrega allí cuando no se puede calcular ninguna tarifa. Fija un precio para estos países en sudemi para cambiarlo."
+
+#: includes/class-sudemi-issues.php
+msgid "Shipping to these countries is calculated live by a carrier plugin, which sudemi cannot ask. sudemi does not deliver there until you set a price for these countries on sudemi."
+msgstr "El envío a estos países lo calcula en directo un plugin de transportista, al que sudemi no puede consultar. sudemi no entrega allí hasta que fijes un precio para estos países en sudemi."

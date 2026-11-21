@@ -26,10 +26,8 @@ final class Sudemi_Sync {
 		add_action( self::CRON_FULL, array( __CLASS__, 'cron_full' ), 10, 1 );
 		// Price and stock, as they change. Guarded inside so an unconnected shop does nothing.
 		add_action( 'woocommerce_update_product', array( __CLASS__, 'on_product_changed' ), 10, 1 );
-		// Shipping prices come from the shipping zones: a change there re-sends the catalogue.
-		foreach ( array( 'woocommerce_after_shipping_zone_object_save', 'woocommerce_shipping_zone_method_added', 'woocommerce_shipping_zone_method_deleted', 'woocommerce_shipping_zone_method_status_toggled', 'woocommerce_update_options_shipping' ) as $hook ) {
-			add_action( $hook, array( __CLASS__, 'schedule_soon' ) );
-		}
+		// Shipping prices come from the shipping zones: a change there re-sends the catalogue
+		// (Sudemi_Shipping::boot() watches them and calls schedule_soon()).
 		add_action( 'woocommerce_product_set_stock', array( __CLASS__, 'on_product_object_changed' ), 10, 1 );
 		add_action( 'woocommerce_update_product_variation', array( __CLASS__, 'on_product_changed' ), 10, 1 );
 		add_action( 'woocommerce_variation_set_stock', array( __CLASS__, 'on_product_object_changed' ), 10, 1 );
@@ -253,6 +251,9 @@ final class Sudemi_Sync {
 			update_option( self::OPTION_REMOVALS_SYNCED, (int) $state['removals'], false );
 		}
 		Sudemi_Heartbeat::anchor( $anchor );
+		// The parcel rule per country goes with every committed full sync (protocol "The shop's
+		// own shipping rules"); a failed send is retried by the heartbeat.
+		Sudemi_Shipping::send_rules();
 		/* translators: %d: number of products. */
 		Sudemi_Logger::info( sprintf( __( 'Synced %d products.', 'sudemi-connector' ), (int) $state['sent'] ) );
 		return 'done';

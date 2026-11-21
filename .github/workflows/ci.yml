@@ -34,6 +34,8 @@ jobs:
         run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/images-test.php"
       - name: Catalogue issues (left out, sent to sudemi, kept for the shop)
         run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/issues-test.php"
+      - name: Shipping rules (per extra item, free over an amount, never below the shop's own rate)
+        run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/shipping-rules-test.php"
       - name: Order safety (accept/reject/shipped answers, price queue)
         run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/orders-test.php"
       - name: Order claims (one caller builds the order)

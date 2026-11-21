@@ -3,7 +3,7 @@
  * Plugin Name:       sudemi Connector
  * Plugin URI:        https://sudemi.com/integrations/woocommerce
  * Description:       Lists this shop's products on sudemi, so an AI assistant can find them and send buyers to you. You stay the merchant of record.
- * Version:           1.4.6
+ * Version:           1.4.7
  * Requires at least: 6.2
  * Requires PHP:      8.0
  * Author:            Akacia
@@ -19,7 +19,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SUDEMI_VERSION', '1.4.6' );
+define( 'SUDEMI_VERSION', '1.4.7' );
 define( 'SUDEMI_PLUGIN_FILE', __FILE__ );
 define( 'SUDEMI_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
@@ -30,6 +30,7 @@ require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-client.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-challenge.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-pairing.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-queue.php';
+require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-shipping-rules.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-shipping.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-withdrawal.php';
 require_once SUDEMI_PLUGIN_DIR . 'includes/class-sudemi-variants.php';
@@ -118,6 +119,7 @@ add_action(
 		Sudemi_Challenge::boot();
 		Sudemi_Pairing::boot();
 		Sudemi_Sync::boot();
+		Sudemi_Shipping::boot();
 		Sudemi_Heartbeat::boot();
 		Sudemi_Orders::boot();
 		Sudemi_Manage::boot();
@@ -144,6 +146,7 @@ register_deactivation_hook(
 		// Deactivation stops the work but keeps the connection: a shop that deactivates to debug
 		// a theme should not have to pair again afterwards. Uninstall is what removes it.
 		Sudemi_Sync::unschedule();
+		Sudemi_Shipping::unschedule();
 		Sudemi_Heartbeat::unschedule();
 		Sudemi_Pairing::stop_polling();
 	}

@@ -56,6 +56,9 @@ delete_option( 'sudemi_changes_checked' );
 delete_option( 'sudemi_changes_retry' );
 delete_option( 'sudemi_tracking_since' );
 delete_option( 'sudemi_db_version' );
+// The shipping rules sent to sudemi (1.4.7).
+delete_option( 'sudemi_shipping_rules_due' );
+delete_option( 'sudemi_shipping_rules_sent' );
 
 // Which sudemi order belongs to which WooCommerce order is also on the orders themselves.
 global $wpdb;
@@ -65,6 +68,7 @@ wp_clear_scheduled_hook( 'sudemi_full_sync' );
 wp_clear_scheduled_hook( 'sudemi_full_sync', array( 'continue' ) );
 wp_clear_scheduled_hook( 'sudemi_pairing_poll' );
 wp_clear_scheduled_hook( 'sudemi_heartbeat' );
+wp_clear_scheduled_hook( 'sudemi_shipping_rules' );
 
 // The per-product right-of-withdrawal setting only means something to sudemi.
 delete_post_meta_by_key( '_sudemi_withdrawal_exclusion' );

@@ -1121,6 +1121,7 @@ final class Sudemi_Admin {
 		delete_option( Sudemi_Orders::OPTION_WAITING );
 		Sudemi_Issues::forget_queue();
 		Sudemi_Sync::forget();
+		Sudemi_Shipping::forget();
 		Sudemi_Order_Calls::forget();
 		Sudemi_Challenge::forget();
 		Sudemi_Requests::forget();
@@ -1152,7 +1153,7 @@ final class Sudemi_Admin {
 				$list[] = $rate['country'] . ' ' . wc_price( Sudemi_Currency::to_major( $rate['costMinor'], Sudemi_Currency::shop_currency() ) );
 			}
 			echo '<p>' . esc_html__( 'Shipping prices sent to sudemi (from your shipping zones; one item, your first product):', 'sudemi-connector' ) . ' ' . wp_kses_post( implode( ', ', $list ) ) . '</p>';
-			echo '<p class="description">' . esc_html__( 'Countries without a fixed price (cost formulas, free shipping with a minimum, postcode-only zones) are left out rather than guessed.', 'sudemi-connector' ) . '</p>';
+			echo '<p class="description">' . esc_html__( 'A parcel of several items is charged by your shipping rules (each extra item, free shipping from an amount); the Shipping tab shows them. A country whose price cannot be read from your zones (a live carrier rate, a postcode-only zone) is left out rather than guessed.', 'sudemi-connector' ) . '</p>';
 		}
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
 		wp_nonce_field( 'sudemi_delivery' );
