@@ -1628,6 +1628,7 @@ class Sudemi_Orders {
 		add_action( 'woocommerce_order_status_delivered', array( __CLASS__, 'report_delivered' ), 10, 1 );
 		// sudemi holds the buyer's payment, so a refund or cancellation made here has to reach it:
 		// otherwise the shop records a refund and the buyer never gets the money back.
+		add_action( 'woocommerce_create_refund', array( __CLASS__, 'on_create_refund' ), 10, 2 );
 		add_action( 'woocommerce_refund_created', array( __CLASS__, 'on_refund_created' ), 10, 2 );
 		add_action( 'woocommerce_order_status_changed', array( __CLASS__, 'on_status_changed' ), 10, 3 );
 		// Tracking typed (or corrected) after the order was reported shipped: sent to sudemi, which
@@ -1767,6 +1768,169 @@ class Sudemi_Orders {
 			'currency'    => $charged,
 			'reason'      => '' === $reason ? null : $reason,
 		);
+	}
+
+	/**
+	 * What a WooCommerce refund that names units of an item with a once-per-line fee must be (owner
+	 * rule 2026-11-21: the fee goes back only with the last unit of its item; partial returns keep
+	 * it). WooCommerce's refund form fills in line total / quantity, a share of the fee included;
+	 * sudemi refunds the units at the unit price paid, plus the fee when the last unit goes. Pure.
+	 *
+	 * @param array $items        Refunded sudemi items: line_id, unit_minor, fee_minor, quantity,
+	 *                            units_sent, refund_qty.
+	 * @param int   $others_minor What else the refund holds (shipping, fees, an amount above the
+	 *                            item rows, a row that is not a sudemi item).
+	 * @return array|null Null when no refunded unit has a fee (the refund goes on as before);
+	 *                    action 'set' (expected: the refund's amount, gross: per item) or 'refuse'
+	 *                    (expected: what sudemi gives back for the sudemi units).
+	 */
+	public static function refund_plan( array $items, $others_minor ) {
+		$with_fee = false;
+		foreach ( $items as $i ) {
+			$with_fee = $with_fee || ( $i['refund_qty'] > 0 && $i['fee_minor'] > 0 );
+		}
+		if ( ! $with_fee ) {
+			return null;
+		}
+		$ok       = 0 === (int) $others_minor;
+		$expected = 0;
+		$gross    = array();
+		foreach ( $items as $n => $i ) {
+			$qty = (int) $i['refund_qty'];
+			if ( '' === (string) $i['line_id'] || $qty < 1 || $i['units_sent'] + $qty > $i['quantity'] ) {
+				$ok = false;
+				continue;
+			}
+			$gross[ $n ] = $qty * (int) $i['unit_minor'] + ( $i['units_sent'] + $qty === (int) $i['quantity'] ? (int) $i['fee_minor'] : 0 );
+			$expected   += $gross[ $n ];
+		}
+		return array(
+			'action'   => $ok ? 'set' : 'refuse',
+			'expected' => $expected,
+			'gross'    => $gross,
+		);
+	}
+
+	/**
+	 * A gross amount split like the item it comes from: net and tax per rate in the item's own
+	 * proportion, the rounding left in the net so net plus taxes is exactly the gross. Pure.
+	 *
+	 * @param int   $gross_minor The amount with tax.
+	 * @param int   $net_minor   The item's net total.
+	 * @param array $tax_minor   The item's tax per rate id.
+	 * @return array{0:int,1:array} [net, taxes per rate id]
+	 */
+	public static function split_gross( $gross_minor, $net_minor, array $tax_minor ) {
+		$whole = (int) $net_minor + (int) array_sum( $tax_minor );
+		if ( $whole <= 0 || empty( $tax_minor ) ) {
+			return array( (int) $gross_minor, array_map( function () { return 0; }, $tax_minor ) );
+		}
+		$taxes = array();
+		foreach ( $tax_minor as $rate => $tax ) {
+			$taxes[ $rate ] = (int) round( (int) $tax * $gross_minor / $whole );
+		}
+		return array( (int) $gross_minor - (int) array_sum( $taxes ), $taxes );
+	}
+
+	/**
+	 * Before WooCommerce saves a refund (woocommerce_create_refund): a refund that names units of
+	 * an item with a once-per-line fee is set to what sudemi gives back for them, whatever the
+	 * form filled in, so the shop's refund and the buyer's money agree and on_refund_created()
+	 * sends it by line. One that cannot go by line (shipping or another amount in the same refund)
+	 * is refused with the right amount: WooCommerce shows the message and saves nothing. A refund
+	 * without quantities goes on as an amount, as before.
+	 *
+	 * @param WC_Order_Refund $refund The refund, not saved yet.
+	 * @param array           $args   wc_create_refund()'s arguments.
+	 * @throws Exception To refuse it (WooCommerce turns it into the admin's error message).
+	 */
+	public static function on_create_refund( $refund, $args ) {
+		if ( self::$applying_sudemi_cancel || ! is_object( $refund ) || ! is_callable( array( $refund, 'get_items' ) ) ) {
+			return;
+		}
+		$order = wc_get_order( $refund->get_parent_id() );
+		if ( ! $order || '' === (string) $order->get_meta( self::META_ORDER_ID ) ) {
+			return;
+		}
+		$currency = (string) $order->get_meta( Sudemi_Currency::META_ORDER_CURRENCY );
+		$currency = '' === $currency ? (string) $order->get_currency() : $currency;
+		$items    = array();
+		$rows     = array();
+		$others   = 0;
+		$row_sum  = 0;
+		foreach ( $refund->get_items( array( 'line_item', 'fee', 'shipping' ) ) as $ri ) {
+			$gross    = abs( self::minor_of( (float) $ri->get_total() + (float) $ri->get_total_tax(), $currency ) );
+			$row_sum += $gross;
+			$own      = $order->get_item( (int) $ri->get_meta( '_refunded_item_id' ) );
+			if ( $ri->is_type( 'line_item' ) && $own && '' !== (string) $own->get_meta( self::META_LINE_ID ) ) {
+				$items[] = array(
+					'line_id'    => (string) $own->get_meta( self::META_LINE_ID ),
+					'unit_minor' => (int) $own->get_meta( self::META_UNIT_MINOR ),
+					'fee_minor'  => (int) $own->get_meta( self::META_LINE_FEE ),
+					'quantity'   => (int) $own->get_quantity(),
+					'units_sent' => (int) $own->get_meta( self::META_UNITS_SENT ),
+					'refund_qty' => abs( (int) $ri->get_quantity() ),
+				);
+				$rows[]  = array( $ri, $own );
+			} else {
+				$others += $gross;
+			}
+		}
+		$amount = self::minor_of( $refund->get_amount(), $currency );
+		// An amount typed above the item rows is something else (shipping, a goodwill payment).
+		$others += max( 0, $amount - $row_sum );
+		$plan    = self::refund_plan( $items, $others );
+		if ( null === $plan ) {
+			return;
+		}
+		// The refund is not saved yet: what is left to refund does not count it.
+		$remaining = self::minor_of( $order->get_remaining_refund_amount(), $currency );
+		if ( 'refuse' === $plan['action'] || $plan['expected'] > $remaining ) {
+			throw new Exception(
+				sprintf(
+					/* translators: %s: the amount sudemi gives back for the units, for example "€10.50". */
+					__( 'This refund cannot be sent to sudemi as entered: an item in it has an add-on charged once for the whole line, which goes back only with the last unit. Refund the units of the items alone (sudemi gives back %s for them), and shipping or any other amount as a separate refund without quantities.', 'sudemi-connector' ),
+					self::price_text( $plan['expected'], $currency )
+				)
+			);
+		}
+		foreach ( $rows as $n => $pair ) {
+			list( $ri, $own ) = $pair;
+			$tax_minor = array();
+			$own_taxes = $own->get_taxes();
+			foreach ( isset( $own_taxes['total'] ) ? (array) $own_taxes['total'] : array() as $rate => $tax ) {
+				if ( '' !== $tax ) {
+					$tax_minor[ $rate ] = self::minor_of( $tax, $currency );
+				}
+			}
+			list( $net, $taxes ) = self::split_gross( $plan['gross'][ $n ], self::minor_of( $own->get_total(), $currency ), $tax_minor );
+			$neg = array();
+			foreach ( $taxes as $rate => $tax ) {
+				$neg[ $rate ] = self::major( -$tax, $currency );
+			}
+			$ri->set_total( self::major( -$net, $currency ) );
+			$ri->set_subtotal( self::major( -$net, $currency ) );
+			$ri->set_taxes(
+				array(
+					'total'    => $neg,
+					'subtotal' => $neg,
+				)
+			);
+		}
+		if ( $plan['expected'] !== $amount ) {
+			$order->add_order_note(
+				sprintf(
+					/* translators: 1: the amount the refund form proposed, 2: the amount refunded. */
+					__( 'The refund was set to %2$s instead of %1$s: sudemi gives back the units at the price paid, and an add-on charged once for the whole line only with the last unit of its item.', 'sudemi-connector' ),
+					self::price_text( $amount, $currency ),
+					self::price_text( $plan['expected'], $currency )
+				)
+			);
+		}
+		$refund->set_amount( self::major( $plan['expected'], $currency ) );
+		$refund->update_taxes();
+		$refund->calculate_totals( false );
+		$refund->set_total( self::major( -$plan['expected'], $currency ) );
 	}
 
 	/**

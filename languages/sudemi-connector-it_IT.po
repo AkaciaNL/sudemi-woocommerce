@@ -2440,3 +2440,13 @@ msgstr "Accredito in sospeso"
 #, php-format
 msgid "+%s, once for the whole line"
 msgstr "+%s, una sola volta per l'intera riga"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "This refund cannot be sent to sudemi as entered: an item in it has an add-on charged once for the whole line, which goes back only with the last unit. Refund the units of the items alone (sudemi gives back %s for them), and shipping or any other amount as a separate refund without quantities."
+msgstr "Questo rimborso non può essere inviato a sudemi così com'è: un articolo ha un'aggiunta addebitata una sola volta per l'intera riga, che viene restituita solo con l'ultima unità. Rimborsa da sole le unità degli articoli (sudemi restituisce %s per esse), e la spedizione o qualsiasi altro importo con un rimborso separato senza quantità."
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "The refund was set to %2$s instead of %1$s: sudemi gives back the units at the price paid, and an add-on charged once for the whole line only with the last unit of its item."
+msgstr "Il rimborso è stato impostato a %2$s invece di %1$s: sudemi restituisce le unità al prezzo pagato, e un'aggiunta addebitata una sola volta per l'intera riga solo con l'ultima unità dell'articolo."

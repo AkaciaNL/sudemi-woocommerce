@@ -2440,3 +2440,13 @@ msgstr "Versement en attente"
 #, php-format
 msgid "+%s, once for the whole line"
 msgstr "+%s, une seule fois pour toute la ligne"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "This refund cannot be sent to sudemi as entered: an item in it has an add-on charged once for the whole line, which goes back only with the last unit. Refund the units of the items alone (sudemi gives back %s for them), and shipping or any other amount as a separate refund without quantities."
+msgstr "Ce remboursement ne peut pas être envoyé à sudemi tel quel : un article qu'il contient a une option facturée une seule fois pour toute la ligne, qui n'est remboursée qu'avec la dernière unité. Remboursez les unités des articles seules (sudemi rembourse %s pour elles), et la livraison ou tout autre montant dans un remboursement séparé sans quantités."
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "The refund was set to %2$s instead of %1$s: sudemi gives back the units at the price paid, and an add-on charged once for the whole line only with the last unit of its item."
+msgstr "Le remboursement a été fixé à %2$s au lieu de %1$s : sudemi rembourse les unités au prix payé, et une option facturée une seule fois pour toute la ligne seulement avec la dernière unité de l'article."

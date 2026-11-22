@@ -2440,3 +2440,13 @@ msgstr "Auszahlung zurückgehalten"
 #, php-format
 msgid "+%s, once for the whole line"
 msgstr "+%s, einmal für die ganze Position"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "This refund cannot be sent to sudemi as entered: an item in it has an add-on charged once for the whole line, which goes back only with the last unit. Refund the units of the items alone (sudemi gives back %s for them), and shipping or any other amount as a separate refund without quantities."
+msgstr "Diese Erstattung kann so nicht an sudemi gesendet werden: Ein Artikel darin hat ein Add-on, das einmal für die ganze Position berechnet wird und erst mit dem letzten Stück zurückgeht. Erstatten Sie die Stücke der Artikel allein (sudemi erstattet dafür %s) und Versand oder einen anderen Betrag als eigene Erstattung ohne Mengen."
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "The refund was set to %2$s instead of %1$s: sudemi gives back the units at the price paid, and an add-on charged once for the whole line only with the last unit of its item."
+msgstr "Die Erstattung wurde auf %2$s statt %1$s gesetzt: sudemi erstattet die Stücke zum bezahlten Preis und ein einmal für die ganze Position berechnetes Add-on erst mit dem letzten Stück des Artikels."

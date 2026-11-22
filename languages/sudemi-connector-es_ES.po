@@ -2440,3 +2440,13 @@ msgstr "Liquidación retenida"
 #, php-format
 msgid "+%s, once for the whole line"
 msgstr "+%s, una sola vez para toda la línea"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "This refund cannot be sent to sudemi as entered: an item in it has an add-on charged once for the whole line, which goes back only with the last unit. Refund the units of the items alone (sudemi gives back %s for them), and shipping or any other amount as a separate refund without quantities."
+msgstr "Este reembolso no se puede enviar a sudemi tal como está: un artículo tiene un complemento cobrado una sola vez para toda la línea, que solo se devuelve con la última unidad. Reembolsa solo las unidades de los artículos (sudemi devuelve %s por ellas), y el envío o cualquier otro importe como un reembolso aparte sin cantidades."
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "The refund was set to %2$s instead of %1$s: sudemi gives back the units at the price paid, and an add-on charged once for the whole line only with the last unit of its item."
+msgstr "El reembolso se ha fijado en %2$s en lugar de %1$s: sudemi devuelve las unidades al precio pagado, y un complemento cobrado una sola vez para toda la línea solo con la última unidad del artículo."

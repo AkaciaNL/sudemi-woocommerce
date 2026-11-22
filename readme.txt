@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, chatgpt, product feed
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.4.10
+Stable tag: 1.4.11
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -126,6 +126,9 @@ Use the Support page inside the plugin, or the seller guides at https://sudemi.c
 
 == Upgrade Notice ==
 
+= 1.4.11 =
+A refund of some units of an item with a once-per-line add-on (gift wrapping, a set-up fee) is now set to exactly what sudemi gives back, so the add-on stays paid until the last unit is refunded.
+
 = 1.4.10 =
 Add-ons charged once per order line (a flat fee such as gift wrapping) and add-ons that lower the price per item (a discount) are now offered on sudemi, at exactly your shop's price.
 
@@ -151,6 +154,10 @@ Sizes and colours of one product now show to buyers as one product with a choice
 Clearer WordPress.org description, a list of every call to sudemi (External services), and screenshots. No change in how the plugin works.
 
 == Changelog ==
+
+= 1.4.11 =
+* Refunds: when a WooCommerce refund names units of an item that has an add-on charged once for the whole line, it is sent to sudemi by line, whatever amount the refund form filled in. WooCommerce's form fills in the line total divided by the quantity, which holds a share of the add-on; sudemi gives back the units at the price paid and the add-on only with the last unit of the item. The shop's refund is set to that amount before it is saved (with an order note naming both amounts), so your books and the buyer's money agree. Example: 3 mugs at 10.50 with gift wrap 3.00 once; refunding 1 mug is 10.50, not 11.50.
+* Such a refund that also holds shipping or another amount is not saved: the refund form says what sudemi gives back for the units and asks for the rest as a separate refund without quantities. A refund of an amount without quantities is sent as before.
 
 = 1.4.10 =
 * Add-ons charged once per order line are offered on sudemi: Product Add-Ons "flat fee", Advanced Product Fields "fixed", PPOM "fixed fee" and YITH "sell individually". sudemi charges the fee once for the whole line, whatever the quantity (gift wrap 3.00 for 3 mugs is 3.00, not 9.00). Before, they were left out and reported as addon_flat_fee.

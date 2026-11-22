@@ -204,6 +204,24 @@ expect( 'refund more units than are left: as an amount', Sudemi_Orders::refund_l
 expect( 'refund an item without a sudemi line: as an amount', Sudemi_Orders::refund_lines_for( array( array( 'line_id' => '' ) + $item ), 1795 ), null );
 expect( 'refund of nothing by line: as an amount', Sudemi_Orders::refund_lines_for( array(), 0 ), null );
 
+// 1.4.11: a refund that names units of an item with a once-per-line fee is set to what sudemi gives
+// back, whatever WooCommerce's form filled in (line total / quantity, a share of the fee included).
+$plan = Sudemi_Orders::refund_plan( array( $item ), 0 );
+expect( 'refund plan: 1 of 3 (form proposed 11.95): set to 10.50, the fee kept', array( $plan['action'], $plan['expected'], $plan['gross'] ), array( 'set', 1795, array( 0 => 1795 ) ) );
+$plan = Sudemi_Orders::refund_plan( array( array( 'units_sent' => 1, 'refund_qty' => 2 ) + $item ), 0 );
+expect( 'refund plan: the last 2 of 3: the units and the fee', array( $plan['action'], $plan['expected'] ), array( 'set', 3890 ) );
+$plan = Sudemi_Orders::refund_plan( array( array( 'refund_qty' => 3 ) + $item ), 0 );
+expect( 'refund plan: all 3 at once: the units and the fee (the whole line)', $plan['expected'], 5685 );
+$plan = Sudemi_Orders::refund_plan( array( $item ), 650 );
+expect( 'refund plan: units with shipping in the same refund: refused, with what sudemi gives back for the units', array( $plan['action'], $plan['expected'] ), array( 'refuse', 1795 ) );
+$plan = Sudemi_Orders::refund_plan( array( $item, array( 'line_id' => '' ) + $item ), 0 );
+expect( 'refund plan: an item without a sudemi line next to it: refused', $plan['action'], 'refuse' );
+expect( 'refund plan: no fee on the refunded item: as before (null)', Sudemi_Orders::refund_plan( array( array( 'fee_minor' => 0 ) + $item ), 0 ), null );
+expect( 'refund plan: no quantities: as before (null)', Sudemi_Orders::refund_plan( array( array( 'refund_qty' => 0 ) + $item ), 0 ), null );
+expect( 'split gross: no tax', Sudemi_Orders::split_gross( 1050, 3450, array() ), array( 1050, array() ) );
+expect( 'split gross: 21% VAT in the item proportion, net + tax exact', Sudemi_Orders::split_gross( 1210, 3000, array( 7 => 630 ) ), array( 1000, array( 7 => 210 ) ) );
+expect( 'split gross: two rates, rounding left in the net', Sudemi_Orders::split_gross( 1001, 900, array( 1 => 90, 2 => 10 ) ), array( 901, array( 1 => 90, 2 => 10 ) ) );
+
 if ( $failures ) {
 	echo "$failures failure(s)\n";
 	exit( 1 );

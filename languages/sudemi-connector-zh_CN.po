@@ -2433,3 +2433,13 @@ msgstr "打款暂缓"
 #, php-format
 msgid "+%s, once for the whole line"
 msgstr "+%s，整行仅收一次"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "This refund cannot be sent to sudemi as entered: an item in it has an add-on charged once for the whole line, which goes back only with the last unit. Refund the units of the items alone (sudemi gives back %s for them), and shipping or any other amount as a separate refund without quantities."
+msgstr "此退款无法按所填内容发送到 sudemi：其中某个商品带有整行只收一次的附加项，只有退回最后一件时才会退还。请单独退还商品的件数（sudemi 为此退还 %s），运费或其他金额请另做一笔不填数量的退款。"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "The refund was set to %2$s instead of %1$s: sudemi gives back the units at the price paid, and an add-on charged once for the whole line only with the last unit of its item."
+msgstr "退款已设为 %2$s，而不是 %1$s：sudemi 按已付价格退还件数，整行只收一次的附加项只在退回该商品最后一件时退还。"

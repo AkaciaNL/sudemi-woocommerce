@@ -2447,3 +2447,13 @@ msgstr "Выплата задержана"
 #, php-format
 msgid "+%s, once for the whole line"
 msgstr "+%s, один раз за всю строку"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "This refund cannot be sent to sudemi as entered: an item in it has an add-on charged once for the whole line, which goes back only with the last unit. Refund the units of the items alone (sudemi gives back %s for them), and shipping or any other amount as a separate refund without quantities."
+msgstr "Этот возврат нельзя отправить в sudemi в таком виде: у товара в нём есть дополнение, оплачиваемое один раз за всю строку, и оно возвращается только с последней единицей. Верните отдельно единицы товаров (sudemi вернёт за них %s), а доставку или другую сумму отдельным возвратом без количества."
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "The refund was set to %2$s instead of %1$s: sudemi gives back the units at the price paid, and an add-on charged once for the whole line only with the last unit of its item."
+msgstr "Сумма возврата установлена на %2$s вместо %1$s: sudemi возвращает единицы по оплаченной цене, а дополнение, оплачиваемое один раз за всю строку, только с последней единицей товара."

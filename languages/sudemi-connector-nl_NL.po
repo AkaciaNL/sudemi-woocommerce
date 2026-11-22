@@ -2440,3 +2440,13 @@ msgstr "Uitbetaling vastgehouden"
 #, php-format
 msgid "+%s, once for the whole line"
 msgstr "+%s, eenmalig voor de hele regel"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "This refund cannot be sent to sudemi as entered: an item in it has an add-on charged once for the whole line, which goes back only with the last unit. Refund the units of the items alone (sudemi gives back %s for them), and shipping or any other amount as a separate refund without quantities."
+msgstr "Deze terugbetaling kan niet zo naar sudemi worden gestuurd: een artikel erin heeft een add-on die één keer voor de hele regel is berekend, en die gaat pas terug met het laatste stuk. Betaal de stuks van de artikelen apart terug (sudemi geeft daarvoor %s terug), en verzending of een ander bedrag als aparte terugbetaling zonder aantallen."
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "The refund was set to %2$s instead of %1$s: sudemi gives back the units at the price paid, and an add-on charged once for the whole line only with the last unit of its item."
+msgstr "De terugbetaling is op %2$s gezet in plaats van %1$s: sudemi geeft de stuks terug tegen de betaalde prijs, en een add-on die één keer voor de hele regel is berekend pas met het laatste stuk van het artikel."

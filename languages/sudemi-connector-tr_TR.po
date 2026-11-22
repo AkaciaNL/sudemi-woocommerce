@@ -2440,3 +2440,13 @@ msgstr "Satıcı ödemesi bekletiliyor"
 #, php-format
 msgid "+%s, once for the whole line"
 msgstr "+%s, tüm satır için bir kez"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "This refund cannot be sent to sudemi as entered: an item in it has an add-on charged once for the whole line, which goes back only with the last unit. Refund the units of the items alone (sudemi gives back %s for them), and shipping or any other amount as a separate refund without quantities."
+msgstr "Bu iade girildiği haliyle sudemi'ye gönderilemez: içindeki bir ürünün tüm satır için bir kez alınan bir eklentisi var ve bu yalnızca son adetle birlikte iade edilir. Ürünlerin adetlerini ayrı iade edin (sudemi bunlar için %s iade eder), kargo veya başka bir tutarı da adet belirtmeden ayrı bir iade olarak yapın."
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "The refund was set to %2$s instead of %1$s: sudemi gives back the units at the price paid, and an add-on charged once for the whole line only with the last unit of its item."
+msgstr "İade %1$s yerine %2$s olarak ayarlandı: sudemi adetleri ödenen fiyattan iade eder, tüm satır için bir kez alınan eklentiyi ise yalnızca ürünün son adetiyle birlikte."

@@ -2447,3 +2447,13 @@ msgstr "Wypłata wstrzymana"
 #, php-format
 msgid "+%s, once for the whole line"
 msgstr "+%s, jednorazowo za całą pozycję"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "This refund cannot be sent to sudemi as entered: an item in it has an add-on charged once for the whole line, which goes back only with the last unit. Refund the units of the items alone (sudemi gives back %s for them), and shipping or any other amount as a separate refund without quantities."
+msgstr "Tego zwrotu nie można wysłać do sudemi w tej postaci: pozycja w nim ma dodatek naliczany jednorazowo za całą pozycję, który wraca dopiero z ostatnią sztuką. Zwróć same sztuki produktów (sudemi zwraca za nie %s), a wysyłkę lub inną kwotę osobnym zwrotem bez ilości."
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "The refund was set to %2$s instead of %1$s: sudemi gives back the units at the price paid, and an add-on charged once for the whole line only with the last unit of its item."
+msgstr "Zwrot ustawiono na %2$s zamiast %1$s: sudemi zwraca sztuki po zapłaconej cenie, a dodatek naliczany jednorazowo za całą pozycję dopiero z ostatnią sztuką produktu."
