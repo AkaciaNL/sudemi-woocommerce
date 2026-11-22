@@ -303,7 +303,7 @@ final class Sudemi_Issues {
 	public static function label( $code ) {
 		switch ( (string) $code ) {
 			case self::ADDON_NEGATIVE_PRICE:
-				return __( 'An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered.', 'sudemi-connector' );
+				return __( 'An add-on lowers the price once for the whole order line; sudemi takes a discount per item only, so it is not offered.', 'sudemi-connector' );
 			case self::ADDON_FLAT_FEE:
 				return __( 'An add-on is charged once per order line (a flat fee); sudemi cannot charge that yet, so it is not offered.', 'sudemi-connector' );
 			case self::ADDON_PER_CHARACTER_PRICE:

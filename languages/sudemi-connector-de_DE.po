@@ -2283,8 +2283,8 @@ msgid "Off (default): an item made with a text the buyer typed (a name, an engra
 msgstr "Aus (Standard): Ein Artikel mit einem vom Käufer eingegebenen Text (ein Name, eine Gravur) kann, wie gesetzlich erlaubt, nicht zurückgegeben werden; Käufer erfahren das vor dem Bezahlen. An: Käufer dürfen ihn wie jeden anderen Artikel zurückgeben."
 
 #: includes/class-sudemi-issues.php
-msgid "An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered."
-msgstr "Ein Add-on senkt den Preis (ein Rabatt); das kann sudemi noch nicht berechnen, daher wird es nicht angeboten."
+msgid "An add-on lowers the price once for the whole order line; sudemi takes a discount per item only, so it is not offered."
+msgstr "Ein Add-on senkt den Preis einmal für die ganze Bestellposition; sudemi rechnet einen Rabatt nur pro Stück, daher wird es nicht angeboten."
 
 #: includes/class-sudemi-issues.php
 msgid "An add-on is charged once per order line (a flat fee); sudemi cannot charge that yet, so it is not offered."
@@ -2435,3 +2435,8 @@ msgstr "Zurückgehalten"
 #: admin/class-sudemi-admin-manage.php
 msgid "Payout on hold"
 msgstr "Auszahlung zurückgehalten"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "+%s, once for the whole line"
+msgstr "+%s, einmal für die ganze Position"

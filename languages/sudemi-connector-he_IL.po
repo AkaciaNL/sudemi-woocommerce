@@ -2283,8 +2283,8 @@ msgid "Off (default): an item made with a text the buyer typed (a name, an engra
 msgstr "כבוי (ברירת מחדל): פריט שנעשה עם טקסט שהקונה הקליד (שם, חריטה) אינו ניתן להחזרה, כפי שהחוק מתיר; הקונים מקבלים על כך הודעה לפני התשלום. פועל: הקונים רשאים להחזיר אותו כמו כל פריט אחר."
 
 #: includes/class-sudemi-issues.php
-msgid "An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered."
-msgstr "תוסף מוריד את המחיר (הנחה); sudemi עדיין לא יכול לחייב זאת, ולכן הוא לא מוצע."
+msgid "An add-on lowers the price once for the whole order line; sudemi takes a discount per item only, so it is not offered."
+msgstr "תוסף מוריד את המחיר פעם אחת לכל שורת ההזמנה; sudemi מקבל הנחה לפי פריט בלבד, ולכן הוא לא מוצע."
 
 #: includes/class-sudemi-issues.php
 msgid "An add-on is charged once per order line (a flat fee); sudemi cannot charge that yet, so it is not offered."
@@ -2435,3 +2435,8 @@ msgstr "מעוכב"
 #: admin/class-sudemi-admin-manage.php
 msgid "Payout on hold"
 msgstr "התשלום מעוכב"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "+%s, once for the whole line"
+msgstr "+%s, פעם אחת לכל השורה"

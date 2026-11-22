@@ -58,7 +58,7 @@ $pao = array(
 );
 $f   = Sudemi_Addons::from_pao( $pao );
 expect( 'Product Add-Ons: two texts and the multiple choice', count( $f ), 3 );
-expect( 'Product Add-Ons: the multiple choice is a choice with its priced option', array( $f[1]['type'], $f[1]['label'], $f[1]['choices'] ), array( 'choice', 'Gift wrap', array( array( 'key' => 'o0', 'label' => 'Yes', 'price' => 3.0, 'percent' => 0.0 ) ) ) );
+expect( 'Product Add-Ons: the multiple choice is a choice with its priced option (no price type = flat fee: once per line)', array( $f[1]['type'], $f[1]['label'], $f[1]['choices'] ), array( 'choice', 'Gift wrap', array( array( 'key' => 'o0', 'label' => 'Yes', 'price' => 3.0, 'percent' => 0.0, 'mode' => 'per_line' ) ) ) );
 $f = array( $f[0], $f[2] );
 expect( 'Product Add-Ons: label', $f[0]['label'], 'Custom name' );
 expect( 'Product Add-Ons: required', $f[0]['required'], true );
@@ -93,6 +93,7 @@ expect( 'PPOM: broken JSON', Sudemi_Addons::from_ppom( '{' ), array() );
 // The listing's fields as sudemi takes them.
 $field = Sudemi_Personalisation::field( 'text', 'Name to print', '', true, 0 );
 expect( 'own setting: key, required, default longest 40, price 0', $field, array( 'key' => 'text', 'label' => 'Name to print', 'required' => true, 'maxLength' => 40, 'priceMinor' => 0 ) );
+expect( 'a discount per item keeps its negative price', Sudemi_Personalisation::field( 'd', 'No box', 0, false, -150 )['priceMinor'], -150 );
 expect( 'longest capped', Sudemi_Personalisation::max_length( 100000 ), Sudemi_Personalisation::LIMIT_MAX );
 
 // An order line from sudemi.
@@ -210,14 +211,25 @@ $tct = Sudemi_Personalisation::from_line( array( 'personalisation' => array( arr
 expect( 'ThemeHigh order line: the field name with the options joined by "," as ThemeHigh writes them', Sudemi_Addons::order_meta( $tcf, $tct, $euro ), array( array( 'wrap', 'Paper,Ribbon' ) ) );
 expect( 'choice keys never hold a comma; repeated labels are dropped', count( Sudemi_Addons::from_pao( array( array( 'name' => 'X', 'type' => 'multiple_choice', 'options' => array( array( 'label' => 'A' ), array( 'label' => 'a' ) ) ) ) )[0]['choices'] ), 1 );
 
-// Review 2026-11-19: a discount add-on is never made free (the buyer would overpay) nor charged
-// in full: it is not offered, with the reason; a required one blocks the listing.
-$neg = Sudemi_Addons::from_pao( array( array( 'name' => 'Loyalty discount', 'type' => 'custom_text', 'required' => 0, 'adjust_price' => 1, 'price_type' => 'flat_fee', 'price' => '-5' ) ) );
-expect( 'Product Add-Ons: a negative price is kept as it is and marked not offerable', array( $neg[0]['price'], $neg[0]['unofferable'] ), array( -5.0, Sudemi_Addons::REASON_DISCOUNT ) );
-$negc = Sudemi_Addons::from_pao( array( array( 'name' => 'Pick-up', 'type' => 'multiple_choice', 'options' => array( array( 'label' => 'In store', 'price' => '-2' ), array( 'label' => 'Courier', 'price' => '0' ) ) ) ) );
-expect( 'Product Add-Ons: a choice with a negative price makes the field not offerable', $negc[0]['unofferable'], Sudemi_Addons::REASON_DISCOUNT );
+// 1.4.10 (core 2026-11-21): a discount per item (a negative price) is offered as it is (sudemi lowers
+// the unit price, never below 0); a discount charged once per order line cannot be: not offered,
+// with the reason, and a required one blocks the listing.
+$neg = Sudemi_Addons::from_pao( array( array( 'name' => 'Loyalty discount', 'type' => 'custom_text', 'required' => 0, 'adjust_price' => 1, 'price_type' => 'quantity_based', 'price' => '-5' ) ) );
+expect( 'Product Add-Ons: a negative price per item is offered as a discount', array( $neg[0]['price'], $neg[0]['mode'], $neg[0]['unofferable'] ), array( -5.0, 'per_item', null ) );
+$negc = Sudemi_Addons::from_pao( array( array( 'name' => 'Pick-up', 'type' => 'multiple_choice', 'options' => array( array( 'label' => 'In store', 'price' => '-2', 'price_type' => 'quantity_based' ), array( 'label' => 'Courier', 'price' => '0' ) ) ) ) );
+expect( 'Product Add-Ons: a choice with a negative price per item is offered', array( $negc[0]['unofferable'], $negc[0]['choices'][0]['price'], $negc[0]['choices'][0]['mode'] ), array( null, -2.0, null ) );
+$negp = Sudemi_Addons::from_pao( array( array( 'name' => 'Member', 'type' => 'multiple_choice', 'options' => array( array( 'label' => 'Yes', 'price' => '-10', 'price_type' => 'percentage_based' ) ) ) ) );
+expect( 'Product Add-Ons: a negative percentage is a discount per item', array( $negp[0]['unofferable'], $negp[0]['choices'][0]['percent'] ), array( null, -10.0 ) );
+$negl = Sudemi_Addons::from_pao( array( array( 'name' => 'Setup discount', 'type' => 'custom_text', 'required' => 0, 'adjust_price' => 1, 'price_type' => 'flat_fee', 'price' => '-5' ) ) );
+expect( 'Product Add-Ons: a negative flat fee (a discount once per line) is not offered', array( $negl[0]['mode'], $negl[0]['unofferable'] ), array( 'per_line', Sudemi_Addons::REASON_DISCOUNT ) );
+$neglc = Sudemi_Addons::from_pao( array( array( 'name' => 'Pick-up', 'type' => 'multiple_choice', 'options' => array( array( 'label' => 'In store', 'price' => '-2', 'price_type' => 'flat_fee' ), array( 'label' => 'Courier', 'price' => '1', 'price_type' => 'quantity_based' ) ) ) ) );
+expect( 'Product Add-Ons: one choice with a negative flat fee makes the field not offered', $neglc[0]['unofferable'], Sudemi_Addons::REASON_DISCOUNT );
 $yd = Sudemi_Addons::from_yith( 50, array( 'type' => 'text', 'title' => 'T' ), array( 'label' => array( 'Coupon text' ), 'price_method' => array( 'decrease' ), 'price' => array( '3' ), 'required' => array( 'yes' ) ) );
-expect( 'YITH: a "decrease" is a negative price (a discount), not offerable, never 0', array( $yd[0]['price'], $yd[0]['unofferable'], $yd[0]['required'] ), array( -3.0, Sudemi_Addons::REASON_DISCOUNT, true ) );
+expect( 'YITH: a "decrease" is a negative price per item, offered', array( $yd[0]['price'], $yd[0]['unofferable'], $yd[0]['required'] ), array( -3.0, null, true ) );
+$ydl = Sudemi_Addons::from_yith( 51, array( 'type' => 'checkbox', 'title' => 'Coupon', 'sell_individually' => 'yes' ), array( 'label' => array( 'Yes' ), 'price_method' => array( 'decrease' ), 'price' => array( '3' ), 'price_type' => array( 'fixed' ) ) );
+expect( 'YITH: a "decrease" sold individually (once per line) is not offered', $ydl[0]['unofferable'], Sudemi_Addons::REASON_DISCOUNT );
+$wneg = Sudemi_Addons::from_wapf( array( 'fields' => array( array( 'id' => 'n1', 'label' => 'Trade-in', 'type' => 'radio', 'choices' => array( array( 'slug' => 'old', 'label' => 'Old phone', 'pricing_type' => 'qt', 'pricing_amount' => -20 ) ) ) ) ) );
+expect( 'Advanced Product Fields: a negative quantity-based price is a discount per item, offered', array( $wneg[0]['unofferable'], $wneg[0]['choices'][0]['price'] ), array( null, -20.0 ) );
 
 // The five-text cap keeps required ones first; more than five required ones block the listing.
 $mk  = function ( $n, $req ) {
@@ -232,42 +244,54 @@ expect( 'cap: a required sixth is kept (first), an optional one left out instead
 $cap = Sudemi_Personalisation::cap( $mk( 6, true ) );
 expect( 'cap: six required texts block the listing (not offered at all)', array( $cap['fields'], null !== $cap['blocked'] ), array( array(), true ) );
 
-// Review 2026-11-19 (MONEY): a price charged once per order line (a flat fee) sent as a price
-// per item would overcharge a buyer of two: not offered, with the reason; a required one blocks.
+// 1.4.10 (core 2026-11-21): a price charged once per order line (a flat fee) is sent with price mode
+// per_line: sudemi charges it once for the whole line, whatever the quantity.
 $flat = Sudemi_Addons::from_pao( array(
 	array( 'name' => 'Setup', 'type' => 'custom_text', 'required' => 1, 'adjust_price' => 1, 'price_type' => 'flat_fee', 'price' => '5' ),
-	array( 'name' => 'Box', 'type' => 'multiple_choice', 'options' => array( array( 'label' => 'Gift box', 'price' => '4', 'price_type' => 'flat_fee' ) ) ),
+	array( 'name' => 'Box', 'type' => 'multiple_choice', 'options' => array( array( 'label' => 'Gift box', 'price' => '4', 'price_type' => 'flat_fee' ), array( 'label' => 'Card', 'price' => '1', 'price_type' => 'quantity_based' ) ) ),
 	array( 'name' => 'Free note', 'type' => 'custom_text', 'adjust_price' => 1, 'price_type' => 'flat_fee', 'price' => '0' ),
 ) );
-expect( 'Product Add-Ons: a flat fee text and a flat fee choice are not offered; a free one (0) is', array( $flat[0]['unofferable'], $flat[1]['unofferable'], $flat[2]['unofferable'] ), array( Sudemi_Addons::REASON_FLAT, Sudemi_Addons::REASON_FLAT, null ) );
+expect( 'Product Add-Ons: a flat fee text is offered once per line; a free one (0) stays per item', array( $flat[0]['unofferable'], $flat[0]['mode'], $flat[0]['price'], $flat[2]['unofferable'], $flat[2]['mode'] ), array( null, 'per_line', 5.0, null, 'per_item' ) );
+expect( 'Product Add-Ons: per option: the flat fee option once per line, the quantity-based one per item', array( $flat[1]['unofferable'], $flat[1]['mode'], $flat[1]['choices'][0]['mode'], $flat[1]['choices'][1]['mode'] ), array( null, 'per_item', 'per_line', null ) );
 $wflat = Sudemi_Addons::from_wapf( array( 'fields' => array(
 	array( 'id' => 'f1', 'label' => 'Engraving', 'type' => 'text', 'required' => 'false', 'pricing' => array( 'enabled' => 'true', 'amount' => '6', 'type' => 'fixed' ) ),
 	array( 'id' => 'f2', 'label' => 'Wrap', 'type' => 'radio', 'choices' => array( array( 'slug' => 'paper', 'label' => 'Paper', 'selected' => 'false', 'pricing_type' => 'fixed', 'pricing_amount' => 2 ) ) ),
 ) ) );
-expect( 'Advanced Product Fields: "fixed" (flat fee, not quantity-based) is not offered, text and choice', array( $wflat[0]['unofferable'], $wflat[1]['unofferable'] ), array( Sudemi_Addons::REASON_FLAT, Sudemi_Addons::REASON_FLAT ) );
+expect( 'Advanced Product Fields: "fixed" (flat fee, not quantity-based) is offered once per line, text and choice', array( $wflat[0]['unofferable'], $wflat[0]['mode'], $wflat[1]['unofferable'], $wflat[1]['choices'][0]['mode'] ), array( null, 'per_line', null, 'per_line' ) );
 $pflat = Sudemi_Addons::from_ppom( '[{"type":"text","data_name":"logo","title":"Logo text","price":"8","onetime":"on"},{"type":"select","data_name":"setup","title":"Setup","onetime":"on","options":[{"option":"Yes","price":"3"}]},{"type":"text","data_name":"note","title":"Note","price":"2"}]' );
-expect( 'PPOM: a "fixed fee" (onetime) field is not offered, text and choice; a per-item price is', array( $pflat[0]['unofferable'], $pflat[1]['unofferable'], $pflat[2]['unofferable'] ), array( Sudemi_Addons::REASON_FLAT, Sudemi_Addons::REASON_FLAT, null ) );
+expect( 'PPOM: a "fixed fee" (onetime) field is once per line, text and choice; a plain price per item', array( $pflat[0]['mode'], $pflat[1]['mode'], $pflat[1]['choices'][0]['mode'], $pflat[2]['mode'], $pflat[0]['unofferable'], $pflat[1]['unofferable'] ), array( 'per_line', 'per_line', null, 'per_item', null, null ) );
 $yflat = Sudemi_Addons::from_yith( 60, array( 'type' => 'checkbox', 'title' => 'Setup', 'sell_individually' => 'yes' ), array( 'label' => array( 'Yes' ), 'price_method' => array( 'increase' ), 'price' => array( '9' ), 'price_type' => array( 'fixed' ) ) );
-expect( 'YITH: "sell individually" with a price is charged once per line: not offered', $yflat[0]['unofferable'], Sudemi_Addons::REASON_FLAT );
+expect( 'YITH: "sell individually" with a price is charged once per line', array( $yflat[0]['unofferable'], $yflat[0]['mode'] ), array( null, 'per_line' ) );
 $capf = Sudemi_Personalisation::cap( array() );
 expect( 'cap of nothing: nothing blocked', $capf['blocked'], null );
 
 // Owner rule 2026-11-19: a REQUIRED add-on sudemi cannot price keeps the product off sudemi (an
-// error issue); an OPTIONAL one is left out (a warning issue).
+// error issue); an OPTIONAL one is left out (a warning issue). Since 1.4.10 a flat fee and a
+// discount per item are priced: offered, required or not.
 $req_flat = Sudemi_Addons::from_pao( array( array( 'name' => 'Setup fee', 'type' => 'custom_text', 'required' => 1, 'adjust_price' => 1, 'price_type' => 'flat_fee', 'price' => '5' ) ) );
 $scr      = Sudemi_Personalisation::screen( $req_flat );
-expect( 'required flat fee: the product is blocked (not listed), the reason is the flat fee', array( null !== $scr['blocked'], $scr['blocked_why'], $scr['offered'] ), array( true, Sudemi_Addons::REASON_FLAT, array() ) );
+expect( 'required flat fee: offered once per line, nothing blocked', array( $scr['blocked'], count( $scr['offered'] ), $scr['left_out'] ), array( null, 1, array() ) );
 $req_neg = Sudemi_Addons::from_pao( array( array( 'name' => 'Club discount', 'type' => 'multiple_choice', 'required' => 1, 'options' => array( array( 'label' => 'Member', 'price' => '-3', 'price_type' => 'quantity_based' ) ) ) ) );
 $scr     = Sudemi_Personalisation::screen( $req_neg );
-expect( 'required negative price: the product is blocked (not listed), the reason is the discount', array( null !== $scr['blocked'], $scr['blocked_why'] ), array( true, Sudemi_Addons::REASON_DISCOUNT ) );
+expect( 'required discount per item: offered, nothing blocked', array( $scr['blocked'], count( $scr['offered'] ) ), array( null, 1 ) );
+$req_negl = Sudemi_Addons::from_pao( array( array( 'name' => 'Club discount', 'type' => 'custom_text', 'required' => 1, 'adjust_price' => 1, 'price_type' => 'flat_fee', 'price' => '-3' ) ) );
+$scr      = Sudemi_Personalisation::screen( $req_negl );
+expect( 'required discount once per line: the product is blocked (not listed), the reason is the line discount', array( null !== $scr['blocked'], $scr['blocked_why'], $scr['offered'] ), array( true, Sudemi_Addons::REASON_DISCOUNT, array() ) );
 $opt_mix = array_merge(
-	Sudemi_Addons::from_pao( array( array( 'name' => 'Gift box', 'type' => 'multiple_choice', 'required' => 0, 'options' => array( array( 'label' => 'Box', 'price' => '4', 'price_type' => 'flat_fee' ) ) ) ) ),
+	Sudemi_Addons::from_pao( array( array( 'name' => 'Gift box', 'type' => 'multiple_choice', 'required' => 0, 'options' => array( array( 'label' => 'Box', 'price' => '-4', 'price_type' => 'flat_fee' ) ) ) ) ),
 	Sudemi_Addons::from_pao( array( array( 'name' => 'Name', 'type' => 'custom_text', 'required' => 1, 'adjust_price' => 1, 'price_type' => 'quantity_based', 'price' => '2' ) ) )
 );
 $scr     = Sudemi_Personalisation::screen( $opt_mix );
-expect( 'optional flat fee: left out (warning), the product stays listed with the rest', array( $scr['blocked'], array_keys( $scr['left_out'] ), count( $scr['offered'] ) ), array( null, array( 'Gift box' ), 1 ) );
+expect( 'optional discount once per line: left out (warning), the product stays listed with the rest', array( $scr['blocked'], array_keys( $scr['left_out'] ), count( $scr['offered'] ) ), array( null, array( 'Gift box' ), 1 ) );
 $req_yd = Sudemi_Addons::from_yith( 70, array( 'type' => 'text', 'title' => 'T' ), array( 'label' => array( 'Loyalty code' ), 'price_method' => array( 'decrease' ), 'price' => array( '2' ), 'required' => array( 'yes' ) ) );
-expect( 'YITH required "decrease" (negative): blocked', null !== Sudemi_Personalisation::screen( $req_yd )['blocked'], true );
+expect( 'YITH required "decrease" (a discount per item): offered', Sudemi_Personalisation::screen( $req_yd )['blocked'], null );
+$req_per_char = Sudemi_Addons::from_yith( 71, array( 'type' => 'text', 'title' => 'T' ), array( 'label' => array( 'Per letter' ), 'price_method' => array( 'increase' ), 'price_type' => array( 'characters' ), 'price' => array( '1' ), 'required' => array( 'yes' ) ) );
+expect( 'still reported: a required price per character blocks the listing', Sudemi_Personalisation::screen( $req_per_char )['blocked_why'], Sudemi_Addons::REASON_PRICING );
+
+// Order line: a once-per-line part is read (line_fee_minor), never part of the unit price.
+$lf = Sudemi_Personalisation::from_line( array( 'personalisation' => array( array( 'key' => 'pao:p:box-1', 'label' => 'Box', 'value' => 'Gift box', 'price_minor' => 0, 'line_fee_minor' => 400, 'type' => 'choice', 'choice_key' => 'o0', 'choice_keys' => array( 'o0' ) ) ) ) );
+expect( 'typed: the once-per-line fee is kept with the value', array( $lf['pao:p:box-1']['value'], $lf['pao:p:box-1']['line_fee_minor'], $lf['pao:p:box-1']['choice_keys'] ), array( 'Gift box', 400, array( 'o0' ) ) );
+expect( 'YITH order line: a discount shows as "(-price)"', Sudemi_Addons::order_meta( array( Sudemi_Personalisation::field( 'yith:52', 'Box', 0, false, 0 ) + array( 'type' => 'choice', 'choices' => array( array( 'key' => '1', 'label' => 'No box', 'priceMinor' => -150 ) ), 'store' => array( 'kind' => 'yith', 'addon' => 52 ) ) ), array( 'yith:52' => array( 'label' => 'Box', 'value' => 'No box', 'choice_keys' => array( '1' ) ) ), $euro )[0], array( 'ywapo-addon-52-1', 'No box (-EUR 1.50)' ) );
 
 // Add-on plugins sudemi does not read: never ignored (final review 2026-11-19).
 $un = Sudemi_Addons::unread_plugins(

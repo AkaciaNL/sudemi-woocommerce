@@ -741,7 +741,7 @@ final class Sudemi_Sync {
 		} elseif ( ! $product->is_visible() ) {
 			return array();
 		}
-		// What the buyer must type or choose and sudemi cannot ask (a required discount add-on,
+		// What the buyer must type or choose and sudemi cannot ask (a required add-on priced per character or a discount once per line,
 		// more than five required texts): not sold here, with the reason recorded (see note()).
 		$blocked  = Sudemi_Personalisation::blocked( $product, $parent_product );
 		$left_out = Sudemi_Personalisation::left_out( $product, $parent_product );
@@ -781,7 +781,7 @@ final class Sudemi_Sync {
 	const META_NOT_OFFERED = '_sudemi_not_offered';
 
 	/**
-	 * Records what of a product sudemi cannot offer yet (a discount add-on, a price per
+	 * Records what of a product sudemi cannot offer yet (a discount once per line, a price per
 	 * character, a sixth text), so the gap stays visible: on the product (meta) and in the log
 	 * when it changes. Never silent.
 	 */

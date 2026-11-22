@@ -136,11 +136,16 @@ final class Sudemi_Manage {
 				continue;
 			}
 			$lines[] = array(
+				'line_id'          => isset( $line['id'] ) ? (string) $line['id'] : ( isset( $line['line_id'] ) ? (string) $line['line_id'] : '' ),
+				'position'         => isset( $line['position'] ) ? $line['position'] : null,
 				'product_id'       => isset( $line['product_id'] ) ? (string) $line['product_id'] : '',
 				'external_id'      => isset( $line['external_id'] ) ? (string) $line['external_id'] : '',
 				'title'            => isset( $line['title'] ) ? (string) $line['title'] : '',
 				'quantity'         => isset( $line['quantity'] ) ? (int) $line['quantity'] : 1,
 				'unit_price_minor' => isset( $line['unit_price_minor'] ) ? $line['unit_price_minor'] : null,
+				// What the buyer typed or chose, and a once-per-line add-on fee (booked on its item).
+				'personalisation'  => isset( $line['personalisation'] ) && is_array( $line['personalisation'] ) ? $line['personalisation'] : array(),
+				'addon_fee'        => isset( $line['addon_fee'] ) && is_array( $line['addon_fee'] ) ? $line['addon_fee'] : null,
 			);
 		}
 		$pending = array(

@@ -2290,8 +2290,8 @@ msgid "Off (default): an item made with a text the buyer typed (a name, an engra
 msgstr "Выключено (по умолчанию): товар, сделанный с текстом, который ввёл покупатель (имя, гравировка), нельзя вернуть, как разрешает закон; покупателям сообщают об этом до оплаты. Включено: покупатели могут вернуть его, как любой другой товар."
 
 #: includes/class-sudemi-issues.php
-msgid "An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered."
-msgstr "Дополнение снижает цену (скидка); sudemi пока не может это учесть, поэтому оно не предлагается."
+msgid "An add-on lowers the price once for the whole order line; sudemi takes a discount per item only, so it is not offered."
+msgstr "Дополнение снижает цену один раз для всей строки заказа; sudemi учитывает скидку только за штуку, поэтому оно не предлагается."
 
 #: includes/class-sudemi-issues.php
 msgid "An add-on is charged once per order line (a flat fee); sudemi cannot charge that yet, so it is not offered."
@@ -2442,3 +2442,8 @@ msgstr "Задержана"
 #: admin/class-sudemi-admin-manage.php
 msgid "Payout on hold"
 msgstr "Выплата задержана"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "+%s, once for the whole line"
+msgstr "+%s, один раз за всю строку"

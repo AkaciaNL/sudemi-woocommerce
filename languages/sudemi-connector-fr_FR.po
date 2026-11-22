@@ -2283,8 +2283,8 @@ msgid "Off (default): an item made with a text the buyer typed (a name, an engra
 msgstr "Désactivé (par défaut) : un article fait avec un texte saisi par l'acheteur (un nom, une gravure) ne peut pas être retourné, comme la loi le permet ; les acheteurs en sont informés avant de payer. Activé : les acheteurs peuvent le retourner comme tout autre article."
 
 #: includes/class-sudemi-issues.php
-msgid "An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered."
-msgstr "Une option baisse le prix (une remise) ; sudemi ne peut pas encore la facturer, elle n'est donc pas proposée."
+msgid "An add-on lowers the price once for the whole order line; sudemi takes a discount per item only, so it is not offered."
+msgstr "Une option baisse le prix une seule fois pour toute la ligne de commande ; sudemi n'applique une remise que par article, elle n'est donc pas proposée."
 
 #: includes/class-sudemi-issues.php
 msgid "An add-on is charged once per order line (a flat fee); sudemi cannot charge that yet, so it is not offered."
@@ -2435,3 +2435,8 @@ msgstr "En attente"
 #: admin/class-sudemi-admin-manage.php
 msgid "Payout on hold"
 msgstr "Versement en attente"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "+%s, once for the whole line"
+msgstr "+%s, une seule fois pour toute la ligne"

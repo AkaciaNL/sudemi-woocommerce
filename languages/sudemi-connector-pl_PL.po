@@ -2290,8 +2290,8 @@ msgid "Off (default): an item made with a text the buyer typed (a name, an engra
 msgstr "Wyłączone (domyślnie): produktu wykonanego z tekstem wpisanym przez kupującego (imię, grawer) nie można zwrócić, na co pozwala prawo; kupujący dowiadują się o tym przed zapłatą. Włączone: kupujący mogą go zwrócić jak każdy inny produkt."
 
 #: includes/class-sudemi-issues.php
-msgid "An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered."
-msgstr "Dodatek obniża cenę (rabat); sudemi nie może jeszcze tego naliczyć, więc nie jest oferowany."
+msgid "An add-on lowers the price once for the whole order line; sudemi takes a discount per item only, so it is not offered."
+msgstr "Dodatek obniża cenę jednorazowo dla całej pozycji zamówienia; sudemi uwzględnia rabat tylko za sztukę, więc nie jest oferowany."
 
 #: includes/class-sudemi-issues.php
 msgid "An add-on is charged once per order line (a flat fee); sudemi cannot charge that yet, so it is not offered."
@@ -2442,3 +2442,8 @@ msgstr "Wstrzymana"
 #: admin/class-sudemi-admin-manage.php
 msgid "Payout on hold"
 msgstr "Wypłata wstrzymana"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "+%s, once for the whole line"
+msgstr "+%s, jednorazowo za całą pozycję"

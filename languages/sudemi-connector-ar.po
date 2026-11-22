@@ -2311,8 +2311,8 @@ msgid "Off (default): an item made with a text the buyer typed (a name, an engra
 msgstr "إيقاف (افتراضي): لا يمكن إرجاع منتج مصنوع بنص كتبه المشتري (اسم أو نقش)، كما يسمح القانون؛ ويُبلَّغ المشتري بذلك قبل الدفع. تشغيل: يمكن للمشترين إرجاعه مثل أي منتج آخر."
 
 #: includes/class-sudemi-issues.php
-msgid "An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered."
-msgstr "إضافة تخفض السعر (خصم)؛ لا يستطيع sudemi احتسابها بعد، لذا لا تُعرض."
+msgid "An add-on lowers the price once for the whole order line; sudemi takes a discount per item only, so it is not offered."
+msgstr "إضافة تخفض السعر مرة واحدة لسطر الطلب بأكمله؛ لا يقبل sudemi الخصم إلا لكل قطعة، لذا لا تُعرض."
 
 #: includes/class-sudemi-issues.php
 msgid "An add-on is charged once per order line (a flat fee); sudemi cannot charge that yet, so it is not offered."
@@ -2463,3 +2463,8 @@ msgstr "معلّق"
 #: admin/class-sudemi-admin-manage.php
 msgid "Payout on hold"
 msgstr "التحويل إليك معلّق"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "+%s, once for the whole line"
+msgstr "+%s، مرة واحدة للسطر بأكمله"

@@ -2276,8 +2276,8 @@ msgid "Off (default): an item made with a text the buyer typed (a name, an engra
 msgstr "关闭（默认）：按法律允许，带有买家输入文字（名字、刻字）的商品不可退货；买家在付款前会被告知。开启：买家可以像其他商品一样退货。"
 
 #: includes/class-sudemi-issues.php
-msgid "An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered."
-msgstr "某个附加项会降低价格（折扣）；sudemi 暂时无法收取，因此不提供。"
+msgid "An add-on lowers the price once for the whole order line; sudemi takes a discount per item only, so it is not offered."
+msgstr "某个附加项对整个订单行一次性降低价格；sudemi 只接受按件的折扣，因此不提供。"
 
 #: includes/class-sudemi-issues.php
 msgid "An add-on is charged once per order line (a flat fee); sudemi cannot charge that yet, so it is not offered."
@@ -2428,3 +2428,8 @@ msgstr "暂缓"
 #: admin/class-sudemi-admin-manage.php
 msgid "Payout on hold"
 msgstr "打款暂缓"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "+%s, once for the whole line"
+msgstr "+%s，整行仅收一次"

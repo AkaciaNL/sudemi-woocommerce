@@ -2282,7 +2282,7 @@ msgid "Off (default): an item made with a text the buyer typed (a name, an engra
 msgstr ""
 
 #: includes/class-sudemi-issues.php
-msgid "An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered."
+msgid "An add-on lowers the price once for the whole order line; sudemi takes a discount per item only, so it is not offered."
 msgstr ""
 
 #: includes/class-sudemi-issues.php
@@ -2433,4 +2433,9 @@ msgstr ""
 
 #: admin/class-sudemi-admin-manage.php
 msgid "Payout on hold"
+msgstr ""
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "+%s, once for the whole line"
 msgstr ""

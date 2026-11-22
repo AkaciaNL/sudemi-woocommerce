@@ -92,18 +92,29 @@ final class Sudemi_Personalisation {
 		foreach ( $screened['offered'] as $addon ) {
 			// An add-on without a longest length takes as much as sudemi does.
 			$field = self::field( $addon['key'], $addon['label'], $addon['max'] > 0 ? $addon['max'] : self::LIMIT_MAX, $addon['required'], self::addon_minor( $product, $addon ) );
-			$type  = isset( $addon['type'] ) ? $addon['type'] : 'text';
+			$mode  = isset( $addon['mode'] ) ? $addon['mode'] : Sudemi_Addons::PER_ITEM;
+			if ( Sudemi_Addons::PER_LINE === $mode ) {
+				// Charged once for the whole order line (a flat fee), whatever the quantity.
+				$field['priceMode'] = Sudemi_Addons::PER_LINE;
+			}
+			$type = isset( $addon['type'] ) ? $addon['type'] : 'text';
 			if ( 'text' !== $type ) {
-				// A choice from the shop's list: each choice with its own price.
+				// A choice from the shop's list: each choice with its own price, and its own price
+				// mode where it differs from the field's (a flat fee option next to per-item ones).
 				unset( $field['maxLength'] );
 				$field['type']    = $type;
 				$field['choices'] = array();
 				foreach ( $addon['choices'] as $choice ) {
-					$field['choices'][] = array(
+					$entry       = array(
 						'key'        => $choice['key'],
 						'label'      => $choice['label'],
 						'priceMinor' => self::addon_minor( $product, $choice ),
 					);
+					$choice_mode = Sudemi_Addons::mode_of( $addon, $choice );
+					if ( $choice_mode !== $mode ) {
+						$entry['priceMode'] = $choice_mode;
+					}
+					$field['choices'][] = $entry;
 				}
 			}
 			if ( $with_store && isset( $addon['store'] ) ) {
@@ -135,7 +146,7 @@ final class Sudemi_Personalisation {
 
 	/**
 	 * The add-ons sudemi can ask, and what it cannot (owner 2026-11-19): an add-on whose price
-	 * sudemi cannot charge (a flat fee, a discount, per character or a formula, a plugin it cannot
+	 * sudemi cannot charge (a discount once per line, per character or a formula, a plugin it cannot
 	 * read) is never offered free or at the wrong price. A required one keeps the product off
 	 * sudemi (blocked: an error issue); an optional one is left out (a warning issue). Pure.
 	 *
@@ -210,33 +221,41 @@ final class Sudemi_Personalisation {
 		);
 	}
 
-	/** An add-on's price in minor units, with tax as the shop shows its prices. */
+	/**
+	 * An add-on's price in minor units, with tax as the shop shows its prices. Negative for a
+	 * discount (per item; sudemi never takes the unit price below 0): the tax is worked out on the
+	 * amount and the sign put back, because WooCommerce taxes no price below 0.
+	 */
 	private static function addon_minor( $product, array $addon ) {
 		$amount = (float) $addon['price'];
-		if ( $addon['percent'] > 0 ) {
+		if ( 0.0 !== (float) $addon['percent'] ) {
 			$amount = (float) $product->get_price() * (float) $addon['percent'] / 100;
 		}
-		if ( $amount <= 0 ) {
+		if ( 0.0 === $amount ) {
 			return 0;
 		}
 		$with_tax = wc_get_price_including_tax(
 			$product,
 			array(
 				'qty'   => 1,
-				'price' => $amount,
+				'price' => abs( $amount ),
 			)
 		);
-		return (int) Sudemi_Currency::to_minor( $with_tax, Sudemi_Currency::shop_currency() );
+		$minor = (int) Sudemi_Currency::to_minor( $with_tax, Sudemi_Currency::shop_currency() );
+		return $amount < 0 ? -$minor : $minor;
 	}
 
-	/** One entry of a listing's personalisation, as sudemi takes it. Pure. */
+	/**
+	 * One entry of a listing's personalisation, as sudemi takes it: a negative price is a discount
+	 * per item (Sudemi_Addons leaves a discount once per line out before it gets here). Pure.
+	 */
 	public static function field( $key, $label, $max, $required, $price_minor ) {
 		return array(
 			'key'        => (string) $key,
 			'label'      => (string) $label,
 			'required'   => (bool) $required,
 			'maxLength'  => self::max_length( $max ),
-			'priceMinor' => max( 0, (int) $price_minor ),
+			'priceMinor' => (int) $price_minor,
 		);
 	}
 
@@ -250,9 +269,10 @@ final class Sudemi_Personalisation {
 	}
 
 	/**
-	 * The texts the buyer typed for an order line, key => [label, value], from sudemi's line
-	 * personalisation [{key, label, value}]. Empty values are left out; control characters
-	 * become spaces. Pure.
+	 * The texts the buyer typed for an order line, key => [label, value, type, choice_keys,
+	 * line_fee_minor], from sudemi's line personalisation [{key, label, value, line_fee_minor?}].
+	 * Empty values are left out; control characters become spaces. line_fee_minor is the part
+	 * charged once for the whole line (a fee line of its own in sudemi), 0 when none. Pure.
 	 */
 	public static function from_line( array $line ) {
 		$out = array();
@@ -286,6 +306,9 @@ final class Sudemi_Personalisation {
 				'type'        => isset( $entry['type'] ) && is_scalar( $entry['type'] ) ? (string) $entry['type'] : 'text',
 				'choice_keys' => $keys,
 			);
+			if ( isset( $entry['line_fee_minor'] ) && is_numeric( $entry['line_fee_minor'] ) && (int) $entry['line_fee_minor'] > 0 ) {
+				$out[ $key ]['line_fee_minor'] = (int) $entry['line_fee_minor'];
+			}
 		}
 		return $out;
 	}

@@ -156,6 +156,54 @@ $GLOBALS['wp_options']['sudemi_auto_confirm'] = 'yes';
 Sudemi_Orders::remember_waiting( array( array( 'order_id' => 'c' ) ) );
 expect( 'with automatic confirmation nothing is kept (the shop answers them itself)', Sudemi_Orders::waiting(), array() );
 
+// 1.4.10 (owner 2026-11-21): a once-per-line add-on fee is a sudemi line of its own (addon_fee),
+// booked on its item (matched by position), never an item of its own. Mug x 3 at 17.95, gift wrap
+// 3.00 once; positions need not start at 0.
+$fee_order = array(
+	'total_minor'    => 6180,
+	'shipping_minor' => 495,
+	'lines'          => array(
+		array( 'line_id' => 'L1', 'position' => 4, 'external_id' => '14', 'title' => 'Mug', 'quantity' => 3, 'unit_price_minor' => 1795, 'addon_fee' => null ),
+		array( 'line_id' => 'F1', 'position' => 5, 'external_id' => '14', 'title' => 'Gift wrap: Red paper (once)', 'quantity' => 1, 'unit_price_minor' => 300,
+			'addon_fee' => array( 'parent_position' => 4, 'key' => 'pao:p:wrap-1', 'label' => 'Gift wrap', 'value' => 'Red paper', 'type' => 'choice', 'choice_keys' => array( 'o0' ), 'price_mode' => 'per_line', 'name' => 'Gift wrap: Red paper' ) ),
+		array( 'line_id' => 'F2', 'position' => 6, 'external_id' => '99', 'title' => 'Lost (once)', 'quantity' => 1, 'unit_price_minor' => 100,
+			'addon_fee' => array( 'parent_position' => 9, 'name' => 'Lost' ) ),
+	),
+);
+expect( 'fee line: told apart from an item line', array( Sudemi_Orders::is_fee_line( $fee_order['lines'][0] ), Sudemi_Orders::is_fee_line( $fee_order['lines'][1] ) ), array( false, true ) );
+$fees = Sudemi_Orders::fees_by_item( $fee_order['lines'] );
+expect( 'fee line: matched to its item by position, with its name and id', $fees['items'], array( 0 => array( array( 'index' => 1, 'line_id' => 'F1', 'name' => 'Gift wrap: Red paper', 'parent_position' => 4 ) ) ) );
+expect( 'fee line whose item is not in the order: an orphan (booked as an order fee, never a product)', array( count( $fees['orphans'] ), $fees['orphans'][0]['name'] ), array( 1, 'Lost' ) );
+expect( 'paid amounts: total = 3 x 17.95 + 3.00 + 1.00 + shipping, every line read', Sudemi_Orders::paid_amounts( $fee_order )['lines'], array( 0 => 1795, 1 => 300, 2 => 100 ) );
+$wait = Sudemi_Orders::waiting_entries( array( array( 'order_id' => 'f', 'respond_by' => 'x' ) + $fee_order ) );
+expect( 'waiting orders: a fee line is not listed as an item', $wait[0]['items'], '3 x Mug' );
+function wc_price( $amount, $args = array() ) {
+	return '<span>' . ( isset( $args['currency'] ) ? $args['currency'] : '' ) . '&nbsp;' . number_format( (float) $amount, 2, '.', '' ) . '</span>';
+}
+function wp_strip_all_tags( $text ) {
+	return strip_tags( $text );
+}
+$meta = Sudemi_Orders::item_money_meta( $fee_order['lines'][0], 1795, $fees['items'][0], Sudemi_Orders::paid_amounts( $fee_order )['lines'], 'PLN' );
+expect( 'item meta: line id and unit, the fee named on the item (visible) and kept (hidden)', $meta, array(
+	array( '_sudemi_line_id', 'L1' ),
+	array( '_sudemi_unit_minor', 1795 ),
+	array( 'Gift wrap: Red paper', "+PLN\u{a0}3.00, once for the whole line" ),
+	array( '_sudemi_line_fee_minor', 300 ),
+	array( '_sudemi_fee_lines', array( array( 'line_id' => 'F1', 'name' => 'Gift wrap: Red paper', 'minor' => 300 ) ) ),
+) );
+expect( 'item meta without fees: line id and unit only', Sudemi_Orders::item_money_meta( array( 'line_id' => 'L9' ), 850, array(), array(), 'EUR' ), array( array( '_sudemi_line_id', 'L9' ), array( '_sudemi_unit_minor', 850 ) ) );
+
+// Refund by line: 1 of 3 mugs at exactly its price goes by line (the fee stays); the last 2 with
+// the fee too; any other amount goes as the amount the shop entered.
+$item = array( 'line_id' => 'L1', 'unit_minor' => 1795, 'fee_minor' => 300, 'quantity' => 3, 'units_sent' => 0, 'refund_qty' => 1 );
+expect( 'refund 1 of 3 at 17.95: by line, the fee kept', Sudemi_Orders::refund_lines_for( array( $item ), 1795 ), array( array( 'lineId' => 'L1', 'quantity' => 1 ) ) );
+expect( 'refund 1 of 3 at 18.95 (WooCommerce spread the fee): as an amount', Sudemi_Orders::refund_lines_for( array( $item ), 1895 ), null );
+expect( 'refund the last 2 of 3 with the fee (2 x 17.95 + 3.00): by line', Sudemi_Orders::refund_lines_for( array( array( 'units_sent' => 1, 'refund_qty' => 2 ) + $item ), 3890 ), array( array( 'lineId' => 'L1', 'quantity' => 2 ) ) );
+expect( 'refund the last 2 without the fee: as an amount (sudemi would give the fee back too)', Sudemi_Orders::refund_lines_for( array( array( 'units_sent' => 1, 'refund_qty' => 2 ) + $item ), 3590 ), null );
+expect( 'refund more units than are left: as an amount', Sudemi_Orders::refund_lines_for( array( array( 'units_sent' => 3 ) + $item ), 1795 ), null );
+expect( 'refund an item without a sudemi line: as an amount', Sudemi_Orders::refund_lines_for( array( array( 'line_id' => '' ) + $item ), 1795 ), null );
+expect( 'refund of nothing by line: as an amount', Sudemi_Orders::refund_lines_for( array(), 0 ), null );
+
 if ( $failures ) {
 	echo "$failures failure(s)\n";
 	exit( 1 );

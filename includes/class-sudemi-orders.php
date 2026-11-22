@@ -61,7 +61,7 @@ class Sudemi_Orders {
 			}
 			$items = array();
 			foreach ( isset( $order['lines'] ) && is_array( $order['lines'] ) ? $order['lines'] : array() as $line ) {
-				if ( is_array( $line ) && isset( $line['title'] ) ) {
+				if ( is_array( $line ) && isset( $line['title'] ) && ! self::is_fee_line( $line ) ) {
 					$items[] = ( isset( $line['quantity'] ) ? (int) $line['quantity'] : 1 ) . ' x ' . sanitize_text_field( (string) $line['title'] );
 				}
 			}
@@ -947,6 +947,10 @@ class Sudemi_Orders {
 		}
 
 		foreach ( $lines as $line ) {
+			if ( is_array( $line ) && self::is_fee_line( $line ) ) {
+				// A once-per-line add-on fee: booked on its item below, never an item of its own.
+				continue;
+			}
 			$product = self::resolve_product( $line );
 			if ( ! $product ) {
 				return sprintf(
@@ -1079,7 +1083,13 @@ class Sudemi_Orders {
 		$item_classes = array();
 		$order->update_meta_data( Sudemi_Currency::META_ORDER_CURRENCY, $currency );
 
+		// Once-per-line add-on fees (a fee line of its own in sudemi) are booked on their item, the
+		// way the shop's add-on plugin books a flat fee: in the item's total, named on the item.
+		$fees = self::fees_by_item( $pending['lines'] );
 		foreach ( $pending['lines'] as $index => $line ) {
+			if ( is_array( $line ) && self::is_fee_line( $line ) ) {
+				continue;
+			}
 			$resolved = self::resolve_line( $line );
 			if ( null === $resolved ) {
 				$order->delete( true );
@@ -1104,8 +1114,15 @@ class Sudemi_Orders {
 				continue;
 			}
 			// The buyer's price wins over today's catalogue price: the price may have changed
-			// since the last sync, and the shop's order has to say what was actually paid.
-			$gross   = $paid['lines'][ $index ] * $quantity;
+			// since the last sync, and the shop's order has to say what was actually paid. A fee
+			// charged once for the line is added to the line's total, never to the unit price
+			// sudemi charged.
+			$item_fees = isset( $fees['items'][ $index ] ) ? $fees['items'][ $index ] : array();
+			$fee_minor = 0;
+			foreach ( $item_fees as $fee ) {
+				$fee_minor += $paid['lines'][ $fee['index'] ];
+			}
+			$gross   = $paid['lines'][ $index ] * $quantity + $fee_minor;
 			if ( $product->is_taxable() ) {
 				$item_classes[] = $product->get_tax_class();
 			}
@@ -1135,8 +1152,23 @@ class Sudemi_Orders {
 				foreach ( $typed as $meta ) {
 					$item->add_meta_data( $meta[0], $meta[1] );
 				}
+				foreach ( self::item_money_meta( $line, $paid['lines'][ $index ], $item_fees, $paid['lines'], $currency ) as $meta ) {
+					$item->add_meta_data( $meta[0], $meta[1], true );
+				}
 				$item->save();
 			}
+		}
+
+		// A fee whose item is not in the order (never sent by sudemi; a safety net): booked as a
+		// fee of the order with its name, so the order total stays what the buyer paid. Never a
+		// product line.
+		foreach ( null === $paid ? array() : $fees['orphans'] as $fee ) {
+			$fee_item = new WC_Order_Item_Fee();
+			$fee_item->set_name( $fee['name'] );
+			$taxes = self::taxes_within( $paid['lines'][ $fee['index'] ], self::tax_rates( $country, '', false ), $currency );
+			$fee_item->set_total( self::major( $paid['lines'][ $fee['index'] ] - array_sum( $taxes ), $currency ) );
+			$fee_item->set_taxes( self::tax_array( $taxes, false, $currency ) );
+			$order->add_item( $fee_item );
 		}
 
 		if ( null !== $paid ) {
@@ -1368,15 +1400,150 @@ class Sudemi_Orders {
 		);
 	}
 
+	/** Whether a sudemi order line is a once-per-line add-on fee (addon_fee set), not an item. Pure. */
+	public static function is_fee_line( array $line ) {
+		return isset( $line['addon_fee'] ) && is_array( $line['addon_fee'] );
+	}
+
+	/**
+	 * The fee lines of an order, matched to their item line by position (addon_fee.parent_position
+	 * against the item's position, as sudemi sends them): items => [item index => [fee]], and
+	 * orphans => [fee] for a fee whose item is not there. A fee: index (its place in lines),
+	 * line_id, name (what to show: "Gift wrap: Red paper"), parent_position. Pure.
+	 *
+	 * @param array $lines A pending order's lines.
+	 */
+	public static function fees_by_item( array $lines ) {
+		$by_position = array();
+		foreach ( $lines as $index => $line ) {
+			if ( is_array( $line ) && ! self::is_fee_line( $line ) && isset( $line['position'] ) && is_numeric( $line['position'] ) ) {
+				$by_position[ (int) $line['position'] ] = $index;
+			}
+		}
+		$out = array(
+			'items'   => array(),
+			'orphans' => array(),
+		);
+		foreach ( $lines as $index => $line ) {
+			if ( ! is_array( $line ) || ! self::is_fee_line( $line ) ) {
+				continue;
+			}
+			$addon  = $line['addon_fee'];
+			$parent = isset( $addon['parent_position'] ) && is_numeric( $addon['parent_position'] ) ? (int) $addon['parent_position'] : null;
+			$name   = isset( $addon['name'] ) && is_scalar( $addon['name'] ) && '' !== trim( (string) $addon['name'] )
+				? trim( (string) $addon['name'] )
+				: ( isset( $line['title'] ) ? trim( (string) $line['title'] ) : '' );
+			$fee    = array(
+				'index'           => $index,
+				'line_id'         => isset( $line['line_id'] ) ? (string) $line['line_id'] : '',
+				'name'            => trim( (string) preg_replace( '/[\x00-\x1F\x7F]+/u', ' ', $name ) ),
+				'parent_position' => $parent,
+			);
+			if ( null !== $parent && isset( $by_position[ $parent ] ) ) {
+				$out['items'][ $by_position[ $parent ] ][] = $fee;
+			} else {
+				$out['orphans'][] = $fee;
+			}
+		}
+		return $out;
+	}
+
+	/** Order item meta keys of the sudemi line behind a WooCommerce order item (hidden). */
+	const META_LINE_ID    = '_sudemi_line_id';
+	const META_UNIT_MINOR = '_sudemi_unit_minor';
+	const META_LINE_FEE   = '_sudemi_line_fee_minor';
+	const META_FEE_LINES  = '_sudemi_fee_lines';
+	/** Units of the item refunded on sudemi by line from this shop (refund_lines_for()). */
+	const META_UNITS_SENT = '_sudemi_units_refunded';
+
+	/**
+	 * The meta an item gets for the sudemi line behind it: the line's id and unit price (refunds by
+	 * line), and per once-per-line fee its amount, hidden, plus one visible entry naming it
+	 * ("Gift wrap: Red paper" => "+€3.00, once for the whole line"). Pure but for the translation
+	 * and the price format.
+	 *
+	 * @param array  $line       The item line.
+	 * @param int    $unit_minor The unit price paid.
+	 * @param array  $item_fees  Its fees (fees_by_item()).
+	 * @param array  $paid_lines Paid unit prices by line index.
+	 * @param string $currency   The order's currency.
+	 * @return array List of [meta key, meta value].
+	 */
+	public static function item_money_meta( array $line, $unit_minor, array $item_fees, array $paid_lines, $currency ) {
+		$out = array();
+		if ( isset( $line['line_id'] ) && is_scalar( $line['line_id'] ) && '' !== (string) $line['line_id'] ) {
+			$out[] = array( self::META_LINE_ID, (string) $line['line_id'] );
+		}
+		$out[] = array( self::META_UNIT_MINOR, (int) $unit_minor );
+		if ( empty( $item_fees ) ) {
+			return $out;
+		}
+		$total = 0;
+		$kept  = array();
+		foreach ( $item_fees as $fee ) {
+			$minor  = (int) $paid_lines[ $fee['index'] ];
+			$total += $minor;
+			$kept[] = array(
+				'line_id' => $fee['line_id'],
+				'name'    => $fee['name'],
+				'minor'   => $minor,
+			);
+			$out[]  = array(
+				$fee['name'],
+				sprintf(
+					/* translators: %s: the add-on's price, for example "€3.00". */
+					__( '+%s, once for the whole line', 'sudemi-connector' ),
+					self::price_text( $minor, $currency )
+				),
+			);
+		}
+		$out[] = array( self::META_LINE_FEE, $total );
+		$out[] = array( self::META_FEE_LINES, $kept );
+		return $out;
+	}
+
+	/**
+	 * A WooCommerce refund as a sudemi refund by line, or null to send it as an amount: only when
+	 * every refunded item is a sudemi line and the amount is exactly what sudemi gives back for
+	 * those units (the units at the price paid, plus the item's once-per-line fees when the last
+	 * unit goes, as sudemi refunds them). Anything else (a different amount, shipping, an item
+	 * without a sudemi line) is sent as the amount the shop entered. Pure.
+	 *
+	 * @param array $items        [line_id, unit_minor, fee_minor, quantity, units_sent, refund_qty] per refunded item.
+	 * @param int   $amount_minor The refund's amount.
+	 * @return array|null [{lineId, quantity}]
+	 */
+	public static function refund_lines_for( array $items, $amount_minor ) {
+		if ( empty( $items ) ) {
+			return null;
+		}
+		$lines    = array();
+		$expected = 0;
+		foreach ( $items as $i ) {
+			if ( '' === (string) $i['line_id'] || $i['refund_qty'] < 1 || $i['units_sent'] + $i['refund_qty'] > $i['quantity'] ) {
+				return null;
+			}
+			$expected += $i['refund_qty'] * $i['unit_minor'];
+			if ( $i['units_sent'] + $i['refund_qty'] === $i['quantity'] ) {
+				$expected += $i['fee_minor'];
+			}
+			$lines[] = array(
+				'lineId'   => (string) $i['line_id'],
+				'quantity' => (int) $i['refund_qty'],
+			);
+		}
+		return $expected === (int) $amount_minor ? $lines : null;
+	}
+
 	/** What the listing of a product or variation asks the buyer to type. */
 	private static function personalisation_fields( $product ) {
 		$parent = $product->is_type( 'variation' ) ? wc_get_product( $product->get_parent_id() ) : null;
 		return Sudemi_Personalisation::for_listing( $product, $parent ? $parent : null, true );
 	}
 
-	/** A price in the shop's currency as text, for an add-on's order line ("€20.00"). */
-	public static function price_text( $minor ) {
-		$currency = Sudemi_Currency::shop_currency();
+	/** A price as text, for an add-on's order line ("€20.00"); the shop's currency unless given. */
+	public static function price_text( $minor, $currency = null ) {
+		$currency = null === $currency ? Sudemi_Currency::shop_currency() : (string) $currency;
 		return html_entity_decode( wp_strip_all_tags( wc_price( Sudemi_Currency::to_major( $minor, $currency ), array( 'currency' => $currency ) ) ), ENT_QUOTES, 'UTF-8' );
 	}
 
@@ -1500,6 +1667,22 @@ class Sudemi_Orders {
 			return;
 		}
 		$body = self::refund_body( $refund, $order );
+		$sent = array();
+		if ( is_array( $body ) ) {
+			// Units of sudemi lines, when the amount is exactly what sudemi gives back for them:
+			// sent by line, so sudemi keeps a once-per-line fee until the last unit goes back.
+			$by_line = self::refund_items( $refund, $order );
+			$lines   = null === $by_line ? null : self::refund_lines_for( $by_line['items'], $body['amountMinor'] );
+			if ( null !== $lines ) {
+				$sent = $by_line['order_items'];
+				$body = array(
+					'lines'       => $lines,
+					'currency'    => $body['currency'],
+					'reason'      => $body['reason'],
+					'amountMinor' => $body['amountMinor'],
+				);
+			}
+		}
 		if ( is_string( $body ) ) {
 			// Not sent: a refund in another currency than the buyer paid in would pay back a
 			// different amount than the shop meant. Said on the order, where the merchant looks.
@@ -1513,10 +1696,38 @@ class Sudemi_Orders {
 			Sudemi_Logger::error( 'Refund for order ' . $order->get_id() . ' not sent to sudemi: ' . $body );
 			return;
 		}
+		$amount = $body['amountMinor'];
+		if ( isset( $body['lines'] ) ) {
+			unset( $body['amountMinor'] );
+		}
 		$response = Sudemi_Client::post_signed(
 			'/integration/v1/orders/' . rawurlencode( $sudemi_id ) . '/refund',
 			$body
 		);
+		if ( isset( $body['lines'] ) ) {
+			$code = is_wp_error( $response ) ? 0 : (int) $response['status'];
+			if ( 409 === $code || 422 === $code ) {
+				// Refused by line (sudemi counts the units differently, for example after a refund
+				// on its own pages): nothing moved, so the same money goes as the amount instead.
+				$response = Sudemi_Client::post_signed(
+					'/integration/v1/orders/' . rawurlencode( $sudemi_id ) . '/refund',
+					array(
+						'amountMinor' => $amount,
+						'currency'    => $body['currency'],
+						'reason'      => $body['reason'],
+					)
+				);
+			} elseif ( $code >= 200 && $code < 300 ) {
+				foreach ( $sent as $item_id => $qty ) {
+					$item = $order->get_item( $item_id );
+					if ( $item ) {
+						$item->update_meta_data( self::META_UNITS_SENT, (int) $item->get_meta( self::META_UNITS_SENT ) + $qty );
+						$item->save();
+					}
+				}
+			}
+		}
+		$body['amountMinor'] = $amount;
 		self::note_money_result(
 			$order,
 			$response,
@@ -1555,6 +1766,41 @@ class Sudemi_Orders {
 			'amountMinor' => Sudemi_Currency::to_minor( $refund->get_amount(), $charged ),
 			'currency'    => $charged,
 			'reason'      => '' === $reason ? null : $reason,
+		);
+	}
+
+	/**
+	 * The refunded items of a WooCommerce refund, for refund_lines_for(): null when the refund
+	 * names no item, or an item that is not a sudemi line.
+	 *
+	 * @return array{items:array,order_items:array<int,int>}|null order_items: order item id => units.
+	 */
+	private static function refund_items( $refund, $order ) {
+		if ( ! is_callable( array( $refund, 'get_items' ) ) ) {
+			return null;
+		}
+		$items = array();
+		$ids   = array();
+		foreach ( $refund->get_items() as $refund_item ) {
+			$qty = abs( (int) $refund_item->get_quantity() );
+			$id  = (int) $refund_item->get_meta( '_refunded_item_id' );
+			$own = $id ? $order->get_item( $id ) : null;
+			if ( $qty < 1 || ! $own || '' === (string) $own->get_meta( self::META_LINE_ID ) ) {
+				return null;
+			}
+			$items[]    = array(
+				'line_id'    => (string) $own->get_meta( self::META_LINE_ID ),
+				'unit_minor' => (int) $own->get_meta( self::META_UNIT_MINOR ),
+				'fee_minor'  => (int) $own->get_meta( self::META_LINE_FEE ),
+				'quantity'   => (int) $own->get_quantity(),
+				'units_sent' => (int) $own->get_meta( self::META_UNITS_SENT ),
+				'refund_qty' => $qty,
+			);
+			$ids[ $id ] = $qty;
+		}
+		return empty( $items ) ? null : array(
+			'items'       => $items,
+			'order_items' => $ids,
 		);
 	}
 

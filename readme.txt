@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, chatgpt, product feed
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.4.9
+Stable tag: 1.4.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -126,6 +126,9 @@ Use the Support page inside the plugin, or the seller guides at https://sudemi.c
 
 == Upgrade Notice ==
 
+= 1.4.10 =
+Add-ons charged once per order line (a flat fee such as gift wrapping) and add-ons that lower the price per item (a discount) are now offered on sudemi, at exactly your shop's price.
+
 = 1.4.9 =
 The Orders page shows why a payout is on hold (an open card dispute, cancellation request or return request).
 
@@ -148,6 +151,14 @@ Sizes and colours of one product now show to buyers as one product with a choice
 Clearer WordPress.org description, a list of every call to sudemi (External services), and screenshots. No change in how the plugin works.
 
 == Changelog ==
+
+= 1.4.10 =
+* Add-ons charged once per order line are offered on sudemi: Product Add-Ons "flat fee", Advanced Product Fields "fixed", PPOM "fixed fee" and YITH "sell individually". sudemi charges the fee once for the whole line, whatever the quantity (gift wrap 3.00 for 3 mugs is 3.00, not 9.00). Before, they were left out and reported as addon_flat_fee.
+* Add-ons that lower the price per item (a negative price, a YITH "decrease", a negative percentage) are offered as a discount on every unit; the unit price never goes below 0. Before, they were left out and reported as addon_negative_price.
+* A discount charged once per order line cannot be taken by sudemi: it is still left out and reported (addon_negative_price, now with that reason), as are prices per character or by a formula.
+* Orders: the fee is booked on its item, the way your add-on plugin books a flat fee: in the item's total, with a line on the item naming it ("Gift wrap: Red paper: +€3.00, once for the whole line"). It is never a product line of its own, so stock and the order total (what the buyer paid) stay right.
+* Refunds: a WooCommerce refund of whole units of an item at exactly the price paid is sent to sudemi by line, so sudemi keeps the once-per-line fee until the last unit goes back (then the fee is refunded with it). Any other amount is sent as the amount you entered, as before.
+* An order accepted from the sudemi Orders page now also writes what the buyer typed or chose on the order line.
 
 = 1.4.9 =
 * Orders: when sudemi holds an order's payout, the order list shows why instead of the payout date (an open card dispute, an open cancellation request or an open return request), and the order page shows it in its own row "Payout on hold". The payout follows once it is resolved.

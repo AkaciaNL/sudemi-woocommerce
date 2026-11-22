@@ -2283,8 +2283,8 @@ msgid "Off (default): an item made with a text the buyer typed (a name, an engra
 msgstr "Uit (standaard): een artikel gemaakt met een tekst die de koper typte (een naam, een gravure) kan niet worden geretourneerd, zoals de wet toestaat; kopers horen dit voor het betalen. Aan: kopers mogen het retourneren zoals elk ander artikel."
 
 #: includes/class-sudemi-issues.php
-msgid "An add-on lowers the price (a discount); sudemi cannot charge that yet, so it is not offered."
-msgstr "Een add-on verlaagt de prijs (een korting); dat kan sudemi nog niet rekenen, dus wordt het niet aangeboden."
+msgid "An add-on lowers the price once for the whole order line; sudemi takes a discount per item only, so it is not offered."
+msgstr "Een add-on verlaagt de prijs één keer voor de hele orderregel; sudemi rekent een korting alleen per stuk, dus wordt het niet aangeboden."
 
 #: includes/class-sudemi-issues.php
 msgid "An add-on is charged once per order line (a flat fee); sudemi cannot charge that yet, so it is not offered."
@@ -2435,3 +2435,8 @@ msgstr "Vastgehouden"
 #: admin/class-sudemi-admin-manage.php
 msgid "Payout on hold"
 msgstr "Uitbetaling vastgehouden"
+
+#: includes/class-sudemi-orders.php
+#, php-format
+msgid "+%s, once for the whole line"
+msgstr "+%s, eenmalig voor de hele regel"
