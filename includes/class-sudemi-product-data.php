@@ -255,6 +255,29 @@ final class Sudemi_Product_Data {
 		return $out;
 	}
 
+	/**
+	 * 1.4.12 (sudemi owner decision 2026-11-26): the description as HTML, so buyers see its
+	 * paragraphs, lists and headings. sudemi keeps only p, br, ul, ol, li, strong, b, em, i, h3 and
+	 * h4 (h1/h2 as h3, h5/h6 as h4) and removes everything else itself: scripts, styles, frames and
+	 * their content, every attribute, links (their text stays), images. Shortcodes are taken out
+	 * (what they show belongs to the shop's own pages), block editor comments too, and the classic
+	 * editor's blank lines become paragraphs the way WordPress shows them (wpautop).
+	 */
+	public static function description( $html ) {
+		$html = (string) $html;
+		if ( '' === trim( $html ) ) {
+			return '';
+		}
+		if ( function_exists( 'strip_shortcodes' ) ) {
+			$html = strip_shortcodes( $html );
+		}
+		$html = (string) preg_replace( '/<!--.*?-->/s', '', $html );
+		if ( function_exists( 'wpautop' ) ) {
+			$html = wpautop( $html );
+		}
+		return trim( $html );
+	}
+
 	/** The fields a price-only update carries along with the price (so it never ends a sale). */
 	public static function price_update_fields( array $listing ) {
 		$out = array();

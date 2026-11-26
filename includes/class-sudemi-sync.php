@@ -951,7 +951,8 @@ final class Sudemi_Sync {
 			'variantAttributes' => $variant,
 			// A text the buyer types (a name to print), set on the product's sudemi tab.
 			'personalisation' => Sudemi_Personalisation::for_listing( $product, $parent_product ),
-			'description' => wp_strip_all_tags( $product->get_description() ? $product->get_description() : $base->get_description() ),
+			// As HTML (1.4.12): sudemi keeps the paragraphs, lists and headings and removes the rest.
+			'description' => Sudemi_Product_Data::description( $product->get_description() ? $product->get_description() : $base->get_description() ),
 			'url'         => $product->get_permalink(),
 			'priceMinor'  => self::minor( self::price_with_tax( $product ) ),
 			'currency'    => get_woocommerce_currency(),

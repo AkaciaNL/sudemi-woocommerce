@@ -30,6 +30,8 @@ jobs:
         run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/personalisation-test.php"
       - name: Product data (sale window, availability, dimensions, quantities, quantity prices)
         run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/product-data-test.php"
+      - name: Description sent as HTML (paragraphs, lists, headings), version 1.4.12
+        run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/description-test.php"
       - name: Product photos (variation galleries from add-ons, https, at most 50)
         run: docker run --rm -v "$PWD:/w" -w /w php:8.3-cli sh -c "php tests/images-test.php"
       - name: Catalogue issues (left out, sent to sudemi, kept for the shop)

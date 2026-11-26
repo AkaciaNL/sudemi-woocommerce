@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, ai, chatgpt, product feed
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.4.11
+Stable tag: 1.4.12
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -126,6 +126,9 @@ Use the Support page inside the plugin, or the seller guides at https://sudemi.c
 
 == Upgrade Notice ==
 
+= 1.4.12 =
+Product descriptions keep their paragraphs, lists and headings on sudemi: they are now sent as HTML, and sudemi keeps only simple formatting.
+
 = 1.4.11 =
 A refund of some units of an item with a once-per-line add-on (gift wrapping, a set-up fee) is now set to exactly what sudemi gives back, so the add-on stays paid until the last unit is refunded.
 
@@ -154,6 +157,11 @@ Sizes and colours of one product now show to buyers as one product with a choice
 Clearer WordPress.org description, a list of every call to sudemi (External services), and screenshots. No change in how the plugin works.
 
 == Changelog ==
+
+= 1.4.12 =
+* Product descriptions are sent to sudemi as HTML instead of as text with every tag removed, so buyers see their paragraphs, bullet lists and headings. sudemi keeps only simple formatting (paragraphs, line breaks, lists, bold, italic and two heading sizes) and removes everything else itself: scripts, styles, embedded frames, images, links (their text stays) and every attribute. AI assistants still read the description as plain text.
+* Shortcodes and block editor comments are taken out of the description; text written in the classic editor gets its paragraphs the way WordPress shows them on your shop.
+* Your products are sent again with the next hourly catalogue sync; nothing to do.
 
 = 1.4.11 =
 * Refunds: when a WooCommerce refund names units of an item that has an add-on charged once for the whole line, it is sent to sudemi by line, whatever amount the refund form filled in. WooCommerce's form fills in the line total divided by the quantity, which holds a share of the add-on; sudemi gives back the units at the price paid and the add-on only with the last unit of the item. The shop's refund is set to that amount before it is saved (with an order note naming both amounts), so your books and the buyer's money agree. Example: 3 mugs at 10.50 with gift wrap 3.00 once; refunding 1 mug is 10.50, not 11.50.
