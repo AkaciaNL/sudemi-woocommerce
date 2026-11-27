@@ -115,29 +115,25 @@ final class Sudemi_Currency {
 	 * Why an incoming order cannot be booked in this shop, or null when it can.
 	 *
 	 * The order is booked in the currency the buyer's card was charged in, never quietly in
-	 * another one: an order of 100 PLN booked as 100 EUR is a different order.
+	 * another one: an order of 100 PLN booked as 100 EUR is a different order. That currency need
+	 * not be the shop's currency today: a WooCommerce order carries its own currency
+	 * (WC_Order::set_currency, as multi-currency checkouts use it), so a shop that changed its
+	 * currency (USD to EUR) still books the orders placed before the change in the currency they
+	 * were paid in, at exactly the amounts sudemi sends (owner 2026-11-27; before, they were
+	 * declined as "paid in USD but this shop sells in EUR").
 	 *
 	 * @param array  $pending One entry of the pending_orders block.
-	 * @param string $shop    This shop's currency.
+	 * @param string $shop    This shop's currency (not used: kept for the callers).
 	 * @return string|null
 	 */
 	public static function order_problem( array $pending, $shop ) {
+		unset( $shop );
 		if ( ! array_key_exists( 'currency_code', $pending ) || null === $pending['currency_code'] ) {
 			// A core older than currency support: its orders are in the shop's currency.
 			return null;
 		}
-		$code = self::normalise( $pending['currency_code'] );
-		$shop = self::normalise( $shop );
-		if ( '' === $code ) {
+		if ( '' === self::normalise( $pending['currency_code'] ) ) {
 			return __( 'the order did not say which currency it was paid in', 'sudemi-connector' );
-		}
-		if ( $code !== $shop ) {
-			return sprintf(
-				/* translators: 1: the order's currency, e.g. PLN, 2: the shop's currency, e.g. EUR. */
-				__( 'the order was paid in %1$s but this shop sells in %2$s, so it cannot be booked here', 'sudemi-connector' ),
-				$code,
-				$shop
-			);
 		}
 		return null;
 	}

@@ -603,8 +603,8 @@ final class Sudemi_Manage {
 	 *
 	 * Like the automatic answer, the WooCommerce order is created first (stock reserved) and only
 	 * then is sudemi told yes, so a buyer is never charged for an order this shop has no record
-	 * of. Stock is not checked: the merchant decided. A currency other than the shop's is refused
-	 * here, and the merchant can decline.
+	 * of. Stock is not checked: the merchant decided. The order is booked in the currency the
+	 * buyer paid in, also when the shop's currency has changed since.
 	 */
 	public static function accept( $id ) {
 		$read = self::order( $id );

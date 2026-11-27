@@ -1,7 +1,8 @@
 <?php
 /**
  * Currencies (currency step 3): minor units per currency, an order in another currency than the
- * shop's is declined and never booked, a refund says its currency and is not sent in another one,
+ * shop's is booked in its own currency (a shop that changed its currency, owner 2026-11-27) and
+ * one without a readable currency is declined, a refund says its currency and is not sent in another one,
  * and what sudemi answered on POST /shop is kept for the settings page.
  *
  * Runs without WordPress: options live in an array, the signed calls are recorded.
@@ -189,26 +190,36 @@ $order = array(
 expect( 'order in the shop currency is fine', Sudemi_Currency::order_problem( $order, 'PLN' ), null );
 expect( 'lower-case code is fine', Sudemi_Currency::order_problem( array( 'currency_code' => 'pln' ), 'PLN' ), null );
 expect( 'older core without currency_code is fine', Sudemi_Currency::order_problem( array( 'order_id' => 'x' ), 'EUR' ), null );
-expect(
-	'PLN order in a EUR shop is refused',
-	Sudemi_Currency::order_problem( $order, 'EUR' ),
-	'the order was paid in PLN but this shop sells in EUR, so it cannot be booked here'
-);
+// Owner 2026-11-27: a shop that changed its currency (here PLN to EUR) still books the orders
+// placed before in the currency they were paid in; a WooCommerce order carries its own currency.
+expect( 'PLN order in a shop now on EUR: bookable (in PLN)', Sudemi_Currency::order_problem( $order, 'EUR' ), null );
+expect( 'USD order in a EUR shop: bookable', Sudemi_Currency::order_problem( array( 'currency_code' => 'USD' ), 'EUR' ), null );
 expect( 'empty code is refused', null !== Sudemi_Currency::order_problem( array( 'currency_code' => '' ), 'EUR' ), true );
+expect( 'garbage code is refused', null !== Sudemi_Currency::order_problem( array( 'currency_code' => 'E1' ), 'EUR' ), true );
 
-// the decline path: rejected on sudemi, nothing built here, logged
+// the answer: a PLN order in a EUR shop is built (in PLN), nothing declined
 $answer = new ReflectionMethod( 'Sudemi_Orders', 'answer' );
 $answer->setAccessible( true );
-$answer->invoke( null, $order );
-expect( 'mismatch: one call to sudemi', count( $posted ), 1 );
-expect( 'mismatch: it is the reject', $posted[0][0], '/integration/v1/orders/o-pln/reject' );
-expect( 'mismatch: the reason names both currencies', $posted[0][1]['reason'], 'the order was paid in PLN but this shop sells in EUR, so it cannot be booked here' );
-expect( 'mismatch: no local order built', $orders_created, 0 );
-expect( 'mismatch: logged', (bool) preg_grep( '/could not be booked/', $logged ), true );
+try {
+	$answer->invoke( null, $order );
+} catch ( RuntimeException $e ) {
+	// The stub stops at building the order.
+}
+expect( 'other currency than the shop: the order is built', $orders_created, 1 );
+expect( 'other currency than the shop: nothing rejected', $posted, array() );
+expect( 'other currency than the shop: nothing about a currency logged', (bool) preg_grep( '/could not be booked/', $logged ), false );
 
-// same order in a PLN shop gets past the currency check and is built in PLN
-$posted        = array();
-$shop_currency = 'PLN';
+// an order without a readable currency is still declined at once, nothing built
+$posted         = array();
+$orders_created = 0;
+$answer->invoke( null, array( 'currency_code' => 'E1' ) + $order );
+expect( 'no readable currency: one call to sudemi, the reject', count( $posted ) . ' ' . $posted[0][0], '1 /integration/v1/orders/o-pln/reject' );
+expect( 'no readable currency: no local order built', $orders_created, 0 );
+
+// same order in a PLN shop is built in PLN as before
+$posted         = array();
+$orders_created = 0;
+$shop_currency  = 'PLN';
 try {
 	$answer->invoke( null, $order );
 } catch ( RuntimeException $e ) {

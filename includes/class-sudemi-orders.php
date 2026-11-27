@@ -164,8 +164,9 @@ class Sudemi_Orders {
 		}
 
 		// Booked in the currency the buyer's card was charged in, or not at all: an order of
-		// 100 PLN booked here as 100 EUR is a different order. Declined at once, so the buyer's
-		// hold is released instead of the order waiting out its window.
+		// 100 PLN booked here as 100 EUR is a different order. Any currency can be booked (the
+		// order carries its own, whatever the shop's currency is now); only an order without a
+		// readable currency is declined at once, so the buyer's hold is released.
 		$shortfall = Sudemi_Currency::order_problem( $pending, Sudemi_Currency::shop_currency() );
 		if ( null !== $shortfall ) {
 			Sudemi_Logger::error(
@@ -1073,8 +1074,9 @@ class Sudemi_Orders {
 		// the order is priced from the catalogue as before.
 		$paid    = self::paid_amounts( $pending );
 		$country = isset( $pending['destination_country'] ) ? (string) $pending['destination_country'] : '';
-		// The currency the buyer's card was charged in (answer() declined any other); a core
-		// that does not send one charged in the shop's currency.
+		// The currency the buyer's card was charged in, also when the shop has changed its own
+		// currency since (the order keeps it; the amounts are exactly sudemi's); a core that
+		// does not send one charged in the shop's currency.
 		$currency = ! empty( $pending['currency_code'] )
 			? Sudemi_Currency::normalise( $pending['currency_code'] )
 			: Sudemi_Currency::shop_currency();
