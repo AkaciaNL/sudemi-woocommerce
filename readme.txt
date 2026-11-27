@@ -128,6 +128,7 @@ Use the Support page inside the plugin, or the seller guides at https://sudemi.c
 
 = 1.4.12 =
 Product descriptions keep their paragraphs, lists and headings on sudemi: they are now sent as HTML, and sudemi keeps only simple formatting.
+Orders in another currency than the shop's (for example after changing the shop currency) are booked in their own currency instead of being declined.
 
 = 1.4.11 =
 A refund of some units of an item with a once-per-line add-on (gift wrapping, a set-up fee) is now set to exactly what sudemi gives back, so the add-on stays paid until the last unit is refunded.
